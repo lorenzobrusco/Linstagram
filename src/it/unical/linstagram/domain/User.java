@@ -2,12 +2,26 @@ package it.unical.linstagram.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class User {
 
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
+	@Column(nullable = false)
 	private String email;
+	@Column(nullable = false)
 	private String username;
+	@Column(nullable = false)
 	private String password;
 	private String name;
 	private String surname;
@@ -15,11 +29,9 @@ public class User {
 	private Gender gender;
 	private String biography;
 	private boolean privateProfile;
-	private Media profilePic;
-	
+
 	public User(int id, String email, String username, String password, String name, String surname, Date birthdate,
-			Gender gender, String biography, boolean privateProfile, Media profilePic) {
-		super();
+			Gender gender, String biography, boolean privateProfile) {
 		this.id = id;
 		this.email = email;
 		this.username = username;
@@ -30,7 +42,6 @@ public class User {
 		this.gender = gender;
 		this.biography = biography;
 		this.privateProfile = privateProfile;
-		this.profilePic = profilePic;
 	}
 
 	public User() {
@@ -116,14 +127,4 @@ public class User {
 		this.biography = biography;
 	}
 
-	public Media getProfilePic() {
-		return profilePic;
-	}
-
-	public void setProfilePic(Media profilePic) {
-		this.profilePic = profilePic;
-	}
-
-	
-	
 }
