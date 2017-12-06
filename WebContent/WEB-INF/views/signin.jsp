@@ -343,7 +343,7 @@ input {
 			</label> <label> <span>Password</span> <input type="password" />
 			</label>
 			<p class="forgot-pass">Forgot password?</p>
-			<button type="button" class="submit">Sign In</button>
+			<button type="button" class="submit"><a href="index">Sign In</a></button>
 			<button type="button" class="fb-btn">
 				Connect with <span>facebook</span>
 			</button>
