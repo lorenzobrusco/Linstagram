@@ -20,6 +20,7 @@ public class User {
 	private String password;
 	private String name;
 	private String surname;
+	//FIXME Forse va usato calendar (Parola di Alviano)
 	private Date birthdate;
 	private Gender gender;
 	private String biography;

@@ -20,7 +20,7 @@
 
 <body>
 	<div class="container">
-		<div class="row">
+		<div class="row" id="my-body">
 			<div class="col-sm-2"></div>
 			<div class="col-sm-8">
 				<div class="login-wrap">
@@ -90,4 +90,20 @@
 	</div>
 	<!--  Container close   -->
 </body>
+
+<script>
+$(document).ready(function(){
+var input = $("input");
+
+input.on( "focusin", function(){
+	$(".login-html").addClass("isFocused");
+});
+
+input.on( "focusout", function(){
+	$(".login-html").removeClass("isFocused");
+});
+	
+});
+</script>
+
 </html>
