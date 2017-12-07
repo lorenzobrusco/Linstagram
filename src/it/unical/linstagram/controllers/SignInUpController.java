@@ -23,7 +23,7 @@ public class SignInUpController {
 	}
 
 	@RequestMapping("/signUpAttempt")
-	public String signUp(@RequestParam String email, @RequestParam String username, @RequestParam String password) {
+	public String signUp(@RequestParam(name="email")String email, @RequestParam (name="username")String username, @RequestParam(name="password") String password) {
 		
 		if (signInService.signUpAttempt(email, username, password) == MessageCode.SUCCESS_SIGN_UP) {
 			return "redirect:index";
