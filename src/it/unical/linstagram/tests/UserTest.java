@@ -25,7 +25,7 @@ public class UserTest {
 		for (User usertmp : users) {
 			System.out.println(usertmp.getUsername());
 		}
-		assertEquals(2, users.size());
+		assertEquals(1, users.size());
 	}
 
 	@Test

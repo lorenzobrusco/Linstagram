@@ -31,6 +31,7 @@ public class UserDAO implements IUserDAO {
 			transaction = session.beginTransaction();
 			session.save(user);
 			transaction.commit();
+			System.out.println("create user");
 		} catch (Exception e) {
 			transaction.rollback();
 		}

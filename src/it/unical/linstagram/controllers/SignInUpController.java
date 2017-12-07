@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,9 +23,9 @@ public class SignInUpController {
 		return "signin";
 	}
 
-	@RequestMapping("/signUpAttempt")
+	@RequestMapping(value = "signUpAttempt", method = RequestMethod.POST)
 	public String signUp(@RequestParam(name="email")String email, @RequestParam (name="username")String username, @RequestParam(name="password") String password) {
-		
+		System.out.println("here");
 		if (signInService.signUpAttempt(email, username, password) == MessageCode.SUCCESS_SIGN_UP) {
 			return "redirect:index";
 		}
@@ -33,7 +34,7 @@ public class SignInUpController {
 
 	}
 
-	@RequestMapping("/signInAttempt")
+	@RequestMapping("signInAttempt")
 	@ResponseBody
 	public String signIn(@RequestParam String username, @RequestParam String password, HttpSession session) {
 		if (signInService.signInAttempt(username, password) == MessageCode.SUCCESS_SIGN_IN) {

@@ -30,7 +30,7 @@
 							type="radio" name="tab" class="sign-up"> <label
 							for="tab-2" class="tab">Sign Up</label>
 						<div class="login-form">
-							<div class="sign-in-htm">
+							<form class="sign-in-htm">
 								<div class="group">
 									<label for="user" class="label">Username</label> <input
 										id="user" name="username" type="text" class="input">
@@ -56,8 +56,8 @@
 								<!-- <div class="foot-lnk">
 									<a href="#forgot">Forgot Password?</a>
 								</div> -->
-							</div>
-							<div class="sign-up-htm">
+							</form>
+							<form action="signUpAttempt" method="post" class="sign-up-htm">
 								<div class="group">
 									<label for="user" class="label">Username</label> <input
 										id="user" name="username" type="text" class="input">
@@ -81,7 +81,7 @@
 									<input type="submit" class="button" value="Sign Up">
 								</div>
 								<div class="foot-lnk"></div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
