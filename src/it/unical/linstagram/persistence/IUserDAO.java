@@ -1,16 +1,14 @@
 package it.unical.linstagram.persistence;
 
-import java.util.List;
-
 import it.unical.linstagram.domain.User;
 
 public interface IUserDAO {
-
-	void save(User user);
 	
-	User fingUserById(String username);
+	/**Default DAO Operation**/
+	public void save(User user);
+	public User findById(int id);
+	boolean update(User user);
+	boolean delete(User user);
 	
-	List<User> allUsers();
-	
-	
+	boolean addFollowing(User requestUser,User user);
 }

@@ -1,18 +1,24 @@
 package it.unical.linstagram.domain;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table
-public class User {
+public class User{
 
 	@Id
-	@Column(nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+
+	@Column(nullable = false, unique = true)
 	private String username;
 	@Column(unique = true, nullable = false)
 	private String email;
@@ -20,33 +26,34 @@ public class User {
 	private String password;
 	private String name;
 	private String surname;
-	//FIXME Forse va usato calendar (Parola di Alviano)
-	private Date birthdate;
+	// FIXME Forse va usato calendar (Parola di Alviano)
+	private Calendar birthdate;
 	private Gender gender;
 	private String biography;
 	private boolean privateProfile;
-
-	public User(String email, String username, String password, String name, String surname, Date birthdate,
-			Gender gender, String biography, boolean privateProfile) {
-		this.email = email;
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.surname = surname;
-		this.birthdate = birthdate;
-		this.gender = gender;
-		this.biography = biography;
-		this.privateProfile = privateProfile;
-	}
-
-	public User() {
-	}
+	private Media photoProfile;
+	private List<User> followers; // chi ti segue
+	private List<User> following; // chi segui
+	private List<Post> posts;
+	private List<Post> tagged;
+	private List<Post> bookmarks;
+	
+	public User() {}
 
 	public User(String username, String email, String password) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 
 	public String getUsername() {
 		return username;
@@ -80,11 +87,11 @@ public class User {
 		this.surname = surname;
 	}
 
-	public Date getBirthdate() {
+	public Calendar getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(Calendar birthdate) {
 		this.birthdate = birthdate;
 	}
 
@@ -119,5 +126,55 @@ public class User {
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
+
+	public Media getPhotoProfile() {
+		return photoProfile;
+	}
+
+	public void setPhotoProfile(Media photoProfile) {
+		this.photoProfile = photoProfile;
+	}
+
+	public List<User> getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(List<User> followers) {
+		this.followers = followers;
+	}
+
+	public List<User> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(List<User> following) {
+		this.following = following;
+	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+
+	public List<Post> getTagged() {
+		return tagged;
+	}
+
+	public void setTagged(List<Post> tagged) {
+		this.tagged = tagged;
+	}
+
+	public List<Post> getBookmarks() {
+		return bookmarks;
+	}
+
+	public void setBookmarks(List<Post> bookmarks) {
+		this.bookmarks = bookmarks;
+	}
+	
+	
 
 }
