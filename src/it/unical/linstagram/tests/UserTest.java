@@ -13,14 +13,20 @@ public class UserTest {
 		User u1=new User("A","A","A");
 		User u2=new User("B","B","B");
 		
-		ModelDAO.getInstance().save(u);
 		ModelDAO.getInstance().save(u1);
 		ModelDAO.getInstance().save(u2);
 		
 		u.getFollowings().add(u1);
 		u.getFollowings().add(u2);
 		
+		System.out.println("_____________________________________________________________________");
+		System.out.println(u.getUsername());
+		System.out.println("_____________________________________________________________________");
+		
+//		ModelDAO.getInstance().save(u);
 		ModelDAO.getInstance().update(u);
+//		ModelDAO.getInstance().update(u1);
+//		ModelDAO.getInstance().update(u2);
 		
 	}
 

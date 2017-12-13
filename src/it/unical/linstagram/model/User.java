@@ -65,8 +65,11 @@ public class User{
     private Set<User> followings = new HashSet<User>();
     
     
-    @ManyToMany(mappedBy="followings")
+    @ManyToMany
     @Cascade(value=CascadeType.ALL)
+    @JoinTable(name="following",
+    joinColumns={@JoinColumn(name="following_id")},
+    inverseJoinColumns={@JoinColumn(name="follower_id")})
     private Set<User> followers = new HashSet<User>();
 	
 //    @OneToMany(mappedBy = "user")
@@ -74,7 +77,7 @@ public class User{
     
 //    @ManyToMany
 //	private List<Post> tagged;
-//    
+
 //    @ManyToMany
 //	private List<Post> bookmarks;
 	
