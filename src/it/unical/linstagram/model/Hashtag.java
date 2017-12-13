@@ -1,4 +1,4 @@
-package it.unical.linstagram.domain;
+package it.unical.linstagram.model;
 
 public class Hashtag {
 

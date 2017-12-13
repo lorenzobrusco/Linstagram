@@ -18,8 +18,9 @@
 		<property name="format_sql">true</property>
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 		<!--create the database schema on startup if required -->
-		<property name="hbm2ddl.auto">create</property>
-		<mapping class="it.unical.linstagram.domain.User" />
+		<property name="hbm2ddl.auto">update</property>
+		
+		<mapping class="it.unical.linstagram.model.User" />
 
 	</session-factory>
 </hibernate-configuration>

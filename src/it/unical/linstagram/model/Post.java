@@ -1,13 +1,23 @@
-package it.unical.linstagram.domain;
+package it.unical.linstagram.model;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 public class Post {
 
 	private int id;
 	
+	@ManyToOne
+	@JoinColumn(name = "user")
+	@Cascade(value=CascadeType.SAVE_UPDATE)
 	private User user;
+	
 	private List<User> likes;
 	private List<Comment> comments;
 	private List<Hashtag> hashtags;

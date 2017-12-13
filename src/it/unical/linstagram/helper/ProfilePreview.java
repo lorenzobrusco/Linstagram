@@ -1,7 +1,7 @@
 package it.unical.linstagram.helper;
 
-import it.unical.linstagram.domain.Media;
-import it.unical.linstagram.domain.User;
+import it.unical.linstagram.model.Media;
+import it.unical.linstagram.model.User;
 
 public class ProfilePreview {
 	
@@ -9,7 +9,7 @@ public class ProfilePreview {
 	private String username;
 	
 	public ProfilePreview(User user) {
-		this.photoProfile = user.getPhotoProfile();
+//		this.photoProfile = user.getPhotoProfile();
 		this.username = user.getUsername();
 	}
 	public Media getPhotoProfile() {
