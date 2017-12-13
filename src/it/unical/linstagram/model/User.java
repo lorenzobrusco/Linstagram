@@ -60,16 +60,12 @@ public class User{
 	@ManyToMany
 	@Cascade(value=CascadeType.ALL)
     @JoinTable(name="following",
-               joinColumns={@JoinColumn(name="follower_id")},
-               inverseJoinColumns={@JoinColumn(name="following_id")})
+               joinColumns={@JoinColumn(name="followed")},
+               inverseJoinColumns={@JoinColumn(name="following")})
     private Set<User> followings = new HashSet<User>();
     
     
-    @ManyToMany
-    @Cascade(value=CascadeType.ALL)
-    @JoinTable(name="following",
-    joinColumns={@JoinColumn(name="following_id")},
-    inverseJoinColumns={@JoinColumn(name="follower_id")})
+   @ManyToMany(mappedBy="followings")
     private Set<User> followers = new HashSet<User>();
 	
 //    @OneToMany(mappedBy = "user")

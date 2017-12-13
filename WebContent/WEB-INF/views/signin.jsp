@@ -29,14 +29,14 @@
               <input id="tab-2" type="radio" name="tab" class="sign-up">
               <label for="tab-2" class="tab">Sign Up</label>
             <div class="login-form">
-              <form class="sign-in-htm">
+              <form class="sign-in-htm" action="signInAttempt" method="post">
                 <div class="group">
                   <label for="user" class="label">Username</label>
-                  <input id="user" name="username" type="text" class="input">
+                  <input id="user" name="username" type="text" class="input" required>
                 </div>
                 <div class="group">
                   <label for="pass" class="label">Password</label>
-                  <input id="pass" name="password" type="password" class="input" data-type="password">
+                  <input id="pass" name="password" type="password" class="input" data-type="password" required>
                 </div>
                 <!-- <div class="group">
 <input id="check" type="checkbox" class="check" checked>
@@ -57,19 +57,19 @@ Signed in</label>
               <form action="signUpAttempt" method="post" class="sign-up-htm">
                 <div class="group">
                   <label for="user" class="label">Username</label>
-                  <input id="user" name="username" type="text" class="input">
+                  <input id="user" name="username" type="text" class="input" required>
                 </div>
                 <div class="group">
                   <label for="pass" class="label">Email Address</label>
-                  <input id="pass" name="email" type="email" class="input">
+                  <input id="pass" name="email" type="email" class="input" required>
                 </div>
                 <div class="group">
                   <label for="pass" class="label">Password</label>
-                  <input id="pass" name="password" type="password" class="input" data-type="password">
+                  <input id="pass" name="password" type="password" class="input" data-type="password" required>
                 </div>
                 <div class="group">
                   <label for="pass" class="label">Repeat Password</label>
-                  <input id="pass" type="password" class="input" data-type="password">
+                  <input id="pass" type="password" class="input" data-type="password" required>
                 </div>
 
                 <div class="hr"></div>
@@ -97,6 +97,10 @@ Signed in</label>
     input.on("focusout", function() {
       $(".login-html").removeClass("isFocused");
     });
+    
+    //TODO: CHECK pass and repeatPass are equal
+    //			and password min length
+    //			email validator
 
   });
 
