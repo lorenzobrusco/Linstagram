@@ -23,12 +23,12 @@ public class SignInUpController {
 	}
 
 	@RequestMapping(value = "signUpAttempt", method = RequestMethod.POST)
-	public String signUp(@RequestParam(name="email")String email, @RequestParam (name="username")String username, @RequestParam(name="password") String password) {
+	public String signUp(@RequestParam String email, @RequestParam String username, @RequestParam String password,HttpSession session) {
 		if (signInService.signUpAttempt(email, username, password) == MessageCode.SUCCESS_SIGN_UP) {
-			return "redirect:index";
+			return signIn(username,password,session);
 		}
 		// TODO: return a string that show the error (already user username/email)
-		return "redirect:";
+		return "redirect:/";
 
 	}
 

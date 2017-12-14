@@ -1,6 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 
-html, 
+@font-face {
+  font-family: 'Billabong';
+  font-style: normal;
+  font-weight: normal;
+  src: local('font/Billabong'), url('font/Billabong.woff') format('woff');
+}
+
+html,
 body {
   height: 100%;
 
@@ -11,14 +18,15 @@ body {
 
 body {
   /*VARIABLE*/
-  --primary-color: #1161ee;
-  --secondary-color: #84868e;
-  --third-color: #c8c8c8;
+  --primary-color: #89ABE3;
+  --primary-color-dark: #91b0e2;
+  --secondary-color: #696a70;
+  --third-color: #F2DDDE;
+  --third-color-dark: #edcecf;
 
   margin: 0;
   color: var(--secondary-color);
   font: 600 16px/18px 'Open Sans', sans-serif;
-  background: url(https://source.unsplash.com/random/1920x1080//?nature) no-repeat center;
 }
 
 *,
@@ -45,18 +53,38 @@ a {
 
 .login-wrap {
   margin: auto;
-  border-radius: 10px;
+  border-radius: 8px;
   width: 100%;
-  margin: 40px auto;
+  margin: 5px auto 10px auto;
   max-width: 480px;
-  min-height: 570px;
+  min-height: 585px;
   position: relative;
-  box-shadow: 0 12px 15px 5px rgba(0, 0, 0, .60), 0 17px 50px 0 rgba(0, 0, 0, .45);
+  box-shadow: 0 0 15px 5px rgba(122, 122, 122, .50);
 }
 
-@media screen and (max-width: 600px){
-  .login-wrap{
+
+@media screen and (max-width: 600px) {
+  .login-wrap {
     max-width: 300px;
+  }
+
+  #container {
+    transform: translate(0, 60px);
+  }
+
+}
+
+@media screen and (max-width: 300px) {
+   .login-wrap {
+    max-width: 300px;
+  }
+
+  #container {
+    transform: translate(0, 40px);
+  }
+
+  #logo{
+    display: none;
   }
 }
 
@@ -65,8 +93,9 @@ a {
   width: 100%;
   height: 100%;
   position: absolute;
-  padding: 50px;
-  background: rgba(40, 57, 101, .7);
+  padding:50px  40px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--third-color) 80%);
+
 }
 
 input:focus,
@@ -78,11 +107,13 @@ button:focus {
 
 
 .isFocused {
-  background: rgba(40, 57, 101, .9);
+  /*  background: rgba(105, 152, 229, .9);*/
+  background: linear-gradient(135deg, var(--primary-color-dark) 0%, var(--third-color-dark) 80%);
 }
 
 .login-html:hover {
-  background: rgba(40, 57, 101, .9);
+  /*  background: rgba(105, 152, 229, .9);*/
+  background: linear-gradient(135deg, var(--primary-color-dark) 0%, var(--third-color-dark) 80%);
 }
 
 .login-html .sign-in-htm,
@@ -110,13 +141,13 @@ button:focus {
 .login-form .group .label,
 .login-form .group .button {
   text-transform: uppercase;
+  text-align: center;
 }
 
 .login-html .tab {
   font-size: 22px;
-  margin-right: 15px;
   padding-bottom: 5px;
-  margin: 0 15px 10px 0;
+  margin: 0 15px 15px 0;
   display: inline-block;
   border-bottom: 2px solid transparent;
 }
@@ -124,7 +155,7 @@ button:focus {
 .login-html .sign-in:checked + .tab,
 .login-html .sign-up:checked + .tab {
   color: #fff;
-  border-color: var(--primary-color);
+  border-color: var(--third-color);
 }
 
 .login-form {
@@ -165,7 +196,7 @@ button:focus {
 
 .login-form .group .label {
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .login-form .group .button {
@@ -256,11 +287,68 @@ button:focus {
 }
 
 .facebook {
-  background-color: transparent !important;
+  /*  background-color: transparent !important;*/
   border: 2px solid var(--primary-color) !important;
 }
 
 .sign-in-htm {
-  padding-top: 25px;
+  padding-top: 20px;
 }
 
+.hide {
+  display: none;
+}
+
+/* Error Styling */
+
+.error-message {
+  font-size: 0.7em;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  color: #a94442;
+  padding-top: 2px;
+}
+
+.input-with-error {
+  border: 1px solid #a94442 !important;
+}
+
+
+#container,
+body {
+  background: linear-gradient(-45deg, var(--primary-color) 0%, var(--third-color) 100%);
+}
+
+#logo-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  overflow: auto;
+
+}
+
+#logo {
+  background-image: url(https://goo.gl/NLUdLH);
+  background-repeat: no-repeat;
+  background-position: -261px -118px;
+  height: 60px;
+  width: 42px;
+  padding: 5px;
+  transform: scale(1.1);
+  align-self: center;
+}
+
+#logo-text {
+  font-family: 'Billabong', sans-serif;
+  padding: 28px 0 5px 15px;
+  font-size: 4em;
+  background: linear-gradient(to left bottom, #4c68d7, #8a3ab9, #cd486b, #fb8750, #FF9800);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  align-self: center;
+}
+
+.row {
+  margin: 0px !important
+}
