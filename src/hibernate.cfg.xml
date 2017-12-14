@@ -18,6 +18,7 @@
 
 		<mapping class="it.unical.linstagram.model.User" />
 		<mapping class="it.unical.linstagram.model.Post" />
+		<mapping class="it.unical.linstagram.model.Comment" />
 
 	</session-factory>
 </hibernate-configuration>

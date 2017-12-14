@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -49,10 +50,17 @@ public class Post {
                joinColumns={@JoinColumn(name="post_id")},
                inverseJoinColumns={@JoinColumn(name="user_id")})
 	private Set<User> likes = new HashSet<User>();
-	
-//	private List<User> tags;
-	
-//	private List<Comment> comments;
+
+	@ManyToMany
+	@Cascade(value=CascadeType.ALL)
+	@JoinTable(name="tags",
+			joinColumns= {@JoinColumn(name="post_id")},
+			inverseJoinColumns= {@JoinColumn(name="user_id")})
+	private Set<User> tags = new HashSet<User>();
+
+	@OneToMany(mappedBy="post")
+	@Cascade(value=CascadeType.ALL)
+	private Set<Comment> comments = new HashSet<Comment>();
 //	private List<Hashtag> hashtags;
 
 	public Post() {}
@@ -64,18 +72,6 @@ public class Post {
 		this.content = content;
 	}
 	
-//	public Post(User user, List<User> likes, List<Comment> comments, List<Hashtag> hashtags, List<User> tags,
-//			Media media, Calendar postDate, String content) {
-//		this.user = user;
-//		this.likes = likes;
-//		this.comments = comments;
-//		this.hashtags = hashtags;
-//		this.tags = tags;
-//		this.media = media;
-//		this.postDate = postDate;
-//		this.content = content;
-//	}
-
 	public int getId() {
 		return id;
 	}
@@ -100,29 +96,29 @@ public class Post {
 		this.likes = likes;
 	}
 
-//	public List<Comment> getComments() {
-//		return comments;
-//	}
-//
-//	public void setComments(List<Comment> comments) {
-//		this.comments = comments;
-//	}
+	public Set<Comment> getComments() {
+		return comments;
+	}
 
-//	public List<Hashtag> getHashtags() {
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+
+//	public Set<Hashtag> getHashtags() {
 //		return hashtags;
 //	}
 //
-//	public void setHashtags(List<Hashtag> hashtags) {
+//	public void setHashtags(Set<Hashtag> hashtags) {
 //		this.hashtags = hashtags;
 //	}
 
-//	public List<User> getTags() {
-//		return tags;
-//	}
-//
-//	public void setTags(List<User> tags) {
-//		this.tags = tags;
-//	}
+	public Set<User> getTags() {
+		return tags;
+	}
+
+	public void setTags(Set<User> tags) {
+		this.tags = tags;
+	}
 
 //	public Media getMedia() {
 //		return media;
@@ -147,5 +143,5 @@ public class Post {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
+	
 }
