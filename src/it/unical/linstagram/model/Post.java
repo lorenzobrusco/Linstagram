@@ -1,16 +1,33 @@
 package it.unical.linstagram.model;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+@Entity
+@Table(name="post")
 public class Post {
 
+	@Id
+	@Column
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
 	@ManyToOne
@@ -18,27 +35,46 @@ public class Post {
 	@Cascade(value=CascadeType.SAVE_UPDATE)
 	private User user;
 	
-	private List<User> likes;
-	private List<Comment> comments;
-	private List<Hashtag> hashtags;
-	private List<User> tags;
-	private Media content;
-	private Date postDate;
-	private String description;
+	@Column(nullable=false)
+	private Calendar postDate;
+	
+	@Column
+	private String content;
+
+//	private Media media;
+	
+	@ManyToMany
+	@Cascade(value=CascadeType.ALL)
+    @JoinTable(name="likes",
+               joinColumns={@JoinColumn(name="post_id")},
+               inverseJoinColumns={@JoinColumn(name="user_id")})
+	private Set<User> likes = new HashSet<User>();
+	
+//	private List<User> tags;
+	
+//	private List<Comment> comments;
+//	private List<Hashtag> hashtags;
 
 	public Post() {}
-
-	public Post(User user, List<User> likes, List<Comment> comments, List<Hashtag> hashtags, List<User> tags,
-			Media content, Date postDate, String description) {
+	
+	public Post(User user,Media media, Calendar postDate, String content) {
 		this.user = user;
-		this.likes = likes;
-		this.comments = comments;
-		this.hashtags = hashtags;
-		this.tags = tags;
-		this.content = content;
+//		this.media = media;
 		this.postDate = postDate;
-		this.description = description;
+		this.content = content;
 	}
+	
+//	public Post(User user, List<User> likes, List<Comment> comments, List<Hashtag> hashtags, List<User> tags,
+//			Media media, Calendar postDate, String content) {
+//		this.user = user;
+//		this.likes = likes;
+//		this.comments = comments;
+//		this.hashtags = hashtags;
+//		this.tags = tags;
+//		this.media = media;
+//		this.postDate = postDate;
+//		this.content = content;
+//	}
 
 	public int getId() {
 		return id;
@@ -56,60 +92,60 @@ public class Post {
 		this.user = user;
 	}
 
-	public List<User> getLikes() {
+	public Set<User> getLikes() {
 		return likes;
 	}
 
-	public void setLikes(List<User> likes) {
+	public void setLikes(Set<User> likes) {
 		this.likes = likes;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
-	}
+//	public List<Comment> getComments() {
+//		return comments;
+//	}
+//
+//	public void setComments(List<Comment> comments) {
+//		this.comments = comments;
+//	}
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
+//	public List<Hashtag> getHashtags() {
+//		return hashtags;
+//	}
+//
+//	public void setHashtags(List<Hashtag> hashtags) {
+//		this.hashtags = hashtags;
+//	}
 
-	public List<Hashtag> getHashtags() {
-		return hashtags;
-	}
+//	public List<User> getTags() {
+//		return tags;
+//	}
+//
+//	public void setTags(List<User> tags) {
+//		this.tags = tags;
+//	}
 
-	public void setHashtags(List<Hashtag> hashtags) {
-		this.hashtags = hashtags;
-	}
+//	public Media getMedia() {
+//		return media;
+//	}
+//
+//	public void setMedia(Media media) {
+//		this.media = media;
+//	}
 
-	public List<User> getTags() {
-		return tags;
-	}
-
-	public void setTags(List<User> tags) {
-		this.tags = tags;
-	}
-
-	public Media getContent() {
-		return content;
-	}
-
-	public void setContent(Media content) {
-		this.content = content;
-	}
-
-	public Date getPostDate() {
+	public Calendar getPostDate() {
 		return postDate;
 	}
 
-	public void setPostDate(Date postDate) {
+	public void setPostDate(Calendar postDate) {
 		this.postDate = postDate;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getContent() {
+		return content;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 }

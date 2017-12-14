@@ -21,6 +21,7 @@
 		<property name="hbm2ddl.auto">update</property>
 		
 		<mapping class="it.unical.linstagram.model.User" />
+		<mapping class="it.unical.linstagram.model.Post" />
 
 	</session-factory>
 </hibernate-configuration>
