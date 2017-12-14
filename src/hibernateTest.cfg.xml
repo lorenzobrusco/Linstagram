@@ -19,9 +19,10 @@
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 		<!--create the database schema on startup if required -->
 		<property name="hbm2ddl.auto">update</property>
-		
+
 		<mapping class="it.unical.linstagram.model.User" />
 		<mapping class="it.unical.linstagram.model.Post" />
+		<mapping class="it.unical.linstagram.model.Comment" />
 
 	</session-factory>
 </hibernate-configuration>

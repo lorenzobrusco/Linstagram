@@ -6,12 +6,14 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -28,13 +30,13 @@ public class User{
 
 	@Column(nullable = false, unique = true)
 	private String username;
-	
+
 	@Column(unique = true, nullable = false)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private String password;
-	
+
 	@Column
 	private String name;
 
@@ -43,7 +45,7 @@ public class User{
 
 	@Column
 	private Calendar birthdate;
-	
+
 	@Column
 	private Gender gender;
 
@@ -53,30 +55,34 @@ public class User{
 	@Column
 	private boolean privateProfile = false; //default the profile is public
 
-//	@Column
-//	private Media photoProfile;
-	
-	
+	//	@Column
+	//	private Media photoProfile;
+
+
 	@ManyToMany
 	@Cascade(value=CascadeType.ALL)
-    @JoinTable(name="following",
-               joinColumns={@JoinColumn(name="followed")},
-               inverseJoinColumns={@JoinColumn(name="following")})
-    private Set<User> followings = new HashSet<User>();
-    
-    
-   @ManyToMany(mappedBy="followings")
-    private Set<User> followers = new HashSet<User>();
-	
-//    @OneToMany(mappedBy = "user")
-//	private List<Post> posts;
-    
-//    @ManyToMany
-//	private List<Post> tagged;
+	@JoinTable(name="following",
+	joinColumns={@JoinColumn(name="followed")},
+	inverseJoinColumns={@JoinColumn(name="following")})
+	private Set<User> followings = new HashSet<User>();
 
-//    @ManyToMany
-//	private List<Post> bookmarks;
-	
+
+	@ManyToMany(mappedBy="followings")
+	private Set<User> followers = new HashSet<User>();
+
+	@OneToMany(mappedBy = "user")
+	private Set<Post> posts = new HashSet<Post>();
+
+	@ManyToMany(mappedBy = "tags")
+	private Set<Post> tagged = new HashSet<Post>();
+
+	@ManyToMany
+	@Cascade(value=CascadeType.ALL)
+	@JoinTable(name="bookmark",
+		joinColumns= {@JoinColumn(name="user_id")},
+		inverseJoinColumns= {@JoinColumn(name="post_id")})
+	private Set<Post> bookmarks = new HashSet<Post>();
+
 	public User() {}
 
 	public User(String username, String email, String password) {
@@ -84,7 +90,7 @@ public class User{
 		this.email = email;
 		this.password = password;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -92,7 +98,7 @@ public class User{
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 
 	public String getUsername() {
 		return username;
@@ -182,8 +188,26 @@ public class User{
 		this.followers = followers;
 	}
 
-	
-	
+	public Set<Post> getPosts() {
+		return posts;
+	}
 
+	public void setPosts(Set<Post> posts) {
+		this.posts = posts;
+	}
 
+	public Set<Post> getTagged() {
+		return tagged;
+	}
+
+	public void setTagged(Set<Post> tagged) {
+		this.tagged = tagged;
+	}
+	
+	public Set<Post> getBookmarks() {
+		return bookmarks;
+	}
+	public void setBookmarks(Set<Post> bookmarks) {
+		this.bookmarks = bookmarks;
+	}
 }
