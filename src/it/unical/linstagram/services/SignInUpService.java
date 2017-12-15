@@ -31,7 +31,7 @@ public class SignInUpService {
 		} else {
 			String savedPassword = UserDAO.getInstance().getPasswordByUsername(access);
 			String passEncrypted = EncryptPassword.checkPassword(password, savedPassword);
-			
+//			System.out.println("saved:"+savedPassword);
 			if (passEncrypted != null)
 				user = UserDAO.getInstance().getUserByUsernameAndPass(access, passEncrypted);
 			else

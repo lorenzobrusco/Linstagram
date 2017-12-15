@@ -20,8 +20,8 @@
 
 <body>
   <div class="row" id="container">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-10">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
       <div id="logo-container">
         <span id="logo"></span>
         <h1 id="logo-text">linstagram</h1>

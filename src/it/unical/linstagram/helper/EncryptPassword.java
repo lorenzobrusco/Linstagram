@@ -1,8 +1,6 @@
 package it.unical.linstagram.helper;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 //	http://www.rgagnon.com/javadetails/java-0400.html
 
@@ -23,10 +21,10 @@ public class EncryptPassword {
 	}
 	
 	public static String checkPassword(String newPassword, String savedPassword) {
-		
 		String hash;
 		try {
 			hash = byteArrayToHexString(EncryptPassword.computeHash(newPassword));
+//			System.out.println(hash);
 
 			if (hash.equals(savedPassword)) 
 				return hash;
