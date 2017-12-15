@@ -34,7 +34,9 @@ public class SignInUpController {
 
 	@RequestMapping(value="signInAttempt",method=RequestMethod.POST)
 	public String signIn(@RequestParam String username, @RequestParam String password, HttpSession session) {
-		if (signInService.signInAttempt(username, password) == MessageCode.SUCCESS_SIGN_IN) {
+		MessageCode signInAttempt = signInService.signInAttempt(username, password);
+//		System.out.println(signInAttempt);
+		if (signInAttempt == MessageCode.SUCCESS_SIGN_IN) {
 			session.setAttribute("username", username);
 			return "redirect:index";
 		}
