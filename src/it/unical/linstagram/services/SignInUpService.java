@@ -3,6 +3,7 @@ package it.unical.linstagram.services;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
+import it.unical.linstagram.helper.EncryptPassword;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -20,9 +21,21 @@ public class SignInUpService {
 		EmailValidator ev = EmailValidator.getInstance();
 		User user = null;
 		if (ev.isValid(access)) {
-			user = UserDAO.getInstance().getUserEmailAndPass(access, password);
+			String savedPassword = UserDAO.getInstance().getPasswordByEmail(access);
+			String passEncrypted = EncryptPassword.checkPassword(password, savedPassword);
+			
+			if (passEncrypted != null)
+				user = UserDAO.getInstance().getUserEmailAndPass(access, passEncrypted);
+			else
+				user = null;
 		} else {
-			user = UserDAO.getInstance().getUserByUsernameAndPass(access, password);
+			String savedPassword = UserDAO.getInstance().getPasswordByUsername(access);
+			String passEncrypted = EncryptPassword.checkPassword(password, savedPassword);
+			
+			if (passEncrypted != null)
+				user = UserDAO.getInstance().getUserByUsernameAndPass(access, passEncrypted);
+			else
+				user = null;
 		}
 		if (user == null)
 			return MessageCode.ERROR_SIGN_IN;
@@ -48,7 +61,9 @@ public class SignInUpService {
 		if (user2 != null)
 			return MessageCode.ERROR_SIGN_UP;
 
-		User newUser = new User(username, email, password);
+		String passEncrypted = EncryptPassword.encrypt(password);
+		
+		User newUser = new User(username, email, passEncrypted);
 		ModelDAO.getInstance().save(newUser);
 
 		return MessageCode.SUCCESS_SIGN_UP;

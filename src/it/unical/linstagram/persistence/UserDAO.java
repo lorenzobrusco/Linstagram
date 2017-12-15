@@ -39,7 +39,6 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public User getUserByUsernameAndPass(String username, String password) {
-		//TODO: Eliana -> crittografia
 		Session session = HibernateUtil.getHibernateSession();
 		User user = (User) session.createQuery("FROM  User u where u.username=:username and u.password=:password")
 				.setParameter("username", username).setParameter("password", password).uniqueResult();
@@ -48,12 +47,31 @@ public class UserDAO implements IUserDAO {
 	}
 
 	public User getUserEmailAndPass(String email, String password) {
-		//TODO: Eliana -> crittografia
 		Session session = HibernateUtil.getHibernateSession();
 		User user = (User) session.createQuery("FROM  User u where u.email=:email and u.password=:password")
 				.setParameter("email", email).setParameter("password", password).uniqueResult();
 		session.close();
 		return user;
 	}
+	
+	public String getPasswordByUsername(String username) {
+		Session session = HibernateUtil.getHibernateSession();
+		String pass = session.createQuery("SELECT u.password FROM  User u where u.username=:username", String.class)
+				.setParameter("username", username).uniqueResult();
+		
+		session.close();
+		return pass;
+	
+	}
 
+	public String getPasswordByEmail(String email) {
+		Session session = HibernateUtil.getHibernateSession();
+		String pass = session.createQuery("SELECT u.password FROM  User u where u.email=:email", String.class)
+				.setParameter("email", email).uniqueResult();
+		
+		session.close();
+		return pass;
+	
+	}
+	
 }
