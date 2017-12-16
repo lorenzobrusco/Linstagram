@@ -1,5 +1,7 @@
 package it.unical.linstagram.model.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +16,7 @@ import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
+import it.unical.linstagram.persistence.UserDAO;
 
 public class TestPost {
 
@@ -41,7 +44,7 @@ public class TestPost {
 			transaction.rollback();
 		}
 
-//		Insieme non aggiornato, è giusto???????????????????????????????????
+//		Insieme non aggiornato, ï¿½ giusto???????????????????????????????????
 //		Set<Post> posts = eliana.getPosts();
 
 		List<Post> posts =  session.createQuery("SELECT user.posts FROM User user WHERE user.id =:idUser")
@@ -170,7 +173,7 @@ public class TestPost {
 //		session.close();
 	}
 	
-	@Test
+//	@Test
 	public void testUserBookmarks() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -216,6 +219,9 @@ public class TestPost {
 //		Assert.assertEquals(1,manuel.getTagged().size());
 //		session.close();
 	}
+	
+	
+
 	
 	
 }
