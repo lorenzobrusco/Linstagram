@@ -1,8 +1,17 @@
 package it.unical.linstagram.helper;
 
+import javax.servlet.http.HttpSession;
+
 import it.unical.linstagram.model.User;
 
 public class UserManager {
+	
+	
+	public static boolean checkLogged(HttpSession session) {
+		if(session.getAttribute("username") != null)
+			return true;
+		return false;
+	}
 
 	/**
 	 * @param id: searched user by id  

@@ -47,7 +47,7 @@ public class SignInUpController {
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:";
+		return "redirect:/";
 	}
 
 }

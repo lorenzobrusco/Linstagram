@@ -219,7 +219,7 @@ footer{
 
 .bookmark span{
 
-	background-image: url(../images/icons.png);
+	background-image: url(icons.png);
 	background-repeat: no-repeat;
 	background-position: -127px -287px;
 	height: 64px;
@@ -230,7 +230,7 @@ footer{
 
 .tags span{
 
-	background-image: url(../images/icons.png);
+	background-image: url(icons.png);
 	background-repeat: no-repeat;
 	background-position: 1px -287px;
 	height: 64px;
@@ -245,4 +245,103 @@ footer{
 	min-height: 1px;
 	padding-right: 10px !important; 
 	padding-left: 10px !important; 
+}
+
+.content-modify-profile {
+	margin-top: 64px;
+	background-color: #fff;
+	border: 0.5px solid #ddd;
+	border-radius: 3px;
+	width: 100%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+.content-modify-profile .sidenav{
+	margin-left: 0 ! important;
+	padding-left: 0 ! important;
+}
+
+
+.content-modify-profile .custom-nav .active-nav{
+	border-left: 2px solid black; 
+}
+
+.content-modify-profile .custom-nav .active-nav:hover{
+	border-left: 2px solid black; 
+}
+
+.content-modify-profile .custom-nav li:hover{
+	border-left: 2px solid #ccc; 
+}
+
+.content-modify-profile .modify-profile{
+	padding: 16px;
+	padding-bottom: 32px; 
+	border-left: 0.5px solid #ddd; 
+}
+
+.content-modify-profile .modify-profile .user-img {
+  bottom: 3	px;
+  position: relative;
+  background: rgba(0, 0, 0, .25);
+  padding: 1px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  -ms-flex-item-align: center;
+  box-shadow: 0.5px 0.5px 7px 0 rgba(0, 0, 0, 0.1);
+  align-self: center;
+}
+
+.content-modify-profile .modify-profile .photo{
+	margin: 32px 64px 50px 64px;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+
+.content-modify-profile .modify-profile .photo .input-inline{
+	float: left;
+	margin: 0 16px;
+}
+
+.content-modify-profile .modify-profile .photo .form-inline-profile{
+	margin-bottom: 16px;
+	width: 50%;
+}
+
+
+.content-modify-profile .modify-profile .info{
+	margin: 0 64px;
+}
+
+.content-modify-profile .modify-profile .info .form-inline-profile{
+	margin-bottom: 16px;
+}
+
+.content-modify-profile .modify-profile .info .input-inline{
+	float: right;
+	width: 70%;
+}
+
+.content-modify-profile .modify-profile .info label{
+	line-height: 32px;
+}
+
+.content-modify-profile .modify-profile .input-inline #bio{
+    height: 60px;
+    padding: 6px 10px;
+    resize: vertical;
+}
+
+.content-modify-profile .modify-profile .input-inline #selection{
+	width: 40%;
+}
+
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
 }
