@@ -19,6 +19,9 @@
 		<mapping class="it.unical.linstagram.model.User" />
 		<mapping class="it.unical.linstagram.model.Post" />
 		<mapping class="it.unical.linstagram.model.Comment" />
+		<mapping class="it.unical.linstagram.model.Media" />
+		<mapping class="it.unical.linstagram.model.Hashtag" />
+		
 
 	</session-factory>
 </hibernate-configuration>

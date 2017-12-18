@@ -48,7 +48,6 @@ public class Comment {
 		this.date = date;
 	}
 
-
 	public int getId() {
 		return id;
 	}

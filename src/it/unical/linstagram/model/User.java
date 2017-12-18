@@ -55,8 +55,8 @@ public class User{
 	@Column
 	private boolean privateProfile = false; //default the profile is public
 
-	//	@Column
-	//	private Media photoProfile;
+	@Column
+	private String photoProfile;
 
 
 	@ManyToMany
@@ -80,8 +80,8 @@ public class User{
 	@ManyToMany
 	@Cascade(value=CascadeType.ALL)
 	@JoinTable(name="bookmark",
-		joinColumns= {@JoinColumn(name="user_id")},
-		inverseJoinColumns= {@JoinColumn(name="post_id")})
+	joinColumns= {@JoinColumn(name="user_id")},
+	inverseJoinColumns= {@JoinColumn(name="post_id")})
 	private Set<Post> bookmarks = new HashSet<Post>();
 
 	public User() {}
@@ -204,11 +204,17 @@ public class User{
 	public void setTagged(Set<Post> tagged) {
 		this.tagged = tagged;
 	}
-	
+
 	public Set<Post> getBookmarks() {
 		return bookmarks;
 	}
 	public void setBookmarks(Set<Post> bookmarks) {
 		this.bookmarks = bookmarks;
+	}
+	public String getPhotoProfile() {
+		return photoProfile;
+	}
+	public void setPhotoProfile(String photoProfile) {
+		this.photoProfile = photoProfile;
 	}
 }

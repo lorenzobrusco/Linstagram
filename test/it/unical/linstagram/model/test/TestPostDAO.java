@@ -2,6 +2,7 @@ package it.unical.linstagram.model.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -10,6 +11,9 @@ import org.hibernate.Transaction;
 import org.junit.Assert;
 import org.junit.Test;
 
+import it.unical.linstagram.model.Comment;
+import it.unical.linstagram.model.Hashtag;
+import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
@@ -112,7 +116,7 @@ public class TestPostDAO {
 		
 	}
 		
-	@Test
+//	@Test
 	public void testTag() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -133,8 +137,58 @@ public class TestPostDAO {
 		for(User user : tags) {
 			System.out.println(user.getUsername());
 		}
-		Assert.assertEquals(2,tags.size());
+		Assert.assertEquals(2,tags.size());	
+	}
+	
+//	@Test
+	public void testHashtag() {
+		HibernateUtil.CreateSessionFactory(true);
 		
+		User eliana = new User("Eliana","email","pass");
+		
+		List<Media> media = new ArrayList<>();
+		Post post = new Post(eliana,media,Calendar.getInstance(),"Sono scema");
+		post.getHashtags().add(new Hashtag("bellofigo"));
+		post.getHashtags().add(new Hashtag("cicciociccio"));
+		ModelDAO.getInstance().save(post);
+		
+		PostDAO dao = PostDAO.getInstance();
+		
+		List<Hashtag> hashtags = dao.getHashtagByPostId(post.getId());
+		
+		for(Hashtag h : hashtags) {
+			System.out.println(h.getHashtag());
+		}
+		
+		Assert.assertEquals(2,hashtags.size());		
+	}
+	
+	
+	@Test
+	public void testComment() {
+		HibernateUtil.CreateSessionFactory(true);
+		
+		User eliana = new User("Eliana","email","pass");
+		
+		List<Media> media = new ArrayList<>();
+		Post post = new Post(eliana,media,Calendar.getInstance(),"Sono scema");
+		
+		Comment c1 = new Comment("bla bla", eliana, post, Calendar.getInstance());
+		Comment c2 = new Comment("ciao", eliana, post, Calendar.getInstance());
+		post.getComments().add(c1);
+		post.getComments().add(c2);
+		
+		ModelDAO.getInstance().save(post);
+		
+		PostDAO dao = PostDAO.getInstance();
+		
+		List<Comment> comments = dao.getCommentByPostId(post.getId());
+		
+		for(Comment c : comments) {
+			System.out.println(c.getContent());
+		}
+		
+		Assert.assertEquals(2,comments.size());		
 	}
 	
 	
