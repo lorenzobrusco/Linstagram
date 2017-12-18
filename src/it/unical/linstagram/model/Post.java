@@ -7,7 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,8 +43,12 @@ public class Post {
 	
 	@Column
 	private String content;
-
-//	private Media media;
+	
+//	@OneToMany(mappedBy="post")
+//	@Cascade(value=CascadeType.ALL)
+	@ElementCollection
+	@CollectionTable(name="media", joinColumns=@JoinColumn(name="post"))
+	private List<Media> media = new ArrayList<Media>();
 	
 	@ManyToMany
 	@Cascade(value=CascadeType.ALL)
@@ -58,18 +64,25 @@ public class Post {
 			inverseJoinColumns= {@JoinColumn(name="user_id")})
 	private Set<User> tags = new HashSet<User>();
 
+
 	@OneToMany(mappedBy="post")
 	@Cascade(value=CascadeType.ALL)
 	private Set<Comment> comments = new HashSet<Comment>();
-//	private List<Hashtag> hashtags;
+	
+	@ManyToMany
+	@JoinTable(name="hashtag_post",
+		joinColumns= {@JoinColumn(name="id_post")},
+		inverseJoinColumns= {@JoinColumn(name="id_hashtag")})
+	@Cascade(value=CascadeType.ALL)
+	private List<Hashtag> hashtags = new ArrayList<Hashtag>();
 
 	public Post() {}
 	
-	public Post(User user,Media media, Calendar postDate, String content) {
+	public Post(User user,List<Media> media, Calendar postDate, String content) {
 		this.user = user;
-//		this.media = media;
 		this.postDate = postDate;
 		this.content = content;
+		this.media = media;
 	}
 	
 	public int getId() {
@@ -104,13 +117,13 @@ public class Post {
 		this.comments = comments;
 	}
 
-//	public Set<Hashtag> getHashtags() {
-//		return hashtags;
-//	}
-//
-//	public void setHashtags(Set<Hashtag> hashtags) {
-//		this.hashtags = hashtags;
-//	}
+	public List<Hashtag> getHashtags() {
+		return hashtags;
+	}
+
+	public void setHashtags(List<Hashtag> hashtags) {
+		this.hashtags = hashtags;
+	}
 
 	public Set<User> getTags() {
 		return tags;
@@ -120,13 +133,13 @@ public class Post {
 		this.tags = tags;
 	}
 
-//	public Media getMedia() {
-//		return media;
-//	}
-//
-//	public void setMedia(Media media) {
-//		this.media = media;
-//	}
+	public List<Media> getMedia() {
+		return media;
+	}
+
+	public void setMedia(List<Media> media) {
+		this.media = media;
+	}
 
 	public Calendar getPostDate() {
 		return postDate;
