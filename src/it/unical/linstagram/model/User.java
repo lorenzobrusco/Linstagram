@@ -71,6 +71,7 @@ public class User{
 	private Set<User> followers = new HashSet<User>();
 
 	@OneToMany(mappedBy = "user")
+	@Cascade(value=CascadeType.ALL)
 	private Set<Post> posts = new HashSet<Post>();
 
 	@ManyToMany(mappedBy = "tags")

@@ -1,7 +1,10 @@
 package it.unical.linstagram.persistence;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
+import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 
 public class UserDAO implements IUserDAO {
@@ -46,6 +49,7 @@ public class UserDAO implements IUserDAO {
 		return user;
 	}
 
+	@Override
 	public User getUserEmailAndPass(String email, String password) {
 		Session session = HibernateUtil.getHibernateSession();
 		User user = (User) session.createQuery("FROM  User u where u.email=:email and u.password=:password")
@@ -54,6 +58,7 @@ public class UserDAO implements IUserDAO {
 		return user;
 	}
 	
+	@Override
 	public String getPasswordByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
 		String pass = session.createQuery("SELECT u.password FROM  User u where u.username=:username", String.class)
@@ -64,6 +69,7 @@ public class UserDAO implements IUserDAO {
 	
 	}
 
+	@Override
 	public String getPasswordByEmail(String email) {
 		Session session = HibernateUtil.getHibernateSession();
 		String pass = session.createQuery("SELECT u.password FROM  User u where u.email=:email", String.class)
@@ -71,7 +77,35 @@ public class UserDAO implements IUserDAO {
 		
 		session.close();
 		return pass;
-	
 	}
 	
+	@Override
+	public List<Post> getPostByUsername(String username) {
+		Session session = HibernateUtil.getHibernateSession();
+		List<Post> posts = session.createQuery("SELECT user.posts FROM User user WHERE user.username=:username")
+				.setParameter("username", username).list();
+		
+		session.close();
+		return posts;
+	}
+	
+	@Override
+	public List<Post> getBookmarksByUsername(String username) {
+		Session session = HibernateUtil.getHibernateSession();
+		List<Post> posts = session.createQuery("SELECT user.bookmarks FROM User user WHERE user.username=:username")
+				.setParameter("username", username).list();
+		
+		session.close();
+		return posts;
+	}
+	
+	@Override
+	public List<Post> getTaggedPostByUsername(String username) {
+		Session session = HibernateUtil.getHibernateSession();
+		List<Post> posts = session.createQuery("SELECT user.tagged FROM User user WHERE user.username=:username")
+				.setParameter("username", username).list();
+		
+		session.close();
+		return posts;
+	}
 }
