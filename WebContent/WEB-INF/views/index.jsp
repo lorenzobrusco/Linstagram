@@ -32,6 +32,15 @@
 	href="${pageContext.request.contextPath}/resources/css/animate.min.css">
 
 
+<script
+	src="${pageContext.request.contextPath}/resources/js/animatedModal.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/dropzone.js"></script>
+
+<script>
+	Dropzone.autoDiscover = false;
+</script>
+
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
@@ -285,19 +294,20 @@
 					<div class="close-create-post-modal"></div>
 				</div>
 				<div class="modal-body">
-					<form action="/file-upload" class="dropzone" id="post-dropzone">
+					<form class="dropzone" id="post-dropzone">
+						<!-- this is were the previews should be shown. -->
 						<div class="fallback">
 							<input name="file" type="file" multiple />
 						</div>
-					</form>
-					<br> <label for="post-description-input">Description:</label>
-					<textarea class="form-control" rows="5" id="post-description-input"> 
+						<br> <label for="post-description-input">Enter a
+							description:</label>
+						<textarea class="form-control" rows="5"
+							id="post-description-input"> 
             </textarea>
-
-					<button class="btn btn-success btn-create">
-						<i class="fa fa-paper-plane" aria-hidden="true"></i> Create Post
-					</button>
-
+						<button type="submit" class="btn btn-success btn-create">
+							<i class="fa fa-paper-plane" aria-hidden="true"></i> Create Post
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -306,52 +316,11 @@
 
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
-	<script type="text/javascript">
-    $(document).ready(function() {
-      //show comment event
-      $('.show-all-comments').click(function(e) {
-        var target = $(e.target).find('span');
-        if (target.hasClass('show-comments')) {
-          $(e.target).html('<span class="hidden-comments"></span> Nascondi altri commenti');
-        } else {
-          $(e.target).html('<span class="show-comments"></span> Carica altri commenti');
-        }
-      });
-
-      //Active tooltip
-      $('[data-toggle="tooltip"]').tooltip();
-      
-      var myDropzone = Dropzone.forElement("#post-dropzone");
-      
-      $("#open-create-post-modal").animatedModal({
-          modalTarget: 'create-post-modal',
-          animatedIn: 'lightSpeedIn',
-          animatedOut: 'bounceOutDown',
-          color: '#fafafa80',
-          // Callbacks
-          beforeOpen: function() {},
-          afterOpen: function() {},
-          beforeClose: function() {},
-          afterClose: function() {
-            $("#post-description-input").val("");
-            //clean dropzone upload
-            myDropzone.removeAllFiles(true);
-          }
-        });
-
-
-    });
-
-  </script>
-
+	<script  src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/create_stories.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/animatedModal.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/dropzone.js"></script>
 
 </body>
 
