@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import it.unical.linstagram.helper.FileModel;
 import it.unical.linstagram.model.Media;
 
 @Controller
@@ -98,6 +100,9 @@ public class UploadController {
 	 * @return
 	 */
 	private String getDestinationLocation() {
-		return context.getRealPath("") + File.separator + "WEB-INF" + File.separator + "images" + File.separator;
+		String path = context.getRealPath("") + File.separator + "WEB-INF" + File.separator + "images" + File.separator;
+		FileModel.createFolder(path);
+		
+		return path;
 	}
 }

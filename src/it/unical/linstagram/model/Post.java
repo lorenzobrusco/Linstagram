@@ -10,6 +10,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ public class Post {
 	@CollectionTable(name="media", joinColumns=@JoinColumn(name="post"))
 	private List<Media> media = new ArrayList<Media>();
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@Cascade(value=CascadeType.ALL)
     @JoinTable(name="likes",
                joinColumns={@JoinColumn(name="post_id")},
@@ -64,7 +65,7 @@ public class Post {
 	private Set<User> tags = new HashSet<User>();
 
 
-	@OneToMany(mappedBy="post")
+	@OneToMany(mappedBy="post", fetch=FetchType.EAGER)
 	@Cascade(value=CascadeType.ALL)
 	private Set<Comment> comments = new HashSet<Comment>();
 	

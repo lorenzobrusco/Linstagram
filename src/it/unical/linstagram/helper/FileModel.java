@@ -20,7 +20,7 @@ public class FileModel {
 	 * 
 	 * @param path
 	 */
-	public void createFolder(String path) {
+	public static void createFolder(String path) {
 
 		File theDir = new File(path);
 
