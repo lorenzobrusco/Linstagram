@@ -11,20 +11,6 @@ import it.unical.linstagram.model.User;
 @SuppressWarnings("unchecked")
 public class PostDAO implements IPostDAO {
 
-	// #### SINGLETON ####
-	private static PostDAO instance;
-
-	public static PostDAO getInstance() {
-		if (instance == null)
-			instance = new PostDAO();
-		return instance;
-	}
-
-	private PostDAO() {
-	}
-	// ---- SINGLETON ----
-	
-	
 	@Override
 	public List<User> getLikesByPostId(int idPost) {
 		Session session = HibernateUtil.getHibernateSession();

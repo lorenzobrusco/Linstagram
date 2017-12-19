@@ -1,6 +1,7 @@
 package it.unical.linstagram.services;
 
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.linstagram.helper.EncryptPassword;
@@ -10,6 +11,9 @@ import it.unical.linstagram.persistence.UserDAO;
 
 @Service
 public class SignInUpService {
+
+	@Autowired
+	private UserDAO userDao;
 	/**
 	 * Try signin.
 	 * 
@@ -21,19 +25,19 @@ public class SignInUpService {
 		EmailValidator ev = EmailValidator.getInstance();
 		User user = null;
 		if (ev.isValid(access)) {
-			String savedPassword = UserDAO.getInstance().getPasswordByEmail(access);
+			String savedPassword = userDao.getPasswordByEmail(access);
 			String passEncrypted = EncryptPassword.checkPassword(password, savedPassword);
 			
 			if (passEncrypted != null)
-				user = UserDAO.getInstance().getUserEmailAndPass(access, passEncrypted);
+				user = userDao.getUserEmailAndPass(access, passEncrypted);
 			else
 				user = null;
 		} else {
-			String savedPassword = UserDAO.getInstance().getPasswordByUsername(access);
+			String savedPassword = userDao.getPasswordByUsername(access);
 			String passEncrypted = EncryptPassword.checkPassword(password, savedPassword);
 //			System.out.println("saved:"+savedPassword);
 			if (passEncrypted != null)
-				user = UserDAO.getInstance().getUserByUsernameAndPass(access, passEncrypted);
+				user = userDao.getUserByUsernameAndPass(access, passEncrypted);
 			else
 				user = null;
 		}
@@ -52,12 +56,11 @@ public class SignInUpService {
 	 * @return
 	 */
 	public MessageCode signUpAttempt(String email, String username, String password) {
-		UserDAO userDAO = UserDAO.getInstance();
-		User user1 = userDAO.getUserByEmail(email);
+		User user1 = userDao.getUserByEmail(email);
 		if (user1 != null)
 			return MessageCode.ERROR_SIGN_UP;
 
-		User user2 = userDAO.getUserByUsername(username);
+		User user2 = userDao.getUserByUsername(username);
 		if (user2 != null)
 			return MessageCode.ERROR_SIGN_UP;
 

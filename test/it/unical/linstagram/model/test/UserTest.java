@@ -48,7 +48,7 @@ public class UserTest {
 
 	@Test
 	public void signinTest() {
-		User user = UserDAO.getInstance().getUserByUsernameAndPass("Eliana", "X");
+		User user = new UserDAO().getUserByUsernameAndPass("Paolo", "aba");
 		assertNotNull(user);
 	}
 
@@ -56,7 +56,7 @@ public class UserTest {
 	public void signupTest() {
 		User user = new User("Paolo", "GiuseppeFigo92@libero.it", "aba");
 		ModelDAO.getInstance().save(user);
-		User userByUsername = UserDAO.getInstance().getUserByUsername("Paolo");
+		User userByUsername = new UserDAO().getUserByUsername("Paolo");
 		assertNotNull(userByUsername);
 	}
 

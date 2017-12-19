@@ -30,7 +30,7 @@ public class TestEncryptPassword {
 		
 //		assertEquals(MessageCode.ERROR_SIGN_UP, m);
 		
-		UserDAO dao = UserDAO.getInstance();
+		UserDAO dao = new UserDAO();
 		System.out.println(dao.getPasswordByUsername("eliana"));
 //		System.out.println(dao.getPasswordByEmail("eliana@gmail.com"));
 		
@@ -43,7 +43,7 @@ public class TestEncryptPassword {
 		SignInUpService service = new SignInUpService();
 		service.signUpAttempt("eliana@gmail.com", "eliana", "ciao");
 		
-		UserDAO dao = UserDAO.getInstance();
+		UserDAO dao = new UserDAO();
 		
 		MessageCode m = service.signInAttempt("eliana@gmail.com", "ciA");
 		

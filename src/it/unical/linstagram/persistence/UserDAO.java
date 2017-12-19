@@ -10,19 +10,6 @@ import it.unical.linstagram.model.User;
 @SuppressWarnings("unchecked")
 public class UserDAO implements IUserDAO {
 
-	// #### SINGLETON ####
-	private static UserDAO instance;
-
-	public static UserDAO getInstance() {
-		if (instance == null)
-			instance = new UserDAO();
-		return instance;
-	}
-
-	private UserDAO() {
-	}
-	// ---- SINGLETON ----
-
 	@Override
 	public User getUserByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();

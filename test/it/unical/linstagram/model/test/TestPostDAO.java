@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -52,7 +50,7 @@ public class TestPostDAO {
 		ModelDAO.getInstance().save(post3); // Simulazione dell'aggiunta di un post da parte dell'utente 
 											// (è inutile fare una query per inserire)
 		
-		UserDAO dao = UserDAO.getInstance();
+		UserDAO dao = new UserDAO();
 		
 //		List<Post> posts = dao.getPostByUsername("eliana");
 		List<Post> posts = dao.getBookmarksByUsername("manuel");
@@ -81,7 +79,7 @@ public class TestPostDAO {
 		post.getTags().add(paola);
 		ModelDAO.getInstance().update(post);
 		
-		UserDAO dao = UserDAO.getInstance();
+		UserDAO dao = new UserDAO();
 		List<Post> tagged =  dao.getTaggedPostByUsername("manuel");
 		
 		for(Post p : tagged) {
@@ -106,7 +104,7 @@ public class TestPostDAO {
 		post.getLikes().add(paola);
 		ModelDAO.getInstance().update(post);
 		
-		PostDAO dao = PostDAO.getInstance();
+		PostDAO dao = new PostDAO();
 
 		List<User> likes =  dao.getLikesByPostId(post.getId());
 		for(User user : likes) {
@@ -131,7 +129,7 @@ public class TestPostDAO {
 		post.getTags().add(paola);
 		ModelDAO.getInstance().update(post);
 		
-		PostDAO dao = PostDAO.getInstance();
+		PostDAO dao = new PostDAO();
 		
 		List<User> tags = dao.getUserTaggedByPostId(post.getId());
 		for(User user : tags) {
@@ -152,7 +150,7 @@ public class TestPostDAO {
 		post.getHashtags().add(new Hashtag("cicciociccio"));
 		ModelDAO.getInstance().save(post);
 		
-		PostDAO dao = PostDAO.getInstance();
+		PostDAO dao = new PostDAO();
 		
 		List<Hashtag> hashtags = dao.getHashtagByPostId(post.getId());
 		
@@ -180,7 +178,7 @@ public class TestPostDAO {
 		
 		ModelDAO.getInstance().save(post);
 		
-		PostDAO dao = PostDAO.getInstance();
+		PostDAO dao = new PostDAO();
 		
 		List<Comment> comments = dao.getCommentByPostId(post.getId());
 		
