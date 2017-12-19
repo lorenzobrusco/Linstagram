@@ -292,12 +292,12 @@
 			<div id="modal-card">
 				<div class="modal-header">
 					<span class="modal-title">Create Post</span>
-					<div class="close-create-post-modal"></div>
+					<div class="close-create-post-modal" id="close-post-modal"></div>
 				</div>
 				<div class="modal-body">
 
-					<form class="dropzone" id="post-dropzone" method="POST"
-						action="upload" enctype="multipart/form-data">
+					<form class="dropzone" id="post-dropzone" method="post"
+						 enctype="multipart/form-data">
 						<!-- this is were the previews should be shown. -->
 						<div class="fallback">
 							<input name="file" type="file"/>
@@ -305,7 +305,7 @@
 						<br> <label for="post-description-input">Enter a
 							description:</label>
 						<textarea class="form-control" rows="5"
-							id="post-description-input"> 
+							id="post-description-input" name="description"> 
             </textarea>
 						<button type="submit" class="btn btn-success btn-create"
 							value="upload">
@@ -315,8 +315,6 @@
 				</div>
 			</div>
 		</div>
-
-
 
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>

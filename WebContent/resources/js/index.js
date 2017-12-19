@@ -54,7 +54,6 @@ $(document).ready(
 
             // Remove rejected files
             var rejected_files = myDropzone.getRejectedFiles();
-            console.log(rejected_files);
             for (var rejected_file of rejected_files) {
               myDropzone.removeFile(rejected_file);
             }
@@ -69,6 +68,8 @@ $(document).ready(
         });
         this.on("successmultiple", function (files,
           response) {
+        	
+        	$('#close-post-modal').click();
           // Gets triggered when the files have successfully been sent.
           // Redirect user or notify of success.
         });
