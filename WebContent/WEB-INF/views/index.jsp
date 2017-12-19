@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix = "form" uri = "http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 
 <!DOCTYPE html>
@@ -49,7 +49,7 @@
 		<div class="row">
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
-				<div id="story-nav">
+				<div id="story-nav" style="margin-top: 20px;">
 					<div id="stories"></div>
 				</div>
 			</div>
@@ -297,10 +297,10 @@
 				<div class="modal-body">
 
 					<form class="dropzone" id="post-dropzone" method="post"
-						 enctype="multipart/form-data">
+						enctype="multipart/form-data">
 						<!-- this is were the previews should be shown. -->
 						<div class="fallback">
-							<input name="file" type="file"/>
+							<input name="file" type="file" />
 						</div>
 						<br> <label for="post-description-input">Enter a
 							description:</label>
