@@ -55,7 +55,7 @@ public class UserTest {
 	@Test
 	public void signupTest() {
 		User user = new User("Paolo", "GiuseppeFigo92@libero.it", "aba");
-		ModelDAO.getInstance().save(user);
+		new ModelDAO().save(user);
 		User userByUsername = new UserDAO().getUserByUsername("Paolo");
 		assertNotNull(userByUsername);
 	}

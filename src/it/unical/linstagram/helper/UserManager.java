@@ -8,7 +8,7 @@ public class UserManager {
 	
 	
 	public static boolean checkLogged(HttpSession session) {
-		if(session.getAttribute("username") != null)
+		if(session.getAttribute("user") != null)
 			return true;
 		return false;
 	}

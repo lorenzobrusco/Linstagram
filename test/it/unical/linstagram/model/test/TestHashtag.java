@@ -21,12 +21,12 @@ public class TestHashtag {
 	public void testHashtag()
 	{
 		User eliana = new User("Eliana","email","pass");
-		
+		ModelDAO md= new ModelDAO();
 		List<Media> media = new ArrayList<>();
 		Post post = new Post(eliana,media,Calendar.getInstance(),"Sono scema");
 		post.getHashtags().add(new Hashtag("bellofigo"));
 		post.getHashtags().add(new Hashtag("cicciociccio"));
-		ModelDAO.getInstance().save(post);
+		md.save(post);
 		
 		final Session session = HibernateUtil.getHibernateTestSession();
 	

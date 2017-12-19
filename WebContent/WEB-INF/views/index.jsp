@@ -19,6 +19,11 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/animatedModal.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/dropzone.js"></script>
+	
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -31,16 +36,8 @@
 	href="${pageContext.request.contextPath}/resources/css/dropzone.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/animate.min.css">
-
-
-<script
-	src="${pageContext.request.contextPath}/resources/js/animatedModal.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/dropzone.js"></script>
-
-<script>
-	Dropzone.autoDiscover = false;
-</script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/create_post_modal_style.css">
 
 </head>
 <body>
@@ -286,35 +283,44 @@
 			</div>
 		</div>
 
-		<!--CREATE POST MODAL-->
-		<div id="create-post-modal">
-			<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID  class="close-animatedModal" -->
-			<div id="modal-card">
-				<div class="modal-header">
-					<span class="modal-title">Create Post</span>
-					<div class="close-create-post-modal" id="close-post-modal"></div>
-				</div>
-				<div class="modal-body">
+ <!--CREATE POST MODAL-->
+    <div id="create-post-modal">
+      <!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID  class="close-animatedModal" -->
+      <div id="modal-card">
+      
+        <div class="modal-header">
+          <span class="modal-title">Create Post</span>
+          <div class="close-create-post-modal"></div>
+        </div>
+        
+        <div class="modal-body">
+         
+          <form class="dropzone" id="post-dropzone">
+            <!-- this is were the previews should be shown. -->
+            <button type="submit" class="btn btn-success btn-create">
+              <i class="fa fa-paper-plane" aria-hidden="true"></i> Confirm
+            </button>
+            <div class="fallback">
+              <input name="file" type="file" multiple />
+            </div>
+            <div class="dropzone-previews">
+              <div class="dz-default dz-message"><span>Drop yuor photos or videos here</span></div>
+            </div>
+          </form>
+          
+          <!--TODO: CALL WITH AJAX FOR HIDE MODEL AND CONFIRM CREATION -->
+          <form id="post-description" class="hide" action="createPost">
+            <label for="post-description-input">Enter a description:</label>
+            <textarea class="form-control" rows="5" id="post-description-input" name="postDescription"> </textarea>
+            <button type="submit" class="btn btn-success btn-create">
+              <i class="fa fa-paper-plane" aria-hidden="true"></i> Confirm
+            </button>
+          </form>
+          
+        </div>
+      </div>
+    </div>
 
-					<form class="dropzone" id="post-dropzone" method="post"
-						enctype="multipart/form-data">
-						<!-- this is were the previews should be shown. -->
-						<div class="fallback">
-							<input name="file" type="file" />
-						</div>
-						<br> <label for="post-description-input">Enter a
-							description:</label>
-						<textarea class="form-control" rows="5"
-							id="post-description-input" name="description"> 
-            </textarea>
-						<button type="submit" class="btn btn-success btn-create"
-							value="upload">
-							<i class="fa fa-paper-plane" aria-hidden="true"></i> Create Post
-						</button>
-					</form>
-				</div>
-			</div>
-		</div>
 
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>

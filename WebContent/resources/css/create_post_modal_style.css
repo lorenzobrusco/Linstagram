@@ -1,0 +1,92 @@
+.close-create-post-modal{
+  float: right;
+  margin-right: 15px;
+}
+
+
+#modal-card{
+  margin: 10% 20%;
+  background: #fafafa;
+  border:1px solid lightgray;
+  border-radius: 3px;
+  box-shadow: 4px 4px 10px 0px #7777778f; 
+}
+
+#post-dropzone{
+  text-align: center;
+  background: #fafafa;
+  border: none;
+}
+
+.close-create-post-modal{
+  background-image: url(../images/icons.png);
+  background-position: -432px -46px;
+  height: 24px;
+  width: 27px;
+  display: inline-block;
+}
+
+.close-create-post-modal:hover{
+  transform: scale(1.1);
+}
+
+.modal-title{
+  margin-left: 15px;
+  font-size: 1.1em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+
+#post-description-input::-webkit-scrollbar {
+  height: 0px;
+}
+
+#post-description-input:hover::-webkit-scrollbar-track,
+#post-description-input:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+
+/* Track */
+#post-description-input::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #d5d5d5; 
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+/* Handle */
+#post-description-input::-webkit-scrollbar-thumb {
+  background: #a2a2a2a3;
+  box-shadow: inset 0 0 5px #d5d5d5; 
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+.modal-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin:15px;
+}
+
+.btn-create {
+	margin:15px 0px;
+  width:100%;
+}
+
+#post-dropzone > div > div.dz-default.dz-message{
+  margin: 15px 5px;
+}
+
+
+#post-dropzone > .dropzone-previews{
+  border:2px dashed #89ABE3;
+  border-radius: 5px;
+  padding: 30px 15px;
+  width: 100%;
+  margin: 16px 0px;
+}
+
+.hide{
+  display:none;
+}

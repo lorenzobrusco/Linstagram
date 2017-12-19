@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.unical.linstagram.model.Comment;
@@ -20,9 +21,17 @@ import it.unical.linstagram.persistence.PostDAO;
 import it.unical.linstagram.persistence.UserDAO;
 
 public class TestPostDAO {
+	
+	private static ModelDAO md;
+	
+	@BeforeClass
+	public static void init() {
+		md = new ModelDAO();
+	}
 
 //	@Test
 	public void testBookmarksUser() {
+		
 		
 		User eliana = new User("Eliana","email","pass");
 		User manuel = new User("Manuel","e","pass");
@@ -32,22 +41,22 @@ public class TestPostDAO {
 		Post post1 = new Post(paola,null,Calendar.getInstance(),"Pararararra");
 		Post post2 = new Post(eliana,null,Calendar.getInstance(),"Sono sceasfafma");
 		
-		ModelDAO.getInstance().save(post1);
+		md.save(post1);
 		
 		eliana.getPosts().add(post);
 		eliana.getPosts().add(post2);
 //		eliana.getPosts().add(post3);
 		
 		manuel.getBookmarks().add(post1);
-		ModelDAO.getInstance().save(eliana);
-		ModelDAO.getInstance().save(manuel);
+		md.save(eliana);
+		md.save(manuel);
 		
 		manuel.getBookmarks().add(post2);
-		ModelDAO.getInstance().update(manuel);
+		md.update(manuel);
 		
 		Post post3 = new Post(eliana,null,Calendar.getInstance(),"Sono scemffffffffffffa");
 
-		ModelDAO.getInstance().save(post3); // Simulazione dell'aggiunta di un post da parte dell'utente 
+		md.save(post3); // Simulazione dell'aggiunta di un post da parte dell'utente 
 											// (è inutile fare una query per inserire)
 		
 		UserDAO dao = new UserDAO();
@@ -74,10 +83,10 @@ public class TestPostDAO {
 		
 		post.getTags().add(manuel);
 		
-		ModelDAO.getInstance().save(post);
+		md.save(post);
 		
 		post.getTags().add(paola);
-		ModelDAO.getInstance().update(post);
+		md.update(post);
 		
 		UserDAO dao = new UserDAO();
 		List<Post> tagged =  dao.getTaggedPostByUsername("manuel");
@@ -99,10 +108,10 @@ public class TestPostDAO {
 		Post post = new Post(eliana,null,Calendar.getInstance(),"Sono scema");
 		
 		post.getLikes().add(manuel);
-		ModelDAO.getInstance().save(post);
+		md.save(post);
 		
 		post.getLikes().add(paola);
-		ModelDAO.getInstance().update(post);
+		md.update(post);
 		
 		PostDAO dao = new PostDAO();
 
@@ -124,10 +133,10 @@ public class TestPostDAO {
 		Post post = new Post(eliana,null,Calendar.getInstance(),"Sono scema");
 		
 		post.getTags().add(manuel);
-		ModelDAO.getInstance().save(post);
+		md.save(post);
 		
 		post.getTags().add(paola);
-		ModelDAO.getInstance().update(post);
+		md.update(post);
 		
 		PostDAO dao = new PostDAO();
 		
@@ -148,7 +157,7 @@ public class TestPostDAO {
 		Post post = new Post(eliana,media,Calendar.getInstance(),"Sono scema");
 		post.getHashtags().add(new Hashtag("bellofigo"));
 		post.getHashtags().add(new Hashtag("cicciociccio"));
-		ModelDAO.getInstance().save(post);
+		md.save(post);
 		
 		PostDAO dao = new PostDAO();
 		
@@ -176,7 +185,7 @@ public class TestPostDAO {
 		post.getComments().add(c1);
 		post.getComments().add(c2);
 		
-		ModelDAO.getInstance().save(post);
+		md.save(post);
 		
 		PostDAO dao = new PostDAO();
 		

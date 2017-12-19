@@ -1,21 +1,19 @@
 package it.unical.linstagram.model.test;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.junit.Assert;
 import org.junit.Test;
 
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Media.Media_Type;
-import it.unical.linstagram.persistence.HibernateUtil;
-import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.persistence.HibernateUtil;
+import it.unical.linstagram.persistence.ModelDAO;
 
 public class TestMedia {
 	
@@ -25,13 +23,14 @@ public class TestMedia {
 	
 //		HibernateUtil.CreateSessionFactory(true);
 		User eliana = new User("Eliana","email","pass");
+		ModelDAO md= new ModelDAO();
 	
 		List<Media> media = new ArrayList<>();
 		media.add(new Media(Media_Type.IMAGE,"url1"));
 		media.add(new Media(Media_Type.IMAGE,"url2"));
 		Post post = new Post(eliana,media,Calendar.getInstance(),"Sono scema");
 		
-		ModelDAO.getInstance().save(post);
+		md.save(post);
 		
 		final Session session = HibernateUtil.getHibernateSession();
 	

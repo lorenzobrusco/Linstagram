@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.unical.linstagram.helper.MessageResponce;
+import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.SignInUpService;
 
@@ -22,7 +24,7 @@ public class SignInUpController {
 		return "signin";
 	}
 
-	@RequestMapping(value = "signUpAttempt", method = RequestMethod.POST)
+	@RequestMapping(value = "/signUpAttempt", method = RequestMethod.POST)
 	public String signUp(@RequestParam String email, @RequestParam String username, @RequestParam String password,HttpSession session) {
 		if (signInService.signUpAttempt(email, username, password) == MessageCode.SUCCESS_SIGN_UP) {
 			return signIn(username,password,session);
@@ -32,13 +34,16 @@ public class SignInUpController {
 
 	}
 
-	@RequestMapping(value="signInAttempt",method=RequestMethod.POST)
+	@RequestMapping(value="/signInAttempt",method=RequestMethod.POST)
 	public String signIn(@RequestParam String username, @RequestParam String password, HttpSession session) {
-		MessageCode signInAttempt = signInService.signInAttempt(username, password);
+		MessageResponce signInAttemptResp = signInService.signInAttempt(username, password);
 //		System.out.println(signInAttempt);
-		if (signInAttempt == MessageCode.SUCCESS_SIGN_IN) {
-			session.setAttribute("username", username);
-			return "redirect:index";
+		if (signInAttemptResp.getMessageCode() == MessageCode.SUCCESS_SIGN_IN) {
+			if(signInAttemptResp.getObj() instanceof User) {
+				User user= (User) signInAttemptResp.getObj();
+				session.setAttribute("user", user);
+				return "index";
+			}
 		}
 		// TODO: return a string that show the error -> put it in session and add message in jsp
 		return "redirect:/";

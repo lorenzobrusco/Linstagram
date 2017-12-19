@@ -7,17 +7,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import it.unical.linstagram.model.Media;
 
 @Controller
@@ -36,7 +38,7 @@ public class UploadController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody List<Media> upload(MultipartHttpServletRequest request, HttpServletResponse response, @RequestParam String description)
+	public @ResponseBody List<Media> upload(MultipartHttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		final Map<String, MultipartFile> fileMap = request.getFileMap();
 		final List<Media> uploadedFiles = new ArrayList<>();

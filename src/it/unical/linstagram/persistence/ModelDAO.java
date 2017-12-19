@@ -4,20 +4,9 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
+import org.springframework.stereotype.Repository;
+@Repository
 public class ModelDAO {
-
-	private static ModelDAO dao;
-
-	public static ModelDAO getInstance() {
-		if (dao == null)
-			dao = new ModelDAO();
-		return dao;
-	}
-
-	private ModelDAO() {
-
-	}
 
 	public boolean save(Object model) {
 		final Session session = HibernateUtil.getHibernateSession();

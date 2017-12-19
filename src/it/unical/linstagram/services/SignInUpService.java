@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.linstagram.helper.EncryptPassword;
+import it.unical.linstagram.helper.MessageResponce;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -14,6 +15,9 @@ public class SignInUpService {
 
 	@Autowired
 	private UserDAO userDao;
+	@Autowired
+	private ModelDAO ModelDao;
+	
 	/**
 	 * Try signin.
 	 * 
@@ -21,7 +25,7 @@ public class SignInUpService {
 	 * @param password
 	 * @return
 	 */
-	public MessageCode signInAttempt(String access, String password) {
+	public MessageResponce signInAttempt(String access, String password) {
 		EmailValidator ev = EmailValidator.getInstance();
 		User user = null;
 		if (ev.isValid(access)) {
@@ -42,8 +46,8 @@ public class SignInUpService {
 				user = null;
 		}
 		if (user == null)
-			return MessageCode.ERROR_SIGN_IN;
-		return MessageCode.SUCCESS_SIGN_IN;
+			return new MessageResponce(MessageCode.ERROR_SIGN_IN, null);
+		return new MessageResponce(MessageCode.SUCCESS_SIGN_IN, user);
 	}
 
 	/**
@@ -67,7 +71,7 @@ public class SignInUpService {
 		String passEncrypted = EncryptPassword.encrypt(password);
 		
 		User newUser = new User(username, email, passEncrypted);
-		ModelDAO.getInstance().save(newUser);
+		ModelDao.save(newUser);
 
 		return MessageCode.SUCCESS_SIGN_UP;
 	}

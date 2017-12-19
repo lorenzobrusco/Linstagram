@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import it.unical.linstagram.helper.EncryptPassword;
+import it.unical.linstagram.helper.MessageResponce;
 import it.unical.linstagram.persistence.UserDAO;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.SignInUpService;
@@ -45,9 +46,9 @@ public class TestEncryptPassword {
 		
 		UserDAO dao = new UserDAO();
 		
-		MessageCode m = service.signInAttempt("eliana@gmail.com", "ciA");
+		MessageResponce m = service.signInAttempt("eliana@gmail.com", "ciA");
 		
-		assertEquals(MessageCode.ERROR_SIGN_IN, m);
+		assertEquals(MessageCode.ERROR_SIGN_IN, m.getMessageCode());
 		
 	}
 	

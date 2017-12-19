@@ -40,21 +40,28 @@
 					<div class="col-sm-5">
 						<div class="row item-user-info">
 							<ul>
-								<li><b>@${username}</b></li>
-								<li><a href="modifyProfile">modifica profilo</a></li>
+								<li><b>@${user.username}</b></li>
+								<li><a class="btn btn-default" href="modifyProfile" id="modify-profile-btn">modifica profilo</a></li>
 								<li></li>
 							</ul>
 						</div>
 						<div class="row item-user-info">
 							<ul>
-								<li><span>9</span> post</li>
-								<li><span>142</span> follower</li>
-								<li><span>113</span> profili seguiti</li>
+								<li><span>6</span> post</li>
+								<li><span>9</span> follower</li>
+								<li><span>10</span> profili seguiti</li>
 							</ul>
 						</div>
 						<div class="row item-user-info">
 							<ul>
-								<li>LORENZO BRUSCO</li>
+							 <c:choose>
+							  <c:when test ="!empty ${user.name}  || !empty ${user.surname}">
+									<li>${user.name} ${user.surname}</li>
+								</c:when>
+								<c:otherwise>
+									<li><b>Name</b> & <b>Surname</b> unknow ..</li>
+								</c:otherwise>
+							</c:choose>
 							</ul>
 						</div>
 					</div>

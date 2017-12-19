@@ -28,16 +28,16 @@
 			</div>
 			<div class="bottom-nav-menu">
 				<ul id="horizontal-list">
-					<li><a href="index.html" id="home-mobile"></a></li>
-					<li><a href="profile.html" role="button" id="profile-mobile"></a></li>
-					<li><a href="" id="add-mobile"></a></li>
+					<li><a href="index" id="home-mobile"></a></li>
+					<li><a href="profile" role="button" id="profile-mobile"></a></li>
+					<li><a href="#create-post-modal" id="add-mobile"></a></li>
 					<li><a href="" id="notification-mobile"></a></li>
 				</ul>
 			</div>
 		</div>
 		<nav id="navbar" class="transparent">
-			<span class="nav-left"> <a href="index.html"> <span
-					id="logo"></span> <span id="logo-text">linstagram</span>
+			<span class="nav-left"> <a href="index"> <span id="logo"></span>
+					<span id="logo-text">linstagram</span>
 			</a>
 			</span> <span id="search-form" class="form-inline">
 				<div class="input-group" id="search-div">
@@ -48,7 +48,7 @@
 			</span> <span class="nav-right"> <a href="" id="explore"
 				class="right-icon-nav disabled" data-toggle="tooltip"
 				data-placement="left" data-original-title="Coming Soon"></a> <a
-				href="" id="notification" class="right-icon-nav"></a> <a href="#"
+				href="#" id="notification" class="right-icon-nav"></a> <a href="#"
 				role="button" id="profile" class="right-icon-nav"></a>
 			</span>
 		</nav>
@@ -61,11 +61,11 @@
 		progressBar.style.display = 'none';
 	};
 
-	//Popover 
+	//Popover (script that use EL)
 	$(document)
 			.ready(
 					function() {
-						var title_popover = "<img class='user-img' src='resources/images/user_login_img.png'/><b><span id='username-popover'>${username}</span></b>";
+						var title_popover = "<img class='user-img' src='resources/images/user_login_img.png'/><b><span id='username-popover'>${user.username}</span></b>";
 						var content_popover = "<a href='profile' class='popover-option' id='profile-option-popover'><i class='fa fa-user'></i>Profile</a> <hr> <a href='logout' class='popover-option' id='logout-option-popover'><i class='fa fa-sign-out'></i>Logout</a>";
 
 						$('#profile').popover({
