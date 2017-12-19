@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 
+@SuppressWarnings("unchecked")
 public class UserDAO implements IUserDAO {
 
 	// #### SINGLETON ####

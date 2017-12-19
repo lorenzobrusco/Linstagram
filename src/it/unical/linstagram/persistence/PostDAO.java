@@ -2,14 +2,13 @@ package it.unical.linstagram.persistence;
 
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
-import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 
+@SuppressWarnings("unchecked")
 public class PostDAO implements IPostDAO {
 
 	// #### SINGLETON ####
@@ -29,7 +28,8 @@ public class PostDAO implements IPostDAO {
 	@Override
 	public List<User> getLikesByPostId(int idPost) {
 		Session session = HibernateUtil.getHibernateSession();
-		List<User> users = (List<User>) session.createQuery("SELECT post.likes FROM Post post WHERE post.id =:idPost")
+	
+		List<User> users = session.createQuery("SELECT post.likes FROM Post post WHERE post.id =:idPost")
 				.setParameter("idPost", idPost).list();
 		
 		session.close();

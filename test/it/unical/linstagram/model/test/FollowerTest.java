@@ -1,4 +1,4 @@
-package it.unical.linstagram.tests;
+package it.unical.linstagram.model.test;
 
 import java.util.Collection;
 import java.util.List;

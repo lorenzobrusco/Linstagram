@@ -1,4 +1,4 @@
-package it.unical.linstagram.tests;
+package it.unical.linstagram.model.test;
 
 import static org.junit.Assert.assertNotNull;
 
