@@ -57,6 +57,7 @@ header {
 }
 
 .nav-left a{
+	float: right;
   padding: 0px;
 }
 
