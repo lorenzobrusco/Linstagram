@@ -31,7 +31,7 @@ public class PostService {
 		Post post = postDAO.getPostById(idPost);
 		post.getLikes().add(user);
 		
-		ModelDAO.getInstance().update(post);
+		new ModelDAO().update(post);
 	}
 	
 	public void insertComment(int idPost, Comment comment) {
@@ -40,7 +40,7 @@ public class PostService {
 
 		post.getComments().add(comment);
 		
-		ModelDAO.getInstance().update(post);
+		new ModelDAO().update(post);
 	}
 	
 }
