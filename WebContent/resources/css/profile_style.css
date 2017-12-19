@@ -219,7 +219,7 @@ footer{
 
 .bookmark span{
 
-	background-image: url(icons.png);
+	background-image: url(../images/icons.png);
 	background-repeat: no-repeat;
 	background-position: -127px -287px;
 	height: 64px;
@@ -230,7 +230,7 @@ footer{
 
 .tags span{
 
-	background-image: url(icons.png);
+	background-image: url(../images/icons.png);
 	background-repeat: no-repeat;
 	background-position: 1px -287px;
 	height: 64px;
