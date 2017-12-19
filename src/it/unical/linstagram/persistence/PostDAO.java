@@ -7,12 +7,32 @@ import org.springframework.stereotype.Repository;
 
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
+import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 
 @Repository
 @SuppressWarnings("unchecked")
 public class PostDAO implements IPostDAO {
 
+	public List<Post> getPosts() {
+		Session session = HibernateUtil.getHibernateSession();
+	
+		List<Post> posts = session.createQuery("FROM Post p join fetch p.media").list();
+		
+		session.close();
+		return posts;
+	}
+	
+	public Post getPostById(int idPost) {
+		Session session = HibernateUtil.getHibernateSession();
+	
+		Post post = session.createQuery("FROM Post p WHERE p.id=:idPost", Post.class)
+				.setParameter("idPost", idPost).uniqueResult();
+		
+		session.close();
+		return post;
+	}
+	
 	@Override
 	public List<User> getLikesByPostId(int idPost) {
 		Session session = HibernateUtil.getHibernateSession();

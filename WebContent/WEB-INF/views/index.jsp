@@ -52,209 +52,89 @@
 			</div>
 		</div>
 		<div id="posts">
-			<section>
-				<div class="row">
-					<div class="col-md-2"></div>
-					<div class="col-md-8">
-
-						<!-- start body-section -->
-						<div class='card'>
-							<div class='top-section'>
-								<a href=''> <img class="user-img"
-									src='https://scontent-mxp1-1.cdninstagram.com/t51.2885-19/s320x320/20482280_307729109689765_5209255955170066432_a.jpg'>
-								</a> <a href='' class='user-name'>Lorenzo</a>
-							</div>
-							<div class='body-section'>
-								<div class="overlay">
-									<span></span>
+		
+			<c:forEach items="${posts}" var="post">
+				<section>
+					<div class="row">
+						<div class="col-md-2"></div>
+						<div class="col-md-8">
+	
+							<!-- start body-section -->
+							<div class='card'>
+								<div class='top-section'>
+									<a href=''> <img class="user-img"
+										src=${post.user.photoProfile }>
+									</a> <a href='' class='user-name'>${post.user.username }</a>
 								</div>
-								<img
-									src='http://www.buonissimo.org/archive/borg/qdBs0GRJIDseIkTw3%252FB%252BOfBYvoxMy9pkhjweUSL9FLKt57oUgnK%252FxA%253D%253D'>
-							</div>
-							<div class='action-section'>
-								<div class='react'>
-									<a href='#' role='button'><span class='love'></span></a> <a
-										href='#' role='button'><span class='comment'></span></a> <a
-										href='#' role='button'><span class='save'></span></a>
-								</div>
-								<div class="likes-section">
-									<a href='#'><b>Piace a<span> 100000 persone</span></b></a>
-								</div>
-								<div class='caption-section'>
-									<a href='#'>Peppe</a><span>Testo del cristiano che ha
-										scritto </span>
-								</div>
-
-								<div class='list-comments-section'>
-									<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									<div id="postcibo" class="collapse">
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
+								<div class='body-section'>
+									<div class="overlay">
+										<span></span>
 									</div>
-
-
-									<a class="show-all-comments" href="#postcibo"
-										data-toggle="collapse"><span class="show-comments"></span>
-										Carica altri commenti</a><br>
-
-
+									<c:forEach items="${post.media}" var="media">
+										<img src=${media.url }>
+									</c:forEach>
 								</div>
-
-								<div class='time-section'>
-									<p>4 ore fa</p>
-								</div>
-
-								<div class='comment-section'>
-									<input type='text' class='comment-text'
-										placeholder='Add a comment...'>
+								<div class='action-section'>
+									<div class='react'>
+										<form role="form" action="like">
+											<a href='#' role='button'><span class='love'></span></a> 
+											<input type="hidden" name="idPost" value="${post.id}">
+											<button type="submit" class="btn btn-success">Submit</button>
+										</form>
+										<a	href='#' role='button'><span class='comment'></span></a> 
+										<a	href='#' role='button'><span class='save'></span></a>
+									</div>
+									<div class="likes-section">
+										<a href='#'><b>Piace a<span> ${post.likes.size() } persone</span></b></a>
+									</div>
+									<div class='caption-section'>
+										<a href='#'>${post.user.username }</a><span>${post.content }</span>
+									</div>
+	
+									<div class='list-comments-section'>
+										<c:forEach items="${post.comments}" var="comment">
+											<a href='#'>${comment.user.username }</a><span> ${comment.content }</span><br>
+										</c:forEach>
+										<!-- <a href='#'>Lorenzo</a><span> testo del commento</span><br>
+										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
+										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
+										<div id="postcibo" class="collapse">
+											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
+											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
+											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
+											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
+										</div> -->
+	
+	
+										<a class="show-all-comments" href="#postcibo"
+											data-toggle="collapse"><span class="show-comments"></span>
+											Carica altri commenti</a><br>
+	
+	
+									</div>
+	
+									<div class='time-section'>
+										<p>4 ore fa</p>
+									</div>
+	
+									<div class='comment-section'>
+										<form role="form" action="comment">
+											<input name="comment" type='text' class='comment-text'
+												placeholder='Add a comment...'>
+											<input type="hidden" name="idPost" value="${post.id}">
+											<button type="submit" class="btn btn-success">Submit</button>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
+						<!-- end body-section -->
+						<div class="col-md-2"></div>
 					</div>
-					<!-- end body-section -->
-					<div class="col-md-2"></div>
-				</div>
-			</section>
-			<!-- end section -->
+				</section>
+				<!-- end section -->
 
-			<section>
-				<div class="row">
-					<div class="col-md-2"></div>
-					<div class="col-md-8">
-						<!-- start body-section -->
-						<div class='card'>
-							<div class='top-section'>
-								<a href=''> <img class="user-img"
-									src='http://static.sify.com/cms/image/mdxq4Aigdfhsi.jpg'>
-								</a> <a href='' class='user-name'>Peppa</a>
-							</div>
-							<div class='body-section'>
-								<div class="overlay">
-									<span></span>
-								</div>
-								<img
-									src='https://static.pexels.com/photos/160699/girl-dandelion-yellow-flowers-160699.jpeg'>
-							</div>
-							<div class='action-section'>
-								<div class='react'>
-									<a href='#' role='button'><span class='love'></span></a> <a
-										href='#' role='button'><span class='comment'></span></a> <a
-										href='#' role='button'><span class='save'></span></a>
-								</div>
-								<div class="likes-section">
-									<a href='#'><b>Piace a<span> 100000 persone</span></b></a>
-								</div>
-								<div class='caption-section'>
-									<a href='#'>Peppe</a><span>Testo del cristiano che ha
-										scritto </span>
-								</div>
-
-								<div class='list-comments-section'>
-									<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									<div id="post1" class="collapse">
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									</div>
-
-
-									<a class="show-all-comments" href="#post1"
-										data-toggle="collapse"><span class="show-comments"></span>
-										Carica altri commenti</a><br>
-
-
-								</div>
-
-								<div class='time-section'>
-									<p>4 ore fa</p>
-								</div>
-
-								<div class='comment-section'>
-									<input type='text' class='comment-text'
-										placeholder='Add a comment...'>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- end body-section -->
-					<div class="col-md-2"></div>
-				</div>
-			</section>
-			<!-- end section -->
-
-			<section>
-				<div class="row">
-					<div class="col-md-2"></div>
-					<div class="col-md-8">
-						<!-- start body-section -->
-						<div class='card'>
-							<div class='top-section'>
-								<a href=''> <img class="user-img"
-									src='resources/images/user_login_img.png'>
-								</a> <a href='' class='user-name'>Peppe</a>
-							</div>
-							<div class='body-section'>
-								<div class="overlay">
-									<span></span>
-								</div>
-								<img src='https://pbs.twimg.com/media/B-EZPXFIIAAmcb8.jpg:large'>
-							</div>
-							<div class='action-section'>
-								<div class='react'>
-									<a href='#' role='button'><span class='love'></span></a> <a
-										href='#' role='button'><span class='comment'></span></a> <a
-										href='#' role='button'><span class='save'></span></a>
-								</div>
-								<div class="likes-section">
-									<a href='#'><b>Piace a<span> 100000 persone</span></b></a>
-								</div>
-								<div class='caption-section'>
-									<a href='#'>Peppe</a><span>Testo del cristiano che ha
-										scritto </span>
-								</div>
-
-								<div class='list-comments-section'>
-									<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									<div id="post2" class="collapse">
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-									</div>
-
-
-									<a class="show-all-comments" href="#post2"
-										data-toggle="collapse"><span class="show-comments"></span>
-										Carica altri commenti</a><br>
-
-
-								</div>
-
-								<div class='time-section'>
-									<p>4 ore fa</p>
-								</div>
-
-								<div class='comment-section'>
-									<input type='text' class='comment-text'
-										placeholder='Add a comment...'>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- end body-section -->
-					<div class="col-md-2"></div>
-				</div>
-			</section>
-			<!-- end section -->
+			</c:forEach>
 		</div>
 		<div id="container-floating">
 
