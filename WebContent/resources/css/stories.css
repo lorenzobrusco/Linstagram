@@ -131,7 +131,7 @@
 
 @media (max-width: 1024px) {
 
-	.stories.carousel .story { max-width: 120px; margin: 0 20px;}
+	.stories.carousel .story { max-width: 120px; margin: 0 10px;}
 	.stories.snapgram .story > a > .img {max-height: 120px;}
 	#zuck-modal-content .story-viewer .head{top:3px;}
 	#zuck-modal-content .story-viewer .head .loading {width: 24px;height: 24px;margin: 6px 0;}
