@@ -3,10 +3,12 @@ package it.unical.linstagram.persistence;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 
+@Repository
 @SuppressWarnings("unchecked")
 public class UserDAO implements IUserDAO {
 

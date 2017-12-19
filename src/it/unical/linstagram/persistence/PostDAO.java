@@ -3,11 +3,13 @@ package it.unical.linstagram.persistence;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.User;
 
+@Repository
 @SuppressWarnings("unchecked")
 public class PostDAO implements IPostDAO {
 
