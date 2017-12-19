@@ -22,7 +22,7 @@ $(document).ready(
       uploadMultiple: true,
       parallelUploads: 4,
       maxFiles: 4,
-      maxFilesize: 2, //MB
+      maxFilesize: 50, //MB
       acceptedFiles: "image/*",
       addRemoveLinks: true,
       dictDefaultMessage: 'Drop yuor photos or videos here',

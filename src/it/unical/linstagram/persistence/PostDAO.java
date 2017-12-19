@@ -29,7 +29,7 @@ public class PostDAO implements IPostDAO {
 	@Override
 	public List<User> getLikesByPostId(int idPost) {
 		Session session = HibernateUtil.getHibernateSession();
-		List<User> users = session.createQuery("SELECT post.likes FROM Post post WHERE post.id =:idPost")
+		List<User> users = (List<User>) session.createQuery("SELECT post.likes FROM Post post WHERE post.id =:idPost")
 				.setParameter("idPost", idPost).list();
 		
 		session.close();
