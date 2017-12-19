@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix = "form" uri = "http://www.springframework.org/tags/form"%>
 
 
 <!DOCTYPE html>
@@ -294,17 +295,20 @@
 					<div class="close-create-post-modal"></div>
 				</div>
 				<div class="modal-body">
-					<form class="dropzone" id="post-dropzone">
+
+					<form class="dropzone" id="post-dropzone" method="POST"
+						action="upload" enctype="multipart/form-data">
 						<!-- this is were the previews should be shown. -->
 						<div class="fallback">
-							<input name="file" type="file" multiple />
+							<input name="file" type="file"/>
 						</div>
 						<br> <label for="post-description-input">Enter a
 							description:</label>
 						<textarea class="form-control" rows="5"
 							id="post-description-input"> 
             </textarea>
-						<button type="submit" class="btn btn-success btn-create">
+						<button type="submit" class="btn btn-success btn-create"
+							value="upload">
 							<i class="fa fa-paper-plane" aria-hidden="true"></i> Create Post
 						</button>
 					</form>
@@ -316,7 +320,7 @@
 
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
-	<script  src="${pageContext.request.contextPath}/resources/js/index.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
 	<script
