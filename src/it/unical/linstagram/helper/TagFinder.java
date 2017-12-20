@@ -12,10 +12,10 @@ public class TagFinder {
 
 		for ( String ss : arr) {
 
+			
 			if (ss.startsWith("@"))
 			{
-				tags.add(ss);
-
+				tags.add(ss.substring(1));
 			}
 
 		}
