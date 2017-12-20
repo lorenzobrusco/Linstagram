@@ -4,6 +4,30 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<script>
+function getElapsedTime(postedTime){
+	var now = (new Date()).getTime();
+	var diff=now-postedTime;
+	var second = diff/1000;
+	var min = second/60;
+	var round=Math.round(min);
+	if(	round<=60)
+		return round+" MIN AGO";
+	else if(round > 60 && round < 24*60){
+		round = round/60;
+		round = Math.round(round);
+		return round+" HOURS AGO";
+	}
+	else{
+		round = round/60;
+		round = round/24;
+		round = Math.round(round);
+		return round+" DAYS AGO";
+	}	
+}
+</script>
+
+
 <!-- start body-section -->
 <c:forEach items="${posts}" var="post">
 	<section>
@@ -12,9 +36,8 @@
 			<div class="col-md-8">
 				<div class='card'>
 					<div class='top-section'>
-						<a href=''> <img class="user-img"
-							src=${post.user.photoProfile }>
-						</a> <a href='' class='user-name'>${post.user.username }</a>
+						<a href=''> <img class="user-img"src=${post.user.photoProfile }></a> 
+						<a href='' class='user-name'>${post.user.username }</a>
 					</div>
 					<div class='body-section'>
 						<div class="overlay">
@@ -61,7 +84,10 @@
 						</div>
 
 						<div class='time-section'>
-							<p>${post.postDate}</p>
+							<p><script>
+								var postedTime = "${post.postDate.getTimeInMillis()}";
+								document.write(getElapsedTime(postedTime));
+							</script></p>
 						</div>
 
 						<div class='comment-section'>
