@@ -22,6 +22,7 @@
 		<mapping class="it.unical.linstagram.model.Comment" />
 		<mapping class="it.unical.linstagram.model.Media" />
 		<mapping class="it.unical.linstagram.model.Hashtag" />
+		<mapping class="it.unical.linstagram.model.Story" />
 		
 
 	</session-factory>
