@@ -9,11 +9,14 @@
 	href="${pageContext.request.contextPath}/resources/css/create_post_modal_style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/dropzone.css">
-	
-<script src="${pageContext.request.contextPath}/resources/js/create_post_modal.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/animatedModal.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.0.0/caman.full.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/create_post_modal.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/animatedModal.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.0.0/caman.full.min.js"></script>
 
 
 <!--CREATE POST MODAL-->
@@ -43,7 +46,14 @@
 				</div>
 			</form>
 			<div id="apply-filter-section" class="hide">
-				
+
+				<div id="filter-btn-group">
+					<div class="btn-group" role="group" aria-label="...">
+						<button type="button" class="btn btn-default" id="vintage-btn">Vintage</button>
+						<button type="button" class="btn btn-default" id="lomo-btn">Middle</button>
+						<button type="button" class="btn btn-default" id="clarity">Right</button>
+					</div>
+				</div>
 			</div>
 			<!--TODO: CALL WITH AJAX FOR HIDE MODEL AND CONFIRM CREATION -->
 			<form id="post-description" class="hide" action="createPost">
