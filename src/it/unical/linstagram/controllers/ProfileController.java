@@ -44,10 +44,6 @@ public class ProfileController {
 		if(UserManager.checkLogged(session)) {
 			User user = (User) session.getAttribute("user");
 			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
-			System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBB");
-			for (Post post : postOfUser) {
-				System.out.println(post.getContent());
-			}
 			
 			model.addAttribute("posts", postOfUser);
 			return "fragment/profilePost";	//profilePost.jsp

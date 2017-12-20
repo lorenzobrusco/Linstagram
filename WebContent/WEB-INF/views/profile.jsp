@@ -26,8 +26,8 @@
 			$.ajax({
 				url : "taggedPhoto",
 				success : function(result) {
-					$("#contentTag").empty();
-					$("#contentTag").append(result);
+					/* $("#tag").empty(); */
+					$("#tag").html(result); //TODO fa un brutto effetto la prima volta!
 				}
 			});
 		});
@@ -105,12 +105,14 @@
 										</div>
 									</div>
 									<div class="tab-pane" id="tab_default_2">
-										<div class="tags">
-											<span></span>
-											<div>Tag</div>
-											<br>
-											<div id="contentTag">
-												Devi essere taggato per porter rivedere i post.<br>
+										<div id="tag">
+											<div class="tags">
+												<span></span>
+												<div>Tag</div>
+												<br>
+												<div id="contentTag">
+													Devi essere taggato per porter rivedere i post.<br>
+												</div>
 											</div>
 										</div>
 									</div>
