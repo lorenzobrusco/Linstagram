@@ -1,5 +1,10 @@
 Dropzone.autoDiscover = false;
 
+function resize_canvas(canvas){
+	canvas.css("width","100%");
+	canvas.css("height","100%");
+}
+
 $(document).ready(function () {
 //	DROPZONE 
 	dropzoneOptions = {
@@ -58,7 +63,20 @@ $(document).ready(function () {
 				this.on("successmultiple", function (files,
 						response) {
 					$("#post-dropzone").addClass("hide");
-					$("#post-description").removeClass("hide");
+					var file=myDropzone.getAcceptedFiles();
+					$("#apply-filter-section").append("<img class='filter-img' src="+file[0].dataURL+"></img>");
+					Caman("#apply-filter-section img",function () {
+						var canvas=$("#apply-filter-section > canvas");
+				        this.vintage();
+				        this.render(function() {
+				        	resize_canvas(canvas);
+				        	$("#apply-filter-section").removeClass("hide");
+				        });
+				    })
+
+
+//					$("#post-description").removeClass("hide");
+				    
 					//        	$('#close-post-modal').click();
 					// Gets triggered when the files have successfully been sent.
 					// Redirect user or notify of success.
@@ -89,6 +107,9 @@ $(document).ready(function () {
 			afterOpen: function () {},
 			beforeClose: function () {},
 			afterClose: function () {
+				$("#post-dropzone").removeClass("hide");
+				$("#post-description").addClass("hide");
+				$("#apply-filter-section").addClass("hide");
 				$("#post-description-input").val("");
 				//clean dropzone uploads
 				myDropzone.removeAllFiles(true);

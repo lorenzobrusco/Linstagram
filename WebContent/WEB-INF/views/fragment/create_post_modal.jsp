@@ -42,7 +42,9 @@
 					</div>
 				</div>
 			</form>
-
+			<div id="apply-filter-section" class="hide">
+				
+			</div>
 			<!--TODO: CALL WITH AJAX FOR HIDE MODEL AND CONFIRM CREATION -->
 			<form id="post-description" class="hide" action="createPost">
 				<label for="post-description-input">Enter a description:</label>
