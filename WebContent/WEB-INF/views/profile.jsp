@@ -12,17 +12,32 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile_style.css">
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/profile_style.css">
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#tags").on('click', function() {
+			$.ajax({
+				url : "taggedPhoto",
+				success : function(result) {
+					/* $("#tag").empty(); */
+					$("#tag").html(result); //TODO fa un brutto effetto la prima volta!
+				}
+			});
+		});
+
+/* 		if ($(window).width() > 767) {
+			$("#sidenav").height($("#posts").height());
+		} */
+	});
+</script>
+
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
@@ -79,37 +94,25 @@
 								<ul class="nav nav-tabs ">
 									<li class="active"><a href="#tab_default_1"
 										data-toggle="tab"> Posts </a></li>
-									<li><a href="#tab_default_2" data-toggle="tab"> Tags </a>
-									</li>
-									<li><a href="#tab_default_3" data-toggle="tab">
-											Bookmarks </a></li>
+									<li><a id="tags" href="#tab_default_2" data-toggle="tab"> Tags </a> </li>
+									<li><a href="#tab_default_3" data-toggle="tab"> Bookmarks </a> </li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_default_1">
 										<div id="colum">
-											<c:forEach items="${user.posts}" var="post">
-												<!--  Il numero dei like e comment e post-->
-												<div class="col-md-4 col-sm-6 post-section">
-													<div class="post">
-														<img class="picture img-responsive" src="${post.media.url}">
-														<div class="links">
-															<a href=""><span class="fa fa-heart"> ${fn:length(post.likes)}</span></a> <a
-																href=""><span class="fa fa-comment"> ${fn:length(post.comments)}</span></a>
-														</div>
-													</div>
-												</div>
-											
-											</c:forEach>
+											<jsp:include page="./fragment/profilePost.jsp"></jsp:include>
 
 										</div>
 									</div>
 									<div class="tab-pane" id="tab_default_2">
-										<div class="tags">
-											<span></span>
-											<div>Tag</div>
-											<br>
-											<div>
-												Devi essere taggato per porter rivedere i post.<br>
+										<div id="tag">
+											<div class="tags">
+												<span></span>
+												<div>Tag</div>
+												<br>
+												<div id="contentTag">
+													Devi essere taggato per porter rivedere i post.<br>
+												</div>
 											</div>
 										</div>
 									</div>

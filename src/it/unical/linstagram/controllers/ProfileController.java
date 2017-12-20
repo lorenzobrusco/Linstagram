@@ -23,10 +23,10 @@ public class ProfileController {
 	@RequestMapping("profile")
 	public String getSignInPage(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
-//			User user = (User) session.getAttribute("User");
-//			System.out.println(user);
-//			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
-//			model.addAttribute("posts", postOfUser);
+			User user = (User) session.getAttribute("user");
+			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
+			
+			model.addAttribute("posts", postOfUser);
 			return "profile";
 		}
 		return "redirect:/";
@@ -39,4 +39,16 @@ public class ProfileController {
 		return "redirect:/";
 	}
 
+	@RequestMapping("taggedPhoto")
+	public String getTaggedPhoto(HttpSession session, Model model) {
+		if(UserManager.checkLogged(session)) {
+			User user = (User) session.getAttribute("user");
+			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
+			
+			model.addAttribute("posts", postOfUser);
+			return "fragment/profilePost";	//profilePost.jsp
+		}
+		return "redirect:/";
+	}
+	
 }
