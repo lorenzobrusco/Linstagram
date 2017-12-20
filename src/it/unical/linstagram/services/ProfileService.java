@@ -19,6 +19,10 @@ public class ProfileService {
 		return userDAO.getPostByUsername(username);
 	}
 	
+	public List<Post> getPostTaggedOfUser(String username) {
+		return userDAO.getTaggedPostByUsername(username);
+	}
+
 	
 
 }
