@@ -13,6 +13,17 @@ import it.unical.linstagram.model.User;
 @Repository
 @SuppressWarnings("unchecked")
 public class PostDAO implements IPostDAO {
+	
+	
+//	@PostConstruct
+//	private void init() {
+//		User u=new UserDAO().getUserByUsername("ciccio");
+//		List<Media> medias=new ArrayList<>();
+//		Media m=new Media(Media_Type.IMAGE, "D:\\ProgrammiEclipseJEE\\EnterpriseApplication\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Linstagram\\WEB-INF\\images\\1.jpg");
+//		medias.add(m);
+//		Post p=new Post(u, medias, Calendar.getInstance(), "PRIMO POST MOLTO BELLO");
+//		new ModelDAO().save(p);
+//	}
 
 	public List<Post> getPosts() {
 		Session session = HibernateUtil.getHibernateSession();

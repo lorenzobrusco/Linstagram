@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Listagram</title>
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -47,9 +48,9 @@
 						</div>
 						<div class="row item-user-info">
 							<ul>
-								<li><span>6</span> post</li>
-								<li><span>9</span> follower</li>
-								<li><span>10</span> profili seguiti</li>
+								<li><span>${fn:length(user.posts)}</span> post</li>
+								<li><span>${fn:length(user.follower)}</span> follower</li>
+								<li><span>${fn:length(user.following)}</span> profili seguiti</li>
 							</ul>
 						</div>
 						<div class="row item-user-info">

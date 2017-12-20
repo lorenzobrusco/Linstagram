@@ -30,7 +30,7 @@ public class SignInUpController {
 			return signIn(username,password,session);
 		}
 		// TODO: return a string that show the error (already user username/email)
-		return "redirect:/";
+		return "redirect:/index";
 
 	}
 
@@ -42,7 +42,7 @@ public class SignInUpController {
 			if(signInAttemptResp.getObj() instanceof User) {
 				User user= (User) signInAttemptResp.getObj();
 				session.setAttribute("user", user);
-				return "index";
+				return "redirect:/index";
 			}
 		}
 		// TODO: return a string that show the error -> put it in session and add message in jsp

@@ -50,7 +50,7 @@ public class Post {
 	@CollectionTable(name="media", joinColumns=@JoinColumn(name="post"))
 	private List<Media> media = new ArrayList<Media>();
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany
 	@Cascade(value=CascadeType.ALL)
     @JoinTable(name="likes",
                joinColumns={@JoinColumn(name="post_id")},
