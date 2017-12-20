@@ -33,7 +33,7 @@
 
 			<form class="dropzone" id="post-dropzone">
 				<!-- this is were the previews should be shown. -->
-				<button type="submit" class="btn btn-success btn-create">
+				<button type="submit" class="btn btn-success btn-create" id="submit-file">
 					<i class="fa fa-paper-plane" aria-hidden="true"></i> Confirm
 				</button>
 				<div class="fallback">
@@ -46,13 +46,11 @@
 				</div>
 			</form>
 			<div id="apply-filter-section" class="hide">
-
-				<div id="filter-btn-group">
-					<div class="btn-group" role="group" aria-label="...">
-						<button type="button" class="btn btn-default" id="vintage-btn">Vintage</button>
-						<button type="button" class="btn btn-default" id="lomo-btn">Middle</button>
-						<button type="button" class="btn btn-default" id="clarity">Right</button>
-					</div>
+				<div class="btn-group" role="group" id="filter-btn-group">
+					<button type="button" class="btn btn-default" id="vintage">Vintage</button>
+					<button type="button" class="btn btn-default" id="lomo">Lomo</button>
+					<button type="button" class="btn btn-default" id="clarity">Clarity</button>
+					<button type="button" class="btn btn-default" id="jarques">Jarques</button>
 				</div>
 			</div>
 			<!--TODO: CALL WITH AJAX FOR HIDE MODEL AND CONFIRM CREATION -->

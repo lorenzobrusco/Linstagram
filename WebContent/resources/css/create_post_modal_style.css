@@ -90,3 +90,7 @@
 .hide{
   display:none;
 }
+
+#filter-btn-group{
+	margin-bottom:15px;
+}

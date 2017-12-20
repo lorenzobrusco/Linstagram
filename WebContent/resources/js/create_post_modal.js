@@ -22,7 +22,7 @@ $(document).ready(function () {
 			init: function () {
 				var myDropzone = this;
 
-				var submit_button = $('.btn-create');
+				var submit_button = $('#submit-file');
 				submit_button.prop("disabled", true);
 				this.on("thumbnail", function (file) {
 					if (myDropzone.getAcceptedFiles().length > 0) {
@@ -32,7 +32,7 @@ $(document).ready(function () {
 				});
 
 				this.on("removedfile", function (file) {
-					console.log(myDropzone.getAcceptedFiles());
+//					console.log(myDropzone.getAcceptedFiles());
 					if (myDropzone.getAcceptedFiles().length == 0) {
 						$("div.dz-default.dz-message").removeClass("hide");
 						submit_button.prop("disabled", true);
@@ -40,7 +40,7 @@ $(document).ready(function () {
 				});
 
 				// First change the button to actually tell Dropzone to process the queue.
-				this.element.querySelector("button[type=submit]").addEventListener("click", function (e) {
+				$("#submit-file").on("click", function (e) {
 					// Make sure that the form isn't actually being sent.
 					e.preventDefault();
 					e.stopPropagation();
@@ -54,30 +54,50 @@ $(document).ready(function () {
 
 				});
 
+
+
 				// Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
 				// of the sending event because uploadMultiple is set to true.
 				this.on("sendingmultiple", function () {
 					// Gets triggered when the form is actually being sent.
 					// Hide the success button or the complete form.
 				});
+
 				this.on("successmultiple", function (files,
 						response) {
 					$("#post-dropzone").addClass("hide");
 					var file=myDropzone.getAcceptedFiles();
 					$("#apply-filter-section").append("<img class='filter-img' src="+file[0].dataURL+"></img>");
 					Caman("#apply-filter-section img",function () {
+						//Create canvas
 						var canvas=$("#apply-filter-section > canvas");
-				        this.vintage();
-				        this.render(function() {
-				        	resize_canvas(canvas);
-				        	$("#apply-filter-section").removeClass("hide");
-				        });
-				    })
+//						this.vintage();
+						this.render(function() {
+							resize_canvas(canvas);
+							$("#apply-filter-section").append('<button type="submit" class="btn btn-success btn-create"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Confirm</button>')
+							$("#submit-filter").on("click",function(){
+								//TODO send modified image
+								$("#apply-filter-section").addClass("hide");
+								$("#post-description").removeClass("hide");
+							});
+							$("#apply-filter-section").removeClass("hide");
+						});
+
+						//add event to filter button
+						$("#apply-filter-section button").click(function() {
+							var filterType = $(this).attr("id");
+							console.log(filterType);
+							Caman(canvas[0],function() {
+								//TODO loading
+								this.revert();
+								eval("this." + filterType + "().render()");
+							});
+						});
+					})
 
 
-//					$("#post-description").removeClass("hide");
-				    
-					//        	$('#close-post-modal').click();
+
+					// $('#close-post-modal').click();
 					// Gets triggered when the files have successfully been sent.
 					// Redirect user or notify of success.
 				});
@@ -108,8 +128,9 @@ $(document).ready(function () {
 			beforeClose: function () {},
 			afterClose: function () {
 				$("#post-dropzone").removeClass("hide");
-				$("#post-description").addClass("hide");
+				$("#apply-filter-section").empty();
 				$("#apply-filter-section").addClass("hide");
+				$("#post-description").addClass("hide");
 				$("#post-description-input").val("");
 				//clean dropzone uploads
 				myDropzone.removeAllFiles(true);
