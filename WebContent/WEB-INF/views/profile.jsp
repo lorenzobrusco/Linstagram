@@ -49,8 +49,8 @@
 						<div class="row item-user-info">
 							<ul>
 								<li><span>${fn:length(user.posts)}</span> post</li>
-								<li><span>${fn:length(user.follower)}</span> follower</li>
-								<li><span>${fn:length(user.following)}</span> profili seguiti</li>
+								<li><span>${fn:length(user.followers)}</span> follower</li>
+								<li><span>${fn:length(user.followings)}</span> profili seguiti</li>
 							</ul>
 						</div>
 						<div class="row item-user-info">
@@ -60,7 +60,7 @@
 									<li>${user.name} ${user.surname}</li>
 								</c:when>
 								<c:otherwise>
-									<li><b>Name</b> & <b>Surname</b> unknow ..</li>
+									<li><b>Name</b> & <b>Surname</b> Unknow ..</li>
 								</c:otherwise>
 							</c:choose>
 							</ul>
@@ -87,66 +87,19 @@
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_default_1">
 										<div id="colum">
-
-											<div class="col-md-4 col-sm-6 post-section">
-												<div class="post">
-													<img class="picture img-responsive" src="resources/images/picture3.jpg">
-													<div class="links">
-														<a href=""><span class="fa fa-heart"> 10</span></a> <a
-															href=""><span class="fa fa-comment"> 10</span></a>
+											<c:forEach items="${user.posts}" var="post">
+												<!--  Il numero dei like e comment e post-->
+												<div class="col-md-4 col-sm-6 post-section">
+													<div class="post">
+														<img class="picture img-responsive" src="${post.media.url}">
+														<div class="links">
+															<a href=""><span class="fa fa-heart"> ${fn:length(post.likes)}</span></a> <a
+																href=""><span class="fa fa-comment"> ${fn:length(post.comments)}</span></a>
+														</div>
 													</div>
 												</div>
-											</div>
-
-											<div class="col-md-4 col-sm-6 post-section">
-												<div class="post">
-													<img class="picture img-responsive" src="resources/images/picture3.jpg">
-													<div class="links">
-														<a href=""><span class="fa fa-heart"> 10</span></a> <a
-															href=""><span class="fa fa-comment"> 10</span></a>
-													</div>
-												</div>
-											</div>
-
-											<div class="col-md-4 col-sm-6 post-section">
-												<div class="post">
-													<img class="picture img-responsive" src="resources/images/picture3.jpg">
-													<div class="links">
-														<a href=""><span class="fa fa-heart"> 10</span></a> <a
-															href=""><span class="fa fa-comment"> 10</span></a>
-													</div>
-												</div>
-											</div>
-
-											<div class="col-md-4 col-sm-6 post-section">
-												<div class="post">
-													<img class="picture img-responsive" src="resources/images/picture3.jpg">
-													<div class="links">
-														<a href=""><span class="fa fa-heart"> 10</span></a> <a
-															href=""><span class="fa fa-comment"> 10</span></a>
-													</div>
-												</div>
-											</div>
-
-											<div class="col-md-4 col-sm-6 post-section">
-												<div class="post">
-													<img class="picture img-responsive" src="resources/images/picture3.jpg">
-													<div class="links">
-														<a href=""><span class="fa fa-heart"> 10</span></a> <a
-															href=""><span class="fa fa-comment"> 10</span></a>
-													</div>
-												</div>
-											</div>
-
-											<div class="col-md-4 col-sm-6 post-section">
-												<div class="post">
-													<img class="picture img-responsive" src="resources/images/picture3.jpg">
-													<div class="links">
-														<a href=""><span class="fa fa-heart"> 10</span></a> <a
-															href=""><span class="fa fa-comment"> 10</span></a>
-													</div>
-												</div>
-											</div>
+											
+											</c:forEach>
 
 										</div>
 									</div>

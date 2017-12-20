@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import it.unical.linstagram.helper.FileModel;
 import it.unical.linstagram.model.Media;
+import it.unical.linstagram.model.User;
 
 @Controller
 public class UploadController {
@@ -39,13 +41,14 @@ public class UploadController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody List<Media> upload(MultipartHttpServletRequest request, HttpServletResponse response)
+	public @ResponseBody List<Media> upload(MultipartHttpServletRequest request, HttpServletResponse response,
+			HttpSession session)
 			throws IOException {
 		final Map<String, MultipartFile> fileMap = request.getFileMap();
 		final List<Media> uploadedFiles = new ArrayList<>();
 		for (MultipartFile multipartFile : fileMap.values()) {
-			saveFileToLocalDisk(multipartFile);
-			Media fileInfo = getUploadedFileInfo(multipartFile);
+			saveFileToLocalDisk(multipartFile, session);
+			Media fileInfo = getUploadedFileInfo(multipartFile, session);
 			fileInfo = saveFileToDatabase(fileInfo);
 			uploadedFiles.add(fileInfo);
 		}
@@ -58,8 +61,8 @@ public class UploadController {
 	 * @throws IOException
 	 * @throws FileNotFoundException
 	 */
-	private void saveFileToLocalDisk(MultipartFile multipartFile) throws IOException, FileNotFoundException {
-		final String outputFileName = getOutputFilename(multipartFile);
+	private void saveFileToLocalDisk(MultipartFile multipartFile, HttpSession session) throws IOException, FileNotFoundException {
+		final String outputFileName = getOutputFilename(multipartFile, session);
 		FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));
 	}
 
@@ -79,9 +82,9 @@ public class UploadController {
 	 * @param multipartFile
 	 * @return
 	 */
-	private String getOutputFilename(MultipartFile multipartFile) {
+	private String getOutputFilename(MultipartFile multipartFile, HttpSession session) {
 		//TODO change file name
-		return getDestinationLocation() + multipartFile.getOriginalFilename();
+		return getDestinationLocation(session) + multipartFile.getOriginalFilename();
 	}
 
 	/**
@@ -90,9 +93,9 @@ public class UploadController {
 	 * @return
 	 * @throws IOException
 	 */
-	private Media getUploadedFileInfo(MultipartFile multipartFile) throws IOException {
+	private Media getUploadedFileInfo(MultipartFile multipartFile, HttpSession session) throws IOException {
 		Media media = new Media();
-		media.setUrl(getDestinationLocation());
+		media.setUrl(getDestinationLocation(session));
 		return media;
 	}
 
@@ -100,8 +103,10 @@ public class UploadController {
 	 * Get absolute path
 	 * @return
 	 */
-	private String getDestinationLocation() {
-		String path = context.getRealPath("") + File.separator + "WEB-INF" + File.separator + "images" + File.separator;
+	private String getDestinationLocation(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		String path = context.getRealPath("/WEB-INF/images/"+user.getUsername());
+		System.out.println(path);
 		FileModel.createFolder(path);
 		
 		return path;
