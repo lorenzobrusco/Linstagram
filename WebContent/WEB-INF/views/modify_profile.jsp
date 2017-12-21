@@ -23,6 +23,27 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/profile_style.css">
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#modify-btn").click(function() {
+			var name = $("#name").val()
+			var username = $("#user-name").val()
+			var email = $("#email").val()
+			var selection = $("#selection").val()
+			var bio = $("#bio").val()
+			
+			/* name+" "+ username+" "+ email+ " "+ sesso+ " "+ bio */
+			$.ajax({url:"sendInfoProfile", 
+				data:{name:name, username:username, email:email, sesso:selection, bio:bio},
+				success: function(result) {
+					//TODO insert popup che dice che le modifiche sono state effettuate
+			}	
+			})
+		})
+	});
+</script>
+
 </head>
 
 <body>
@@ -59,7 +80,7 @@
 								</div>
 							</div>
 							<div class="form-inline-profile">
-								<label for="user-name">Nome Utente</label>
+								<label for="user-name">Username</label>
 								<div class="input-inline">
 									<input type="text" class="form-control" id="user-name">
 								</div>
@@ -72,7 +93,7 @@
 							</div>
 
 							<div class="form-inline-profile">
-								<label for="selection">Email address:</label>
+								<label for="selection">Sesso</label>
 								<div class="input-inline">
 									<select id="selection" class="form-control"><option
 											value="1">Uomo</option>
@@ -89,12 +110,13 @@
 									<textarea class="form-control" id="bio"></textarea>
 								</div>
 							</div>
-
 						</form>
 					</div>
 				</div>
 			</div>
+			<button class="pull-right" id="modify-btn">Submit</button>
 		</div>
+		
 	</section>
 	<!-- end section -->
 

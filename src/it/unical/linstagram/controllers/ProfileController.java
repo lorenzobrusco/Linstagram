@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
@@ -39,6 +40,19 @@ public class ProfileController {
 		return "redirect:/";
 	}
 
+	@RequestMapping("/sendInfoProfile")
+	public String setInfoProfile(HttpSession session, @RequestParam("name") String name,
+			@RequestParam("username") String username, @RequestParam("email") String email,
+			@RequestParam("sesso") String sesso, @RequestParam("bio") String bio) {
+		
+		User user = (User) session.getAttribute("user");
+		if (!name.equals(""))
+			profileService.changeName(user, name);
+//		System.out.println(name+" "+ username+" "+email+ " "+sesso+" "+bio);
+		
+		return "redirect:/";
+	}
+	
 	@RequestMapping("taggedPhoto")
 	public String getTaggedPhoto(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {

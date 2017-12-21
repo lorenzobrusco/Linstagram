@@ -16,35 +16,11 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<script src="resources/js/userPhotoProfile.js"></script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile_style.css">
 
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#tags").on('click', function() {
-			$.ajax({
-				url : "taggedPhoto",
-				success : function(result) {
-					/* $("#tag").empty(); */
-					$("#tag").html(result); //TODO fa un brutto effetto la prima volta!
-				}
-			});
-		});
-	});
-	
-	$(document).ready(function() {
-		$("#bookmarks").on('click', function() {
-			$.ajax({
-				url : "bookmarkPhoto",
-				success : function(result) {
-					/* $("#tag").empty(); */
-					$("#bookmark").html(result); //TODO fa un brutto effetto la prima volta!
-				}
-			});
-		});
-	});
-</script>
 
 </head>
 <body>
