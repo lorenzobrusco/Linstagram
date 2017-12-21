@@ -23,6 +23,8 @@ public class ProfileService {
 		return userDAO.getTaggedPostByUsername(username);
 	}
 
-	
+	public List<Post> getBookmarkOfUser(String username) {
+		return userDAO.getBookmarksByUsername(username);
+	}
 
 }

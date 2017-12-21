@@ -50,5 +50,16 @@ public class ProfileController {
 		}
 		return "redirect:/";
 	}
-	
+
+	@RequestMapping("bookmarkPhoto")
+	public String getBookmarkPhoto(HttpSession session, Model model) {
+		if(UserManager.checkLogged(session)) {
+			User user = (User) session.getAttribute("user");
+			List<Post> postOfUser = profileService.getBookmarkOfUser(user.getUsername());
+			
+			model.addAttribute("posts", postOfUser);
+			return "fragment/profilePost";	//profilePost.jsp
+		}
+		return "redirect:/";
+	}
 }

@@ -31,10 +31,18 @@
 				}
 			});
 		});
-
-/* 		if ($(window).width() > 767) {
-			$("#sidenav").height($("#posts").height());
-		} */
+	});
+	
+	$(document).ready(function() {
+		$("#bookmarks").on('click', function() {
+			$.ajax({
+				url : "bookmarkPhoto",
+				success : function(result) {
+					/* $("#tag").empty(); */
+					$("#bookmark").html(result); //TODO fa un brutto effetto la prima volta!
+				}
+			});
+		});
 	});
 </script>
 
@@ -95,7 +103,7 @@
 									<li class="active"><a href="#tab_default_1"
 										data-toggle="tab"> Posts </a></li>
 									<li><a id="tags" href="#tab_default_2" data-toggle="tab"> Tags </a> </li>
-									<li><a href="#tab_default_3" data-toggle="tab"> Bookmarks </a> </li>
+									<li><a id="bookmarks" href="#tab_default_3" data-toggle="tab"> Bookmarks </a> </li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_default_1">
@@ -117,14 +125,16 @@
 										</div>
 									</div>
 									<div class="tab-pane" id="tab_default_3">
-										<div class="bookmark">
-											<span></span>
-											<div>Salva</div>
-											<br>
-											<div>
-												Salva le foto e i video che desideri rivedere. Nessuno
-												riceverà <br>una notifica e solo tu potrai vedere cosa
-												hai salvato.
+										<div id="bookmark">
+											<div class="bookmark">
+												<span></span>
+												<div>Salva</div>
+												<br>
+												<div>
+													Salva le foto e i video che desideri rivedere. Nessuno
+													riceverà <br>una notifica e solo tu potrai vedere cosa
+													hai salvato.
+												</div>
 											</div>
 										</div>
 									</div>
