@@ -22,17 +22,38 @@ $(document).ready(function() {
 				}
 		}	
 		})
-	})
+	});
 
 	$('.close').on('click', function () {
 	  	var popup = document.getElementById("popupOK");
 		popup.classList.remove("show"); 
 		var popup = document.getElementById("popupFAIL");
 		popup.classList.remove("show"); 
-	})
+	});
 	
 
+	$('.nav-pills').on('click', 'li', function() {
+	    $('.nav-pills li.active-nav').removeClass('active-nav');
+	    $(this).addClass('active-nav');
+	});
 	
+	$("#changePassword").click(function() {
+		$.ajax({url:"changePasswordPage", 
+			success: function(result) {
+				$('#container_form').empty();
+				$('#container_form').append(result);
+		}	
+		})
+	});
+	
+	$("#changeInfoUser").click(function() {
+		$.ajax({url:"changeInfoUser", 
+			success: function(result) {
+				$('#container_form').empty();
+				$('#container_form').append(result);
+		}	
+		})
+	});
 });
 
 $(function () {
@@ -46,4 +67,5 @@ function verify_check(cb) {
 	else
 		  document.getElementById('check').value = "false";
 };
+
 
