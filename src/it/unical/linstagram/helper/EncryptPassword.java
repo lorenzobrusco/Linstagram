@@ -25,7 +25,7 @@ public class EncryptPassword {
 		try {
 			hash = byteArrayToHexString(EncryptPassword.computeHash(newPassword));
 //			System.out.println(hash);
-
+//			System.out.println(hash+"    SAVED: "+savedPassword);
 			if (hash.equals(savedPassword)) 
 				return hash;
 			

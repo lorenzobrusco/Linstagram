@@ -46,8 +46,8 @@ public class SignInUpService {
 				user = null;
 		}
 		if (user == null)
-			return new MessageResponce(MessageCode.ERROR_SIGN_IN, null);
-		return new MessageResponce(MessageCode.SUCCESS_SIGN_IN, user);
+			return new MessageResponce(MessageCode.ERROR_SIGN_IN, null, "");
+		return new MessageResponce(MessageCode.SUCCESS_SIGN_IN, user, "");
 	}
 
 	/**

@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import it.unical.linstagram.helper.EncryptPassword;
+import it.unical.linstagram.helper.MessageResponce;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.ProfileService;
 
 @Controller
@@ -55,18 +58,18 @@ public class ProfileController {
 		User user = (User) session.getAttribute("user");
 		if (!name.equals(""))
 			if (!profileService.changeName(user, name))
-				return "NAME_FAILED";
+				return new MessageResponce(MessageCode.NAME_FAILED, user, "Non è stato possibile cambiare il nome.").getMessage();
 		if (!username.equals("")) {
 			if (!profileService.changeUsername(user, username))
-				return "USERNAME_FAILED";
+				return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Username già esistente.").getMessage();
 		}
 		if (!email.equals("")) {
 			if (!profileService.changeEmail(user, email))
-				return "EMAIL_FAILED";
+				return new MessageResponce(MessageCode.EMAIL_FAILED, user, "Email già esistente.").getMessage();
 		}
 		if (!gender.equals("-1"))
 			if (!profileService.changeGender(user, gender))
-				return "GENDER_FAILED";
+				return new MessageResponce(MessageCode.GENDER_FAILED, user, "Non è stato possibile cambiare il genere.").getMessage();
 		
 		if (!date.equals("")) {
 			try {
@@ -75,24 +78,24 @@ public class ProfileController {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(dateNew);
 				if (!cal.before(Calendar.getInstance()))
-					return "VIENI DAL FUTURO??";
+					return new MessageResponce(MessageCode.DATE_FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
 				
 				if (!profileService.changeDate(user, cal))
-					return "DATE_FAILED";
+					return  new MessageResponce(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
 				
 			} catch (ParseException e) {
-				return "DATE_FAIL";
+				return  new MessageResponce(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
 			}
 		}
 		
 		if (!bio.equals(""))
 			if (!profileService.changeBiography(user, bio))
-				return "BIO_FAILED";
+				return  new MessageResponce(MessageCode.BIO_FAILED, user, "Non è stato possibile cambiare la biografia.").getMessage();
 		
 		if (!profileService.changePrivateField(user, privateCheck))
-			return "PRIVATE_FAILED";
+			return  new MessageResponce(MessageCode.PRIVATE_FAILED, user, "Non è stato possibile cambiare il campo di privacy.").getMessage();
 		
-		return "OK";
+		return  new MessageResponce(MessageCode.OK, user, "Ok").getMessage();
 	}
 	
 	@RequestMapping("taggedPhoto")
@@ -118,4 +121,36 @@ public class ProfileController {
 		}
 		return "redirect:/";
 	}
+	
+	@RequestMapping("changePasswordPage")
+	public String getPagePassword(HttpSession session) {
+		return "fragment/passwordPage";
+	}
+
+	@RequestMapping("changeInfoUser")
+	public String getInfoUser(HttpSession session) {
+		return "fragment/profilePage";
+	}
+	
+	@RequestMapping("sendChangePassword")
+	@ResponseBody
+	public String changePassword(HttpSession session, @RequestParam("old_pass") String old_password, 
+			 @RequestParam("new_pass") String new_password,  @RequestParam("repeat_pass") String repeat_password) {
+		
+		User user = (User) session.getAttribute("user");
+		String pass = profileService.getPassword(user.getUsername());
+		
+		if (!pass.equals(EncryptPassword.checkPassword(old_password, pass)))
+			return  new MessageResponce(MessageCode.PASS_WRONG, user, "La password inserita non corrisponde alla password corrente.").getMessage();
+		
+		if (!new_password.equals(repeat_password))
+			return  new MessageResponce(MessageCode.PASS_DIFFERENT, user, "Le due password inserite sono diverse.").getMessage();
+		
+		String password = EncryptPassword.encrypt(new_password);
+		profileService.changePassword(user, password);
+		
+		return "OK";
+	}
+	
+	
 }

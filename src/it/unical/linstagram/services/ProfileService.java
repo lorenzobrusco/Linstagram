@@ -95,6 +95,22 @@ public class ProfileService {
 			user.setPrivateProfile(true);
 		else 
 			user.setPrivateProfile(false);
+		
+		if (modelDAO.merge(user))
+			return true;
+		return false;
+	}
+	
+	
+	
+	
+	public String getPassword(String username) {
+		return userDAO.getPasswordByUsername(username);
+	}
+	
+	public boolean changePassword(User user, String password) {
+		user.setPassword(password);
+		
 		if (modelDAO.merge(user))
 			return true;
 		return false;
