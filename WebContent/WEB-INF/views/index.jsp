@@ -81,8 +81,11 @@
 	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/create_stories.js"></script>
+<!-- 	<script -->
+<%-- 		src="${pageContext.request.contextPath}/resources/js/create_stories.js"></script> --%>
+	<script>
+	<%@ include file="../../resources/js/load_stories.js" %>
+	</script>
 
 </body>
 

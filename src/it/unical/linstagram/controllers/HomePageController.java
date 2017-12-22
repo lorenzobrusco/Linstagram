@@ -15,6 +15,7 @@ import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.PostService;
+import it.unical.linstagram.services.StoriesService;
 import it.unical.linstagram.services.UserService;
 
 @Controller
@@ -26,10 +27,14 @@ public class HomePageController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private StoriesService storiesService;
+	
 	@RequestMapping("/index")
 	public String homePageController(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
 			model.addAttribute("posts", postService.getPosts());
+			model.addAttribute("followedUsersStories",storiesService.getFollowedStories((User)session.getAttribute("user")));
 			return "index";
 		}
 		return "redirect:/";

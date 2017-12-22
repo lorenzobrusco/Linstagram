@@ -38,9 +38,17 @@ public class StoryDAO implements IStoryDAO{
 		Calendar currentTime = Calendar.getInstance();
 		Session session = HibernateUtil.getHibernateSession();
 
-		Query followedUsers = session.createQuery("");
-		session.createQuery("SELECT s FROM Stories s WHERE s.user.id in (:fUsers)").setParameter("fUsers",followedUsers.list());
-		return null;
+		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
+				.setParameter("username", username).list();
+		List<Story> stories = null;
+		if(followedUsers.isEmpty())
+			stories = session.createQuery("SELECT s FROM Story s  WHERE 1=0").list();
+		else
+			stories = session.createQuery("SELECT s FROM Story s  WHERE s.user in (:fUsers)")
+				.setParameter("fUsers",followedUsers).list();
+		
+		session.close();
+		return stories;
 	}
 
 }
