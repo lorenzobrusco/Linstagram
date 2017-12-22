@@ -15,8 +15,9 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/animatedModal.min.js"></script>
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.0.0/caman.full.min.js"></script>
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.0.0/caman.full.min.js"></script> -->
+	<script
+	src="${pageContext.request.contextPath}/resources/js/camanjs.js"></script>
 
 
 <!--CREATE POST MODAL-->
@@ -33,7 +34,7 @@
 
 			<form class="dropzone" id="post-dropzone">
 				<!-- this is were the previews should be shown. -->
-				<button type="submit" class="btn btn-success btn-create" id="submit-file">
+				<button class="btn btn-success btn-create" id="submit-file">
 					<i class="fa fa-paper-plane" aria-hidden="true"></i> Confirm
 				</button>
 				<div class="fallback">
@@ -41,7 +42,7 @@
 				</div>
 				<div class="dropzone-previews">
 					<div class="dz-default dz-message">
-						<span>Drop yuor photos or videos here</span>
+						<span>Drop your photos or videos here</span>
 					</div>
 				</div>
 			</form>
@@ -52,13 +53,14 @@
 					<button type="button" class="btn btn-default" id="clarity">Clarity</button>
 					<button type="button" class="btn btn-default" id="jarques">Jarques</button>
 				</div>
+				<div id="loader" class="hide"></div>
 			</div>
 			<!--TODO: CALL WITH AJAX FOR HIDE MODEL AND CONFIRM CREATION -->
 			<form id="post-description" class="hide" action="createPost">
 				<label for="post-description-input">Enter a description:</label>
 				<textarea class="form-control" rows="5" id="post-description-input"
 					name="postDescription"> </textarea>
-				<button type="submit" class="btn btn-success btn-create">
+				<button type="submit" class="btn btn-success btn-create" id="submit-description">
 					<i class="fa fa-paper-plane" aria-hidden="true"></i> Confirm
 				</button>
 			</form>

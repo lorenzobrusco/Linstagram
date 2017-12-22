@@ -1,6 +1,5 @@
 package it.unical.linstagram.controllers;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -84,7 +83,7 @@ public class UploadController {
 	 */
 	private String getOutputFilename(MultipartFile multipartFile, HttpSession session) {
 		//TODO change file name
-		return getDestinationLocation(session) + multipartFile.getOriginalFilename();
+		return getLocalDestinationLocation(session) + multipartFile.getOriginalFilename();
 	}
 
 	/**
@@ -95,20 +94,29 @@ public class UploadController {
 	 */
 	private Media getUploadedFileInfo(MultipartFile multipartFile, HttpSession session) throws IOException {
 		Media media = new Media();
-		media.setUrl(getDestinationLocation(session));
+		String path=getOnlineLocation(session)+multipartFile.getOriginalFilename();
+		System.out.println(path);
+		media.setUrl(path);
 		return media;
 	}
 
 	/**
-	 * Get absolute path
-	 * @return
+	 * Get absolute path and create a folder for each user (if not exist).
+	 * @return the local path of the image
 	 */
-	private String getDestinationLocation(HttpSession session) {
+	private String getLocalDestinationLocation(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		String path = context.getRealPath("/WEB-INF/images/"+user.getUsername());
+		String path = context.getRealPath("/WEB-INF/images/"+user.getUsername()+"/");
 		System.out.println(path);
 		FileModel.createFolder(path);
-		
 		return path;
 	}
+	
+	private String getOnlineLocation(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		String onlineContextPath = "images/"+user.getUsername()+"/";
+		return onlineContextPath;
+	}
+	
+	
 }
