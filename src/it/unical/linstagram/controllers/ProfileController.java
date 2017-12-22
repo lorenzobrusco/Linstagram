@@ -1,5 +1,9 @@
 package it.unical.linstagram.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
@@ -41,16 +46,49 @@ public class ProfileController {
 	}
 
 	@RequestMapping("/sendInfoProfile")
+	@ResponseBody
 	public String setInfoProfile(HttpSession session, @RequestParam("name") String name,
 			@RequestParam("username") String username, @RequestParam("email") String email,
-			@RequestParam("sesso") String sesso, @RequestParam("bio") String bio) {
+			@RequestParam("sesso") String gender, @RequestParam("date") String date, @RequestParam("bio") String bio) {
 		
 		User user = (User) session.getAttribute("user");
 		if (!name.equals(""))
-			profileService.changeName(user, name);
-//		System.out.println(name+" "+ username+" "+email+ " "+sesso+" "+bio);
+			if (!profileService.changeName(user, name))
+				return "NAME_FAILED";
+		if (!username.equals("")) {
+			if (!profileService.changeUsername(user, username))
+				return "USERNAME_FAILED";
+		}
+		if (!email.equals("")) {
+			if (!profileService.changeEmail(user, email))
+				return "EMAIL_FAILED";
+		}
+		if (!gender.equals("-1"))
+			if (!profileService.changeGender(user, gender))
+				return "GENDER_FAILED";
 		
-		return "redirect:/";
+		if (!date.equals("")) {
+			try {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				Date dateNew = sdf.parse(date);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(dateNew);
+				if (!cal.before(Calendar.getInstance()))
+					return "VIENI DAL FUTURO??";
+				
+				if (!profileService.changeDate(user, cal))
+					return "DATE_FAILED";
+				
+			} catch (ParseException e) {
+				return "DATE_FAIL";
+			}
+		}
+		
+		if (!bio.equals(""))
+			if (!profileService.changeBiography(user, bio))
+				return "BIO_FAILED";
+		
+		return "OK";
 	}
 	
 	@RequestMapping("taggedPhoto")

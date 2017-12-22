@@ -59,6 +59,7 @@ public class ModelDAO {
 			return true;
 		} catch (Exception e) {
 			transaction.rollback();
+			e.printStackTrace();
 			return false;
 		} finally {
 			session.close();

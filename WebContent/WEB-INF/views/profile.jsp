@@ -52,7 +52,7 @@
 								<li><span>${fn:length(user.followings)}</span> profili seguiti</li>
 							</ul>
 						</div>
-						<div class="row item-user-info">
+						<div class="row item-user-info" style="padding-bottom:0% !important">
 							<ul>
 							 <c:choose>
 							  <c:when test ="!empty ${user.name}  || !empty ${user.surname}">
@@ -62,6 +62,11 @@
 									<li><b>Name</b> & <b>Surname</b> Unknow ..</li>
 								</c:otherwise>
 							</c:choose>
+							</ul>
+						</div>
+						<div class="row item-user-info" style="padding-top:0% !important">
+							<ul>
+								<li><b>Biography</b> ${user.biography }</li>
 							</ul>
 						</div>
 					</div>

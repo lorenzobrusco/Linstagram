@@ -1,5 +1,6 @@
 package it.unical.linstagram.services;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -7,6 +8,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.linstagram.model.Gender;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
@@ -36,9 +38,56 @@ public class ProfileService {
 	}
 
 	
-	public void changeName(User user, String name) {
+	public boolean changeName(User user, String name) {
 		user.setName(name);
-		modelDAO.merge(user);
+		if (modelDAO.merge(user))
+			return true;
+		return false;
+	}
+
+	public boolean changeUsername(User user, String username) {
+		User userFound = userDAO.getUserByUsername(username);
+		if (userFound == null) {
+			user.setUsername(username);
+			if (modelDAO.merge(user))
+				return true;
+			return false;
+		}
+		
+		return false;		
+	}
+
+	public boolean changeEmail(User user, String email) {
+		User userFound = userDAO.getUserByEmail(email);
+		if (userFound == null) {
+			user.setEmail(email);
+			if (modelDAO.merge(user))
+				return true;
+			return false;
+		}
+		
+		return false;	
+	}
+
+	public boolean changeGender(User user, String gender) {
+		user.setGender(Gender.values()[Integer.parseInt(gender)-1]);
+		if (modelDAO.merge(user))
+			return true;
+		return false;
+	}
+
+	public boolean changeBiography(User user, String bio) {
+		user.setBiography(bio);
+		if (modelDAO.merge(user))
+			return true;
+		return false;
+	}
+
+	public boolean changeDate(User user, Calendar date) {
+		user.setBirthdate(date);
+		if (modelDAO.merge(user))
+			return true;
+		return false;
 	}
 	
 }
