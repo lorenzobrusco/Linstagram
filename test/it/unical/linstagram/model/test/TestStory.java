@@ -93,4 +93,53 @@ public class TestStory {
 		
 	}
 	
+	@Test
+	public void getFollowedUserStories() {
+		User eliana = new User("Eliana","email","pass");
+		User manuel = new User("Manuel","e","pass");
+		User paola = new User("Paola","paola","pass");
+		
+		Media media = new Media(Media_Type.IMAGE,"urlmedia");
+		Story story = new Story(eliana, media);
+		Story story2 = new Story(eliana, media);
+		
+		Media media1 = new Media(Media_Type.IMAGE,"urlmedia");
+		Story story1 = new Story(manuel, media1);
+		
+		paola.getFollowings().add(eliana);
+		paola.getFollowings().add(manuel);
+		
+		story.getViewers().add(manuel);
+		story.getViewers().add(paola);
+
+		ModelDAO modelDAO = new ModelDAO();
+
+		modelDAO.save(eliana);
+		modelDAO.save(manuel);
+		modelDAO.save(paola);
+		
+		modelDAO.save(story);
+		modelDAO.save(story1);
+		modelDAO.save(story2);
+		
+		
+		IStoryDAO storyDAO = new StoryDAO();
+		List<Story> stories = storyDAO.getFollowedUsersStoriesByUsername(paola.getUsername());
+		
+		Assert.assertEquals(3, stories.size());
+		Assert.assertEquals(2, stories.get(0).getViewers().size());
+
+		
+	}
+	
+	@Test
+	public void testEmptyStories() {
+		User eliana = new User("Eliana","email","pass");
+		
+		ModelDAO modelDAO = new ModelDAO();
+		modelDAO.save(eliana);
+		
+		IStoryDAO storyDAO = new StoryDAO();
+		List<Story> stories = storyDAO.getFollowedUsersStoriesByUsername(eliana.getUsername());
+	}
 }

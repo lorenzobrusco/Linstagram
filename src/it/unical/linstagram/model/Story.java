@@ -63,6 +63,15 @@ public class Story {
 		this.media = media;
 		this.creationDate = Calendar.getInstance();
 	}
+	
+	public void addViewer(User user) {
+		viewers.add(user);
+	}
+	
+	public boolean isAViewer(User user) {
+		return viewers.contains(user);
+	}
+	
 	public int getId() {
 		return id;
 	}

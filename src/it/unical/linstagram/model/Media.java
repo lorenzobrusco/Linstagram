@@ -33,6 +33,12 @@ public class Media{
 		this.url = url;
 	}
 	
+	public Media_Type getType() {
+		return type;
+	}
+	public void setType(Media_Type type) {
+		this.type = type;
+	}
 	
 
 	
