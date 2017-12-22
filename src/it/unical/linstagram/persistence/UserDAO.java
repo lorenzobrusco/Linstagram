@@ -98,4 +98,6 @@ public class UserDAO implements IUserDAO {
 		session.close();
 		return posts;
 	}
+	
+	
 }

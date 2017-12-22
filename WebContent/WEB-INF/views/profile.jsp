@@ -16,27 +16,11 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<script src="resources/js/userPhotoProfile.js"></script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile_style.css">
 
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#tags").on('click', function() {
-			$.ajax({
-				url : "taggedPhoto",
-				success : function(result) {
-					/* $("#tag").empty(); */
-					$("#tag").html(result); //TODO fa un brutto effetto la prima volta!
-				}
-			});
-		});
-
-/* 		if ($(window).width() > 767) {
-			$("#sidenav").height($("#posts").height());
-		} */
-	});
-</script>
 
 </head>
 <body>
@@ -95,7 +79,7 @@
 									<li class="active"><a href="#tab_default_1"
 										data-toggle="tab"> Posts </a></li>
 									<li><a id="tags" href="#tab_default_2" data-toggle="tab"> Tags </a> </li>
-									<li><a href="#tab_default_3" data-toggle="tab"> Bookmarks </a> </li>
+									<li><a id="bookmarks" href="#tab_default_3" data-toggle="tab"> Bookmarks </a> </li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_default_1">
@@ -117,14 +101,16 @@
 										</div>
 									</div>
 									<div class="tab-pane" id="tab_default_3">
-										<div class="bookmark">
-											<span></span>
-											<div>Salva</div>
-											<br>
-											<div>
-												Salva le foto e i video che desideri rivedere. Nessuno
-												riceverà <br>una notifica e solo tu potrai vedere cosa
-												hai salvato.
+										<div id="bookmark">
+											<div class="bookmark">
+												<span></span>
+												<div>Salva</div>
+												<br>
+												<div>
+													Salva le foto e i video che desideri rivedere. Nessuno
+													riceverà <br>una notifica e solo tu potrai vedere cosa
+													hai salvato.
+												</div>
 											</div>
 										</div>
 									</div>
