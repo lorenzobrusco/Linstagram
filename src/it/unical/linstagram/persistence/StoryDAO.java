@@ -44,7 +44,7 @@ public class StoryDAO implements IStoryDAO{
 		if(followedUsers.isEmpty())
 			stories = session.createQuery("SELECT s FROM Story s  WHERE 1=0").list();
 		else
-			stories = session.createQuery("SELECT s FROM Story s  WHERE s.user in (:fUsers)")
+			stories = session.createQuery("SELECT s FROM Story s  WHERE s.user in (:fUsers) order by s.creationDate desc")
 				.setParameter("fUsers",followedUsers).list();
 		
 		session.close();

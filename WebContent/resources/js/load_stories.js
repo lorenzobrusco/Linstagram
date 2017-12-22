@@ -8,14 +8,8 @@ var createStories = function(){
         'cubeEffect': true
       }
     };
-    var timeIndex = 0;
-    var shifts = [35, 60, 60*3, 60*60*2, 60*60*25, 60*60*24*4, 60*60*24*10];
-    var timestamp = function() {
-      var now = new Date();
-      var shift = shifts[timeIndex++] || 0;
-      var date = new Date( now - shift*1000);
-
-      return date.getTime() / 1000;
+    var timestamp = function(date) {
+      return date/1000;
     };
 
     var stories = new Zuck('stories', {
@@ -33,7 +27,6 @@ var createStories = function(){
         id: "${user.username}",
         photo: "${user.photoProfile}",
         name: "${user.username}",
-        lastUpdated: timestamp(),
         items: [
       	  	<c:forEach items="${user.stories}" var="story">
 	      	  		buildItem(	"${story.id}",
@@ -44,7 +37,8 @@ var createStories = function(){
 	      	  					'',
 	      	  					false,
 	      	  					"${story.viewed}", 
-	      	  					timestamp()),
+	      	  					timestamp("${story.date}")
+	      	  					),
       	  	</c:forEach>
         ]
       },

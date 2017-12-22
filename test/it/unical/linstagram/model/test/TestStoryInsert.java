@@ -36,15 +36,21 @@ public class TestStoryInsert {
 		Media media = new Media(Media_Type.IMAGE,"https://scontent-gru2-2.cdninstagram.com/t51.2885-15/e15/10810091_1527190460857578_541280638_n.jpg");
 		Story story = new Story(ciccio, media);
 		
-		User dragmaf = userDAO.getUserByUsername("dragmaf");
-		
-		Media media1 = new Media(Media_Type.VIDEO,"https://instagram.frao1-1.fna.fbcdn.net/t50.2886-16/17886251_1128605603951544_572796556789415936_n.mp4");
-		Story story1 = new Story(dragmaf, media1);
-		
+//		User dragmaf = userDAO.getUserByUsername("dragmaf");
+//		
+//		Media media1 = new Media(Media_Type.VIDEO,"https://instagram.frao1-1.fna.fbcdn.net/t50.2886-16/17886251_1128605603951544_572796556789415936_n.mp4");
+//		Story story1 = new Story(dragmaf, media1);
+//		
+//		User root = userDAO.getUserByUsername("root");
+//		
+//		Story story2 = new Story(root, media);
+//		
+//		
 		
 		ModelDAO modelDAO = new ModelDAO();
 		modelDAO.save(story);
-		modelDAO.save(story1);
+//		modelDAO.save(story1);
+//		modelDAO.save(story2);
 	}
 //	@Test
 	public void addFollowedUsers() {
