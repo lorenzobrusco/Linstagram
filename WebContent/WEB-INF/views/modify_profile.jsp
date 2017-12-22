@@ -18,50 +18,14 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile_style.css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modify_profile.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup.css">
+
+<script src="${pageContext.request.contextPath}/resources/js/modify_profile.js"></script>
 
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#modify-btn").click(function() {
-			var name = $("#name").val()
-			var username = $("#user-name").val()
-			var email = $("#email").val()
-			var selection = $("#selection").val()
-			var date = $("#datepicker").val()
-			var bio = $("#bio").val()
-			var popup = document.getElementById("myPopup");
-   
-			/* name+" "+ username+" "+ email+ " "+ sesso+ " "+ bio */
-			$.ajax({url:"sendInfoProfile", 
-				data:{name:name, username:username, email:email, sesso:selection, date:date, bio:bio},
-				success: function(result) {
-					if (result == "OK")
-						 popup.classList.toggle("show");
-					else
-						alert(result);
-					//TODO insert popup che dice che le modifiche sono state effettuate
-			}	
-			})
-		})
-
-		$('.close').on('click', function () {
-		  	var popup = document.getElementById("myPopup");
-			popup.classList.remove("show"); 
-		})
-		
-
-		
-	});
-	$(function () {
-        $("#datepicker").datepicker();
-    });
-	
-</script>
 
 </head>
 
@@ -135,10 +99,43 @@
 									<textarea class="form-control" id="bio"></textarea>
 								</div>
 							</div>
-							<div class="popup">
-								<span class="popuptext alert" id="myPopup">
+							
+							<div class="form-inline-profile">
+								<label for="private"></label>
+								<div class="input-inline">
+									<c:choose>
+									    <c:when test="${user.privateProfile == true}">
+									        <label for="private" style="margin-left:-41%">Private</label>
+											<label class="switch pull-right">
+										  		<input onClick="verify_check(this)" type="checkbox" id="checkbox" checked>
+										  		<span class="slider round"></span>
+										  		<input type="hidden" id="check" value="true"/>
+											</label>
+									    </c:when>    
+									    <c:otherwise>
+									        <label for="private" style="margin-left:-41%">Private</label>
+											<label class="switch pull-right">
+										  		<input onClick="verify_check(this)" type="checkbox" id="checkbox">
+										  		<span class="slider round"></span>
+										  		<input type="hidden" id="check" value="false"/>
+											</label>
+									    </c:otherwise>
+									</c:choose>
+								</div>
+							</div>
+							
+							<div class="popup popupOK">
+								<span class="popuptext alert" id="popupOK">
 								  <a  onclick="close" class="close">&times;</a>
 								  <strong>Success!</strong> Le modifiche sono state effettuate.
+		  						</span>
+							</div>
+							<div class="popup popupFAIL">
+								<span class="popuptext alert" id="popupFAIL">
+								  <a  onclick="close" class="close">&times;</a>
+								  <br>
+								  <br>
+								  <a id="text"></a>
 		  						</span>
 							</div>
 						</form>

@@ -49,7 +49,8 @@ public class ProfileController {
 	@ResponseBody
 	public String setInfoProfile(HttpSession session, @RequestParam("name") String name,
 			@RequestParam("username") String username, @RequestParam("email") String email,
-			@RequestParam("sesso") String gender, @RequestParam("date") String date, @RequestParam("bio") String bio) {
+			@RequestParam("sesso") String gender, @RequestParam("date") String date, @RequestParam("bio") String bio,
+			@RequestParam("privateCheck") String privateCheck) {
 		
 		User user = (User) session.getAttribute("user");
 		if (!name.equals(""))
@@ -87,6 +88,9 @@ public class ProfileController {
 		if (!bio.equals(""))
 			if (!profileService.changeBiography(user, bio))
 				return "BIO_FAILED";
+		
+		if (!profileService.changePrivateField(user, privateCheck))
+			return "PRIVATE_FAILED";
 		
 		return "OK";
 	}

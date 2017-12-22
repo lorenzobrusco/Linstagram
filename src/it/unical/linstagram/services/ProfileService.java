@@ -89,5 +89,15 @@ public class ProfileService {
 			return true;
 		return false;
 	}
+
+	public boolean changePrivateField(User user, String privateCheck) {
+		if (privateCheck == "true")
+			user.setPrivateProfile(true);
+		else 
+			user.setPrivateProfile(false);
+		if (modelDAO.merge(user))
+			return true;
+		return false;
+	}
 	
 }
