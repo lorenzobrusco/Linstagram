@@ -90,7 +90,7 @@
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_default_1">
 										<div id="colum">
-											<jsp:include page="./fragment/profilePost.jsp"></jsp:include>
+											<jsp:include page="./fragment/userProfileFragment/postSection.jsp"></jsp:include>
 
 										</div>
 									</div>

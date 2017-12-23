@@ -12,19 +12,25 @@
 			<div class="form-inline-profile">
 				<label for="name">Nome</label>
 				<div class="input-inline">
-					<input type="text" class="form-control" id="name">
+					<input type="text" class="form-control" id="name" placeholder="${user.name }">
+				</div>
+			</div>
+			<div class="form-inline-profile">
+				<label for="name">Surname</label>
+				<div class="input-inline">
+					<input type="text" class="form-control" id="surname" placeholder="${user.surname }">
 				</div>
 			</div>
 			<div class="form-inline-profile">
 				<label for="user-name">Username</label>
 				<div class="input-inline">
-					<input type="text" class="form-control" id="user-name">
+					<input type="text" class="form-control" id="user-name" placeholder="${user.username }">
 				</div>
 			</div>
 			<div class="form-inline-profile">
 				<label for="email">Email</label>
 				<div class="input-inline">
-					<input type="email" class="form-control" id="email">
+					<input type="email" class="form-control" id="email" placeholder="${user.email }">
 				</div>
 			</div>
 

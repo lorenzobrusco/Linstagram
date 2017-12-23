@@ -52,9 +52,11 @@ public class ProfileController {
 		return "redirect:/";
 	}
 
+	
+//Controllo dei campi che l'utente cambia
 	@RequestMapping("/sendInfoProfile")
 	@ResponseBody
-	public String setInfoProfile(HttpSession session, @RequestParam("name") String name,
+	public String setInfoProfile(HttpSession session, @RequestParam("name") String name, @RequestParam("surname") String surname,
 			@RequestParam("username") String username, @RequestParam("email") String email,
 			@RequestParam("sesso") String gender, @RequestParam("date") String date, @RequestParam("bio") String bio,
 			@RequestParam("privateCheck") String privateCheck) {
@@ -63,6 +65,10 @@ public class ProfileController {
 		if (!name.equals(""))
 			if (!profileService.changeName(user, name))
 				return new MessageResponce(MessageCode.NAME_FAILED, user, "Non è stato possibile cambiare il nome.").getMessage();
+		if (!surname.equals(""))
+			if (!profileService.changeSurname(user, surname))
+				return new MessageResponce(MessageCode.SURNAME_FAILED, user, "Non è stato possibile cambiare il cognome.").getMessage();
+		
 		if (!username.equals("")) {
 			if (!profileService.changeUsername(user, username))
 				return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Username già esistente.").getMessage();
@@ -102,38 +108,6 @@ public class ProfileController {
 		return  new MessageResponce(MessageCode.OK, user, "Ok").getMessage();
 	}
 	
-	@RequestMapping("taggedPhoto")
-	public String getTaggedPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
-		if(UserManager.checkLogged(session)) {
-			User user = userService.getUser(username);
-			model.addAttribute("user", user);
-			return "fragment/profileTagged";	//Per aggiungere solo i post in cui è taggato l'utente [utilizzato sia per utente nella sessione che per gli altri utenti]
-		}
-		return "redirect:/";
-	}
-
-	@RequestMapping("bookmarkPhoto")
-	public String getBookmarkPhoto(HttpSession session, Model model) {
-		if(UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getBookmarkOfUser(user.getUsername());
-			
-			model.addAttribute("posts", postOfUser);
-			return "fragment/profilePost";	//profilePost.jsp
-		}
-		return "redirect:/";
-	}
-	
-	@RequestMapping("changePasswordPage")
-	public String getPagePassword(HttpSession session) {
-		return "fragment/modifyProfileFragment/modifyPasswordSection";
-	}
-
-	@RequestMapping("changeInfoUser")
-	public String getInfoUser(HttpSession session) {
-		return "fragment/modifyProfileFragment/modifyProfileSection";
-	}
-	
 	@RequestMapping("sendChangePassword")
 	@ResponseBody
 	public String changePassword(HttpSession session, @RequestParam("old_pass") String old_password, 
@@ -153,6 +127,43 @@ public class ProfileController {
 		
 		return "OK";
 	}
+	
+	
+// Per switchare la grafica di "modify_info" a "modify_password"
+	@RequestMapping("changePasswordPage")
+	public String getPagePassword(HttpSession session) {
+		return "fragment/modifyProfileFragment/modifyPasswordSection";
+	}
+
+	@RequestMapping("changeInfoUser")
+	public String getInfoUser(HttpSession session) {
+		return "fragment/modifyProfileFragment/modifyProfileSection";
+	}
+	
+	
+// COntrollo sugli eventi quando vengono richieste le foto in cui gli utenti sono taggati e i bookmarks	
+	@RequestMapping("taggedPhoto")
+	public String getTaggedPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
+		if(UserManager.checkLogged(session)) {
+			User user = userService.getUser(username);
+			model.addAttribute("user", user);
+			return "fragment/userProfileFragment/taggedPhotoSection";	//Per aggiungere solo i post in cui è taggato l'utente [utilizzato sia per utente nella sessione che per gli altri utenti]
+		}
+		return "redirect:/";
+	}
+
+	@RequestMapping("bookmarkPhoto")
+	public String getBookmarkPhoto(HttpSession session, Model model) {
+		if(UserManager.checkLogged(session)) {
+			User user = (User) session.getAttribute("user");
+			List<Post> postOfUser = profileService.getBookmarkOfUser(user.getUsername());
+			
+			model.addAttribute("posts", postOfUser);
+			return "fragment/userProfileFragment/postSection";	//profilePost.jsp
+		}
+		return "redirect:/";
+	}
+	
 	
 	
 }

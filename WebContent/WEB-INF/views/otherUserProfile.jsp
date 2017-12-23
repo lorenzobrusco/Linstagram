@@ -25,6 +25,9 @@
 
 </head>
 <body>
+
+<!-- PROFILO DEGLI ALTRI UTENTI [non quello nella sessione, cioè loggato] -->
+
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
 	<div class="container profile">
 		<section class="profile">
@@ -66,7 +69,7 @@
 								</div>
 							</c:when>
 							<c:otherwise>
-								<jsp:include page="./fragment/pagePublic.jsp"></jsp:include>
+								<jsp:include page="./fragment/userProfileFragment/pagePublic.jsp"></jsp:include>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -92,7 +95,7 @@
 										<div class="tab-content">
 											<div class="tab-pane active" id="tab_default_1">
 												<div id="colum">
-													<jsp:include page="./fragment/profilePost.jsp"></jsp:include>
+													<jsp:include page="./fragment/userProfileFragment/postSection.jsp"></jsp:include>
 		
 												</div>
 											</div>

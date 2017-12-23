@@ -44,7 +44,14 @@ public class ProfileService {
 			return true;
 		return false;
 	}
-
+	
+	public boolean changeSurname(User user, String surname) {
+		user.setSurname(surname);
+		if (modelDAO.merge(user))
+			return true;
+		return false;
+	}
+	
 	public boolean changeUsername(User user, String username) {
 		User userFound = userDAO.getUserByUsername(username);
 		if (userFound == null) {

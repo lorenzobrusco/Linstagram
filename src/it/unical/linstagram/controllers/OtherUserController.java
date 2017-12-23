@@ -43,7 +43,7 @@ public class OtherUserController {
 		
 		model.addAttribute("user", userDTO);
 		model.addAttribute("userSession", user);
-		return "otherUserPage";
+		return "otherUserProfile";
 	}
 		
 }

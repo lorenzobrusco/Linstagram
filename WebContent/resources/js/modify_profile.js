@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	$("#modify-btn").click(function() {
 		var name = $("#name").val()
+		var surname = $("#surname").val()
 		var username = $("#user-name").val()
 		var email = $("#email").val()
 		var selection = $("#selection").val()
@@ -12,7 +13,7 @@ $(document).ready(function() {
 		
 			/* name+" "+ username+" "+ email+ " "+ sesso+ " "+ bio */
 		$.ajax({url:"sendInfoProfile", 
-			data:{name:name, username:username, email:email, sesso:selection, date:date, bio:bio, privateCheck:checkbox},
+			data:{name:name, surname:surname, username:username, email:email, sesso:selection, date:date, bio:bio, privateCheck:checkbox},
 			success: function(result) {
 				if (result == "OK")
 					 popup.classList.toggle("show");
