@@ -15,13 +15,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/dropzone.js"></script>
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index_style.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/stories.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
 
 </head>
 <body>
@@ -73,11 +72,11 @@
 	
 	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
+		src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
 <!-- 	<script -->
 <%-- 		src="${pageContext.request.contextPath}/resources/js/create_stories.js"></script> --%>
 	<script>
-	<%@ include file="../../resources/js/load_stories.js" %>
+	<%@ include file="../../resources/js/lib/load_stories.js" %>
 	</script>
 
 </body>

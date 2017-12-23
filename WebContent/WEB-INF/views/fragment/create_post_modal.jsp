@@ -4,20 +4,21 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/animate.min.css">
+	href="${pageContext.request.contextPath}/resources/css/lib/animate.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/create_post_modal_style.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/dropzone.css">
+	href="${pageContext.request.contextPath}/resources/css/lib/dropzone.css">
+<script src="${pageContext.request.contextPath}/resources/js/lib/dropzone.js"></script>
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/create_post_modal.js"></script>
 <script
-	src="${pageContext.request.contextPath}/resources/js/animatedModal.min.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/lib/animatedModal.min.js"></script>
 
 <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.0.0/caman.full.min.js"></script> -->
 	<script
-	src="${pageContext.request.contextPath}/resources/js/camanjs.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/lib/camanjs.js"></script>
 
 
 <!--CREATE POST MODAL-->
