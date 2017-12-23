@@ -20,7 +20,7 @@ import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.PostDAO;
 import it.unical.linstagram.persistence.UserDAO;
 
-public class TestPostDAO {
+public class TestPostDAO extends AbstractModelTest{
 	
 	private static ModelDAO md;
 	
@@ -29,7 +29,7 @@ public class TestPostDAO {
 		md = new ModelDAO();
 	}
 
-//	@Test
+	@Test
 	public void testBookmarksUser() {
 		
 		
@@ -72,7 +72,8 @@ public class TestPostDAO {
 	}
 
 	
-//	@Test
+	//TODO da sistemare
+	@Test
 	public void testUserTagged() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -98,7 +99,7 @@ public class TestPostDAO {
 	}
 	
 	
-//	@Test
+	@Test
 	public void testLikes() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -123,7 +124,7 @@ public class TestPostDAO {
 		
 	}
 		
-//	@Test
+	@Test
 	public void testTag() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -147,7 +148,7 @@ public class TestPostDAO {
 		Assert.assertEquals(2,tags.size());	
 	}
 	
-//	@Test
+	@Test
 	public void testHashtag() {
 		HibernateUtil.CreateSessionFactory(true);
 		

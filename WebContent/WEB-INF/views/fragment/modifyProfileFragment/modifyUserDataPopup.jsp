@@ -5,12 +5,12 @@
 
 <div class="popup popupOK">
 	<span class="popuptext alert" id="popupOK"> <a onclick="close"
-		class="close">&times;</a> <strong>Success!</strong> Le modifiche sono
-		state effettuate.
+		class="close">&times;</a> <strong>Success!</strong> 
+		Le modifiche sono state effettuate.
 	</span>
 </div>
 <div class="popup popupFAIL">
-	<span class="popuptext alert" id="popupFAIL"> <a onclick="close"
-		class="close">&times;</a> <br> <br> <a id="text"></a>
+	<span class="popuptext alert" id="popupFAIL">
+	 <a onclick="close" class="close">&times;</a> <br> <br> <a id="text"></a>
 	</span>
 </div>

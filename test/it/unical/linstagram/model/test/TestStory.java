@@ -19,7 +19,7 @@ import it.unical.linstagram.persistence.IStoryDAO;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.StoryDAO;
 
-public class TestStory {
+public class TestStory extends AbstractModelTest {
 
 //	@Autowired
 //	ModelDAO modelDAO;
@@ -27,27 +27,8 @@ public class TestStory {
 //	@Autowired
 //	StoryDAO storyDAO;
 //	
-	@BeforeClass
-	public static void init() {
-		HibernateUtil.CreateSessionFactory(true);
-	}
-	
-	@Before
-	public void cleaningDB() {
-		Session session = HibernateUtil.getHibernateSession();
-		Transaction transaction = null;
-		try {
-			transaction = session.beginTransaction();
-			session.createQuery("delete from Story").executeUpdate();
-			session.createQuery("delete from User").executeUpdate();
-			transaction.commit();
-		} catch (Exception e) {
-			transaction.rollback();
-		} finally {
-			session.close();
-		}
-	}
-	
+
+		
 	@Test
 	public void addStory() {
 		User eliana = new User("Eliana","email","pass");
