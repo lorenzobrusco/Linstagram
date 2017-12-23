@@ -213,7 +213,8 @@ footer{
 
 .tags,
 .bookmark,
-.private {
+.private,
+.empty_post {
 	text-align: center;
 	padding: 24px 44px ;
 }
@@ -247,6 +248,16 @@ footer{
 	background-position: -177px -33px;
 	height: 80px;
 	width: 77px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.empty_post span {
+	background-image: url(../images/icons.png);
+	background-repeat: no-repeat;
+	background-position: -93px -51px;
+	height: 85px;
+	width: 83px;
 	display: inline-block;
 	cursor: pointer;
 }

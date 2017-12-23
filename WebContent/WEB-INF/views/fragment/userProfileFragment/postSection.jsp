@@ -6,13 +6,13 @@
 
 <!-- VISUALIZZAZIONE DEI POST DELL'UTENTE [utente della sessione e altri] -->
 
-<c:if test="${fn:length(post.likes)} == 0">
-	<div class="tags">
+<c:if test="${fn:length(user.posts) == 0}">
+	<div class="empty_post">
 		<span></span>
-		<div>Tag</div>
+		<div>Nessun Post</div>
 		<br>
-		<div id="contentTag">
-			Devi essere taggato per porter rivedere i post.<br>
+		<div id="contentPost">
+			Non sono presenti post per questo profilo.<br>
 		</div>
 	</div>
 </c:if>
