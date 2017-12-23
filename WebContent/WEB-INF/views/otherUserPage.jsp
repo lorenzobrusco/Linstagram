@@ -16,7 +16,7 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<!-- <script src="resources/js/userPhotoProfile.js"></script> --- FARE PER ALTRI UTENTI -->
+<script src="resources/js/userPhotoProfile.js"></script>
 
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -40,9 +40,6 @@
 					</div>
 					<div class="col-sm-5">
 						<c:choose>
-							<%-- <c:when test="${user.username == userSession.username }">
-								<jsp:include page="./fragment/profilePage.jsp"></jsp:include>
-							</c:when> --%>
 							<c:when test="${user.privateProfile == true }">
 								<div class="row item-user-info">
 									<ul>

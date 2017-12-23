@@ -44,6 +44,7 @@
 								<li><a class="btn btn-default" href="modifyProfile" id="modify-profile-btn">modifica profilo</a></li>
 								<li></li>
 							</ul>
+							<input id="username_hidden" type="hidden" name="username_hidden" value="${user.username}"/>
 						</div>
 						<div class="row item-user-info">
 							<ul>

@@ -3,6 +3,7 @@ package it.unical.linstagram.persistence;
 import java.util.Collection;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,8 @@ public class UserDAO implements IUserDAO {
 		Session session = HibernateUtil.getHibernateSession();
 		User user = (User) session.createQuery("FROM  User u where u.username=:username")
 				.setParameter("username", username).uniqueResult();
+//		Hibernate.initialize(user.getPosts());
+		
 		session.close();
 		return user;
 	}
@@ -80,7 +83,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public List<Post> getPostByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
-		List<Post> posts = session.createQuery("SELECT user.posts FROM User user WHERE user.username=:username")
+		List<Post> posts = session.createQuery("SELECT user.posts FROM User user, Post p JOIN FETCH p.media WHERE user.username=:username")
 				.setParameter("username", username).list();
 		
 		session.close();
@@ -100,7 +103,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public List<Post> getTaggedPostByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
-		List<Post> posts = session.createQuery("SELECT user.tagged FROM User user WHERE user.username=:username")
+		List<Post> posts = session.createQuery("SELECT user.tagged FROM User user, Post p JOIN FETCH p.media WHERE user.username=:username")
 				.setParameter("username", username).list();
 		
 		session.close();
@@ -115,6 +118,18 @@ public class UserDAO implements IUserDAO {
 		
 		session.close();
 		return users;
+	}
+	
+	public void inizializeLists(String username) {
+		Session session = HibernateUtil.getHibernateSession();
+		User user = (User) session.createQuery("FROM  User u where u.username=:username")
+				.setParameter("username", username).uniqueResult();
+		
+		Hibernate.initialize(user.getPosts());
+		Hibernate.initialize(user.getTagged());
+		Hibernate.initialize(user.getBookmarks());
+
+		session.close();
 	}
 	
 }

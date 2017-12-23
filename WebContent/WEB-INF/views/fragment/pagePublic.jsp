@@ -11,6 +11,7 @@
 		</c:if>
 		<li></li>
 	</ul>
+	<input id="username_hidden" type="hidden" name="username_hidden" value="${user.username}"/>
 </div>
 <div class="row item-user-info">
 	<ul>

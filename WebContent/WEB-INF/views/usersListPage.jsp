@@ -21,7 +21,6 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/dropzone.js"></script>
 
-
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -32,6 +31,10 @@
 
 </head>
 <body>
+
+<!-- USATO SOLO PER FARE LE PROVE DEL PROFILO UTENTE [infatti fa schifo xD] -->
+<!-- magari un giorno, diventerà la pagina della ricerca utente, ma chi lo sa xD -->
+
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
 	<div class="container" id="top">
 		<div class="row">

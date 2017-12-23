@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
 import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.UserDAO;
 
@@ -43,15 +45,13 @@ public class UserService {
 		return userDAO.getUserByUsername(username);
 	}
 	
-	public UserPrivateDTO getOtherUser(User user, String usernameOther) {
+	public UserDTO getOtherUser(User user, String usernameOther) {
 		
 		User userOther = userDAO.getUserByUsername(usernameOther);
 		
 		List<User> userFollowing = userDAO.getFollowingByUsername(user.getUsername());
 		
 		for (User u : userFollowing) {
-			System.out.println(u.getUsername());
-			
 			if (u.getId() == userOther.getId())
 				return new UserPublicDTO(userOther, true);
 		}
@@ -67,4 +67,12 @@ public class UserService {
 		return userDAO.getAllUser();
 	}
 	
+	
+	public List<Post> getPostTaggedOfUser(String username) {
+		return userDAO.getTaggedPostByUsername(username);
+	}
+	
+	public void getListsUser(String username) {
+		userDAO.inizializeLists(username);
+	}
 }

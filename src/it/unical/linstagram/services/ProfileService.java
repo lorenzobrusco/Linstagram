@@ -102,8 +102,6 @@ public class ProfileService {
 	}
 	
 	
-	
-	
 	public String getPassword(String username) {
 		return userDAO.getPasswordByUsername(username);
 	}

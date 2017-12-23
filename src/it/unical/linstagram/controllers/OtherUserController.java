@@ -10,8 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
+import it.unical.linstagram.dto.UserPublicDTO;
 import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.UserService;
 
@@ -36,11 +39,11 @@ public class OtherUserController {
 	public String getUserPage(HttpSession session, Model model, @RequestParam("usernameOther") String usernameOther) {
 		
 		User user = (User) session.getAttribute("user");
-		UserPrivateDTO userDTO = userService.getOtherUser(user, usernameOther);
+		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
+		
 		model.addAttribute("user", userDTO);
 		model.addAttribute("userSession", user);
 		return "otherUserPage";
 	}
-	
-	
+		
 }

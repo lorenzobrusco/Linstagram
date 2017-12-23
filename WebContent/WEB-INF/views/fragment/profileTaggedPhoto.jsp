@@ -4,9 +4,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!-- VISUALIZZAZIONE DEI POST DELL'UTENTE [utente della sessione e altri] -->
 
-<c:forEach items="${user.posts}" var="post">
+<!-- VISUALIZZAZIONE POST TAGGED DELL'UTENTE [Sia per utente nella sessione che per gli altri] -->
+
+<c:forEach items="${user.tagged}" var="post">
 	<!--  Il numero dei like e comment e post-->
 	<div class="col-md-4 col-sm-6 post-section">
 		<div class="post">
