@@ -212,7 +212,8 @@ footer{
 }
 
 .tags,
-.bookmark {
+.bookmark,
+.private {
 	text-align: center;
 	padding: 24px 44px ;
 }
@@ -238,6 +239,18 @@ footer{
 	display: inline-block;
 	cursor: pointer;
 }
+
+.private span{
+
+	background-image: url(../images/icons.png);
+	background-repeat: no-repeat;
+	background-position: -177px -33px;
+	height: 80px;
+	width: 77px;
+	display: inline-block;
+	cursor: pointer;
+}
+
 
 .tab-pane .col-md-4, 
 .tab-pane .col-sm-6{

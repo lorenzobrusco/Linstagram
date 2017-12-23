@@ -1,10 +1,13 @@
 package it.unical.linstagram.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.linstagram.dto.UserPrivateDTO;
+import it.unical.linstagram.dto.UserPublicDTO;
 import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.User;
@@ -40,6 +43,28 @@ public class UserService {
 		return userDAO.getUserByUsername(username);
 	}
 	
+	public UserPrivateDTO getOtherUser(User user, String usernameOther) {
+		
+		User userOther = userDAO.getUserByUsername(usernameOther);
+		
+		List<User> userFollowing = userDAO.getFollowingByUsername(user.getUsername());
+		
+		for (User u : userFollowing) {
+			System.out.println(u.getUsername());
+			
+			if (u.getId() == userOther.getId())
+				return new UserPublicDTO(userOther, true);
+		}
+		
+		if (userOther.isPrivateProfile())
+			return new UserPrivateDTO(userOther);
+		
+		return new UserPublicDTO(userOther, false);
+	}
 	
 
+	public List<User> getUsersList() {
+		return userDAO.getAllUser();
+	}
+	
 }

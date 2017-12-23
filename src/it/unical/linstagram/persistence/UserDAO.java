@@ -1,5 +1,6 @@
 package it.unical.linstagram.persistence;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -12,6 +13,13 @@ import it.unical.linstagram.model.User;
 @SuppressWarnings("unchecked")
 public class UserDAO implements IUserDAO {
 
+	public List<User> getAllUser() {
+		Session session = HibernateUtil.getHibernateSession();
+		List<User> users = session.createQuery("FROM  User").list();
+		session.close();
+		return users;
+	}
+	
 	@Override
 	public User getUserByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
@@ -99,5 +107,14 @@ public class UserDAO implements IUserDAO {
 		return posts;
 	}
 	
+	
+	public List<User> getFollowingByUsername(String username) {
+		Session session = HibernateUtil.getHibernateSession();
+		List<User> users = session.createQuery("SELECT user.followings FROM User user WHERE user.username=:username")
+				.setParameter("username", username).list();
+		
+		session.close();
+		return users;
+	}
 	
 }
