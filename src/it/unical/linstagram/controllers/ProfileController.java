@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +23,23 @@ import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.ProfileService;
+import it.unical.linstagram.services.UserService;
 
 @Controller
 public class ProfileController {
 
 	@Autowired
 	private ProfileService profileService;
+	@Autowired
+	private UserService userService;
+	
 	
 	@RequestMapping("profile")
 	public String getSignInPage(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
 			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
-			
-			model.addAttribute("posts", postOfUser);
+			userService.getListsUser(user.getUsername());
+
 			return "profile";
 		}
 		return "redirect:/";
@@ -48,9 +52,11 @@ public class ProfileController {
 		return "redirect:/";
 	}
 
+	
+//Controllo dei campi che l'utente cambia
 	@RequestMapping("/sendInfoProfile")
 	@ResponseBody
-	public String setInfoProfile(HttpSession session, @RequestParam("name") String name,
+	public String setInfoProfile(HttpSession session, @RequestParam("name") String name, @RequestParam("surname") String surname,
 			@RequestParam("username") String username, @RequestParam("email") String email,
 			@RequestParam("sesso") String gender, @RequestParam("date") String date, @RequestParam("bio") String bio,
 			@RequestParam("privateCheck") String privateCheck) {
@@ -58,18 +64,22 @@ public class ProfileController {
 		User user = (User) session.getAttribute("user");
 		if (!name.equals(""))
 			if (!profileService.changeName(user, name))
-				return new MessageResponce(MessageCode.NAME_FAILED, user, "Non e' stato possibile cambiare il nome.").getMessage();
+				return new MessageResponce(MessageCode.NAME_FAILED, user, "Non è stato possibile cambiare il nome.").getMessage();
+		if (!surname.equals(""))
+			if (!profileService.changeSurname(user, surname))
+				return new MessageResponce(MessageCode.SURNAME_FAILED, user, "Non è stato possibile cambiare il cognome.").getMessage();
+		
 		if (!username.equals("")) {
 			if (!profileService.changeUsername(user, username))
-				return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Username gia'� esistente.").getMessage();
+				return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Username già esistente.").getMessage();
 		}
 		if (!email.equals("")) {
 			if (!profileService.changeEmail(user, email))
-				return new MessageResponce(MessageCode.EMAIL_FAILED, user, "Email gia'� esistente.").getMessage();
+				return new MessageResponce(MessageCode.EMAIL_FAILED, user, "Email già esistente.").getMessage();
 		}
 		if (!gender.equals("-1"))
 			if (!profileService.changeGender(user, gender))
-				return new MessageResponce(MessageCode.GENDER_FAILED, user, "Non e' stato possibile cambiare il genere.").getMessage();
+				return new MessageResponce(MessageCode.GENDER_FAILED, user, "Non è stato possibile cambiare il genere.").getMessage();
 		
 		if (!date.equals("")) {
 			try {
@@ -93,109 +103,9 @@ public class ProfileController {
 				return  new MessageResponce(MessageCode.BIO_FAILED, user, "Non è stato possibile cambiare la biografia.").getMessage();
 		
 		if (!profileService.changePrivateField(user, privateCheck))
-			return  new MessageResponce(MessageCode.PRIVATE_FAILED, user, "Non e' stato possibile cambiare il campo di privacy.").getMessage();
+			return  new MessageResponce(MessageCode.PRIVATE_FAILED, user, "Non è stato possibile cambiare il campo di privacy.").getMessage();
 		
 		return  new MessageResponce(MessageCode.OK, user, "Le modifiche sono state effettuate con successo.").getMessage();
-		return new MessageResponce(MessageCode.OK, user, "Ok").getMessage();
-	}
-	
-	@RequestMapping("taggedPhoto")
-	public String getTaggedPhoto(HttpSession session, Model model) {
-		if(UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
-			
-			model.addAttribute("posts", postOfUser);
-			return "fragment/profilePost";	//profilePost.jsp
-		}
-		return "redirect:/";
-		return new MessageResponce(MessageCode.OK, user, "Ok").getMessage();
-	}
-	
-	@RequestMapping("taggedPhoto")
-	public String getTaggedPhoto(HttpSession session, Model model) {
-		if(UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
-			
-			model.addAttribute("posts", postOfUser);
-			return "fragment/profilePost";	//profilePost.jsp
-		}
-		return "redirect:/";
-		return new MessageResponce(MessageCode.OK, user, "Ok").getMessage();
-	}
-	
-	@RequestMapping("taggedPhoto")
-	public String getTaggedPhoto(HttpSession session, Model model) {
-		if(UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
-			
-			model.addAttribute("posts", postOfUser);
-			return "fragment/profilePost";	//profilePost.jsp
-		}
-		return "redirect:/";
-		return new MessageResponce(MessageCode.OK, user, "Ok").getMessage();
-	}
-	
-	@RequestMapping("taggedPhoto")
-	public String getTaggedPhoto(HttpSession session, Model model) {
-		if(UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
-			
-			model.addAttribute("posts", postOfUser);
-			return "fragment/profilePost";	//profilePost.jsp
-		}
-		return "redirect:/";
-		return new MessageResponce(MessageCode.OK, user, "Ok").getMessage();
-	}
-	
-	@RequestMapping("taggedPhoto")
-	public String getTaggedPhoto(HttpSession session, Model model) {
-		if(UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
-			
-			model.addAttribute("posts", postOfUser);
-			return "fragment/profilePost";	//profilePost.jsp
-		}
-		return "redirect:/";
-		return new MessageResponce(MessageCode.OK, user, "Ok").getMessage();
-	}
-	
-	@RequestMapping("taggedPhoto")
-	public String getTaggedPhoto(HttpSession session, Model model) {
-		if(UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
-			
-			model.addAttribute("posts", postOfUser);
-			return "fragment/profilePost";	//profilePost.jsp
-		}
-		return "redirect:/";
-	}
-
-	@RequestMapping("bookmarkPhoto")
-	public String getBookmarkPhoto(HttpSession session, Model model) {
-		if(UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getBookmarkOfUser(user.getUsername());
-			
-			model.addAttribute("posts", postOfUser);
-			return "fragment/profilePost";	//profilePost.jsp
-		}
-		return "redirect:/";
-	}
-	
-	@RequestMapping("changePasswordPage")
-	public String getPagePassword(HttpSession session) {
-		return "fragment/modifyProfileFragment/modifyPasswordSection";
-	}
-
-	@RequestMapping("changeInfoUser")
-	public String getInfoUser(HttpSession session) {
-		return "fragment/modifyProfileFragment/modifyProfileSection";
 	}
 	
 	@RequestMapping("sendChangePassword")
@@ -253,7 +163,4 @@ public class ProfileController {
 		}
 		return "redirect:/";
 	}
-	
-	
-	
 }
