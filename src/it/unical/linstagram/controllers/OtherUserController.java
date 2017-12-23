@@ -65,7 +65,7 @@ public class OtherUserController {
 	@RequestMapping("unfollowUser")
 	@ResponseBody
 	public String unfollowUser(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
-		
+
 		User user = (User) session.getAttribute("user");
 		User userToFollow = userService.getUser(usernameOther);
 		

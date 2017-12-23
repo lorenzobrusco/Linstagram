@@ -20,10 +20,10 @@ $(document).ready(function() {
 					$("#follow_ul").append("<li><button id='unfollow-btn'>Unfollow</button></li>");
 					$("#count_follower").html(parseInt($("#count_follower").html(), 10)+1)
 				}
-				else {
+				/* else {
 					$('#text').text(result);
 					popupFail.classList.toggle("show");					
-				}
+				} */
 			}
 		});
 	});
@@ -41,10 +41,10 @@ $(document).ready(function() {
 					$("#follow_ul").append("<li><button id='follow-btn'>Follow</button></li>");
 					$("#count_follower").html(parseInt($("#count_follower").html(), 10)-1)
 				}
-				else {
+				/* else {
 					$('#text').text(result);
 					popupFail.classList.toggle("show");			
-				}
+				} */
 			}
 		});
 	});
@@ -100,8 +100,8 @@ $(document).ready(function() {
 </div>
 </c:if>
 
-<div class="popup popupFAIL">
+<!-- <div class="popup popupFAIL">
 	<span class="popuptext alert" id="popupFAIL">
 	 <a onclick="close" class="close">&times;</a> <br> <br> <a id="text"></a>
 	</span>
-</div>
+</div> -->

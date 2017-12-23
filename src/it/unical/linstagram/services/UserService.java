@@ -42,7 +42,7 @@ public class UserService {
 		userSession.getFollowings().add(userToFollow);
 		userToFollow.getFollowers().add(userSession);
 		
-		if (modelDAO.update(userSession))
+		if (modelDAO.merge(userSession))
 			return true;
 		return false;
 	}
@@ -51,7 +51,7 @@ public class UserService {
 		userSession.getFollowings().remove(userToFollow);
 		userToFollow.getFollowers().remove(userSession);
 		
-		if (modelDAO.update(userSession))
+		if (modelDAO.merge(userSession))
 			return true;
 		return false;
 	}

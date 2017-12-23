@@ -1,9 +1,11 @@
 package it.unical.linstagram.persistence;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import it.unical.linstagram.model.Hashtag;
 
+@Repository
 public class HashtagDAO implements IHashtagDAO {
 
 	@Override
