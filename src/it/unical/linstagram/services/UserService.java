@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
@@ -13,6 +14,7 @@ import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.UserDAO;
 
 @Service
@@ -20,6 +22,8 @@ public class UserService {
 	
 	@Autowired
 	private UserDAO userDAO;
+	@Autowired
+	private ModelDAO modelDAO;
 	
 	UserManager userManager;
 	
@@ -34,9 +38,21 @@ public class UserService {
 	}
 	
 	
-	public boolean addFollowing(int myId, int userId) {
-		//TODO: myID.addFollowing(userID);
-		//		userID.addFollower(myId);
+	public boolean addFollowing(User userSession, User userToFollow) {
+		userSession.getFollowings().add(userToFollow);
+		userToFollow.getFollowers().add(userSession);
+		
+		if (modelDAO.update(userSession))
+			return true;
+		return false;
+	}
+	
+	public boolean removeFollowing(User userSession, User userToFollow) {
+		userSession.getFollowings().remove(userToFollow);
+		userToFollow.getFollowers().remove(userSession);
+		
+		if (modelDAO.update(userSession))
+			return true;
 		return false;
 	}
 	

@@ -16,7 +16,8 @@ $(document).ready(function() {
 			data:{name:name, surname:surname, username:username, email:email, sesso:selection, date:date, bio:bio, privateCheck:checkbox},
 			success: function(result) {
 				if (result == "OK")
-					 popup.classList.toggle("show");
+//					Le modifiche sono state effettuate con successo.
+					popup.classList.toggle("show");
 				else {
 					$('#text').text(result);
 					popupFail.classList.toggle("show");

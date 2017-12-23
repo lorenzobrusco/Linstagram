@@ -5,6 +5,52 @@
 
 <!-- VISUALIZZAZIONE DEL PROFILO PUBBLICO, LA PRIMA PARTE [sono esclusi i post che sono fatti in profilePost.jsp] -->
 
+<script>
+$(document).ready(function() {
+	$(document).on('click', '#follow-btn', function() {
+		var username = $('#username_hidden').val();
+		var popupFail = document.getElementById("popupFAIL");
+		
+		$.ajax({
+			url : "followUser",
+			data:{username:username},
+			success : function(result) {
+				if (result == "OK") {
+					$("#follow_ul").empty();
+					$("#follow_ul").append("<li><button id='unfollow-btn'>Unfollow</button></li>");
+					$("#count_follower").html(parseInt($("#count_follower").html(), 10)+1)
+				}
+				else {
+					$('#text').text(result);
+					popupFail.classList.toggle("show");					
+				}
+			}
+		});
+	});
+	
+	$(document).on('click', '#unfollow-btn', function() {
+		var username = $('#username_hidden').val();
+		var popupFail = document.getElementById("popupFAIL");
+		
+		$.ajax({
+			url : "unfollowUser",
+			data:{username:username},
+			success : function(result) {
+				if (result == "OK") {
+					$("#follow_ul").empty();
+					$("#follow_ul").append("<li><button id='follow-btn'>Follow</button></li>");
+					$("#count_follower").html(parseInt($("#count_follower").html(), 10)-1)
+				}
+				else {
+					$('#text').text(result);
+					popupFail.classList.toggle("show");			
+				}
+			}
+		});
+	});
+});
+</script>
+
 <div class="row item-user-info">
 	<ul>
 		<li><b>@${user.username}</b></li>
@@ -18,7 +64,7 @@
 <div class="row item-user-info">
 	<ul>
 		<li><span>${fn:length(user.posts)}</span> post</li>
-		<li><span>${fn:length(user.followers)}</span> follower</li>
+		<li><span id="count_follower">${fn:length(user.followers)}</span> follower</li>
 		<li><span>${fn:length(user.followings)}</span> profili seguiti</li>
 	</ul>
 </div>
@@ -41,15 +87,21 @@
 </div>
 <c:if test="${user.username != userSession.username }">
 <div class="row item-user-info">
-	<ul>
+	<ul id="follow_ul">
 		<c:choose>
 			<c:when test="${user.followed == false }">
-				<li><button>Follow</button></li>
+				<li><button id="follow-btn">Follow</button></li>
 			</c:when>
 			<c:otherwise>
-				<li><button>Unfollow</button></li>
+				<li><button id="unfollow-btn">Unfollow</button></li>
 			</c:otherwise>
 		</c:choose>
 	</ul>
 </div>
 </c:if>
+
+<div class="popup popupFAIL">
+	<span class="popuptext alert" id="popupFAIL">
+	 <a onclick="close" class="close">&times;</a> <br> <br> <a id="text"></a>
+	</span>
+</div>
