@@ -1,61 +1,43 @@
-package it.unical.linstagram.controllers;
+package it.unical.linstagram.services;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import it.unical.linstagram.helper.FileModel;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.User;
 
-@Controller
-public class UploadController {
+@Service
+public class UploadService {
 
 	@Autowired
 	private ServletContext context;
 
-	
 	/**
-	 * Getting uploaded files from request
-	 * save of all them and create post
-	 * @param request
-	 * @param response
-	 * @return
+	 * From a single uploaded file create a media and save it on disk
+	 * @param multipartFile the uploaded File
+	 * @param session an HttpSession
+	 * @return Media
+	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody List<Media> upload(MultipartHttpServletRequest request, HttpServletResponse response,
-			HttpSession session)
-			throws IOException {
-		final Map<String, MultipartFile> fileMap = request.getFileMap();
-		final List<Media> uploadedFiles = new ArrayList<>();
-		for (MultipartFile multipartFile : fileMap.values()) {
-			saveFileToLocalDisk(multipartFile, session);
-			Media fileInfo = getUploadedFileInfo(multipartFile, session);
-			fileInfo = saveFileToDatabase(fileInfo);
-			uploadedFiles.add(fileInfo);
-		}
-		return uploadedFiles;
+	public Media createMedia(MultipartFile multipartFile, HttpSession session) throws FileNotFoundException, IOException {
+		saveFileToLocalDisk(multipartFile,session);
+		return getUploadedMediaInfo(multipartFile,session);
 	}
-
+	
+	
 	/**
-	 * Save media from disk
+	 * Save media on disk
 	 * @param multipartFile
 	 * @throws IOException
 	 * @throws FileNotFoundException
@@ -64,17 +46,18 @@ public class UploadController {
 		final String outputFileName = getOutputFilename(multipartFile, session);
 		FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));
 	}
-
+	
 	/**
-	 * 
-	 * @param media
-	 * @return
+	 * Return a complete Media object created form the uploaded File
 	 */
-	private Media saveFileToDatabase(Media media) {
-		//TODO call DAO and save Media
+	private Media getUploadedMediaInfo(MultipartFile multipartFile, HttpSession session) throws IOException {
+		Media media = new Media();
+		String path=getOnlineLocation(session)+multipartFile.getOriginalFilename();
+		System.out.println(path);
+		media.setUrl(path);
 		return media;
-
 	}
+
 
 	/**
 	 * Get absolute path with file name
@@ -86,19 +69,7 @@ public class UploadController {
 		return getLocalDestinationLocation(session) + multipartFile.getOriginalFilename();
 	}
 
-	/**
-	 * Create Media from request
-	 * @param multipartFile
-	 * @return
-	 * @throws IOException
-	 */
-	private Media getUploadedFileInfo(MultipartFile multipartFile, HttpSession session) throws IOException {
-		Media media = new Media();
-		String path=getOnlineLocation(session)+multipartFile.getOriginalFilename();
-		System.out.println(path);
-		media.setUrl(path);
-		return media;
-	}
+	
 
 	/**
 	 * Get absolute path and create a folder for each user (if not exist).
@@ -112,11 +83,17 @@ public class UploadController {
 		return path;
 	}
 	
+	
+	/**
+	 * Get url where is possible to finde the image
+	 * @return url of the image
+	 */
 	private String getOnlineLocation(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		String onlineContextPath = "images/"+user.getUsername()+"/";
 		return onlineContextPath;
 	}
+	
 	
 	
 }

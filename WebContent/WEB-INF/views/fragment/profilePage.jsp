@@ -77,65 +77,65 @@
 				<div class="input-inline">
 					<select id="selection" class="form-control">
 						<option value="-1"></option>
-					 	<option value="1">Uomo</option>
+						<option value="1">Uomo</option>
 						<option value="2">Donna</option>
-						<option value="3">Non specificato</option></select>
+						<option value="3">Non specificato</option>
+					</select>
 				</div>
 			</div>
 
 			<div class="form-inline-profile">
 				<label for="datepicker">Birthdate</label>
 				<div class="input-inline">
-             				<input type="text" name="selDate" id="datepicker">
-            				</div>
+					<input type="text" name="selDate" id="datepicker" class="form-control">
+				</div>
 			</div>
-			
+
 			<div class="form-inline-profile">
 				<label for="bio">Biografia</label>
 				<div class="input-inline">
 					<textarea class="form-control" id="bio"></textarea>
 				</div>
 			</div>
-			
+
 			<div class="form-inline-profile">
 				<label for="private"></label>
 				<div class="input-inline">
 					<c:choose>
-					    <c:when test="${user.privateProfile == true}">
-					        <label for="private" style="margin-left:-41%">Private</label>
-							<label class="switch pull-right">
-						  		<input onClick="verify_check(this)" type="checkbox" id="checkbox" checked>
-						  		<span class="slider round"></span>
-						  		<input type="hidden" id="check" value="true"/>
+						<c:when test="${user.privateProfile == true}">
+							<label for="private" style="margin-left: -41%">Private</label>
+							<label class="switch pull-right"> <input
+								onClick="verify_check(this)" type="checkbox" id="checkbox"
+								checked> <span class="slider round"></span> <input
+								type="hidden" id="check" value="true" />
 							</label>
-					    </c:when>    
-					    <c:otherwise>
-					        <label for="private" style="margin-left:-41%">Private</label>
-							<label class="switch pull-right">
-						  		<input onClick="verify_check(this)" type="checkbox" id="checkbox">
-						  		<span class="slider round"></span>
-						  		<input type="hidden" id="check" value="false"/>
+						</c:when>
+						<c:otherwise>
+							<label for="private" style="margin-left: -41%">Private</label>
+							<label class="switch pull-right"> <input
+								onClick="verify_check(this)" type="checkbox" id="checkbox">
+								<span class="slider round"></span> <input type="hidden"
+								id="check" value="false" />
 							</label>
-					    </c:otherwise>
+						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>
-			
+
 			<div class="popup popupOK">
-				<span class="popuptext alert" id="popupOK">
-				  <a  onclick="close" class="close">&times;</a>
-				  <strong>Success!</strong> Le modifiche sono state effettuate.
+				<span class="popuptext alert" id="popupOK"> <a
+					onclick="close" class="close">&times;</a> <strong>Success!</strong>
+					Le modifiche sono state effettuate.
 				</span>
 			</div>
 			<div class="popup popupFAIL">
-				<span class="popuptext alert" id="popupFAIL">
-				  <a  onclick="close" class="close">&times;</a>
-				  <br>
-				  <br>
-				  <a id="text"></a>
+				<span class="popuptext alert" id="popupFAIL"> <a
+					onclick="close" class="close">&times;</a> <br> <br> <a
+					id="text"></a>
 				</span>
 			</div>
 		</form>
 	</div>
 </div>
-<button type="button" class="btn btn-outline-primary pull-right" id="modify-btn" style="margin: 0% 10% 2% 0%;">Submit</button>
+<button type="button" class="btn btn-outline-primary pull-right"
+	id="modify-btn" style="margin: 0% 10% 2% 0%;">Submit</button>

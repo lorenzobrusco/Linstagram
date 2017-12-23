@@ -15,7 +15,6 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/popover_style.css">
 
-<script src="${pageContext.request.contextPath}/resources/js/navbar.js"></script>
 </head>
 <body>
 
@@ -39,17 +38,18 @@
 			<span class="nav-left"> <a href="index"> <span id="logo"></span>
 					<span id="logo-text">linstagram</span>
 			</a>
-			</span> <span id="search-form" class="form-inline">
+			</span> 
+			<span id="search-form" class="form-inline">
 				<div class="input-group" id="search-div">
-					<span class="input-group-btn"><i class="fa fa-search"></i></span> <input
-						type="text" class="form-control transparent" placeholder="Search"
-						id="search-input">
+					<input type="text" class="form-control transparent" placeholder="Search" id="search-input-desktop">
 				</div>
-			</span> <span class="nav-right"> <a href="" id="explore"
-				class="right-icon-nav disabled" data-toggle="tooltip"
-				data-placement="left" data-original-title="Coming Soon"></a> <a
-				href="#" id="notification" class="right-icon-nav"></a> <a href="#"
-				role="button" id="profile" class="right-icon-nav"></a>
+			</span> 
+			<span class="nav-right"> 
+				<a href="" id="explore"
+					class="right-icon-nav disabled" data-toggle="tooltip"
+					data-placement="left" data-original-title="Coming Soon"></a>
+				<a href="#" id="notification" class="right-icon-nav"></a>
+				<a href="#" role="button" id="profile" class="right-icon-nav"></a>
 			</span>
 		</nav>
 	</header>
@@ -88,6 +88,18 @@
 									$(_this).popover("hide");
 								}
 							}, 300);
+						});
+						$('[data-toggle="tooltip"]').tooltip();
+
+						//TODO not work	
+						
+						$('#search-input-desktop').focusin(function() {
+							$("#search-div").css("width", "70%");
+							console.log("ok");
+						});
+
+						$('#search-input-desktop').focusout(function() {
+							$("#search-div").css("width", "50%");
 						});
 
 					});
