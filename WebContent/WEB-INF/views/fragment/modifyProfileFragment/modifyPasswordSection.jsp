@@ -34,7 +34,13 @@
 		popup.classList.remove("show"); 
 	});
 	
-
+    $(':text').on('input', function() {
+        if( $(':text').filter(function() { return !!this.value; }).length > 0 ) {
+             $('button').prop('disabled', false);
+        } else {
+             $('button').prop('disabled', true);
+        }
+    });
 </script>
 
 <div class='modify-profile'>
@@ -70,5 +76,5 @@
 		</form>
 	</div>
 </div>
-<button type="button" class="btn confirm-btn pull-right"
+<button type="button" disabled="disabled" class="btn confirm-btn pull-right"
 	id="modifyPass-btn">Submit</button>

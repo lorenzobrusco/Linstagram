@@ -56,11 +56,50 @@ $(document).ready(function() {
 		}	
 		})
 	});
+	
+	$("textarea").keyup(function() {
+        if ($(this).val() != "") {
+            $("button").prop("disabled", false);
+        } else {
+             $("button").prop("disabled", true);
+      }
+    });
+	
+	$('#selection').change(function() {
+	    if($(this).val() != -1) {          
+	    	$('button').removeAttr("disabled");}
+	    else 
+	    	$('button').prop("disabled", true);
+	  });
+	
+	$('#datepicker').change(function() {
+	    if($(this).val() != "") {          
+	    	$('button').removeAttr("disabled");}
+	    else 
+	    	$('button').prop("disabled", true);
+	});
+
+	$('input[type="email"]').keyup(function() {
+        if($(this).val() != '') {
+           $('button').prop('disabled', false);
+        }
+        else 
+        	$('button').prop('disabled', true);
+     });
+	
+    $(':text').on('input', function() {
+        if( $(':text').filter(function() { return !!this.value; }).length > 0 ) {
+             $('button').prop('disabled', false);
+        } else {
+             $('button').prop('disabled', true);
+        }
+    });
 });
 
 $(function () {
     $("#datepicker").datepicker();
 });
+
 
 function verify_check(cb) {
 	// .checked considera nel momento in cui si trasforma [quindi si ragiona al contrario]
@@ -68,6 +107,9 @@ function verify_check(cb) {
 	      document.getElementById('check').value = "true";
 	else
 		  document.getElementById('check').value = "false";
+	
+	if ($("button").is(":disabled"))
+		$('button').prop('disabled', false);
+	else
+		$('button').prop('disabled', true);
 };
-
-

@@ -105,7 +105,7 @@ public class ProfileController {
 		if (!profileService.changePrivateField(user, privateCheck))
 			return  new MessageResponce(MessageCode.PRIVATE_FAILED, user, "Non è stato possibile cambiare il campo di privacy.").getMessage();
 		
-		return  new MessageResponce(MessageCode.OK, user, "Ok").getMessage();
+		return  new MessageResponce(MessageCode.OK, user, "Le modifiche sono state effettuate con successo.").getMessage();
 	}
 	
 	@RequestMapping("sendChangePassword")

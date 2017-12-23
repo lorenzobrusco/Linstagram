@@ -8,7 +8,7 @@
 	<jsp:include page="./modifyProfileHeader.jsp"></jsp:include>
 	
 	<div class="info">
-		<form id="">
+		<form id="form_info">
 			<div class="form-inline-profile">
 				<label for="name">Nome</label>
 				<div class="input-inline">
@@ -89,4 +89,4 @@
 		</form>
 	</div>
 </div>
-<button type="button" class="btn confirm-btn pull-right" id="modify-btn">Submit</button>
+<button type="button" disabled="disabled" class="btn confirm-btn pull-right" id="modify-btn">Submit</button>
