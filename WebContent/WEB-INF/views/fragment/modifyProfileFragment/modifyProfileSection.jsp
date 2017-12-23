@@ -3,54 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!-- <style>
-/*Bootstrap button outline override*/
-.btn-outline {
-    background-color: transparent !important;
-    color: inherit !important;
-    transition: all .5s !important;
-}
-
-.btn-primary.btn-outline {
-    color: #428bca !important;
-}
-
-.btn-success.btn-outline {
-    color: #5cb85c !important;
-}
-
-.btn-info.btn-outline {
-    color: #5bc0de !important;
-}
-
-.btn-warning.btn-outline {
-    color: #f0ad4e !important;
-}
-
-.btn-danger.btn-outline {
-    color: #d9534f !important;
-}
-
-.btn-primary.btn-outline:hover,
-.btn-success.btn-outline:hover,
-.btn-info.btn-outline:hover,
-.btn-warning.btn-outline:hover,
-.btn-danger.btn-outline:hover {
-    color: #fff !important;
-}
-</style>
- -->
-
 <div class='modify-profile'>
-	<div class="photo">
-		<div class="form-inline-profile">
-			<div class="input-inline">
-				<img class="user-img" src="resources/images/user_login_img.png">
-			</div>
-			<label for="name">PEPPE PEPPE</label><br> <span>Change
-				profile image</span>
-		</div>
-	</div>
+	
+	<jsp:include page="./modifyProfileHeader.jsp"></jsp:include>
+	
 	<div class="info">
 		<form id="">
 			<div class="form-inline-profile">
@@ -122,20 +78,9 @@
 				</div>
 			</div>
 
-			<div class="popup popupOK">
-				<span class="popuptext alert" id="popupOK"> <a
-					onclick="close" class="close">&times;</a> <strong>Success!</strong>
-					Le modifiche sono state effettuate.
-				</span>
-			</div>
-			<div class="popup popupFAIL">
-				<span class="popuptext alert" id="popupFAIL"> <a
-					onclick="close" class="close">&times;</a> <br> <br> <a
-					id="text"></a>
-				</span>
-			</div>
+			<jsp:include page="./modifyUserDataPopup.jsp"></jsp:include>
+			
 		</form>
 	</div>
 </div>
-<button type="button" class="btn btn-outline-primary pull-right"
-	id="modify-btn" style="margin: 0% 10% 2% 0%;">Submit</button>
+<button type="button" class="btn confirm-btn pull-right" id="modify-btn">Submit</button>
