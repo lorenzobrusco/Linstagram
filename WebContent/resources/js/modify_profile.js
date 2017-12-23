@@ -38,7 +38,8 @@ $(document).ready(function() {
 	});
 	
 	$("#changePassword").click(function() {
-		$.ajax({url:"changePasswordPage", 
+		$.ajax(
+				{url:"changePasswordPage", 
 			success: function(result) {
 				$('#container_form').empty();
 				$('#container_form').append(result);
