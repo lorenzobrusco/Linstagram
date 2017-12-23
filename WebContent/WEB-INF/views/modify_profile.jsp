@@ -19,7 +19,6 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile_style.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modify_profile.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup.css">
 
 <script src="${pageContext.request.contextPath}/resources/js/modify_profile.js"></script>
 
@@ -44,7 +43,7 @@
 			<div class="col-lg-9" id="container_form">
 				<!-- start body-section -->
 				
-				<jsp:include page="./fragment/profilePage.jsp"></jsp:include>
+				<jsp:include page="./fragment/modifyProfileFragment/modifyProfileSection.jsp"></jsp:include>
 			</div>
 		</div>
 

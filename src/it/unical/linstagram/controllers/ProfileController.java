@@ -124,12 +124,12 @@ public class ProfileController {
 	
 	@RequestMapping("changePasswordPage")
 	public String getPagePassword(HttpSession session) {
-		return "fragment/passwordPage";
+		return "fragment/modifyProfileFragment/modifyPasswordSection";
 	}
 
 	@RequestMapping("changeInfoUser")
 	public String getInfoUser(HttpSession session) {
-		return "fragment/profilePage";
+		return "fragment/modifyProfileFragment/modifyProfileSection";
 	}
 	
 	@RequestMapping("sendChangePassword")
