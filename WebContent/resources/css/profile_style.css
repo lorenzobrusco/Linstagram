@@ -378,3 +378,8 @@ footer{
 #modify-btn #modifyPass-btn {
 	margin: 0% 10% 2% 0% !important;
 }
+
+#following,
+#follower { 
+	cursor: pointer; 
+}

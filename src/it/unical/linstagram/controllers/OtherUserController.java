@@ -52,7 +52,6 @@ public class OtherUserController {
 	@RequestMapping("followUser")
 	@ResponseBody
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
-		
 		User user = (User) session.getAttribute("user");
 		User userToFollow = userService.getUser(usernameOther);
 		

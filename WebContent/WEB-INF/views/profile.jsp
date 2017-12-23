@@ -49,8 +49,10 @@
 						<div class="row item-user-info">
 							<ul>
 								<li><span>${fn:length(user.posts)}</span> post</li>
-								<li><span>${fn:length(user.followers)}</span> follower</li>
-								<li><span>${fn:length(user.followings)}</span> profili seguiti</li>
+								<li id="follower" data-toggle="modal" data-target="#modalFollower">
+								<span>${fn:length(user.followers)}</span> follower</li>
+								<li id="following" data-toggle="modal" data-target="#modalFollowing">
+								<span>${fn:length(user.followings)}</span> profili seguiti</li>
 							</ul>
 						</div>
 						<div class="row item-user-info" style="padding-bottom:0% !important">
@@ -129,5 +131,9 @@
 		</section>
 	</div>
  <jsp:include page="./fragment/footer.jsp"></jsp:include>
+<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
 </body>
+
+
+
 </html>

@@ -59,7 +59,7 @@ public class User{
 
 
 	@ManyToMany
-	@Cascade(value=CascadeType.ALL)
+	@Cascade(value= {CascadeType.SAVE_UPDATE, CascadeType.MERGE })
 	@JoinTable(name="following",
 	joinColumns={@JoinColumn(name="followed")},
 	inverseJoinColumns={@JoinColumn(name="following")})

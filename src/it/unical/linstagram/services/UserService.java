@@ -42,7 +42,7 @@ public class UserService {
 		userSession.getFollowings().add(userToFollow);
 		userToFollow.getFollowers().add(userSession);
 		
-		if (modelDAO.merge(userSession))
+		if (modelDAO.merge(userToFollow))
 			return true;
 		return false;
 	}
