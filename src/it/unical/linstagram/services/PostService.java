@@ -16,8 +16,8 @@ public class PostService {
 
 	@Autowired
 	private PostDAO postDAO;
-	
-	
+	@Autowired
+	private ModelDAO modelDao;
 	
 	public List<Post> getPosts() {
 		return postDAO.getPosts();
@@ -41,6 +41,10 @@ public class PostService {
 		post.getComments().add(comment);
 		
 		new ModelDAO().update(post);
+	}
+	
+	public void savePost(Post post) {
+		modelDao.save(post);
 	}
 	
 }

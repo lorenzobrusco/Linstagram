@@ -16,7 +16,7 @@ public class SignInUpService {
 	@Autowired
 	private UserDAO userDao;
 	@Autowired
-	private ModelDAO ModelDao;
+	private ModelDAO modelDao;
 	
 	/**
 	 * Try signin.
@@ -71,7 +71,7 @@ public class SignInUpService {
 		String passEncrypted = EncryptPassword.encrypt(password);
 		
 		User newUser = new User(username, email, passEncrypted);
-		ModelDao.save(newUser);
+		modelDao.save(newUser);
 
 		return MessageCode.SUCCESS_SIGN_UP;
 	}

@@ -12,7 +12,7 @@ public class Media{
 	}
 	
 	@Column(nullable=false)
-	private Media_Type type;
+	private Media_Type type = Media_Type.IMAGE;
 	
 	@Column
 	private String url;

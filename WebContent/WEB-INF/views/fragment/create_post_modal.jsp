@@ -34,8 +34,8 @@
 
 			<form class="dropzone" id="post-dropzone">
 				<!-- this is were the previews should be shown. -->
-				<button class="btn btn-success btn-create" id="submit-file">
-					<i class="fa fa-paper-plane" aria-hidden="true"></i> Confirm
+				<button class="btn btn-submit" id="submit-file">
+					<i class="fa fa-paper-plane" aria-hidden="true"></i> Upload Media
 				</button>
 				<div class="fallback">
 					<input name="file" type="file" multiple />
@@ -47,23 +47,38 @@
 				</div>
 			</form>
 			<div id="apply-filter-section" class="hide">
-				<div class="btn-group" role="group" id="filter-btn-group">
+				<div id="filter-btn-group">
 					<button type="button" class="btn btn-default" id="vintage">Vintage</button>
 					<button type="button" class="btn btn-default" id="lomo">Lomo</button>
 					<button type="button" class="btn btn-default" id="clarity">Clarity</button>
 					<button type="button" class="btn btn-default" id="jarques">Jarques</button>
+					<button type="button" class="btn btn-default" id="sinCity">Sin City</button>
+					<button type="button" class="btn btn-default" id="sunrise">Sunrise</button>
+					<button type="button" class="btn btn-default" id="crossProcess">Cross Process</button>
+					<button type="button" class="btn btn-default" id="orangePeel">Orange Peel</button>
+					<button type="button" class="btn btn-default" id="love">Love</button>
+					<button type="button" class="btn btn-default" id="grungy">Grungy</button>
+					<button type="button" class="btn btn-default" id="pinhole">Pinhole</button>
+					<button type="button" class="btn btn-default" id="oldBoot">Old Boot</button>
+					<button type="button" class="btn btn-default" id="glowingSun">Glowing Sun</button>
+					<button type="button" class="btn btn-default" id="hazyDays">Hazy Days</button>
+					<button type="button" class="btn btn-default" id="herMajesty">Her Majesty</button>
+					<button type="button" class="btn btn-default" id="nostalgia">Nostalgia</button>
+					<button type="button" class="btn btn-default" id="hemingway">Hemingway</button>
+					<button type="button" class="btn btn-default" id="concentrate">Concentrate</button>
 				</div>
+				
 				<div id="loader" class="hide"></div>
 			</div>
 			<!--TODO: CALL WITH AJAX FOR HIDE MODEL AND CONFIRM CREATION -->
-			<form id="post-description" class="hide" action="createPost">
+			<div id="post-description" class="hide">
 				<label for="post-description-input">Enter a description:</label>
 				<textarea class="form-control" rows="5" id="post-description-input"
 					name="postDescription"> </textarea>
-				<button type="submit" class="btn btn-success btn-create" id="submit-description">
-					<i class="fa fa-paper-plane" aria-hidden="true"></i> Confirm
+				<button class="btn btn-submit" id="submit-description">
+					<i class="fa fa-paper-plane" aria-hidden="true"></i> Create Post
 				</button>
-			</form>
+			</div>
 
 		</div>
 	</div>
