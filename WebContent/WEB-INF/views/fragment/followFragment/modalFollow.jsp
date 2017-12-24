@@ -42,14 +42,14 @@
 	        						<button id="button_form" name="usernameOther" value="${follow.username }">
 		        						<div id="button_user">
 			        						<div id="img_div">
-			        							<c:choose>
+			        							<%-- <c:choose>
 				        							<c:when test="${empty follow.photoProfile }">
 				        								<img id="img" src="https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png"></img>
-				       								</c:when>
-				       								<c:otherwise>
+				       								</c:when> 
+				       								<c:otherwise>--%>
 			        									<img id="img" src="${follow.photoProfile }"></img>
-			        								</c:otherwise>
-			        							</c:choose>
+			        					<%-- 			</c:otherwise>
+			        							</c:choose> --%>
 			        						</div>
 			        							
 			        						<div id="info_div">

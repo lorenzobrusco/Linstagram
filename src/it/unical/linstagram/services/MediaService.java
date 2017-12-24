@@ -97,6 +97,13 @@ public class MediaService {
 		User user = (User) session.getAttribute("user");
 		String path_image = context.getRealPath("/WEB-INF/images/");
 		FileModel.createFolder(path_image);
+		String imageUrl = "https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png";
+		try {
+			FileModel.saveImage(imageUrl, path_image+"/default.png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		String path = path_image +user.getUsername()+"/";
 //		System.out.println(path);
 		FileModel.createFolder(path);
