@@ -23,7 +23,7 @@ import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.PostService;
 import it.unical.linstagram.services.StoriesService;
-import it.unical.linstagram.services.UploadService;
+import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.UserService;
 
 @Controller
@@ -33,7 +33,7 @@ public class HomePageController {
 	private PostService postService;
 	
 	@Autowired
-	private UploadService uploadService;
+	private MediaService uploadService;
 	
 	@Autowired
 	private UserService userService;

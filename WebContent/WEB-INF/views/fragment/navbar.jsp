@@ -65,7 +65,7 @@
 	$(document)
 			.ready(
 					function() {
-						var title_popover = "<img class='user-img' src='resources/images/user_login_img.png'/><b><span id='username-popover'>${user.username}</span></b>";
+						var title_popover = "<img class='user-img' src='${user.photoProfile}'/><b><span id='username-popover'>${user.username}</span></b>";
 						var content_popover = "<a href='profile' class='popover-option' id='profile-option-popover'><i class='fa fa-user'></i>Profile</a> <hr> <a href='logout' class='popover-option' id='logout-option-popover'><i class='fa fa-sign-out'></i>Logout</a>";
 
 						$('#profile').popover({

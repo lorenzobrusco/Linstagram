@@ -1,26 +1,31 @@
 package it.unical.linstagram.controllers;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.print.attribute.standard.Media;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.helper.EncryptPassword;
 import it.unical.linstagram.helper.MessageResponce;
 import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.ProfileService;
 import it.unical.linstagram.services.UserService;
@@ -32,6 +37,8 @@ public class ProfileController {
 	private ProfileService profileService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MediaService uploadService;
 	
 	
 	@RequestMapping("profile")
@@ -135,19 +142,34 @@ public class ProfileController {
 		return "fragment/modifyProfileFragment/modifyPasswordSection";
 	}
 
-	@RequestMapping("changeInfoUser")
+	@RequestMapping("changeInfoUserPage")
 	public String getInfoUser(HttpSession session) {
 		return "fragment/modifyProfileFragment/modifyProfileSection";
 	}
 	
+	@RequestMapping(value ="uploadPhotoProfile", method = RequestMethod.POST)
+	public String uploadProfilePhoto(@RequestParam MultipartFile file,HttpSession session) throws FileNotFoundException, IOException {
+		//TODO overwrite old img profile
+		//TODO resize img profile
+		Media mediaInfo = uploadService.createMedia(file, session);
+		User user = (User) session.getAttribute("user");
+		user.setPhotoProfile(mediaInfo.getUrl());
+		System.out.println(user.getPhotoProfile());
+		boolean result = profileService.uploadPhotoProfile(user);
+		if(result)
+			return "modify_profile";
+		else
+			return "redirect:/";
+	}
 	
-// COntrollo sugli eventi quando vengono richieste le foto in cui gli utenti sono taggati e i bookmarks	
+	
+// Controllo sugli eventi quando vengono richieste le foto in cui gli utenti sono taggati e i bookmarks	
 	@RequestMapping("taggedPhoto")
 	public String getTaggedPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
 		if(UserManager.checkLogged(session)) {
 			User user = userService.getUser(username);
 			model.addAttribute("user", user);
-			return "fragment/userProfileFragment/taggedPhotoSection";	//Per aggiungere solo i post in cui è taggato l'utente [utilizzato sia per utente nella sessione che per gli altri utenti]
+			return "fragment/userProfileFragment/taggedPhotoSection";	//Per aggiungere solo i post in cui e' taggato l'utente [utilizzato sia per utente nella sessione che per gli altri utenti]
 		}
 		return "redirect:/";
 	}

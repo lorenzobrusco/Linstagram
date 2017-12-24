@@ -17,8 +17,7 @@
 	src="${pageContext.request.contextPath}/resources/js/lib/animatedModal.min.js"></script>
 
 <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.0.0/caman.full.min.js"></script> -->
-	<script
-	src="${pageContext.request.contextPath}/resources/js/lib/camanjs.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/lib/camanjs.js"></script>
 
 
 <!--CREATE POST MODAL-->
@@ -35,9 +34,6 @@
 
 			<form class="dropzone" id="post-dropzone">
 				<!-- this is were the previews should be shown. -->
-				<button class="btn btn-submit" id="submit-file">
-					<i class="fa fa-paper-plane" aria-hidden="true"></i> Upload Media
-				</button>
 				<div class="fallback">
 					<input name="file" type="file" multiple />
 				</div>
@@ -46,6 +42,9 @@
 						<span>Drop your photos or videos here</span>
 					</div>
 				</div>
+				<button class="btn btn-submit" id="submit-file">
+					<i class="fa fa-paper-plane" aria-hidden="true"></i> Upload Media
+				</button>
 			</form>
 			<div id="apply-filter-section" class="hide">
 				<div id="filter-btn-group">

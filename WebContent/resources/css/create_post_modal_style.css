@@ -1,8 +1,23 @@
-.close-create-post-modal{
+.close-create-post-modal, .close-upload-photoprofile-modal{
   float: right;
   margin-right: 15px;
+  background-image: url(../images/icons.png);
+  background-position: -432px -46px;
+  height: 24px;
+  width: 27px;
+  display: inline-block;
 }
 
+.close-create-post-modal:hover, .close-upload-photoprofile-modal:hover{
+  transform: scale(1.1);
+}
+
+.modal-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin:2%;
+}
 
 #modal-card{
   margin: 10% 20%;
@@ -17,26 +32,12 @@
   background: #fafafa;
   border: none;
 }
-
-.close-create-post-modal{
-  background-image: url(../images/icons.png);
-  background-position: -432px -46px;
-  height: 24px;
-  width: 27px;
-  display: inline-block;
-}
-
-.close-create-post-modal:hover{
-  transform: scale(1.1);
-}
-
 .modal-title{
   margin-left: 15px;
   font-size: 1.1em;
   text-transform: uppercase;
   font-weight: bold;
 }
-
 
 #post-description-input::-webkit-scrollbar {
   height: 0px;
@@ -62,13 +63,6 @@
   visibility: hidden;
 }
 
-.modal-body{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin:2%;
-}
-
 .btn-submit {
 	margin:15px 0px;
   width:100%;
@@ -79,7 +73,6 @@
 .btn-submit:hover{
 	color:white;
 }
-
 
 #post-dropzone > div > div.dz-default.dz-message{
   margin: 15px 5px;

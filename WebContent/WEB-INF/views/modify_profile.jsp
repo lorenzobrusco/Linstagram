@@ -46,9 +46,6 @@
 				<jsp:include page="./fragment/modifyProfileFragment/modifyProfileSection.jsp"></jsp:include>
 			</div>
 		</div>
-
-
-		
 		
 	</section>
 	<!-- end section -->

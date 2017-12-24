@@ -3,15 +3,12 @@ package it.unical.linstagram.services;
 import java.util.Calendar;
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.linstagram.model.Gender;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
-import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.UserDAO;
 
@@ -115,7 +112,12 @@ public class ProfileService {
 	
 	public boolean changePassword(User user, String password) {
 		user.setPassword(password);
-		
+		if (modelDAO.merge(user))
+			return true;
+		return false;
+	}
+	
+	public boolean uploadPhotoProfile(User user) {
 		if (modelDAO.merge(user))
 			return true;
 		return false;

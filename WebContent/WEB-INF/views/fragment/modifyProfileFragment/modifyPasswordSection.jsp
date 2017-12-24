@@ -17,8 +17,10 @@
 		$.ajax({url:"sendChangePassword", 
 			data:{old_pass:old_pass, new_pass:new_pass, repeat_pass:repeat_pass},
 			success: function(result) {
-				if (result == "OK")
+				if (result == "OK"){
 					 popup.classList.toggle("show");
+						setTimeout(location.reload.bind(location), 2000); //wait 2 second and then reload
+				}
 				else {
 					$('#text').text(result);
 					popupFail.classList.toggle("show");
@@ -51,7 +53,7 @@
 			<div class="form-inline-profile">
 				<label for="old_password">Old Password</label>
 				<div class="input-inline">
-					<input type="text" class="form-control" id="old_password">
+					<input type="password" class="form-control" id="old_password">
 				</div>
 			</div>
 
@@ -60,13 +62,13 @@
 			<div class="form-inline-profile">
 				<label for="new_password">New Password</label>
 				<div class="input-inline">
-					<input type="text" class="form-control" id="new_password">
+					<input type="password" class="form-control" id="new_password">
 				</div>
 			</div>
 			<div class="form-inline-profile">
 				<label for="repeat_password">Repeat Password</label>
 				<div class="input-inline">
-					<input type="text" class="form-control" id="repeat_password">
+					<input type="password" class="form-control" id="repeat_password">
 				</div>
 			</div>
 

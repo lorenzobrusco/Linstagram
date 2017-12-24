@@ -15,10 +15,11 @@ $(document).ready(function() {
 		$.ajax({url:"sendInfoProfile", 
 			data:{name:name, surname:surname, username:username, email:email, sesso:selection, date:date, bio:bio, privateCheck:checkbox},
 			success: function(result) {
-				if (result == "OK")
+				if (result == "OK"){
 //					Le modifiche sono state effettuate con successo.
 					popup.classList.toggle("show");
-				else {
+					setTimeout(location.reload.bind(location), 2000); //wait 2 second and then reload
+				}else {
 					$('#text').text(result);
 					popupFail.classList.toggle("show");
 				}
@@ -50,7 +51,7 @@ $(document).ready(function() {
 	});
 	
 	$("#changeInfoUser").click(function() {
-		$.ajax({url:"changeInfoUser", 
+		$.ajax({url:"changeInfoUserPage", 
 			success: function(result) {
 				$('#container_form').empty();
 				$('#container_form').append(result);

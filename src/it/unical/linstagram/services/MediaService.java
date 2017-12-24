@@ -17,7 +17,7 @@ import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.User;
 
 @Service
-public class UploadService {
+public class MediaService {
 
 	@Autowired
 	private ServletContext context;
@@ -34,8 +34,7 @@ public class UploadService {
 		saveFileToLocalDisk(multipartFile,session);
 		return getUploadedMediaInfo(multipartFile,session);
 	}
-	
-	
+
 	/**
 	 * Save media on disk
 	 * @param multipartFile
@@ -53,7 +52,7 @@ public class UploadService {
 	private Media getUploadedMediaInfo(MultipartFile multipartFile, HttpSession session) throws IOException {
 		Media media = new Media();
 		String path=getOnlineLocation(session)+multipartFile.getOriginalFilename();
-		System.out.println(path);
+//		System.out.println(path);
 		media.setUrl(path);
 		return media;
 	}
@@ -69,7 +68,7 @@ public class UploadService {
 		return getLocalDestinationLocation(session) + multipartFile.getOriginalFilename();
 	}
 
-	
+
 
 	/**
 	 * Get absolute path and create a folder for each user (if not exist).
@@ -82,8 +81,8 @@ public class UploadService {
 		FileModel.createFolder(path);
 		return path;
 	}
-	
-	
+
+
 	/**
 	 * Get url where is possible to finde the image
 	 * @return url of the image
@@ -93,7 +92,7 @@ public class UploadService {
 		String onlineContextPath = "images/"+user.getUsername()+"/";
 		return onlineContextPath;
 	}
-	
-	
-	
+
+
+
 }

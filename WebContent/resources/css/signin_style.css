@@ -57,13 +57,13 @@ a {
   width: 100%;
   margin: 5px auto 10px auto;
   max-width: 480px;
-  min-height: 565px;
+  min-height: 540px;
   position: relative;
   box-shadow: 0 0 15px 5px rgba(122, 122, 122, .50);
 }
 
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 370px) {
   .login-wrap {
     max-width: 300px;
   }

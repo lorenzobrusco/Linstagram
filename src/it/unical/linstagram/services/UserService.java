@@ -1,11 +1,9 @@
 package it.unical.linstagram.services;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
@@ -91,4 +89,5 @@ public class UserService {
 	public void getListsUser(String username) {
 		userDAO.inizializeLists(username);
 	}
+	
 }

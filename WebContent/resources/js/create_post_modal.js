@@ -184,7 +184,7 @@ $(document).ready(function () {
 				});
 
 
-				this.on("successmultiple", function (files, response) {});
+//				this.on("successmultiple", function (files, response) {});
 
 			} //close init
 	}; //close option

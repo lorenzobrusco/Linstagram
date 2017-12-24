@@ -65,7 +65,7 @@
 			</div>
 		</div>
 
-	<jsp:include page="./fragment/create_post_modal.jsp"></jsp:include>
+	<jsp:include page="./fragment/createPostModal.jsp"></jsp:include>
 	
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
