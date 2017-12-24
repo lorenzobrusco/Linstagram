@@ -2,7 +2,7 @@
 
 body,
 html {
-	background: #fafafa;
+	background: #fafafa!important;
 	margin: 0;
 	padding: 0;
 
@@ -137,7 +137,7 @@ footer{
 }
 .tabbable-line > .tab-content {
 	margin-top: -3px;
-	background-color: #ffffff;
+	background-color: #fafafa;
 	border: 0;
 	padding: 15px 0;
 }
