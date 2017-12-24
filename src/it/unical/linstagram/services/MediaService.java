@@ -22,6 +22,8 @@ public class MediaService {
 	@Autowired
 	private ServletContext context;
 
+	private String nameFile;
+	
 	/**
 	 * From a single uploaded file create a media and save it on disk
 	 * @param multipartFile the uploaded File
@@ -51,8 +53,8 @@ public class MediaService {
 	 */
 	private Media getUploadedMediaInfo(MultipartFile multipartFile, HttpSession session) throws IOException {
 		Media media = new Media();
-		String path=getOnlineLocation(session)+multipartFile.getOriginalFilename();
-//		System.out.println(path);
+		String path=getOnlineLocation(session)+nameFile;
+		System.out.println(path);
 		media.setUrl(path);
 		return media;
 	}
@@ -65,11 +67,28 @@ public class MediaService {
 	 */
 	private String getOutputFilename(MultipartFile multipartFile, HttpSession session) {
 		//TODO change file name
-		return getLocalDestinationLocation(session) + multipartFile.getOriginalFilename();
+//		System.out.println(multipartFile.getOriginalFilename());
+		getNameFile(multipartFile, session);
+		String name = nameFile;
+		return getLocalDestinationLocation(session) + name;
 	}
 
-
-
+	
+	/**
+	 * Create the new name of the file to upload
+	 * Split the originalName of Multipartfile only for take the extension
+	 * And call the incrementNumber method of FileModel that check if exist the file with only extnsion jpd and png
+	 * @param multipartFile
+	 * @param session
+	 */
+	private void getNameFile(MultipartFile multipartFile, HttpSession session) {
+		String fileName = multipartFile.getOriginalFilename();
+		String[] tokens = fileName.split("\\.(?=[^\\.]+$)");
+		
+		int name_file = FileModel.incrementNumber(getLocalDestinationLocation(session));
+		nameFile = name_file+"."+tokens[1];
+	}
+	
 	/**
 	 * Get absolute path and create a folder for each user (if not exist).
 	 * @return the local path of the image
@@ -78,7 +97,7 @@ public class MediaService {
 		User user = (User) session.getAttribute("user");
 		String path_image = context.getRealPath("/WEB-INF/images/");
 		FileModel.createFolder(path_image);
-		String path = context.getRealPath("/WEB-INF/images/"+user.getUsername()+"/");
+		String path = path_image +user.getUsername()+"/";
 //		System.out.println(path);
 		FileModel.createFolder(path);
 		return path;
