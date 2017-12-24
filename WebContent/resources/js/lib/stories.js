@@ -447,11 +447,13 @@ var ZuckJS = function () {
                         storyData['items'][i]['seen'] = true;
                         item['seen'] = true;
                     }
-
+                	var itemId = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(i+1)+")").attr("data-id");
+//                    var itemId = storyData["items"][i].id;
+                    
                     var length = get(item, 'length');
                     var linkText = get(item, 'linkText');
                     var seenClass = get(item, 'seen') === true ? 'seen' : '';
-                    var commonAttrs = 'data-index="' + i + '" data-item-id="' + get(item, 'id') + '"';
+                    var commonAttrs = 'data-index="' + i + '" data-item-id="' +itemId + '"';
 
                     if (currentItem === i) {
                         currentItemTime = timeAgo(get(item, 'time'));
@@ -838,13 +840,14 @@ var ZuckJS = function () {
 
         var parseStory = function parseStory(story) {
             var storyId = story.getAttribute('data-id');
-            var seen = false;
-
+            var seenS = story.getAttribute('data-seen');
+            var seen=false;
+            
             if (zuck.internalData['seenItems'][storyId]) {
                 seen = true;
             }
 
-            if (seen) {
+            if (seenS == 'true' || seen) {
                 story.classList.add('seen');
             } else {
                 story.classList.remove('seen');
@@ -857,7 +860,7 @@ var ZuckJS = function () {
                     'name': story.firstElementChild.lastElementChild.firstChild.innerText,
                     'link': story.firstElementChild.getAttribute('href'),
                     'lastUpdated': story.getAttribute('data-last-updated'),
-                    'seen': seen,
+                    'seen': seenS,
                     'items': []
                 };
             } catch (e) {
@@ -1021,6 +1024,7 @@ var ZuckJS = function () {
 
             story.setAttribute('data-id', storyId);
             story.setAttribute('data-photo', get(data, 'photo'));
+            story.setAttribute('data-seen', data['seen']);
             story.setAttribute('data-last-updated', get(data, 'lastUpdated'));
 
             var preview = false;
@@ -1054,9 +1058,8 @@ var ZuckJS = function () {
         zuck.addItem = function (storyId, data, append) {
             var story = query('#' + id + ' > [data-id="' + storyId + '"]');
             var li = d.createElement('li');
-
             li.className = get(data, 'seen') ? 'seen' : '';
-            li.setAttribute('data-id', get(data, 'id'));
+            li.setAttribute('data-id', data.id);
 
             li.innerHTML = '<a href="' + get(data, 'src') + '" data-link="' + get(data, 'link') + '" data-linkText="' + get(data, 'linkText') + '" data-time="' + get(data, 'time') + '" data-type="' + get(data, 'type') + '" data-length="' + get(data, 'length') + '"><img src="' + get(data, 'preview') + '"></a>';
 
@@ -1093,7 +1096,7 @@ var ZuckJS = function () {
             var nextItems = storyViewer.querySelectorAll('[data-index="' + navigateItem + '"]');
             var nextPointer = nextItems[0];
             var nextItem = nextItems[1];
-
+//            console.log(nextItem);
             if (storyViewer && nextPointer && nextItem) {
                 var navigateItemCallback = function navigateItemCallback() {
 
@@ -1126,7 +1129,7 @@ var ZuckJS = function () {
                 var callback = option('callbacks', 'onNavigateItem');
                 callback = !callback ? option('callbacks', 'onNextItem') : option('callbacks', 'onNavigateItem');
 
-                callback(currentStory, nextItem.getAttribute('data-story-id'), navigateItemCallback);
+                callback(currentStory, nextItem.getAttribute('data-item-id'), navigateItemCallback);
             } else if (storyViewer) {
                 if (direction != 'previous') {
                     modal.next(event);

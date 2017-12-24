@@ -77,6 +77,16 @@ public class HomePageController {
 		return "redirect:index";
 	}
 	
+	@RequestMapping("/storyViewed")
+	public String viewStory(HttpSession session, @RequestParam int idStory) {
+		if(UserManager.checkLogged(session)) {
+			User loggedUser = (User) session.getAttribute("user");
+			storiesService.AddViewerToStory(loggedUser, idStory);
+			return "redirect:index";
+		}
+		return "redirect:index";
+	}
+	
 	
 	//TODO: hande multiple file
 //	/**

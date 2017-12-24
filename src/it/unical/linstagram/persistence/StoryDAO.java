@@ -35,7 +35,6 @@ public class StoryDAO implements IStoryDAO{
 
 	@Override
 	public List<Story> getFollowedUsersStoriesByUsername(String username) {
-		Calendar currentTime = Calendar.getInstance();
 		Session session = HibernateUtil.getHibernateSession();
 
 		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
@@ -51,4 +50,14 @@ public class StoryDAO implements IStoryDAO{
 		return stories;
 	}
 
+	@Override
+	public Story getStoryById(int idStory) {
+		Session session = HibernateUtil.getHibernateSession();
+		Story story = session.createQuery("SELECT s FROM Story s WHERE s.id=:idStory",Story.class).
+				setParameter("idStory", idStory).uniqueResult();
+		session.close();
+		return story;
+	}
+
+	
 }
