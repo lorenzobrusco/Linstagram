@@ -13,7 +13,7 @@ import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
 
-public class TestComment {
+public class TestComment extends AbstractModelTest {
 
 	@Test
 	public void testComment() {
@@ -22,7 +22,7 @@ public class TestComment {
 
 		Post post = new Post(eliana,null,Calendar.getInstance(),"Sono scema");
 
-		post.getComments().add(new Comment("Si è vero",manuel,post,Calendar.getInstance()));
+		post.getComments().add(new Comment("Si ï¿½ vero",manuel,post,Calendar.getInstance()));
 		post.getComments().add(new Comment("Che stupido",eliana,post,Calendar.getInstance()));
 		
 		final Session session = HibernateUtil.getHibernateTestSession();

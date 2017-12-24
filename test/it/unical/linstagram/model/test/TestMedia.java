@@ -15,13 +15,12 @@ import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
 
-public class TestMedia {
+public class TestMedia extends AbstractModelTest{
 	
 	
 	@Test
 	public void addMedia() {
 	
-//		HibernateUtil.CreateSessionFactory(true);
 		User eliana = new User("Eliana","email","pass");
 		ModelDAO md= new ModelDAO();
 	
@@ -32,7 +31,7 @@ public class TestMedia {
 		
 		md.save(post);
 		
-		final Session session = HibernateUtil.getHibernateSession();
+		final Session session = HibernateUtil.getHibernateTestSession();
 	
 		Post p =  session.createQuery("SELECT post FROM Post post WHERE post.id =:idPost",Post.class)
 				.setParameter("idPost",post.getId()).uniqueResult();

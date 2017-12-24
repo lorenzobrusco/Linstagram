@@ -10,8 +10,10 @@ import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.UserDAO;
 
-public class UserTest {
+public class UserTest extends AbstractModelTest {
 
+	
+	//TODO SISTEMARE TEST NON FUNZIONA NULL POINTER 
 	@Test
 	public void followerTest() {
 		// User u=new User("Eliana", "elianalovehitler@gmail.com", "Leader");

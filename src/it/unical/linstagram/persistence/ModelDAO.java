@@ -48,4 +48,22 @@ public class ModelDAO {
 		}
 	}
 
+	public boolean merge(Object model) {
+		final Session session = HibernateUtil.getHibernateSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			
+			session.merge(model);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+	}
+	
 }

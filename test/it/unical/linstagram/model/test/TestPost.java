@@ -1,11 +1,7 @@
 package it.unical.linstagram.model.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,12 +11,10 @@ import org.junit.Test;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
-import it.unical.linstagram.persistence.ModelDAO;
-import it.unical.linstagram.persistence.UserDAO;
 
-public class TestPost {
+public class TestPost extends AbstractModelTest {
 
-//	@Test
+	@Test
 	public void testPost() {
 		User eliana = new User("Eliana","email","pass");
 		
@@ -57,7 +51,7 @@ public class TestPost {
 		
 		
 	}
-//	@Test
+	@Test
 	public void testLikes() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -93,7 +87,7 @@ public class TestPost {
 		session.close();
 	}
 	
-//	@Test
+	@Test
 	public void testTag() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -128,7 +122,7 @@ public class TestPost {
 		Assert.assertEquals(2,tags.size());
 		session.close();
 	}
-//	@Test
+	@Test
 	public void testUserTagged() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -173,7 +167,7 @@ public class TestPost {
 //		session.close();
 	}
 	
-//	@Test
+	@Test
 	public void testUserBookmarks() {
 		
 		User eliana = new User("Eliana","email","pass");

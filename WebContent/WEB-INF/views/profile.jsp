@@ -12,17 +12,16 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="resources/js/userPhotoProfile.js"></script>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/profile_style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile_style.css">
+
+
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
@@ -34,7 +33,7 @@
 					<div class="col-sm-3">
 						<div class="user-img-container">
 							<div class="user-img">
-								<img src="resources/images/user_login_img.png" class="img-circle">
+								<img src='${user.photoProfile}' class="img-circle">
 							</div>
 						</div>
 					</div>
@@ -45,15 +44,18 @@
 								<li><a class="btn btn-default" href="modifyProfile" id="modify-profile-btn">modifica profilo</a></li>
 								<li></li>
 							</ul>
+							<input id="username_hidden" type="hidden" name="username_hidden" value="${user.username}"/>
 						</div>
 						<div class="row item-user-info">
 							<ul>
 								<li><span>${fn:length(user.posts)}</span> post</li>
-								<li><span>${fn:length(user.followers)}</span> follower</li>
-								<li><span>${fn:length(user.followings)}</span> profili seguiti</li>
+								<li id="follower" data-toggle="modal" data-target="#modalFollower">
+								<span>${fn:length(user.followers)}</span> follower</li>
+								<li id="following" data-toggle="modal" data-target="#modalFollowing">
+								<span>${fn:length(user.followings)}</span> profili seguiti</li>
 							</ul>
 						</div>
-						<div class="row item-user-info">
+						<div class="row item-user-info" style="padding-bottom:0% !important">
 							<ul>
 							 <c:choose>
 							  <c:when test ="!empty ${user.name}  || !empty ${user.surname}">
@@ -63,6 +65,11 @@
 									<li><b>Name</b> & <b>Surname</b> Unknow ..</li>
 								</c:otherwise>
 							</c:choose>
+							</ul>
+						</div>
+						<div class="row item-user-info" style="padding-top:0% !important">
+							<ul>
+								<li><b>Biography</b> ${user.biography }</li>
 							</ul>
 						</div>
 					</div>
@@ -79,49 +86,39 @@
 								<ul class="nav nav-tabs ">
 									<li class="active"><a href="#tab_default_1"
 										data-toggle="tab"> Posts </a></li>
-									<li><a href="#tab_default_2" data-toggle="tab"> Tags </a>
-									</li>
-									<li><a href="#tab_default_3" data-toggle="tab">
-											Bookmarks </a></li>
+									<li><a id="tags" href="#tab_default_2" data-toggle="tab"> Tags </a> </li>
+									<li><a id="bookmarks" href="#tab_default_3" data-toggle="tab"> Bookmarks </a> </li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_default_1">
 										<div id="colum">
-											<c:forEach items="${user.posts}" var="post">
-												<!--  Il numero dei like e comment e post-->
-												<div class="col-md-4 col-sm-6 post-section">
-													<div class="post">
-														<img class="picture img-responsive" src="${post.media.url}">
-														<div class="links">
-															<a href=""><span class="fa fa-heart"> ${fn:length(post.likes)}</span></a> <a
-																href=""><span class="fa fa-comment"> ${fn:length(post.comments)}</span></a>
-														</div>
-													</div>
-												</div>
-											
-											</c:forEach>
+											<jsp:include page="./fragment/userProfileFragment/postSection.jsp"></jsp:include>
 
 										</div>
 									</div>
 									<div class="tab-pane" id="tab_default_2">
-										<div class="tags">
-											<span></span>
-											<div>Tag</div>
-											<br>
-											<div>
-												Devi essere taggato per porter rivedere i post.<br>
+										<div id="tag">
+											<div class="tags">
+												<span></span>
+												<div>Tag</div>
+												<br>
+												<div id="contentTag">
+													Devi essere taggato per porter rivedere i post.<br>
+												</div>
 											</div>
 										</div>
 									</div>
 									<div class="tab-pane" id="tab_default_3">
-										<div class="bookmark">
-											<span></span>
-											<div>Salva</div>
-											<br>
-											<div>
-												Salva le foto e i video che desideri rivedere. Nessuno
-												riceverà <br>una notifica e solo tu potrai vedere cosa
-												hai salvato.
+										<div id="bookmark">
+											<div class="bookmark">
+												<span></span>
+												<div>Salva</div>
+												<br>
+												<div>
+													Salva le foto e i video che desideri rivedere. Nessuno
+													riceverà <br>una notifica e solo tu potrai vedere cosa
+													hai salvato.
+												</div>
 											</div>
 										</div>
 									</div>
@@ -134,5 +131,9 @@
 		</section>
 	</div>
  <jsp:include page="./fragment/footer.jsp"></jsp:include>
+<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
 </body>
+
+
+
 </html>

@@ -212,7 +212,9 @@ footer{
 }
 
 .tags,
-.bookmark {
+.bookmark,
+.private,
+.empty_post {
 	text-align: center;
 	padding: 24px 44px ;
 }
@@ -238,6 +240,28 @@ footer{
 	display: inline-block;
 	cursor: pointer;
 }
+
+.private span{
+
+	background-image: url(../images/icons.png);
+	background-repeat: no-repeat;
+	background-position: -177px -33px;
+	height: 80px;
+	width: 77px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.empty_post span {
+	background-image: url(../images/icons.png);
+	background-repeat: no-repeat;
+	background-position: -93px -51px;
+	height: 85px;
+	width: 83px;
+	display: inline-block;
+	cursor: pointer;
+}
+
 
 .tab-pane .col-md-4, 
 .tab-pane .col-sm-6{
@@ -349,4 +373,13 @@ footer{
 #modify-profile-btn{
 	position: relative;
   bottom: 6px;
+}
+
+#modify-btn #modifyPass-btn {
+	margin: 0% 10% 2% 0% !important;
+}
+
+#following,
+#follower { 
+	cursor: pointer; 
 }

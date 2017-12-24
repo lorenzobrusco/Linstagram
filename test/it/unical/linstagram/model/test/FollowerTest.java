@@ -9,7 +9,7 @@ import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
 
-public class FollowerTest {
+public class FollowerTest extends AbstractModelTest {
 
 	@Test
 	void followerTest() {
@@ -45,7 +45,7 @@ public class FollowerTest {
 		md.update(ciccio);
 		md.update(alessio);
 
-		Session sex = HibernateUtil.getHibernateSession();
+		Session sex = HibernateUtil.getHibernateTestSession();
 		Collection<User> users = sex.createQuery("SELECT user.following FROM User user where user.id=:u1id")
 				.setParameter("u1id", eliana.getId()).list();
 		System.out.println(users.size());
