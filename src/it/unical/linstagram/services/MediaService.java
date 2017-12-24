@@ -76,8 +76,10 @@ public class MediaService {
 	 */
 	private String getLocalDestinationLocation(HttpSession session) {
 		User user = (User) session.getAttribute("user");
+		String path_image = context.getRealPath("/WEB-INF/images/");
+		FileModel.createFolder(path_image);
 		String path = context.getRealPath("/WEB-INF/images/"+user.getUsername()+"/");
-		System.out.println(path);
+//		System.out.println(path);
 		FileModel.createFolder(path);
 		return path;
 	}

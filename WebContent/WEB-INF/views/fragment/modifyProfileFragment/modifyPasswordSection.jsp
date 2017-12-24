@@ -36,8 +36,8 @@
 		popup.classList.remove("show"); 
 	});
 	
-    $(':text').on('input', function() {
-        if( $(':text').filter(function() { return !!this.value; }).length > 0 ) {
+    $(':password').on('input', function() {
+        if( $(':password').filter(function() { return !!this.value; }).length > 0 ) {
              $('button').prop('disabled', false);
         } else {
              $('button').prop('disabled', true);
