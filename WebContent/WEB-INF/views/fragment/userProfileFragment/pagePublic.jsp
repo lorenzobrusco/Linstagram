@@ -63,9 +63,11 @@ $(document).ready(function() {
 </div>
 <div class="row item-user-info">
 	<ul>
-		<li><span>${fn:length(user.posts)}</span> post</li>
-		<li><span id="count_follower">${fn:length(user.followers)}</span> follower</li>
-		<li><span>${fn:length(user.followings)}</span> profili seguiti</li>
+		<li><span><b>${fn:length(user.posts)}</b></span> post</li>
+		<li id="follower" data-toggle="modal" data-target="#modalFollower">
+		<span><b id="count_follower">${fn:length(user.followers)}</b></span> follower</li>
+		<li id="following" data-toggle="modal" data-target="#modalFollowing">
+		<span><b>${fn:length(user.followings)}</b></span> profili seguiti</li>
 	</ul>
 </div>
 <div class="row item-user-info" style="padding-bottom:0% !important">

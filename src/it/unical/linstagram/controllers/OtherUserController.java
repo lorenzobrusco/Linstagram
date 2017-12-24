@@ -51,25 +51,23 @@ public class OtherUserController {
 	
 	@RequestMapping("followUser")
 	@ResponseBody
-	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
+	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
-		User userToFollow = userService.getUser(usernameOther);
 		
-		if (!userService.addFollowing(user, userToFollow))
-			return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+		if (!userService.addFollowing(user.getUsername(), usernameToFollow))
+			return new MessageResponce(MessageCode.FOLLOW_FAILED, user, "Non è stato possibile inserire l'utente come following.").getMessage();
 		
 		return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
 	}
 	
 	@RequestMapping("unfollowUser")
 	@ResponseBody
-	public String unfollowUser(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
+	public String unfollowUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 
 		User user = (User) session.getAttribute("user");
-		User userToFollow = userService.getUser(usernameOther);
 		
-		if (!userService.removeFollowing(user, userToFollow))
-			return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+		if (!userService.removeFollowing(user.getUsername(), usernameToFollow))
+			return new MessageResponce(MessageCode.UNFOLLOW_FAILED, user, "Non è stato possibile eliminare l'utente dai following.").getMessage();
 		
 		return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
 	}

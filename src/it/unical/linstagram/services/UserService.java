@@ -25,31 +25,29 @@ public class UserService {
 	
 	UserManager userManager;
 	
-	public List<ProfilePreview> getFollowers() {
-		// TODO: to implement
-		return null;
-	}
-
-	public List<ProfilePreview> getFollowing() {
-		// TODO: to implement
-		return null;
-	}
-	
-	
-	public boolean addFollowing(User userSession, User userToFollow) {
+	public boolean addFollowing(String usernameSession, String usernameToFollow) {
+		
+		User userSession = userDAO.getUserByUsername(usernameSession);
+		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
+		
 		userSession.getFollowings().add(userToFollow);
 		userToFollow.getFollowers().add(userSession);
 		
-		if (modelDAO.merge(userToFollow))
+		if (modelDAO.update(userSession))
 			return true;
 		return false;
 	}
 	
-	public boolean removeFollowing(User userSession, User userToFollow) {
+	public boolean removeFollowing(String usernameSession, String usernameToFollow) {
+
+		
+		User userSession = userDAO.getUserByUsername(usernameSession);
+		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
+		
 		userSession.getFollowings().remove(userToFollow);
 		userToFollow.getFollowers().remove(userSession);
 		
-		if (modelDAO.merge(userSession))
+		if (modelDAO.update(userSession))
 			return true;
 		return false;
 	}

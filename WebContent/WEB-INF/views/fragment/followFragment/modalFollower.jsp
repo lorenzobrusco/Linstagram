@@ -32,6 +32,7 @@ $(document).ready(function() {
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
+					$("#count_follower").val(parseInt($("#count_follower").html(), 10)+1)
 					$(btn).empty();
 					$(btn).append("<button id='unfollow-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
 				}
@@ -50,30 +51,13 @@ $(document).ready(function() {
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
+					$("#count_follower").val(parseInt($("#count_follower").val(), 10)-1)
 					$(btn).empty();
 					$(btn).append("<button id='follow-btn' name='"+id+"' value='"+username+"'>Follow</button>");
 				}
 			}
 		});
 	});
-	
-/* 	$(document).on('click', '#user_enter', function(event) {
-		event.preventDefault();
-		var id = $(this).attr('name');
-		var username = $(this).attr('value');
-		
-		var btn = "#button"+id
-		$.ajax({
-			url : "userPage",
-			data:{username:username},
-			success : function(result) {
-				if (result == "OK") {
-				}
-			}
-		});
-	}); */
-	
-	
 });
 </script>
 
@@ -81,18 +65,18 @@ $(document).ready(function() {
 <body>
 
 <!-- Modal -->
-	<div class="modal fade" id="modalFollowing" role="dialog">
+	<div class="modal fade" id="modalFollower" role="dialog">
   		<div class="modal-dialog">
 	  
 		    <!-- Modal content-->
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h4 class="modal-title"><b>Followings</b></h4>
+		        <h4 class="modal-title"><b>Followers</b></h4>
 		      </div>
 		      <div class="modal-body">
 	      		<ul>
-        			<c:forEach items="${user.followings}" var="follow">
+        			<c:forEach items="${user.followers}" var="follow">
         				<li id="users">
         					<div id="user_enter">
         						<form role="form" action="userPage">

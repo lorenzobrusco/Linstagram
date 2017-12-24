@@ -48,11 +48,11 @@
 						</div>
 						<div class="row item-user-info">
 							<ul>
-								<li><span>${fn:length(user.posts)}</span> post</li>
+								<li><span><b>${fn:length(user.posts)}</b></span> post</li>
 								<li id="follower" data-toggle="modal" data-target="#modalFollower">
-								<span>${fn:length(user.followers)}</span> follower</li>
+								<span><b>${fn:length(user.followers)}</b></span> follower</li>
 								<li id="following" data-toggle="modal" data-target="#modalFollowing">
-								<span>${fn:length(user.followings)}</span> profili seguiti</li>
+								<span><b>${fn:length(user.followings)}</b></span> profili seguiti</li>
 							</ul>
 						</div>
 						<div class="row item-user-info" style="padding-bottom:0% !important">
@@ -97,30 +97,39 @@
 										</div>
 									</div>
 									<div class="tab-pane" id="tab_default_2">
-										<div id="tag">
-											<div class="tags">
-												<span></span>
-												<div>Tag</div>
-												<br>
-												<div id="contentTag">
-													Devi essere taggato per porter rivedere i post.<br>
-												</div>
-											</div>
-										</div>
+										<jsp:include page="./fragment/userProfileFragment/taggedPhotoSection.jsp"></jsp:include>
 									</div>
 									<div class="tab-pane" id="tab_default_3">
-										<div id="bookmark">
-											<div class="bookmark">
-												<span></span>
-												<div>Salva</div>
-												<br>
-												<div>
-													Salva le foto e i video che desideri rivedere. Nessuno
-													riceverà <br>una notifica e solo tu potrai vedere cosa
-													hai salvato.
+										
+										<c:if test="${fn:length(user.bookmarks) == 0}">
+											<div id="bookmark">
+												<div class="bookmark">
+													<span></span>
+													<div>Salva</div>
+													<br>
+													<div>
+														Salva le foto e i video che desideri rivedere. Nessuno
+														riceverà <br>una notifica e solo tu potrai vedere cosa
+														hai salvato.
+													</div>
 												</div>
 											</div>
-										</div>
+										</c:if>
+										
+										<c:forEach items="${user.bookmarks}" var="post">
+											<div class="col-md-4 col-sm-6 post-section">
+												<div class="post">
+													<c:forEach items="${post.media}" var="media">
+														<img class="picture img-responsive" src="${media.url }">
+													</c:forEach>
+													<div class="links">
+														<a href=""><span class="fa fa-heart"> ${fn:length(post.likes)}</span></a> <a
+															href=""><span class="fa fa-comment"> ${fn:length(post.comments)}</span></a>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+										
 									</div>
 								</div>
 							</div>
@@ -132,6 +141,7 @@
 	</div>
  <jsp:include page="./fragment/footer.jsp"></jsp:include>
 <jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
+<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
 </body>
 
 

@@ -26,6 +26,7 @@ public enum MessageCode {
 	PASS_WRONG,
 	PASS_DIFFERENT,
 	
-	
+	FOLLOW_FAILED,
+	UNFOLLOW_FAILED,
 
 }

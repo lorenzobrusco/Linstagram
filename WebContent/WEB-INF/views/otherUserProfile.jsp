@@ -142,5 +142,7 @@
 		</section>
 	</div>
  <jsp:include page="./fragment/footer.jsp"></jsp:include>
+<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
+<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
 </body>
 </html>
