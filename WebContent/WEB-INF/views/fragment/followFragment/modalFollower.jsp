@@ -17,49 +17,9 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<script src="./resources/js/modal_follow_event.js"></script>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
-
-
-<script>
-$(document).ready(function() {
-	$(document).on('click', '#follow-btn', function() {
-		var id = $(this).attr('name');
-		var username = $(this).attr('value');
-
-		var btn = "#button"+id
-		$.ajax({
-			url : "followUser",
-			data:{username:username},
-			success : function(result) {
-				if (result == "OK") {
-					$("#count_follower").val(parseInt($("#count_follower").html(), 10)+1)
-					$(btn).empty();
-					$(btn).append("<button id='unfollow-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
-				}
-			}
-		});
-	});
-	
-	$(document).on('click', '#unfollow-btn', function(event) {
-		event.preventDefault();
-		var id = $(this).attr('name');
-		var username = $(this).attr('value');
-		
-		var btn = "#button"+id
-		$.ajax({
-			url : "unfollowUser",
-			data:{username:username},
-			success : function(result) {
-				if (result == "OK") {
-					$("#count_follower").val(parseInt($("#count_follower").val(), 10)-1)
-					$(btn).empty();
-					$(btn).append("<button id='follow-btn' name='"+id+"' value='"+username+"'>Follow</button>");
-				}
-			}
-		});
-	});
-});
-</script>
 
 </head>
 <body>
@@ -100,9 +60,11 @@ $(document).ready(function() {
 		        						</div>
 	        						</button>
         						</form>
-        						<div id="button${follow.id }" class="pull-right">
-        							<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
-        						</div>
+        						<c:if test="${follow.username != userSession.username }">
+	        						<div id="button${follow.id }" class="pull-right">
+	        							<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
+	        						</div>
+        						</c:if>
         					</div>
         				</li>
         			</c:forEach>

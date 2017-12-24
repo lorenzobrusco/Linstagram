@@ -1,49 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/modify_profile.css">
-
-<script type="text/javascript">
-	
-	$("#modifyPass-btn").click(function() {
-		var old_pass = $("#old_password").val();
-		var new_pass = $("#new_password").val();
-		var repeat_pass = $("#repeat_password").val();
-		
-		var popup = document.getElementById("popupOK");
-		var popupFail = document.getElementById("popupFAIL");
-		
-		$.ajax({url:"sendChangePassword", 
-			data:{old_pass:old_pass, new_pass:new_pass, repeat_pass:repeat_pass},
-			success: function(result) {
-				if (result == "OK"){
-					 popup.classList.toggle("show");
-						setTimeout(location.reload.bind(location), 2000); //wait 2 second and then reload
-				}
-				else {
-					$('#text').text(result);
-					popupFail.classList.toggle("show");
-				}
-			}
-		})
-	});
-	
-	$('.close').on('click', function () {
-	  	var popup = document.getElementById("popupOK");
-		popup.classList.remove("show"); 
-		var popup = document.getElementById("popupFAIL");
-		popup.classList.remove("show"); 
-	});
-	
-    $(':password').on('input', function() {
-        if( $(':password').filter(function() { return !!this.value; }).length > 0 ) {
-             $('button').prop('disabled', false);
-        } else {
-             $('button').prop('disabled', true);
-        }
-    });
-</script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modify_profile.css">
+<script src="./resources/js/modify_profile.js"></script>
 
 <div class='modify-profile'>
 	<jsp:include page="./modifyProfileHeader.jsp"></jsp:include>
