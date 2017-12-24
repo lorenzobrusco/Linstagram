@@ -96,19 +96,18 @@
 											<div class="tab-pane active" id="tab_default_1">
 												<div id="colum">
 													<jsp:include page="./fragment/userProfileFragment/postSection.jsp"></jsp:include>
-		
 												</div>
 											</div>
 											<div class="tab-pane" id="tab_default_2">
 												<div id="tag">
-													<div class="tags">
+													<!-- <div class="tags">
 														<span></span>
 														<div>Tag</div>
 														<br>
 														<div id="contentTag">
 															Devi essere taggato per porter rivedere i post.<br>
 														</div>
-													</div>
+													</div> -->
 												</div>
 											</div>
 										</div>

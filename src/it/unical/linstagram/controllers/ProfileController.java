@@ -181,7 +181,7 @@ public class ProfileController {
 			List<Post> postOfUser = profileService.getBookmarkOfUser(user.getUsername());
 			
 			model.addAttribute("posts", postOfUser);
-			return "fragment/userProfileFragment/postSection";	//profilePost.jsp
+			return "fragment/userProfileFragment/bookmarkPhotoSection";	
 		}
 		return "redirect:/";
 	}

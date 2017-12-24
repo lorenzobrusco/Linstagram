@@ -97,39 +97,12 @@
 										</div>
 									</div>
 									<div class="tab-pane" id="tab_default_2">
-										<jsp:include page="./fragment/userProfileFragment/taggedPhotoSection.jsp"></jsp:include>
-									</div>
+										<div id="tag"></div>
+										<%-- <jsp:include page="./fragment/userProfileFragment/taggedPhotoSection.jsp"></jsp:include>
+									 --%></div>
 									<div class="tab-pane" id="tab_default_3">
-										
-										<c:if test="${fn:length(user.bookmarks) == 0}">
-											<div id="bookmark">
-												<div class="bookmark">
-													<span></span>
-													<div>Salva</div>
-													<br>
-													<div>
-														Salva le foto e i video che desideri rivedere. Nessuno
-														riceverà <br>una notifica e solo tu potrai vedere cosa
-														hai salvato.
-													</div>
-												</div>
-											</div>
-										</c:if>
-										
-										<c:forEach items="${user.bookmarks}" var="post">
-											<div class="col-md-4 col-sm-6 post-section">
-												<div class="post">
-													<c:forEach items="${post.media}" var="media">
-														<img class="picture img-responsive" src="${media.url }">
-													</c:forEach>
-													<div class="links">
-														<a href=""><span class="fa fa-heart"> ${fn:length(post.likes)}</span></a> <a
-															href=""><span class="fa fa-comment"> ${fn:length(post.comments)}</span></a>
-													</div>
-												</div>
-											</div>
-										</c:forEach>
-										
+										<div id="bookmark">
+										</div>
 									</div>
 								</div>
 							</div>
