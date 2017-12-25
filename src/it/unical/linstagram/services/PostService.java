@@ -2,7 +2,6 @@ package it.unical.linstagram.services;
 
 import java.util.List;
 
-import org.hsqldb.lib.HsqlArrayHeap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +43,13 @@ public class PostService {
 		modelDao.update(post);
 	}
 	
+	public void removeLike(int idPost, User user) {
+		Post post = postDAO.getPostById(idPost);
+		post.getLikes().remove(user);
+		
+		modelDao.update(post);
+	}
+	
 	public void insertComment(int idPost, Comment comment) {
 		Post post = postDAO.getPostById(idPost);
 		System.out.println("POST2 "+post);
@@ -65,12 +71,12 @@ public class PostService {
 				hashtagByValue.setCount(hashtagByValue.getCount()+1);
 				modelDao.update(hashtagByValue);
 				
-				post.getHashtags().add(hashtagByValue);
 			}
 			else
 			{
 				hashtagByValue = new Hashtag(fh, 1);
 			}
+			post.getHashtags().add(hashtagByValue);
 		}
 		
 		for (String tag : findTags) {
