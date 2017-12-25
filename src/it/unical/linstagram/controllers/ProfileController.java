@@ -44,9 +44,10 @@ public class ProfileController {
 	@RequestMapping("profile")
 	public String getSignInPage(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			userService.getListsUser(user.getUsername());
+			String username = ((User) session.getAttribute("user")).getUsername();
+			User user = userService.getListsUser(username);
 
+			model.addAttribute("user", user);
 			return "profile";
 		}
 		return "redirect:/";
@@ -168,6 +169,7 @@ public class ProfileController {
 	public String getTaggedPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
 		if(UserManager.checkLogged(session)) {
 			User user = userService.getUser(username);
+			userService.getListsUser(username);
 			model.addAttribute("user", user);
 			return "fragment/userProfileFragment/taggedPhotoSection";	//Per aggiungere solo i post in cui e' taggato l'utente [utilizzato sia per utente nella sessione che per gli altri utenti]
 		}

@@ -84,8 +84,12 @@ public class UserService {
 		return userDAO.getTaggedPostByUsername(username);
 	}
 	
-	public void getListsUser(String username) {
-		userDAO.inizializeLists(username);
+	/**
+	 * Initialize the list of the user
+	 * @param username 
+	 */
+	public User getListsUser(String username) {
+		return userDAO.inizializeLists(username);
 	}
 	
 }
