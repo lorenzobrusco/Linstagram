@@ -52,31 +52,6 @@ public class HomePageController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/like")
-	public String insertLike(HttpSession session, Model model, @RequestParam int idPost) {
-		if(UserManager.checkLogged(session)) {
-			User user = userService.getUser((String) session.getAttribute("username"));
-			postService.insertLike(idPost, user);
-			return "redirect:index";
-		}
-		return "redirect:index";
-	}
-	
-	@RequestMapping("/comment")
-	public String insertComment(HttpSession session, Model model, @RequestParam int idPost, @RequestParam String comment) {
-		if(UserManager.checkLogged(session)) {
-			User user = userService.getUser((String) session.getAttribute("username"));
-			Post post = postService.getPost(idPost);
-			System.out.println("POST "+post);
-			Comment c = new Comment(comment, user, post, Calendar.getInstance());
-			
-			postService.insertComment(idPost, c);
-			
-			return "redirect:index";
-		}
-		return "redirect:index";
-	}
-	
 	@RequestMapping("/storyViewed")
 	public String viewStory(HttpSession session, @RequestParam int idStory) {
 		if(UserManager.checkLogged(session)) {

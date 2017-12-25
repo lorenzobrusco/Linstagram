@@ -20,7 +20,6 @@ $(document).ready(function() {
 	});
 	
 	$(document).on('click', '#unfollow-btn', function(event) {
-		event.preventDefault();
 		var id = $(this).attr('name');
 		var username = $(this).attr('value');
 		

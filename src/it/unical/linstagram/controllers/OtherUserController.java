@@ -42,6 +42,9 @@ public class OtherUserController {
 	public String getUserPage(HttpSession session, Model model, @RequestParam("usernameOther") String usernameOther) {
 		
 		User user = (User) session.getAttribute("user");
+		if (usernameOther.equals(user.getUsername()))
+			return "profile";
+		
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
 		
 		model.addAttribute("user", userDTO);

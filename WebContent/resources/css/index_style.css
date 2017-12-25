@@ -206,6 +206,14 @@ progress {
   display: inline-block;
 }
 
+.react .loveFull {
+  background-image: url(../images/icons.png);
+  background-position: -407px -129px;
+  height: 24px;
+  width: 27px;
+  display: inline-block;
+}
+
 .react .comment {
   background-image: url(../images/icons.png);
   background-position: -407px -26px;
@@ -218,6 +226,15 @@ progress {
   background-image: url(../images/icons.png);
   background-repeat: no-repeat;
   background-position: -104px -389px;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+}
+
+.react .saveFull {
+  background-image: url(../images/icons.png);
+  background-repeat: no-repeat;
+  background-position: -183px -389px;
   height: 24px;
   width: 24px;
   display: inline-block;

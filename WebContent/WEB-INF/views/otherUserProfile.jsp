@@ -37,7 +37,7 @@
 					<div class="col-sm-3">
 						<div class="user-img-container">
 							<div class="user-img">
-								<img src="resources/images/user_login_img.png" class="img-circle">
+								<img src='${user.photoProfile}' class="img-circle">
 							</div>
 						</div>
 					</div>

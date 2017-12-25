@@ -36,11 +36,15 @@ public class PostService {
 		return postDAO.getPostById(idPost);
 	}
 	
-	public void insertLike(int idPost, User user) {
+	public boolean insertLike(int idPost, User user) {
 		Post post = postDAO.getPostById(idPost);
-		post.getLikes().add(user);
-		
-		modelDao.update(post);
+		if(post.getLikes().add(user)) {
+			post.getLikes().clear();
+			modelDao.update(post);
+			if (modelDao.merge(user))
+				return true;
+		}
+		return false;
 	}
 	
 	public void removeLike(int idPost, User user) {
@@ -50,13 +54,32 @@ public class PostService {
 		modelDao.update(post);
 	}
 	
-	public void insertComment(int idPost, Comment comment) {
+	public boolean insertComment(int idPost, Comment comment) {
 		Post post = postDAO.getPostById(idPost);
-		System.out.println("POST2 "+post);
-
 		post.getComments().add(comment);
 		
-		modelDao.update(post);
+		if(modelDao.save(comment))
+			return true;
+		return false;
+	}
+	
+	public boolean insertBookmark(User user, int idPost) {
+		User userDB = userDAO.getUserByUsername(user.getUsername());
+		Post post = postDAO.getPostById(idPost);
+		if(user.getBookmarks().add(post)) {
+			//TODO chiedere a Bernardo! facendo solo update non andava... ma perchè??? ho dovuto fare sta schifezza
+			userDB.getBookmarks().clear();
+			modelDao.update(userDB);
+			if(modelDao.merge(user)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean removeBookmark(User user, int idPost) {
+		//TODO implementare non appena ci sarà il popup del post [si può mettere un bottone]
+		return false;
 	}
 	
 	public void savePost(Post post) {

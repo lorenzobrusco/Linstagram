@@ -29,4 +29,6 @@ public enum MessageCode {
 	FOLLOW_FAILED,
 	UNFOLLOW_FAILED,
 
+	FAILED,
+	
 }

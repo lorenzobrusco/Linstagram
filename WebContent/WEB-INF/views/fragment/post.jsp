@@ -24,7 +24,65 @@ function getElapsedTime(postedTime){
 		round = Math.round(round);
 		return round+" DAYS AGO";
 	}	
-}
+};
+
+$(document).on('click', '.like', function() {
+	var postID = $(this).attr('name');
+	var count_like = $("#count_like"+postID)
+	var love_id = $("#love"+postID)
+
+	$.ajax({
+		url : "like",
+		data:{postID:postID},
+		success : function(result) {
+			if(result == "OK") {
+				$(count_like).html(parseInt($(count_like).html(), 10)+1)
+				$(love_id).empty();
+				$(love_id).append("<span class='loveFull'></span>");
+				// cambiare il cuoricino
+			}
+			//altrimenti dare un messaggio di errore??					
+		}
+	});
+});
+
+$(document).on('click', '.bookmark', function() {
+	var postID = $(this).attr('name');
+	var bookmark_id = $("#bookmark"+postID)
+	
+	$.ajax({
+		url : "bookmark",
+		data:{postID:postID},
+		success : function(result) {
+			if(result == "OK") {
+				$(bookmark_id).empty();
+				$(bookmark_id).append("<span class='saveFull'></span>");
+			}
+				// cambiare il simbolo di bookmark
+			//altrimenti dare un messaggio di errore??					
+		}
+	});
+});
+
+/* $(document).on('click', '.submit_comment', function() {
+	var postID = $(this).attr('id');
+	var comm = $("#comment"+postID).val()
+	
+	$.ajax({
+		url : "comment",
+		data:{postID:postID, comment:comm},
+		success : function(result) {		if(resesult == "OK") {
+				$(comm).val('');
+				alert("AAAAAAAAAAAAAAAAAAAAAA")
+			}
+			else
+				alert("NOOOOOOOOO");
+			//altrimenti dare un messaggio di errore??					
+		}
+	});
+}); */
+
+
 </script>
 
 
@@ -37,7 +95,7 @@ function getElapsedTime(postedTime){
 				<div class='card'>
 					<div class='top-section'>
 						<a href=''> <img class="user-img"src=${post.user.photoProfile }></a> 
-						<a href='' class='user-name'>${post.user.username }</a>
+						<a href='userPage?usernameOther=${post.user.username }' class='user-name'>${post.user.username }</a>
 					</div>
 					<div class='body-section'>
 						<div class="overlay">
@@ -49,19 +107,19 @@ function getElapsedTime(postedTime){
 					</div>
 					<div class='action-section'>
 						<div class='react'>
-							<a href='#' role='button'><span class='love'></span></a> <a
-								href='#' role='button'><span class='comment'></span></a> <a
-								href='#' role='button'><span class='save'></span></a>
+							<a name="${post.id }" id="love${post.id }" class="like"><span class='love'></span></a> 
+							<a href='#' role='button'><span class='comment'></span></a>
+							<a name="${post.id }" id="bookmark${post.id }" class="bookmark"><span class='save'></span></a>
 						</div>
 						<div class="likes-section">
-							<a href='#'><b>Piace a<span>
-										${fn:length(post.likes)} persone</span></b></a>
+							<a href='#'><b>Piace a <span id="count_like${post.id }">
+										${fn:length(post.likes)}</span> persone</b></a>
 						</div>
 						<div class='caption-section'>
 							<a href='#'>${post.user.username }</a><span>${post.content}</span>
 						</div>
 
-						<div class='list-comments-section'>
+						<div class='list-comments-section${post.id }'>
 							<c:forEach items="${post.comments}" var="comment">
 								<a href='#'>${comment.user.username}</a>
 								<span> ${comment.content}</span>
@@ -91,8 +149,9 @@ function getElapsedTime(postedTime){
 						</div>
 
 						<div class='comment-section'>
-							<input name="comment" type='text' class='comment-text'
+							<input id="comment${post.id }" name="comment" type='text' class='comment-text'
 								placeholder='Add a comment...'>
+							<%-- <button id="${post.id }" class="submit_comment" type="submit">Submit</button> --%>
 						</div>
 					</div>
 				</div>
