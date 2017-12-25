@@ -61,9 +61,25 @@
 	        						</button>
         						</form>
         						<c:if test="${follow.username != userSession.username }">
-	        						<div id="button${follow.id }" class="pull-right">
-	        							<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
-	        						</div>
+        							<c:set var="found" value="${false}"/>
+        							<c:forEach items="${userSession.followings}" var="followSession">
+       									<c:if test="${followSession.id == follow.id }">
+       										<c:set var="found" value="${true}"/>
+       									</c:if>
+	        						</c:forEach>
+	        						
+	        						<c:choose>
+       									<c:when test="${found }">
+       										<div id="button${follow.id }" class="pull-right">
+		        								<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
+			        						</div>
+       									</c:when>
+		        						<c:otherwise>
+			        						<div id="button${follow.id }" class="pull-right">
+			        							<button name="${follow.id }" value="${follow.username }" id="follow-btn">Follow</button>
+			        						</div>
+		        						</c:otherwise>
+	        						</c:choose>
         						</c:if>
         					</div>
         				</li>

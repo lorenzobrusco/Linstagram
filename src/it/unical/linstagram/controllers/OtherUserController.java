@@ -54,7 +54,7 @@ public class OtherUserController {
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
 		
-		if (!userService.addFollowing(user.getUsername(), usernameToFollow))
+		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user))
 			return new MessageResponce(MessageCode.FOLLOW_FAILED, user, "Non è stato possibile inserire l'utente come following.").getMessage();
 		
 		return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
@@ -66,7 +66,7 @@ public class OtherUserController {
 
 		User user = (User) session.getAttribute("user");
 		
-		if (!userService.removeFollowing(user.getUsername(), usernameToFollow))
+		if (!userService.removeFollowing(user.getUsername(), usernameToFollow, user))
 			return new MessageResponce(MessageCode.UNFOLLOW_FAILED, user, "Non è stato possibile eliminare l'utente dai following.").getMessage();
 		
 		return new MessageResponce(MessageCode.OK, user, "OK").getMessage();

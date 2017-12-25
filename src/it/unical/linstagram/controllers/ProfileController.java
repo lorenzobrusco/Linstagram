@@ -44,10 +44,11 @@ public class ProfileController {
 	@RequestMapping("profile")
 	public String getSignInPage(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
-			String username = ((User) session.getAttribute("user")).getUsername();
-			User user = userService.getListsUser(username);
-
-			model.addAttribute("user", user);
+			User user = (User) session.getAttribute("user");
+			userService.getListsUser(user.getUsername());
+			
+			model.addAttribute("userSession", user);
+			
 			return "profile";
 		}
 		return "redirect:/";
