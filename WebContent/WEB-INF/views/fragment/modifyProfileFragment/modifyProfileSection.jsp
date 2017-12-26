@@ -2,6 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+
+
 <div id="form-container">
 	<div class="info">
 		<form id="form_info">
@@ -9,14 +12,14 @@
 				<label for="name">Nome</label>
 				<div class="input-inline">
 					<input type="text" class="form-control" id="name"
-						placeholder="${user.name }">
+						value="${user.username}">
 				</div>
 			</div>
 			<div class="form-inline-profile">
 				<label for="name">Surname</label>
 				<div class="input-inline">
 					<input type="text" class="form-control" id="surname"
-						placeholder="${user.surname }">
+						value="${user.surname }">
 				</div>
 			</div>
 			<div class="form-inline-profile">
@@ -84,10 +87,9 @@
 					</c:choose>
 				</div>
 			</div>
-
 		</form>
 	</div>
-	<button type="button" disabled="disabled"
-	class="btn confirm-btn pull-right" id="modify-btn">Submit</button>
+	<button type="button" class="btn confirm-btn pull-right" id="modify-btn">Submit</button>
 </div>
+
 

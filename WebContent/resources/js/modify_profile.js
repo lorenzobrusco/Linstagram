@@ -17,14 +17,61 @@ $(document).ready(function() {
 			timeout:4000,
 			progressBar: true
 	}
+	
+	var usernameError={
+			text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> The username is already used!',
+			theme: 'nest',
+			type: 'error',
+			layout: 'bottomLeft',
+			timeout:4000,
+			progressBar: true
+	}
 
+	var emailError={
+			text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> The email is already used!',
+			theme: 'nest',
+			type: 'error',
+			layout: 'bottomLeft',
+			timeout:4000,
+			progressBar: true
+	}
+	
+	var validationEmailError={
+			text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> The email inserted is wrong!',
+			theme: 'nest',
+			type: 'error',
+			layout: 'bottomLeft',
+			timeout:4000,
+			progressBar: true
+	}
+	
 	function showResultMessage(result){
 		if (result == "OK"){
 			new Noty(notysuccess).show();
 			setTimeout(location.reload.bind(location), notysuccess.timeout); //wait 2 second and then reload
-		}else {
+		}
+		else if (result == "USERNAME_FAILED") {
+			new Noty(usernameError).show();
+		}
+		else if (result == "EMAIL_FAILED") {
+			new Noty(emailError).show();
+		}
+		else if (result == "VALIDATION_EMAIL_FAILED") {
+			new Noty(validationEmailError).show();
+		}
+		else {
 			new Noty(notyerror).show();
 		}
+	}
+	
+	function validationMail(mail) {
+		var mail_pattern=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	
+		if(mail=='')
+			return false;
+		else if(mail_pattern.test(mail)==false)
+			return false;
+		return true;
 	}
 
 	$("#modify-btn").click(function() {
@@ -39,13 +86,15 @@ $(document).ready(function() {
 		var popup = document.getElementById("popupOK");
 		var popupFail = document.getElementById("popupFAIL");
 
-		/* name+" "+ username+" "+ email+ " "+ sesso+ " "+ bio */
-		$.ajax({url:"sendInfoProfile", 
-			data:{name:name, surname:surname, username:username, email:email, sesso:selection, date:date, bio:bio, privateCheck:checkbox},
-			success: function(result) {
-				showResultMessage(result);
-			}	
-		})
+		if (validationMail(email))
+			$.ajax({url:"sendInfoProfile", 
+				data:{name:name, surname:surname, username:username, email:email, sesso:selection, date:date, bio:bio, privateCheck:checkbox},
+				success: function(result) {
+						showResultMessage(result);
+				}	
+			})
+		else
+			showResultMessage("VALIDATION_EMAIL_FAILED");
 	});
 
 
@@ -124,10 +173,7 @@ function verify_check(cb) {
 	else
 		document.getElementById('check').value = "false";
 
-	if ($("button").is(":disabled"))
-		$('button').prop('disabled', false);
-	else
-		$('button').prop('disabled', true);
+	$('button').prop('disabled', false);
 };
 
 

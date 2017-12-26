@@ -73,22 +73,22 @@ public class ProfileController {
 		User user = (User) session.getAttribute("user");
 		if (!name.equals(""))
 			if (!profileService.changeName(user, name))
-				return new MessageResponse(MessageCode.NAME_FAILED, user, "Non è stato possibile cambiare il nome.").getMessage();
+				return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare il nome.").getMessage();
 		if (!surname.equals(""))
 			if (!profileService.changeSurname(user, surname))
-				return new MessageResponse(MessageCode.SURNAME_FAILED, user, "Non è stato possibile cambiare il cognome.").getMessage();
+				return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare il cognome.").getMessage();
 		
 		if (!username.equals("")) {
 			if (!profileService.changeUsername(user, username))
-				return new MessageResponse(MessageCode.USERNAME_FAILED, user, "Username già esistente.").getMessage();
+				return new MessageResponse(MessageCode.USERNAME_FAILED, user, "USERNAME_FAILED").getMessage();
 		}
 		if (!email.equals("")) {
 			if (!profileService.changeEmail(user, email))
-				return new MessageResponse(MessageCode.EMAIL_FAILED, user, "Email già esistente.").getMessage();
+				return new MessageResponse(MessageCode.EMAIL_FAILED, user, "EMAIL_FAILED").getMessage();
 		}
 		if (!gender.equals("-1"))
 			if (!profileService.changeGender(user, gender))
-				return new MessageResponse(MessageCode.GENDER_FAILED, user, "Non è stato possibile cambiare il genere.").getMessage();
+				return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare il genere.").getMessage();
 		
 		if (!date.equals("")) {
 			try {
@@ -97,22 +97,22 @@ public class ProfileController {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(dateNew);
 				if (!cal.before(Calendar.getInstance()))
-					return new MessageResponse(MessageCode.DATE_FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
+					return new MessageResponse(MessageCode.FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
 				
 				if (!profileService.changeDate(user, cal))
-					return  new MessageResponse(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+					return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
 				
 			} catch (ParseException e) {
-				return  new MessageResponse(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+				return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
 			}
 		}
 		
 		if (!bio.equals(""))
 			if (!profileService.changeBiography(user, bio))
-				return  new MessageResponse(MessageCode.BIO_FAILED, user, "Non è stato possibile cambiare la biografia.").getMessage();
+				return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare la biografia.").getMessage();
 		
 		if (!profileService.changePrivateField(user, privateCheck))
-			return  new MessageResponse(MessageCode.PRIVATE_FAILED, user, "Non è stato possibile cambiare il campo di privacy.").getMessage();
+			return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare il campo di privacy.").getMessage();
 		
 		return  new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
