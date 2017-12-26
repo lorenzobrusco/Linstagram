@@ -21,69 +21,95 @@ import it.unical.linstagram.persistence.ModelDAO;
 
 public class ResearchTest extends AbstractModelTest {
 
-	
 	private static IHashtagDAO hashtagDAO;
 	private static ModelDAO modelDAO;
-	
+
 	@BeforeClass
-	public static void init ()
-	{
+	public static void init() {
 		hashtagDAO = new HashtagDAO();
 		modelDAO = new ModelDAO();
 	}
-	
-	  /**
-     * Regenerates the index for a given class 
-     * 
-     * @param clazz the class 
-     * @param sess the hibernate session 
-     */ 
-    public static void reindex(Class clazz, Session sess) { 
-        FullTextSession txtSession = Search.getFullTextSession(sess); 
-        MassIndexer massIndexer = txtSession.createIndexer(clazz); 
-        try { 
-            massIndexer.startAndWait(); 
-        } catch (InterruptedException e) { 
-            System.err.println("mass reindexing interrupted: " + e.getMessage()); 
-        } finally { 
-            txtSession.flushToIndexes(); 
-        } 
-    } 
-	
+
+	/**
+	 * Regenerates the index for a given class
+	 * 
+	 * @param clazz
+	 *            the class
+	 * @param sess
+	 *            the hibernate session
+	 */
+	public static void reindex(Class clazz, Session sess) {
+		FullTextSession txtSession = Search.getFullTextSession(sess);
+		MassIndexer massIndexer = txtSession.createIndexer(clazz);
+		try {
+			massIndexer.startAndWait();
+		} catch (InterruptedException e) {
+			System.err.println("mass reindexing interrupted: " + e.getMessage());
+		} finally {
+			txtSession.flushToIndexes();
+		}
+	}
+
+//	@Test
+//	public void researchHashtagAutocomplete() {
+//		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
+//		reindex(Hashtag.class, hibernateTestSession);
+//		modelDAO.save(new Hashtag("ciao"));
+//		modelDAO.save(new Hashtag("ciaoCOMEVA"));
+//		modelDAO.save(new Hashtag("COMEVA"));
+//		modelDAO.save(new Hashtag("tag"));
+//		modelDAO.save(new Hashtag("CIA"));
+//
+//		System.out.println("SONO QUI");
+//
+//		List<Hashtag> hashtags = hibernateTestSession.createQuery("FROM Hashtag").list();
+//
+//		for (Hashtag h : hashtags) {
+//			System.out.println(h.getHashtag());
+//		}
+//
+//		List<Hashtag> suggestions = hashtagDAO.search("cia");
+//
+//		for (Hashtag hashtag : suggestions) {
+//			System.out.println(hashtag.getHashtag() + " : " + hashtag.getCount());
+//		}
+//
+//		hibernateTestSession.close();
+//
+//		//
+//		Assert.assertEquals(3, suggestions.size());
+//	}
+//	
 	@Test
-	public void researchHashtag()
-	{	
+	public void researchHashtagStandard() {
 		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
 		reindex(Hashtag.class, hibernateTestSession);
 		modelDAO.save(new Hashtag("ciao"));
-		modelDAO.save(new Hashtag("ciaoCOMEVA"));	
+		modelDAO.save(new Hashtag("ciaoCOMEVA"));
 		modelDAO.save(new Hashtag("COMEVA"));
 		modelDAO.save(new Hashtag("tag"));
 		modelDAO.save(new Hashtag("CIA"));
-		
+
 		System.out.println("SONO QUI");
+		;
 
+		List<String> hashtags = hibernateTestSession.createQuery("select h.hashtag FROM Hashtag h where h.hashtag=:_hashtag")
+				.setParameter("_hashtag", "comeva").list();
 
-		List<Hashtag> hashtags =  hibernateTestSession.createQuery("FROM Hashtag").list();
-		
-
-		for(Hashtag h : hashtags) {
-			System.out.println(h.getHashtag());
+		for (String h : hashtags) {
+			System.out.println(h);
 		}
 
-		Assert.assertEquals(5,hashtags.size());
-		
-//		List<Hashtag> suggestions = hashtagDAO.getSuggestions("cia");
-		List<Hashtag> suggestions = hashtagDAO.search("cia");
-		
+		List<Hashtag> suggestions = (List<Hashtag>) hashtagDAO.getHashtagByValue("COMEVA");
+
 		for (Hashtag hashtag : suggestions) {
-			System.out.println(hashtag.getHashtag());
+			System.out.println(hashtag.getHashtag() + " : " + hashtag.getCount());
 		}
-		
+
 		hibernateTestSession.close();
-		
-//		
-//		Assert.assertEquals(3, suggestions.size());
+
+		//
+		Assert.assertEquals(3, suggestions.size());
 	}
-	
+
 }

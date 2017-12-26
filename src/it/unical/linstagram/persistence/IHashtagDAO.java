@@ -13,8 +13,7 @@ public interface IHashtagDAO {
 	@Nullable
 	Hashtag getHashtagByValue (String value);
 	
-	 public List getSuggestions(final String searchTerm);
-	
 	public List search (String queryString);
+	public List standardSearch (String queryString);
 
 }
