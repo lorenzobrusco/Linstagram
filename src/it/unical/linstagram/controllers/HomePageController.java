@@ -3,6 +3,8 @@ package it.unical.linstagram.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -40,11 +42,22 @@ public class HomePageController {
 	@RequestMapping("/index")
 	public String homePageController(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
-			model.addAttribute("posts", postService.getFollowedPosts(((User)session.getAttribute("user")).getUsername()));
+			List<Post> posts = postService.getFollowedPosts(((User)session.getAttribute("user")).getUsername());
+			
+			Collections.sort(posts, new Comparator<Post>() {
+				@Override
+				public int compare(Post post2, Post post1)
+				{
+					return  post1.getPostDate().compareTo(post2.getPostDate());
+				}
+			});
+			
+			model.addAttribute("posts", posts);
 			model.addAttribute("followedUsersStories",storiesService.getFollowedStories((User)session.getAttribute("user")));
 			return "index";
 		}
 		return "redirect:/";
+		
 	}
 	
 	@RequestMapping("/storyViewed")

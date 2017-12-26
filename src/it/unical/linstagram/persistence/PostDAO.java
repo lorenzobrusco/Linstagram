@@ -1,11 +1,14 @@
 package it.unical.linstagram.persistence;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
+import it.unical.linstagram.helper.UnionHelper;
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Post;
@@ -51,14 +54,17 @@ public class PostDAO implements IPostDAO {
 
 		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
 				.setParameter("username", username).list();
+		List<Post> postUser = session.createQuery("SELECT u.posts FROM User u WHERE u.username=:username")
+				.setParameter("username", username).list();
 		List<Post> posts = new ArrayList<>();
 		if(!followedUsers.isEmpty())
 			posts = session.createQuery("SELECT p FROM Post p  WHERE p.user in (:fUsers) order by p.postDate desc")
 				.setParameter("fUsers",followedUsers).list();
 		
 		session.close();
-		return posts;
+		return UnionHelper.union(posts, postUser);
 	}
+	
 	
 	@Override
 	public List<User> getLikesByPostId(int idPost) {
