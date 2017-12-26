@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.model.User;
@@ -25,13 +26,11 @@ public class SignInUpController {
 	}
 
 	@RequestMapping(value = "/signUpAttempt", method = RequestMethod.POST)
-	public String signUp(@RequestParam String email, @RequestParam String username, @RequestParam String password,HttpSession session) {
-		if (signInService.signUpAttempt(email, username, password) == MessageCode.SUCCESS_SIGN_UP) {
-			return signIn(username,password,session);
-		}
-		// TODO: return a string that show the error (already user username/email)
-		return "redirect:/index";
-
+	@ResponseBody
+	public String signUp(@RequestParam String email, @RequestParam String username, @RequestParam String password) {
+		MessageCode signUpAttempt = signInService.signUpAttempt(email, username, password);
+//		System.out.println(signUpAttempt);
+		return signUpAttempt.toString();
 	}
 
 	@RequestMapping(value="/signInAttempt",method=RequestMethod.POST)
@@ -45,7 +44,6 @@ public class SignInUpController {
 				return "redirect:/index";
 			}
 		}
-		// TODO: return a string that show the error -> put it in session and add message in jsp
 		return "redirect:/";
 	}
 
