@@ -30,86 +30,46 @@ public class ResearchTest extends AbstractModelTest {
 		modelDAO = new ModelDAO();
 	}
 
-	/**
-	 * Regenerates the index for a given class
-	 * 
-	 * @param clazz
-	 *            the class
-	 * @param sess
-	 *            the hibernate session
-	 */
-	public static void reindex(Class clazz, Session sess) {
-		FullTextSession txtSession = Search.getFullTextSession(sess);
-		MassIndexer massIndexer = txtSession.createIndexer(clazz);
-		try {
-			massIndexer.startAndWait();
-		} catch (InterruptedException e) {
-			System.err.println("mass reindexing interrupted: " + e.getMessage());
-		} finally {
-			txtSession.flushToIndexes();
-		}
-	}
-
-//	@Test
-//	public void researchHashtagAutocomplete() {
-//		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
-//		reindex(Hashtag.class, hibernateTestSession);
-//		modelDAO.save(new Hashtag("ciao"));
-//		modelDAO.save(new Hashtag("ciaoCOMEVA"));
-//		modelDAO.save(new Hashtag("COMEVA"));
-//		modelDAO.save(new Hashtag("tag"));
-//		modelDAO.save(new Hashtag("CIA"));
-//
-//		System.out.println("SONO QUI");
-//
-//		List<Hashtag> hashtags = hibernateTestSession.createQuery("FROM Hashtag").list();
-//
-//		for (Hashtag h : hashtags) {
-//			System.out.println(h.getHashtag());
-//		}
-//
-//		List<Hashtag> suggestions = hashtagDAO.search("cia");
-//
-//		for (Hashtag hashtag : suggestions) {
-//			System.out.println(hashtag.getHashtag() + " : " + hashtag.getCount());
-//		}
-//
-//		hibernateTestSession.close();
-//
-//		//
-//		Assert.assertEquals(3, suggestions.size());
-//	}
-//	
 	@Test
-	public void researchHashtagStandard() {
-		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
-		reindex(Hashtag.class, hibernateTestSession);
+	public void researchHashtagAutocomplete() {
+		
 		modelDAO.save(new Hashtag("ciao"));
 		modelDAO.save(new Hashtag("ciaoCOMEVA"));
 		modelDAO.save(new Hashtag("COMEVA"));
 		modelDAO.save(new Hashtag("tag"));
 		modelDAO.save(new Hashtag("CIA"));
+		
+		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
+		List<Hashtag> hashtags = hibernateTestSession.createQuery("FROM Hashtag").list();
 
-		System.out.println("SONO QUI");
-		;
-
-		List<String> hashtags = hibernateTestSession.createQuery("select h.hashtag FROM Hashtag h where h.hashtag=:_hashtag")
-				.setParameter("_hashtag", "comeva").list();
-
-		for (String h : hashtags) {
-			System.out.println(h);
+		for (Hashtag h : hashtags) {
+			System.out.println(h.getHashtag());
 		}
 
-		List<Hashtag> suggestions = (List<Hashtag>) hashtagDAO.getHashtagByValue("COMEVA");
+		List<Hashtag> suggestions = hashtagDAO.getSuggestions("cia");
 
 		for (Hashtag hashtag : suggestions) {
 			System.out.println(hashtag.getHashtag() + " : " + hashtag.getCount());
 		}
 
 		hibernateTestSession.close();
-
-		//
 		Assert.assertEquals(3, suggestions.size());
+	}
+
+	@Test
+	public void researchHashtagStandard() {
+		
+		modelDAO.save(new Hashtag("ciao".toLowerCase()));
+		modelDAO.save(new Hashtag("ciaoCOMEVA".toLowerCase()));
+		modelDAO.save(new Hashtag("COMEVA".toLowerCase()));
+		modelDAO.save(new Hashtag("tag".toLowerCase()));
+		modelDAO.save(new Hashtag("CIA".toLowerCase()));
+
+		Hashtag suggestions = hashtagDAO.getHashtagByValue("COMEVA");
+
+		System.out.println(suggestions.getHashtag() + " : " + suggestions.getCount());
+
+		Assert.assertEquals("comeva", suggestions.getHashtag());
 	}
 
 }
