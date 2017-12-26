@@ -8,7 +8,7 @@ import java.util.Set;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import it.unical.linstagram.helper.UnionHelper;
+import it.unical.linstagram.helper.ListHelper;
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Post;
@@ -62,7 +62,7 @@ public class PostDAO implements IPostDAO {
 				.setParameter("fUsers",followedUsers).list();
 		
 		session.close();
-		return UnionHelper.union(posts, postUser);
+		return ListHelper.union(posts, postUser);
 	}
 	
 	

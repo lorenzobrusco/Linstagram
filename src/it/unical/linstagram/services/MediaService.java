@@ -77,7 +77,7 @@ public class MediaService {
 	private Media getUploadedMediaInfo(MultipartFile multipartFile, HttpSession session) throws IOException {
 		Media media = new Media();
 		String path=getOnlineLocation(session)+nameFile;
-		System.out.println(path);
+//		System.out.println(path);
 		media.setUrl(path);
 		return media;
 	}
@@ -119,6 +119,18 @@ public class MediaService {
 	private String getLocalDestinationLocation(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		String path_image = context.getRealPath("/WEB-INF/images/");
+		
+		String path = path_image +user.getId()+"/";
+//		System.out.println(path);
+		FileModel.createFolder(path);
+		return path;
+	}
+	
+	/**
+	 * Create default image and folder for user 
+	 */
+	public void createImageDefault() {
+		String path_image = context.getRealPath("/WEB-INF/images/");
 		FileModel.createFolder(path_image);
 		String imageUrl = "https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png";
 		try {
@@ -126,11 +138,6 @@ public class MediaService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		String path = path_image +user.getUsername()+"/";
-//		System.out.println(path);
-		FileModel.createFolder(path);
-		return path;
 	}
 
 
@@ -140,7 +147,7 @@ public class MediaService {
 	 */
 	private String getOnlineLocation(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		String onlineContextPath = "images/"+user.getUsername()+"/";
+		String onlineContextPath = "images/"+user.getId()+"/";
 		return onlineContextPath;
 	}
 

@@ -26,7 +26,7 @@
 		      </div>
 		      <div class="modal-body">
 	      		<ul>
-        			<c:forEach items="${user.followings}" var="follow">
+        			<c:forEach items="${followings}" var="follow">
         				<li id="users">
         					<div id="user_enter">
         						<form role="form" action="userPage">

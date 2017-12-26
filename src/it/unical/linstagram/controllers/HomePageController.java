@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.unical.linstagram.helper.ListHelper;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
@@ -43,14 +44,7 @@ public class HomePageController {
 	public String homePageController(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
 			List<Post> posts = postService.getFollowedPosts(((User)session.getAttribute("user")).getUsername());
-			
-			Collections.sort(posts, new Comparator<Post>() {
-				@Override
-				public int compare(Post post2, Post post1)
-				{
-					return  post1.getPostDate().compareTo(post2.getPostDate());
-				}
-			});
+			ListHelper.order(posts);
 			
 			model.addAttribute("posts", posts);
 			model.addAttribute("followedUsersStories",storiesService.getFollowedStories((User)session.getAttribute("user")));

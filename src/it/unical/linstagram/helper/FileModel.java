@@ -73,13 +73,6 @@ public class FileModel {
 		return 0;
 	}
 
-	// public static void main(String[] args) throws Exception {
-	// String imageUrl = "http://www.avajava.com/images/avajavalogo.jpg";
-	// String destinationFile = "image.jpg";
-	//
-	// saveImage(imageUrl, destinationFile);
-	// }
-
 	public static void saveImage(String imageUrl, String destinationFile) throws IOException {
 		File file = new File(destinationFile);
 		if (!file.exists()) {

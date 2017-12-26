@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.SignInUpService;
 
@@ -19,6 +20,8 @@ public class SignInUpController {
 
 	@Autowired
 	private SignInUpService signInService;
+	@Autowired
+	private MediaService mediaService;
 
 	@RequestMapping("/")
 	public String getSignInPage() {
@@ -41,6 +44,7 @@ public class SignInUpController {
 			if(signInAttemptResp.getObj() instanceof User) {
 				User user= (User) signInAttemptResp.getObj();
 				session.setAttribute("user", user);
+				mediaService.createImageDefault();
 				return "redirect:/index";
 			}
 		}

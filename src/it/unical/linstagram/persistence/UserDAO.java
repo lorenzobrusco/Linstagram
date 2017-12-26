@@ -121,20 +121,30 @@ public class UserDAO implements IUserDAO {
 		return users;
 	}
 	
-	public User inizializeLists(String username) {
+	public List<User> getFollowerByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
-		User user = (User) session.createQuery("FROM  User u where u.username=:username")
-				.setParameter("username", username).uniqueResult();
-		
-		Hibernate.initialize(user.getPosts());
-		Hibernate.initialize(user.getTagged());
-		Hibernate.initialize(user.getBookmarks());
-		Hibernate.initialize(user.getFollowings());
-		Hibernate.initialize(user.getFollowers());
+		List<User> users = session.createQuery("SELECT user.followers FROM User user WHERE user.username=:username")
+				.setParameter("username", username).list();
 		
 		session.close();
-		return user;
+		return users;
 	}
+	
+	
+//	public User inizializeLists(String username) {
+//		Session session = HibernateUtil.getHibernateSession();
+//		User user = (User) session.createQuery("FROM  User u where u.username=:username")
+//				.setParameter("username", username).uniqueResult();
+//		
+//		Hibernate.initialize(user.getPosts());
+//		Hibernate.initialize(user.getTagged());
+//		Hibernate.initialize(user.getBookmarks());
+//		Hibernate.initialize(user.getFollowings());
+//		Hibernate.initialize(user.getFollowers());
+//		
+//		session.close();
+//		return user;
+//	}
 	
 	public void inizializeListUser(Set<Post> set) {
 		Session session = HibernateUtil.getHibernateSession();

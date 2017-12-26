@@ -46,6 +46,8 @@ public class OtherUserController {
 			return "profile";
 		
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
+		model.addAttribute("followers", userService.getFollowers(userDTO.getUsername()));
+		model.addAttribute("followings", userService.getFollowings(userDTO.getUsername()));
 		
 		model.addAttribute("user", userDTO);
 		model.addAttribute("userSession", user);

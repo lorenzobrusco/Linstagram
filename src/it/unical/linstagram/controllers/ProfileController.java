@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import it.unical.linstagram.helper.EncryptPassword;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Gender;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
@@ -45,10 +46,11 @@ public class ProfileController {
 	public String getSignInPage(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
 			User user = (User) session.getAttribute("user");
-			userService.getListsUser(user.getUsername());
+//			userService.getListsUser(user.getUsername());
 			
-			model.addAttribute("userSession", user);
-			
+//			model.addAttribute("userSession", user);
+			model.addAttribute("followers", userService.getFollowers(user.getUsername()));
+			model.addAttribute("followings", userService.getFollowings(user.getUsername()));
 			return "profile";
 		}
 		return "redirect:/";
@@ -72,23 +74,22 @@ public class ProfileController {
 		
 		User user = (User) session.getAttribute("user");
 		if (!name.equals(""))
-			if (!profileService.changeName(user, name))
-				return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare il nome.").getMessage();
+			user.setName(name);
 		if (!surname.equals(""))
-			if (!profileService.changeSurname(user, surname))
-				return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare il cognome.").getMessage();
+			user.setSurname(surname);
 		
 		if (!username.equals("")) {
 			if (!profileService.changeUsername(user, username))
 				return new MessageResponse(MessageCode.USERNAME_FAILED, user, "USERNAME_FAILED").getMessage();
+			user.setUsername(username);
 		}
 		if (!email.equals("")) {
 			if (!profileService.changeEmail(user, email))
 				return new MessageResponse(MessageCode.EMAIL_FAILED, user, "EMAIL_FAILED").getMessage();
+			user.setEmail(email);
 		}
 		if (!gender.equals("-1"))
-			if (!profileService.changeGender(user, gender))
-				return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare il genere.").getMessage();
+			user.setGender(Gender.values()[Integer.parseInt(gender)-1]);
 		
 		if (!date.equals("")) {
 			try {
@@ -99,8 +100,7 @@ public class ProfileController {
 				if (!cal.before(Calendar.getInstance()))
 					return new MessageResponse(MessageCode.FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
 				
-				if (!profileService.changeDate(user, cal))
-					return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+				user.setBirthdate(cal);
 				
 			} catch (ParseException e) {
 				return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
@@ -108,12 +108,15 @@ public class ProfileController {
 		}
 		
 		if (!bio.equals(""))
-			if (!profileService.changeBiography(user, bio))
-				return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare la biografia.").getMessage();
+			user.setBiography(bio);
 		
-		if (!profileService.changePrivateField(user, privateCheck))
-			return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare il campo di privacy.").getMessage();
-		
+		if (privateCheck == "true")
+			user.setPrivateProfile(true);
+		else 
+			user.setPrivateProfile(false);
+	
+		if (!profileService.updateUser(user))
+			return  new MessageResponse(MessageCode.FAILED, user, "FAILED").getMessage();
 		return  new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	

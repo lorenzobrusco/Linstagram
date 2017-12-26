@@ -1,5 +1,6 @@
 package it.unical.linstagram.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -93,8 +94,38 @@ public class UserService {
 	 * Initialize the list of the user
 	 * @param username 
 	 */
-	public User getListsUser(String username) {
-		return userDAO.inizializeLists(username);
+//	public User getListsUser(String username) {
+//		
+//		
+//		User user = userDAO.getUserByUsername(username);
+//		for (User follow : user.getFollowings()) {
+//			
+//		}
+//		
+//		
+//		return null;
+//	}
+	
+	public List<UserDTO> getFollowers(String username) {
+		List<User> followers = userDAO.getFollowerByUsername(username);
+		
+		List<UserDTO> followersDTO = new ArrayList<>();
+		for (User user : followers) {
+			followersDTO.add(new UserPrivateDTO(user));
+		}
+		
+		return followersDTO;
+	}
+	
+	public List<UserDTO> getFollowings(String username) {
+		List<User> followings = userDAO.getFollowingByUsername(username);
+		
+		List<UserDTO> followingsDTO = new ArrayList<>();
+		for (User user : followings) {
+			followingsDTO.add(new UserPrivateDTO(user));
+		}
+		
+		return followingsDTO;
 	}
 	
 	
