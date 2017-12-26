@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.helper.EncryptPassword;
-import it.unical.linstagram.helper.MessageResponce;
+import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
@@ -57,7 +57,7 @@ public class ProfileController {
 	@RequestMapping("modifyProfile")
 	public String getModifyProfile(HttpSession session) {
 		if(UserManager.checkLogged(session))
-			return "modify_profile";
+			return "modifyProfile";
 		return "redirect:/";
 	}
 
@@ -73,22 +73,22 @@ public class ProfileController {
 		User user = (User) session.getAttribute("user");
 		if (!name.equals(""))
 			if (!profileService.changeName(user, name))
-				return new MessageResponce(MessageCode.NAME_FAILED, user, "Non è stato possibile cambiare il nome.").getMessage();
+				return new MessageResponse(MessageCode.NAME_FAILED, user, "Non è stato possibile cambiare il nome.").getMessage();
 		if (!surname.equals(""))
 			if (!profileService.changeSurname(user, surname))
-				return new MessageResponce(MessageCode.SURNAME_FAILED, user, "Non è stato possibile cambiare il cognome.").getMessage();
+				return new MessageResponse(MessageCode.SURNAME_FAILED, user, "Non è stato possibile cambiare il cognome.").getMessage();
 		
 		if (!username.equals("")) {
 			if (!profileService.changeUsername(user, username))
-				return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Username già esistente.").getMessage();
+				return new MessageResponse(MessageCode.USERNAME_FAILED, user, "Username già esistente.").getMessage();
 		}
 		if (!email.equals("")) {
 			if (!profileService.changeEmail(user, email))
-				return new MessageResponce(MessageCode.EMAIL_FAILED, user, "Email già esistente.").getMessage();
+				return new MessageResponse(MessageCode.EMAIL_FAILED, user, "Email già esistente.").getMessage();
 		}
 		if (!gender.equals("-1"))
 			if (!profileService.changeGender(user, gender))
-				return new MessageResponce(MessageCode.GENDER_FAILED, user, "Non è stato possibile cambiare il genere.").getMessage();
+				return new MessageResponse(MessageCode.GENDER_FAILED, user, "Non è stato possibile cambiare il genere.").getMessage();
 		
 		if (!date.equals("")) {
 			try {
@@ -97,24 +97,24 @@ public class ProfileController {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(dateNew);
 				if (!cal.before(Calendar.getInstance()))
-					return new MessageResponce(MessageCode.DATE_FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
+					return new MessageResponse(MessageCode.DATE_FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
 				
 				if (!profileService.changeDate(user, cal))
-					return  new MessageResponce(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+					return  new MessageResponse(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
 				
 			} catch (ParseException e) {
-				return  new MessageResponce(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+				return  new MessageResponse(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
 			}
 		}
 		
 		if (!bio.equals(""))
 			if (!profileService.changeBiography(user, bio))
-				return  new MessageResponce(MessageCode.BIO_FAILED, user, "Non è stato possibile cambiare la biografia.").getMessage();
+				return  new MessageResponse(MessageCode.BIO_FAILED, user, "Non è stato possibile cambiare la biografia.").getMessage();
 		
 		if (!profileService.changePrivateField(user, privateCheck))
-			return  new MessageResponce(MessageCode.PRIVATE_FAILED, user, "Non è stato possibile cambiare il campo di privacy.").getMessage();
+			return  new MessageResponse(MessageCode.PRIVATE_FAILED, user, "Non è stato possibile cambiare il campo di privacy.").getMessage();
 		
-		return  new MessageResponce(MessageCode.OK, user, "OK").getMessage();
+		return  new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
 	@RequestMapping("sendChangePassword")
@@ -126,10 +126,10 @@ public class ProfileController {
 		String pass = profileService.getPassword(user.getUsername());
 		
 		if (!pass.equals(EncryptPassword.checkPassword(old_password, pass)))
-			return  new MessageResponce(MessageCode.PASS_WRONG, user, "La password inserita non corrisponde alla password corrente.").getMessage();
+			return  new MessageResponse(MessageCode.PASS_WRONG, user, "La password inserita non corrisponde alla password corrente.").getMessage();
 		
 		if (!new_password.equals(repeat_password))
-			return  new MessageResponce(MessageCode.PASS_DIFFERENT, user, "Le due password inserite sono diverse.").getMessage();
+			return  new MessageResponse(MessageCode.PASS_DIFFERENT, user, "Le due password inserite sono diverse.").getMessage();
 		
 		String password = EncryptPassword.encrypt(new_password);
 		profileService.changePassword(user, password);
@@ -159,7 +159,7 @@ public class ProfileController {
 		System.out.println(user.getPhotoProfile());
 		boolean result = profileService.uploadPhotoProfile(user);
 		if(result)
-			return "modify_profile";
+			return "modifyProfile";
 		else
 			return "redirect:/";
 	}

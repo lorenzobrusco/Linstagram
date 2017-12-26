@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import it.unical.linstagram.helper.MessageResponce;
+import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Post;
@@ -34,9 +34,9 @@ public class PostController {
 	public String insertLike(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
 		if (postService.insertLike(idPost, user))
-			return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
+			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
-		return new MessageResponce(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
 	}
 	
 	@RequestMapping("/bookmark")
@@ -44,9 +44,9 @@ public class PostController {
 	public String insertBookmark(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
 		if (postService.insertBookmark(user, idPost))
-			return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
+			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
-		return new MessageResponce(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
 	}
 	
 	

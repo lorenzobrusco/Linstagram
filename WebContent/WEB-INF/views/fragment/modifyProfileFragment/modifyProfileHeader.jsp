@@ -35,7 +35,6 @@
 </div>
 
 
-
 <div id="upload-photoprofile-modal">
 	<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID  class="close-animatedModal" -->
 	<div id="modal-card">
@@ -136,8 +135,6 @@ $(document).ready(function(){
 	var uploader = document.querySelector('#post-dropzone');
 	//	CREATE DROPZONE
 	var myDropzone = new Dropzone(uploader,dropzoneOptions);
-	
-	
 	
 });
 </script>

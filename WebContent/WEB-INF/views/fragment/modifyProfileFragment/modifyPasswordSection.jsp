@@ -2,11 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modify_profile.css">
-<script src="./resources/js/modify_profile.js"></script>
-
-<div class='modify-profile'>
-	<jsp:include page="./modifyProfileHeader.jsp"></jsp:include>
-
+<script src="${pageContext.request.contextPath}/resources/js/modify_profile.js"></script>
+<div id="form-container">
 	<div class="info">
 		<form>
 			<div class="form-inline-profile">
@@ -30,12 +27,9 @@
 					<input type="password" class="form-control" id="repeat_password">
 				</div>
 			</div>
-
-			<jsp:include page="./modifyUserDataPopup.jsp"></jsp:include>
-
-
 		</form>
 	</div>
-</div>
-<button type="button" disabled="disabled" class="btn confirm-btn pull-right"
+	<button type="button" disabled="disabled" class="btn confirm-btn pull-right"
 	id="modifyPass-btn">Submit</button>
+</div>
+
