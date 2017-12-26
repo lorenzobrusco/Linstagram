@@ -101,7 +101,7 @@ public class PostService {
 			}
 			else
 			{
-				hashtagByValue = new Hashtag(fh, 1);
+				hashtagByValue = new Hashtag(fh.toLowerCase(), 1);
 			}
 			post.getHashtags().add(hashtagByValue);
 		}
