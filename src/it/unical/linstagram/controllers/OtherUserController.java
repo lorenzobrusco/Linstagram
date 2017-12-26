@@ -68,7 +68,7 @@ public class OtherUserController {
 	public String unfollowUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 
 		User user = (User) session.getAttribute("user");
-		
+		System.out.println(user.getUsername()+" "+usernameToFollow);
 		if (!userService.removeFollowing(user.getUsername(), usernameToFollow, user))
 			return new MessageResponce(MessageCode.UNFOLLOW_FAILED, user, "Non è stato possibile eliminare l'utente dai following.").getMessage();
 		

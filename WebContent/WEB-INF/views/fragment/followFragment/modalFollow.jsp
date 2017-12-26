@@ -10,18 +10,7 @@
 <html>
 <head>
 <title>Listagram</title>
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="./resources/js/modal_follow_event.js"></script>
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
-
+<script src="./resources/js/follow_event/modal_follow_event.js"></script>
 </head>
 <body>
 
@@ -44,14 +33,7 @@
 	        						<button id="button_form" name="usernameOther" value="${follow.username }">
 		        						<div id="button_user">
 			        						<div id="img_div">
-			        							<%-- <c:choose>
-				        							<c:when test="${empty follow.photoProfile }">
-				        								<img id="img" src="https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png"></img>
-				       								</c:when> 
-				       								<c:otherwise>--%>
-			        									<img id="img" src="${follow.photoProfile }"></img>
-			        					<%-- 			</c:otherwise>
-			        							</c:choose> --%>
+	        									<img id="img" src="${follow.photoProfile }"></img>
 			        						</div>
 			        							
 			        						<div id="info_div">

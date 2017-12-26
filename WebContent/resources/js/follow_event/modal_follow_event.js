@@ -6,7 +6,7 @@ $(document).ready(function() {
 		var id = $(this).attr('name');
 		var username = $(this).attr('value');
 
-		var btn = "#button"+id
+		var btn = "#button"+id;
 		$.ajax({
 			url : "followUser",
 			data:{username:username},
@@ -23,7 +23,7 @@ $(document).ready(function() {
 		var id = $(this).attr('name');
 		var username = $(this).attr('value');
 		
-		var btn = "#button"+id
+		var btn = "#button"+id;
 		$.ajax({
 			url : "unfollowUser",
 			data:{username:username},

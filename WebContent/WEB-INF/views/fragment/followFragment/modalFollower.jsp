@@ -8,22 +8,9 @@
 <html>
 <head>
 <title>Listagram</title>
-<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<script src="./resources/js/modal_follow_event.js"></script>
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
-
+<script src="./resources/js/follow_event/follower_event.js"></script>
 </head>
 <body>
-
 <!-- Modal -->
 	<div class="modal fade" id="modalFollower" role="dialog">
   		<div class="modal-dialog">
@@ -61,25 +48,27 @@
 	        						</button>
         						</form>
         						<c:if test="${follow.username != userSession.username }">
-        							<c:set var="found" value="${false}"/>
-        							<c:forEach items="${userSession.followings}" var="followSession">
-       									<c:if test="${followSession.id == follow.id }">
-       										<c:set var="found" value="${true}"/>
-       									</c:if>
-	        						</c:forEach>
-	        						
-	        						<c:choose>
-       									<c:when test="${found }">
-       										<div id="button${follow.id }" class="pull-right">
-		        								<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
-			        						</div>
-       									</c:when>
-		        						<c:otherwise>
-			        						<div id="button${follow.id }" class="pull-right">
-			        							<button name="${follow.id }" value="${follow.username }" id="follow-btn">Follow</button>
-			        						</div>
-		        						</c:otherwise>
-	        						</c:choose>
+        							<div id="fol-div${follow.id }">
+	        							<c:set var="found" value="${false}"/>
+	        							<c:forEach items="${userSession.followings}" var="followSession">
+	       									<c:if test="${followSession.id == follow.id }">
+	       										<c:set var="found" value="${true}"/>
+	       									</c:if>
+		        						</c:forEach>
+		        						
+		        						<c:choose>
+	       									<c:when test="${found }">
+	       										<div id="button${follow.id }" class="pull-right">
+				        							<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
+				        						</div>
+	       									</c:when>
+			        						<c:otherwise>
+				        						<div id="button${follow.id }" class="pull-right">
+				        							<button name="${follow.id }" value="${follow.username }" id="follow-btn">Follow</button>
+				        						</div>
+			        						</c:otherwise>
+		        						</c:choose>
+	        						</div>
         						</c:if>
         					</div>
         				</li>
