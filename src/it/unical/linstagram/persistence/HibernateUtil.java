@@ -8,6 +8,7 @@ import org.hibernate.search.MassIndexer;
 import org.hibernate.search.Search;
 
 import it.unical.linstagram.model.Hashtag;
+import it.unical.linstagram.model.User;
 
 public class HibernateUtil {
 
@@ -54,6 +55,7 @@ public class HibernateUtil {
 	{
 		Session session = factory.openSession();
 		reindex(Hashtag.class, session);
+		reindex(User.class, session);
 		session.close();
 	}
 

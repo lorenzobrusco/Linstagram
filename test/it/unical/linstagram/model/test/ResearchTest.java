@@ -80,22 +80,37 @@ public class ResearchTest extends AbstractModelTest {
 		hibernateTestSession.close();
 		Assert.assertEquals(3, suggestions.size());
 	}
-//	
-//	@Test
-//	public void researchUserAutocomplete() {
-//		
-//		
-//		modelDAO.save(new User("Eliana","email","pass"));
-//		modelDAO.save(new User("Elia","emaill","pass"));
-//		modelDAO.save(new User("lana","email2","pass"));
-//		modelDAO.save(new User("paola","email1","pass"));
-//		
-//
-//		List<User> suggestions = userDAO.getSuggestions("eli");
-//		
-//		for (User user : suggestions) {
-//			System.out.println(user.getUsername());
-//		}
-//	}
+	
+	@Test
+	public void researchUserAutocomplete() {
+		
+		HibernateUtil.init();
+		modelDAO.save(new User("Eliana","email","pass"));
+		modelDAO.save(new User("Elia","emaill","pass"));
+		modelDAO.save(new User("lana","email2","pass"));
+		modelDAO.save(new User("paola","email1","pass"));
+		
+
+		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
+		List<User> users = hibernateTestSession.createQuery("FROM User").list();
+
+		for (User u : users) {
+			System.out.println(u.getUsername());
+		}
+
+		
+		
+		List<User> suggestions = userDAO.getSuggestions("ana");
+		System.out.println("la size della lista è "+ suggestions.size());
+		
+		System.out.println("SONO QUI");
+		
+		for (User user : suggestions) {
+			System.out.println(user.getUsername());
+		}
+		hibernateTestSession.close();
+		
+		Assert.assertEquals(2, suggestions.size());
+	}
 
 }

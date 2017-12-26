@@ -15,11 +15,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.lucene.analysis.core.*;
+import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.apache.lucene.analysis.pattern.PatternReplaceFilterFactory;
+import org.hibernate.search.annotations.*;
 
 @Entity
 @Table(name="user")
+@Indexed
 public class User{
 
 	@Id
@@ -27,7 +32,12 @@ public class User{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(nullable = false, unique = true)
+	@Column(name="username", nullable = false, unique = true)
+	@Fields({
+		@Field(name = "username", index = Index.YES, store = Store.YES),
+		@Field(name = "edgeNGramUsername", index = Index.YES, store = Store.NO,
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
+	})
 	private String username;
 
 	@Column(unique = true, nullable = false)

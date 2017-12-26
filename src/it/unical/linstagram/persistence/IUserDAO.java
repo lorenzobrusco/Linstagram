@@ -19,7 +19,5 @@ public interface IUserDAO {
 	List<Post> getBookmarksByUsername(String username);
 	List<Post> getTaggedPostByUsername(String username);
 	
-	
-	
-	
+	List<User> getSuggestions(String queryString);	
 }
