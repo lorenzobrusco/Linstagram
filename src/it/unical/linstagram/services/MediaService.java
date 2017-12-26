@@ -25,6 +25,29 @@ public class MediaService {
 	private String nameFile;
 	
 	/**
+	 * Save photo profile
+	 * @param multipartFile the uploaded File
+	 * @param session an HttpSession
+	 * @return Media
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public Media createProfilePhoto(MultipartFile multipartFile, HttpSession session) throws FileNotFoundException, IOException {
+		saveProfilePhotoToLocalDisk(multipartFile,session);
+		return getUploadedMediaInfo(multipartFile,session);
+	}
+	
+	private void saveProfilePhotoToLocalDisk(MultipartFile multipartFile, HttpSession session) throws IOException, FileNotFoundException {
+		String fileName = multipartFile.getOriginalFilename();
+		String[] tokens = fileName.split("\\.(?=[^\\.]+$)");
+		nameFile = "photoProfile"+"."+tokens[1];
+		final String outputFileName = getLocalDestinationLocation(session) + nameFile;
+		byte[] cropImageSquare = FileModel.cropImageSquare(multipartFile.getBytes());
+		FileCopyUtils.copy(cropImageSquare, new FileOutputStream(outputFileName));
+	}
+	
+	
+	/**
 	 * From a single uploaded file create a media and save it on disk
 	 * @param multipartFile the uploaded File
 	 * @param session an HttpSession
@@ -33,7 +56,7 @@ public class MediaService {
 	 * @throws IOException
 	 */
 	public Media createMedia(MultipartFile multipartFile, HttpSession session) throws FileNotFoundException, IOException {
-		saveFileToLocalDisk(multipartFile,session);
+		saveMediaToLocalDisk(multipartFile,session);
 		return getUploadedMediaInfo(multipartFile,session);
 	}
 
@@ -43,7 +66,7 @@ public class MediaService {
 	 * @throws IOException
 	 * @throws FileNotFoundException
 	 */
-	private void saveFileToLocalDisk(MultipartFile multipartFile, HttpSession session) throws IOException, FileNotFoundException {
+	private void saveMediaToLocalDisk(MultipartFile multipartFile, HttpSession session) throws IOException, FileNotFoundException {
 		final String outputFileName = getOutputFilename(multipartFile, session);
 		FileCopyUtils.copy(multipartFile.getBytes(), new FileOutputStream(outputFileName));
 	}
