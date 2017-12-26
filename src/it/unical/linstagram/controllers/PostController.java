@@ -29,7 +29,7 @@ public class PostController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("/like")
+	@RequestMapping("addLike")
 	@ResponseBody
 	public String insertLike(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
@@ -39,7 +39,7 @@ public class PostController {
 		return new MessageResponce(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
 	}
 	
-	@RequestMapping("/bookmark")
+	@RequestMapping("addBookmark")
 	@ResponseBody
 	public String insertBookmark(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
@@ -50,18 +50,18 @@ public class PostController {
 	}
 	
 	
-//	@RequestMapping("comment")
-//	@ResponseBody
-//	public String insertComment(HttpSession session, Model model, @RequestParam("postID") int idPost, @RequestParam("comment") String comment) {
-//		User user = (User) session.getAttribute("user");
-//		Post post = postService.getPost(idPost);
-//		System.out.println("POST "+post);
-//		Comment c = new Comment(comment, user, post, Calendar.getInstance());
-//		
-//		if (postService.insertComment(idPost, c))
-//			return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
-//		
-//		return new MessageResponce(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
-//	}
-//	
+	@RequestMapping("comment")
+	@ResponseBody
+	public String insertComment(HttpSession session, Model model, @RequestParam("postID") int idPost, @RequestParam("comment") String comment) {
+		User user = (User) session.getAttribute("user");
+		Post post = postService.getPost(idPost);
+		System.out.println("POST "+post);
+		Comment c = new Comment(comment, user, post, Calendar.getInstance());
+		
+		if (postService.insertComment(idPost, c))
+			return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
+		
+		return new MessageResponce(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+	}
+	
 }

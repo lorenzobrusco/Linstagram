@@ -2,6 +2,7 @@ package it.unical.linstagram.persistence;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -134,5 +135,15 @@ public class UserDAO implements IUserDAO {
 		session.close();
 		return user;
 	}
+	
+	public void inizializeListUser(Set<Post> set) {
+		Session session = HibernateUtil.getHibernateSession();
+		
+		Hibernate.initialize(set);
+		
+		session.close();
+		
+	}
+	
 	
 }

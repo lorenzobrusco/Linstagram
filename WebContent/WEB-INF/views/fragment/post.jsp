@@ -32,7 +32,7 @@ $(document).on('click', '.like', function() {
 	var love_id = $("#love"+postID)
 
 	$.ajax({
-		url : "like",
+		url : "addLike",
 		data:{postID:postID},
 		success : function(result) {
 			if(result == "OK") {
@@ -50,7 +50,7 @@ $(document).on('click', '.bookmark', function() {
 	var bookmark_id = $("#bookmark"+postID)
 	
 	$.ajax({
-		url : "bookmark",
+		url : "addBookmark",
 		data:{postID:postID},
 		success : function(result) {
 			if(result == "OK") {

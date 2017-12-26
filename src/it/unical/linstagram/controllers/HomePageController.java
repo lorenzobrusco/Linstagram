@@ -40,7 +40,7 @@ public class HomePageController {
 	@RequestMapping("/index")
 	public String homePageController(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
-			model.addAttribute("posts", postService.getPosts());
+			model.addAttribute("posts", postService.getFollowedPosts(((User)session.getAttribute("user")).getUsername()));
 			model.addAttribute("followedUsersStories",storiesService.getFollowedStories((User)session.getAttribute("user")));
 			return "index";
 		}

@@ -2,6 +2,7 @@ package it.unical.linstagram.services;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,10 @@ import it.unical.linstagram.helper.TagFinder;
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Post;
+import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HashtagDAO;
+import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.PostDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -46,11 +49,13 @@ public class PostService {
 		return false;
 	}
 	
-	public void removeLike(int idPost, User user) {
+	public boolean removeLike(int idPost, User user) {
 		Post post = postDAO.getPostById(idPost);
 		post.getLikes().remove(user);
 		
-		modelDao.update(post);
+		if(modelDao.update(post))
+			return true;
+		return false;
 	}
 	
 	public boolean insertComment(int idPost, Comment comment) {
@@ -112,5 +117,11 @@ public class PostService {
 		
 		modelDao.merge(post);
 	}
+	
+	public List<Post> getFollowedPosts(String username) {
+		return postDAO.getFollowedPosts(username);
+	}
+	
+	
 	
 }

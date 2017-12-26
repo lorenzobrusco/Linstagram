@@ -1,5 +1,6 @@
 package it.unical.linstagram.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Post;
+import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 
 @Repository
@@ -42,6 +44,20 @@ public class PostDAO implements IPostDAO {
 		
 		session.close();
 		return post;
+	}
+	
+	public List<Post> getFollowedPosts(String username) {
+		Session session = HibernateUtil.getHibernateSession();
+
+		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
+				.setParameter("username", username).list();
+		List<Post> posts = new ArrayList<>();
+		if(!followedUsers.isEmpty())
+			posts = session.createQuery("SELECT p FROM Post p  WHERE p.user in (:fUsers) order by p.postDate desc")
+				.setParameter("fUsers",followedUsers).list();
+		
+		session.close();
+		return posts;
 	}
 	
 	@Override

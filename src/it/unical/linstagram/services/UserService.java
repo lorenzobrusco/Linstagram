@@ -1,6 +1,7 @@
 package it.unical.linstagram.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,6 +95,11 @@ public class UserService {
 	 */
 	public User getListsUser(String username) {
 		return userDAO.inizializeLists(username);
+	}
+	
+	
+	public void inizialiteList(Set<Post> set) {
+		userDAO.inizializeListUser(set);
 	}
 	
 }

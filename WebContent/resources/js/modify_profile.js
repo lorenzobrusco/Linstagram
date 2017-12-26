@@ -110,10 +110,7 @@ function verify_check(cb) {
 	else
 		  document.getElementById('check').value = "false";
 	
-	if ($("button").is(":disabled"))
-		$('button').prop('disabled', false);
-	else
-		$('button').prop('disabled', true);
+	$('button').prop('disabled', false);
 };
 
 

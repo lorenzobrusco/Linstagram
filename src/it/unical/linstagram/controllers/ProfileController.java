@@ -170,7 +170,7 @@ public class ProfileController {
 	public String getTaggedPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
 		if(UserManager.checkLogged(session)) {
 			User user = userService.getUser(username);
-			userService.getListsUser(username);
+			userService.inizialiteList(user.getTagged());
 			model.addAttribute("user", user);
 			return "fragment/userProfileFragment/taggedPhotoSection";	//Per aggiungere solo i post in cui e' taggato l'utente [utilizzato sia per utente nella sessione che per gli altri utenti]
 		}
