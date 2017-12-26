@@ -146,57 +146,61 @@ Signed in</label>
 		
 		$("#signup-btn").click(function(e) {
 			e.preventDefault();
-			var pass_field = $("#password-field");
-			var pass_repeat = $("#password-repeat");
+			var user = $("#user").val();
 			//check if pass and pass_repeat are equal
-			
-			if(pass_field.val().length < 6){
-				buildNoty("Sorry, but the PASSWORD must be of at least 6 character");
-			} else {
-				
-				if (pass_field.val() != pass_repeat.val()) {
-					buildNoty("Sorry, but the PASSWORD do not match");
-					pass_field.addClass("input-with-error");
-					pass_repeat.addClass("input-with-error");
-					pass_field.focus();
+			if(user.length != 0){
+				var pass_field = $("#password-field");
+				var pass_repeat = $("#password-repeat");
+				if(pass_field.val().length < 6){
+					buildNoty("Sorry, but the PASSWORD must be of at least 6 character");
 				} else {
-						pass_field.removeClass("input-with-error");
-						pass_repeat.removeClass("input-with-error");
+					
+					if (pass_field.val() != pass_repeat.val()) {
+						buildNoty("Sorry, but the PASSWORD do not match");
+						pass_field.addClass("input-with-error");
+						pass_repeat.addClass("input-with-error");
+						pass_field.focus();
+					} else {
+							pass_field.removeClass("input-with-error");
+							pass_repeat.removeClass("input-with-error");
+							
+							
+							var email = $("#email").val();
+							var pass = pass_field.val();
+							
+							if(validationMail(email)){
+								$.ajax({
+									url : "signUpAttempt",
+									method:'post',
+									data : {
+										email : email,
+										username : user,
+										password : pass
+									},
+									success : function(result) {
+										if(result == EMAIL_ALREADY_USED){
+											buildNoty("Sorry, but the entered EMAIL is ALREADY USED");
+										}
+										else if(result == USERNAME_ALREADY_USED){
+											buildNoty("Sorry, but the entered USERNAME is ALREADY USED");
+										}
+										else if(result == SUCCESS_SING_UP){
+										//fill sign-in form with the data of the just registered user and submit 
+											$("#user-singin").val(user);
+											$("#pass").val(pass);
+											$(".sign-in-htm").submit();
+										}
+									} //close success
+								}); //close ajax
+							} else {//close check email if
+								buildNoty("Sorry, but the entered EMAIL is NOT VALID");
+							}
 						
-						var user = $("#user").val();
-						var email = $("#email").val();
-						var pass = pass_field.val();
-						
-						if(validationMail(email)){
-							$.ajax({
-								url : "signUpAttempt",
-								method:'post',
-								data : {
-									email : email,
-									username : user,
-									password : pass
-								},
-								success : function(result) {
-									if(result == EMAIL_ALREADY_USED){
-										buildNoty("Sorry, but the entered EMAIL is ALREADY USED");
-									}
-									else if(result == USERNAME_ALREADY_USED){
-										buildNoty("Sorry, but the entered USERNAME is ALREADY USED");
-									}
-									else if(result == SUCCESS_SING_UP){
-									//fill sign-in form with the data of the just registered user and submit 
-										$("#user-singin").val(user);
-										$("#pass").val(pass);
-										$(".sign-in-htm").submit();
-									}
-								} //close success
-							}); //close ajax
-						} else {//close check email if
-							buildNoty("Sorry, but the entered EMAIL is NOT VALID");
-						}
+					}
 					
 				}
-				
+			}else {
+				buildNoty("Please, insert an USERNAME");
 			}
 		}); //close listener
 	});
