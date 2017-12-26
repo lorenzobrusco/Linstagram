@@ -2,7 +2,7 @@ Dropzone.autoDiscover = false;
 
 function resize_canvas(canvas) {
 	canvas.css("width", "100%");
-	canvas.css("height", "100%");
+//	canvas.css("height", "100%");
 }
 
 //function getContextPath() {

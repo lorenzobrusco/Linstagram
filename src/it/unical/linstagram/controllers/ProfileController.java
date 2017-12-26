@@ -151,8 +151,6 @@ public class ProfileController {
 	
 	@RequestMapping(value ="uploadPhotoProfile", method = RequestMethod.POST)
 	public String uploadProfilePhoto(@RequestParam MultipartFile file,HttpSession session) throws FileNotFoundException, IOException {
-		//TODO overwrite old img profile
-		//TODO resize img profile
 		Media mediaInfo = uploadService.createProfilePhoto(file, session);
 		User user = (User) session.getAttribute("user");
 		user.setPhotoProfile(mediaInfo.getUrl());
