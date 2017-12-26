@@ -111,7 +111,7 @@ public class PostService {
 		}
 		
 		
-		modelDao.save(post);
+		modelDao.merge(post);
 	}
 	
 }

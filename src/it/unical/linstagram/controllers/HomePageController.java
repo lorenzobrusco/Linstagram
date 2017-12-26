@@ -17,14 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.helper.UserManager;
-import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.PostService;
 import it.unical.linstagram.services.StoriesService;
-import it.unical.linstagram.services.MediaService;
-import it.unical.linstagram.services.UserService;
 
 @Controller
 public class HomePageController {
@@ -34,9 +32,6 @@ public class HomePageController {
 	
 	@Autowired
 	private MediaService uploadService;
-	
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private StoriesService storiesService;

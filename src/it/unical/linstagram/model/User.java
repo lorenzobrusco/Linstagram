@@ -55,7 +55,7 @@ public class User{
 	private boolean privateProfile = false; //default the profile is public
 
 	@Column
-	private String photoProfile;
+	private String photoProfile = "images/default.png"; //default image profile
 
 
 	@ManyToMany

@@ -115,7 +115,7 @@ $(document).ready(function(){
 					}
 				});
 				
-				$("#submit-photo").click(e => {
+				$("#submit-photo").click(function(e){
 					e.preventDefault();
 					e.stopPropagation();
 					var rejected_files = myDropzone.getRejectedFiles();
@@ -126,7 +126,9 @@ $(document).ready(function(){
 				})
 				
 				this.on("success", function (files, response) {
+					myDropzone.removeAllFiles(true);
 					$(".close-upload-photoprofile-modal").click(); //close modal
+					location.reload(true);
 				});
 			} //close init
 	};	//close option
