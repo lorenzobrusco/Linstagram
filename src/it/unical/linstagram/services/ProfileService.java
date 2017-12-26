@@ -35,22 +35,80 @@ public class ProfileService {
 	}
 
 	
-	public boolean changeUsername(User user, String username) {
-		User userFound = userDAO.getUserByUsername(username);
-		if (userFound == null)
+	public boolean changeName(String username, String name) {
+		User user = userDAO.getUserByUsername(username);
+		user.setName(name);
+		if(modelDAO.update(user))
 			return true;
+		return false;
+	}
+	
+	public boolean changeSurname(String username, String surname) {
+		User user = userDAO.getUserByUsername(username);
+		user.setSurname(surname);
+		if(modelDAO.update(user))
+			return true;
+		return false;
+	}
+	
+	public boolean changeUsername(String usernameUser, String username) {
+		User userFound = userDAO.getUserByUsername(username);
+		if (userFound == null) {
+			User user = userDAO.getUserByUsername(usernameUser);
+			user.setUsername(usernameUser);
+			if(modelDAO.update(user))
+				return true;
+		}
 		
 		return false;		
 	}
 	
-	public boolean changeEmail(User user, String email) {
+	public boolean changeEmail(String username, String email) {
 		User userFound = userDAO.getUserByEmail(email);
-		if (userFound == null)
-			return true;
-		
+		if (userFound == null) {
+			User user = userDAO.getUserByUsername(username);
+			user.setUsername(username);
+			if(modelDAO.update(user))
+				return true;
+		}
 		return false;	
 	}
 
+	public boolean changeGender(String username, String gender) {
+		User user = userDAO.getUserByUsername(username);
+		user.setGender(Gender.values()[Integer.parseInt(gender)-1]);
+		if(modelDAO.update(user))
+			return true;
+		return false;
+	}
+	
+	public boolean changeBirthday(String username, Calendar cal) {
+		User user = userDAO.getUserByUsername(username);
+		user.setBirthdate(cal);
+		if(modelDAO.update(user))
+			return true;
+		return false;
+	}
+	
+	public boolean changeBiography(String username, String biography) {
+		User user = userDAO.getUserByUsername(username);
+		user.setBiography(biography);
+		if(modelDAO.update(user))
+			return true;
+		return false;
+	}
+	
+	public boolean changePrivate(String username, String privateCheck) {
+		User user = userDAO.getUserByUsername(username);
+		if (privateCheck == "true")
+			user.setPrivateProfile(true);
+		else 
+			user.setPrivateProfile(false);
+		if(modelDAO.update(user))
+			return true;
+		return false;
+	}
+	
 	public String getPassword(String username) {
 		return userDAO.getPasswordByUsername(username);
 	}
@@ -73,5 +131,6 @@ public class ProfileService {
 			return true;
 		return false;
 	}
+
 	
 }

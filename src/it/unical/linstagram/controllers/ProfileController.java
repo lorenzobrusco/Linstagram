@@ -74,23 +74,26 @@ public class ProfileController {
 			@RequestParam("privateCheck") String privateCheck) {
 		
 		User user = (User) session.getAttribute("user");
+		String usernameSession = user.getUsername();
 		if (!name.equals(""))
-			user.setName(name);
+			if(!profileService.changeName(usernameSession, name))
+				return new MessageResponse(MessageCode.FAILED, user, "NAME_FAILED").getMessage();
+			
 		if (!surname.equals(""))
-			user.setSurname(surname);
+			if(!profileService.changeSurname(usernameSession, surname))
+				return new MessageResponse(MessageCode.FAILED, user, "SURNAME_FAILED").getMessage();
 		
 		if (!username.equals("")) {
-			if (!profileService.changeUsername(user, username))
+			if (!profileService.changeUsername(usernameSession, username))
 				return new MessageResponse(MessageCode.USERNAME_FAILED, user, "USERNAME_FAILED").getMessage();
-			user.setUsername(username);
 		}
 		if (!email.equals("")) {
-			if (!profileService.changeEmail(user, email))
+			if (!profileService.changeEmail(usernameSession, email))
 				return new MessageResponse(MessageCode.EMAIL_FAILED, user, "EMAIL_FAILED").getMessage();
-			user.setEmail(email);
 		}
 		if (!gender.equals("-1"))
-			user.setGender(Gender.values()[Integer.parseInt(gender)-1]);
+			if(!profileService.changeGender(usernameSession, gender))
+				return new MessageResponse(MessageCode.FAILED, user, "GENDER_FAILED").getMessage();
 		
 		if (!date.equals("")) {
 			try {
@@ -101,7 +104,8 @@ public class ProfileController {
 				if (!cal.before(Calendar.getInstance()))
 					return new MessageResponse(MessageCode.FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
 				
-				user.setBirthdate(cal);
+				if(!profileService.changeBirthday(usernameSession, cal))
+					return new MessageResponse(MessageCode.FAILED, user, "BIRTHDATE_FAILED").getMessage();
 				
 			} catch (ParseException e) {
 				return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
@@ -109,15 +113,18 @@ public class ProfileController {
 		}
 		
 		if (!bio.equals(""))
-			user.setBiography(bio);
+			if(!profileService.changeBiography(usernameSession, bio))
+				return new MessageResponse(MessageCode.FAILED, user, "BIO_FAILED").getMessage();
 		
 		if (privateCheck == "true")
 			user.setPrivateProfile(true);
 		else 
 			user.setPrivateProfile(false);
 	
-		if (!profileService.updateUser(user))
-			return  new MessageResponse(MessageCode.FAILED, user, "FAILED").getMessage();
+//		if (!profileService.updateUser(user))
+//			return  new MessageResponse(MessageCode.FAILED, user, "FAILED").getMessage();
+		
+		session.setAttribute("user", user);
 		return  new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
