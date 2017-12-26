@@ -68,7 +68,7 @@ $(document).ready(function() {
 		var mail_pattern=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	
 		if(mail=='')
-			return false;
+			return true;
 		else if(mail_pattern.test(mail)==false)
 			return false;
 		return true;
@@ -122,43 +122,43 @@ $(document).ready(function() {
 		})
 	});
 
-	$("textarea").keyup(function() {
-		if ($(this).val() != "") {
-			$("button").prop("disabled", false);
-		} else {
-			$("button").prop("disabled", true);
-		}
-	});
-
-	$('#selection').change(function() {
-		if($(this).val() != -1) {          
-			$('button').removeAttr("disabled");}
-		else 
-			$('button').prop("disabled", true);
-	});
-
-	$('#datepicker').change(function() {
-		if($(this).val() != "") {          
-			$('button').removeAttr("disabled");}
-		else 
-			$('button').prop("disabled", true);
-	});
-
-	$('input[type="email"]').keyup(function() {
-		if($(this).val() != '') {
-			$('button').prop('disabled', false);
-		}
-		else 
-			$('button').prop('disabled', true);
-	});
-
-	$(':text').on('input', function() {
-		if( $(':text').filter(function() { return !!this.value; }).length > 0 ) {
-			$('button').prop('disabled', false);
-		} else {
-			$('button').prop('disabled', true);
-		}
-	});
+//	$("textarea").keyup(function() {
+//		if ($(this).val() != "") {
+//			$("button").prop("disabled", false);
+//		} else {
+//			$("button").prop("disabled", true);
+//		}
+//	});
+//
+//	$('#selection').change(function() {
+//		if($(this).val() != -1) {          
+//			$('button').removeAttr("disabled");}
+//		else 
+//			$('button').prop("disabled", true);
+//	});
+//
+//	$('#datepicker').change(function() {
+//		if($(this).val() != "") {          
+//			$('button').removeAttr("disabled");}
+//		else 
+//			$('button').prop("disabled", true);
+//	});
+//
+//	$('input[type="email"]').keyup(function() {
+//		if($(this).val() != '') {
+//			$('button').prop('disabled', false);
+//		}
+//		else 
+//			$('button').prop('disabled', true);
+//	});
+//
+//	$(':text').on('input', function() {
+//		if( $(':text').filter(function() { return !!this.value; }).length > 0 ) {
+//			$('button').prop('disabled', false);
+//		} else {
+//			$('button').prop('disabled', true);
+//		}
+//	});
 
 
 $(function () {
@@ -173,7 +173,7 @@ function verify_check(cb) {
 	else
 		document.getElementById('check').value = "false";
 
-	$('button').prop('disabled', false);
+//	$('button').prop('disabled', false);
 };
 
 
