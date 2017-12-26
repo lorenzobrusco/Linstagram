@@ -16,6 +16,7 @@ public class HashtagFinder {
 			{
 				String[] connctedTags = ss.substring(1).split("#"); 
 				for (int i = 0; i < connctedTags.length; i++) {
+					if (connctedTags[i].length() != 0)
 					hashtags.add(connctedTags[i]);
 				}
 			}
