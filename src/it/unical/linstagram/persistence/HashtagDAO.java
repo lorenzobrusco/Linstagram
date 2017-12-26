@@ -19,7 +19,7 @@ public class HashtagDAO implements IHashtagDAO {
 
 
 	private static final String HASHTAG_EDGE_NGRAM_INDEX = "edgeNGramHashtag";
-	private static final String STANDARD_INDEX = "hashtag";
+//	private static final String STANDARD_INDEX = "hashtag";
 	
 	@Override
 	public Hashtag getHashtagByValue(String value) {

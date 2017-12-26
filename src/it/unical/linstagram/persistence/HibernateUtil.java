@@ -50,7 +50,7 @@ public class HibernateUtil {
 		return session;
 	}
 
-	private static void init()
+	public static void init()
 	{
 		Session session = factory.openSession();
 		reindex(Hashtag.class, session);
