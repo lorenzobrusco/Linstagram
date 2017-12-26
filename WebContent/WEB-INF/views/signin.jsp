@@ -59,10 +59,12 @@ Signed in</label>
 
             <form action="signUpAttempt" method="post" class="sign-up-htm">
               <div class="group">
-                <label for="user" class="label">Username</label> <input id="user" name="username" type="text" class="input" required>
+                <label for="user" class="label">Username</label> 
+                <input id="user" name="username" type="text" class="input" required>
               </div>
               <div class="group">
-                <label for="email" class="label">Email Address</label> <input id="email" type="email" name="email" class="input" required>
+                <label for="email" class="label">Email Address</label>
+                 <input id="email" type="email" name="email" class="input" required>
               </div>
               <div class="group">
                 <label for="password-field" class="label">Password</label> <input name="password" type="password" class="input" data-type="password" id="password-field" minlength=6 required>
@@ -86,6 +88,7 @@ Signed in</label>
   </div>
   <!--  Container close   -->
 </body>
+
 <script type="text/javascript">
   $(document).ready(function() {
     var input = $('input');

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
-import it.unical.linstagram.helper.MessageResponce;
+import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
@@ -58,9 +58,9 @@ public class OtherUserController {
 		User user = (User) session.getAttribute("user");
 		
 		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user))
-			return new MessageResponce(MessageCode.FOLLOW_FAILED, user, "Non è stato possibile inserire l'utente come following.").getMessage();
+			return new MessageResponse(MessageCode.FOLLOW_FAILED, user, "Non è stato possibile inserire l'utente come following.").getMessage();
 		
-		return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
+		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
 	@RequestMapping("unfollowUser")
@@ -70,9 +70,9 @@ public class OtherUserController {
 		User user = (User) session.getAttribute("user");
 		System.out.println(user.getUsername()+" "+usernameToFollow);
 		if (!userService.removeFollowing(user.getUsername(), usernameToFollow, user))
-			return new MessageResponce(MessageCode.UNFOLLOW_FAILED, user, "Non è stato possibile eliminare l'utente dai following.").getMessage();
+			return new MessageResponse(MessageCode.UNFOLLOW_FAILED, user, "Non è stato possibile eliminare l'utente dai following.").getMessage();
 		
-		return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
+		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
 }

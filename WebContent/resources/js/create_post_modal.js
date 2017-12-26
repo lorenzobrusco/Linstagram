@@ -6,16 +6,16 @@ function resize_canvas(canvas) {
 }
 
 //function getContextPath() {
-//	var domanin=document.location.origin;
-//	return domanin+window.location.pathname.substring(0, window.location.pathname.indexOf("/",2))+"/";
+//var domanin=document.location.origin;
+//return domanin+window.location.pathname.substring(0, window.location.pathname.indexOf("/",2))+"/";
 //}
 
 function UploadPic(canvas,filename) {
 	canvas.toBlob(function(blob){
-		console.log(blob);
+//		console.log(blob);
 		var formData = new FormData();
 		formData.append('file', blob,filename);
-    formData.append('postDescription', $("#post-description-input").val());
+		formData.append('postDescription', $("#post-description-input").val());
 		$.ajax({
 			type: 'POST',
 			url: 'createPost',
@@ -24,10 +24,18 @@ function UploadPic(canvas,filename) {
 			processData: false,
 			contentType: false,
 			success: function(msg) {
-				//TODO add cute message
-				console.log(msg);
 				$(".close-create-post-modal").click(); //close modal
-				alert('Image saved successfully !');
+//				location.reload(true);
+				
+				new Noty({
+					text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your post is created!',
+					theme: 'nest',
+					type: 'success',
+					layout: 'bottomLeft',
+					timeout:2000,
+					progressBar: true
+				}).show();
+				
 			}
 		});
 	});
@@ -80,7 +88,7 @@ $(document).ready(function () {
 			dictDefaultMessage: 'Drop yuor photos or videos here',
 			//     Tweek dropzone to use another container for file previews
 			previewsContainer: ".dropzone-previews",
-			
+
 			init: function () {
 				var myDropzone = this;
 				var submit_file = $('#submit-file');
@@ -129,9 +137,9 @@ $(document).ready(function () {
 
 					filter_section.append("<canvas class='filter-img' id='img-to-modify'></canvas>");
 					filter_section.append('<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter </button>');
-					
+
 					var canvas=$('#apply-filter-section > canvas');
-					
+
 					createCanvas(canvas.get(0),file[0].dataURL);
 					resize_canvas(canvas);
 					filter_section.removeClass("hide");

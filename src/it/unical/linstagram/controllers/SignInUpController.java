@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.unical.linstagram.helper.MessageResponce;
+import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.SignInUpService;
@@ -36,7 +36,7 @@ public class SignInUpController {
 
 	@RequestMapping(value="/signInAttempt",method=RequestMethod.POST)
 	public String signIn(@RequestParam String username, @RequestParam String password, HttpSession session) {
-		MessageResponce signInAttemptResp = signInService.signInAttempt(username, password);
+		MessageResponse signInAttemptResp = signInService.signInAttempt(username, password);
 //		System.out.println(signInAttempt);
 		if (signInAttemptResp.getMessageCode() == MessageCode.SUCCESS_SIGN_IN) {
 			if(signInAttemptResp.getObj() instanceof User) {

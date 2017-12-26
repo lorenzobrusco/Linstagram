@@ -21,6 +21,16 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index_style.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
+
+
+<!-- NOTY -->	
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/lib/noty/noty.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/lib/noty/themes/nest.css">
+<script
+	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
 </head>
 <body>
@@ -42,7 +52,7 @@
 		<div id="container-floating">
 
 			<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
-				data-original-title="Story">
+				data-original-title="Story" id="create-story">
 				<i class="fa fa-clock-o center-icon" aria-hidden="true"></i>
 			</div>
 
