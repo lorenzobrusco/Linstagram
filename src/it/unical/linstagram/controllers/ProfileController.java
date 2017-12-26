@@ -49,6 +49,7 @@ public class ProfileController {
 //			userService.getListsUser(user.getUsername());
 			
 //			model.addAttribute("userSession", user);
+			userService.inizialiteList(user.getBookmarks());
 			model.addAttribute("followers", userService.getFollowers(user.getUsername()));
 			model.addAttribute("followings", userService.getFollowings(user.getUsername()));
 			return "profile";

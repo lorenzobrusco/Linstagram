@@ -182,9 +182,10 @@ progress {
   padding: 0 16px;
 }
 
-.react {
+.react div{
   margin-top: 4px;
   position: relative;
+  display: inline-block;
 }
 
 .react a {

@@ -23,6 +23,7 @@ import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.persistence.UserDAO;
 import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.PostService;
 import it.unical.linstagram.services.StoriesService;
@@ -38,7 +39,8 @@ public class HomePageController {
 	
 	@Autowired
 	private StoriesService storiesService;
-	
+	@Autowired
+	UserDAO userDAO;
 	
 	@RequestMapping("/index")
 	public String homePageController(HttpSession session, Model model) {

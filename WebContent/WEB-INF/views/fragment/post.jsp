@@ -25,10 +25,10 @@ function getElapsedTime(postedTime){
 	}	
 };
 
-$(document).on('click', '.like', function() {
+$(document).on('click', '.love', function() {
 	var postID = $(this).attr('name');
 	var count_like = $("#count_like"+postID)
-	var love_id = $("#love"+postID)
+	var love_id = $("#love_div"+postID)
 
 	$.ajax({
 		url : "addLike",
@@ -37,7 +37,28 @@ $(document).on('click', '.like', function() {
 			if(result == "OK") {
 				$(count_like).html(parseInt($(count_like).html(), 10)+1)
 				$(love_id).empty();
-				$(love_id).append("<span class='loveFull'></span>");
+				$(love_id).append("<a name="+postID+" id=loveFull"+postID+
+				" class=loveFull><span class=loveFull></span></a>");
+			}
+			//altrimenti dare un messaggio di errore??					
+		}
+	});
+});
+
+$(document).on('click', '.loveFull', function() {
+	var postID = $(this).attr('name');
+	var count_like = $("#count_like"+postID)
+	var love_id = $("#love_div"+postID)
+
+	$.ajax({
+		url : "removeLike",
+		data:{postID:postID},
+		success : function(result) {
+			if(result == "OK") {
+				$(count_like).html(parseInt($(count_like).html(), 10)-1)
+				$(love_id).empty();
+				$(love_id).append("<a name="+postID+" id=love"+postID+
+				" class=love><span class=love></span></a>");
 			}
 			//altrimenti dare un messaggio di errore??					
 		}
@@ -46,7 +67,7 @@ $(document).on('click', '.like', function() {
 
 $(document).on('click', '.bookmark', function() {
 	var postID = $(this).attr('name');
-	var bookmark_id = $("#bookmark"+postID)
+	var bookmark_id = $("#bookmark_div"+postID)
 	
 	$.ajax({
 		url : "addBookmark",
@@ -54,7 +75,26 @@ $(document).on('click', '.bookmark', function() {
 		success : function(result) {
 			if(result == "OK") {
 				$(bookmark_id).empty();
-				$(bookmark_id).append("<span class='saveFull'></span>");
+				$(bookmark_id).append("<a name="+postID+" id=bookmark"+postID+
+				" class=bookmarkFull><span class=saveFull></span></a>");
+			}
+			//altrimenti dare un messaggio di errore??					
+		}
+	});
+});
+
+$(document).on('click', '.bookmarkFull', function() {
+	var postID = $(this).attr('name');
+	var bookmark_id = $("#bookmark_div"+postID)
+	
+	$.ajax({
+		url : "removeBookmark",
+		data:{postID:postID},
+		success : function(result) {
+			if(result == "OK") {
+				$(bookmark_id).empty();
+				$(bookmark_id).append("<a name="+postID+" id=bookmark"+postID+
+				" class=bookmark><span class=save></span></a>");
 			}
 			//altrimenti dare un messaggio di errore??					
 		}
@@ -104,9 +144,51 @@ $(document).on('click', '.bookmark', function() {
 					</div>
 					<div class='action-section'>
 						<div class='react'>
-							<a name="${post.id }" id="love${post.id }" class="like"><span class='love'></span></a> 
-							<a href='#' role='button'><span class='comment'></span></a>
-							<a name="${post.id }" id="bookmark${post.id }" class="bookmark"><span class='save'></span></a>
+							<div id="love_div${post.id }">
+								<c:choose>
+									<c:when test="${fn:length(post.likes) == 0 }">
+										<a name="${post.id }" id="love${post.id }" class="love"><span class='love'></span></a> 
+									</c:when>
+									<c:otherwise>
+										<c:forEach  items="${post.likes}" var="like">
+											<c:choose>
+												<c:when test="${like.id == user.id}">
+													<a name="${post.id }" id="loveFull${post.id }" class="loveFull"><span class='loveFull'></span></a> 
+												</c:when>
+												<c:otherwise>
+													<a name="${post.id }" id="love${post.id }" class="love"><span class='love'></span></a> 
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div id="comment_div">
+								<a href='#' role='button'><span class='comment'></span></a>
+							</div>
+							<div id="bookmark_div${post.id }">
+								<c:choose>
+									<c:when test="${fn:length(user.bookmarks) == 0 }">
+										<a name="${post.id }" id="bookmark${post.id }" class="bookmark"><span class='save'></span></a>
+									</c:when>
+									<c:otherwise>
+										<c:set var="found" value="${false}"/>
+										<c:forEach  items="${user.bookmarks}" var="bookmark">
+											<c:if test="${bookmark.id == post.id}">
+												<c:set var="found" value="${true}"/>
+											</c:if>
+										</c:forEach>
+										<c:choose>
+	       									<c:when test="${found }">
+	       										<a name="${post.id }" id="bookmark${post.id }" class="bookmarkFull"><span class='saveFull'></span></a>
+	       									</c:when>
+			        						<c:otherwise>
+				        						<a name="${post.id }" id="bookmark${post.id }" class="bookmark"><span class='save'></span></a>
+			        						</c:otherwise>
+		        						</c:choose>
+									</c:otherwise>
+								</c:choose>
+							</div>
 						</div>
 						<div class="likes-section">
 							<a href='#'><b>Piace a <span id="count_like${post.id }">

@@ -26,14 +26,22 @@ public class PostController {
 
 	@Autowired
 	private PostService postService;
-	@Autowired
-	private UserService userService;
 	
 	@RequestMapping("addLike")
 	@ResponseBody
 	public String insertLike(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
-		if (postService.insertLike(idPost, user))
+		if (postService.insertLike(idPost, user.getUsername()))
+			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+		
+		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+	}
+	
+	@RequestMapping("removeLike")
+	@ResponseBody
+	public String removeLike(HttpSession session, Model model, @RequestParam("postID") int idPost) {
+		User user = (User) session.getAttribute("user");
+		if (postService.removeLike(user.getUsername(), idPost))
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
 		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
@@ -43,7 +51,17 @@ public class PostController {
 	@ResponseBody
 	public String insertBookmark(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
-		if (postService.insertBookmark(user, idPost))
+		if (postService.insertBookmark(user.getUsername(), idPost))
+			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+		
+		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+	}
+	
+	@RequestMapping("removeBookmark")
+	@ResponseBody
+	public String removeBookmark(HttpSession session, Model model, @RequestParam("postID") int idPost) {
+		User user = (User) session.getAttribute("user");
+		if (postService.removeBookmark(user.getUsername(), idPost))
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
 		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
