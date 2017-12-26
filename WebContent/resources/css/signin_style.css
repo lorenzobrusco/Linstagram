@@ -301,19 +301,9 @@ button:focus {
 
 /* Error Styling */
 
-.error-message {
-  font-size: 0.7em;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  color: #a94442;
-  padding-top: 2px;
-}
-
 .input-with-error {
   border: 1px solid #a94442 !important;
 }
-
 
 #container,
 body {
