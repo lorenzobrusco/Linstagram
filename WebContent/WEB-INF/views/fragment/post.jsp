@@ -39,7 +39,6 @@ $(document).on('click', '.like', function() {
 				$(count_like).html(parseInt($(count_like).html(), 10)+1)
 				$(love_id).empty();
 				$(love_id).append("<span class='loveFull'></span>");
-				// cambiare il cuoricino
 			}
 			//altrimenti dare un messaggio di errore??					
 		}
@@ -58,7 +57,6 @@ $(document).on('click', '.bookmark', function() {
 				$(bookmark_id).empty();
 				$(bookmark_id).append("<span class='saveFull'></span>");
 			}
-				// cambiare il simbolo di bookmark
 			//altrimenti dare un messaggio di errore??					
 		}
 	});

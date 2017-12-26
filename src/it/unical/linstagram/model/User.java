@@ -69,7 +69,7 @@ public class User{
 	@ManyToMany(mappedBy="followings")
 	private Set<User> followers = new HashSet<User>();
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", orphanRemoval=true)
 	@Cascade(value=CascadeType.ALL)
 	private Set<Post> posts = new HashSet<Post>();
 

@@ -39,9 +39,8 @@ public class PostService {
 	public boolean insertLike(int idPost, User user) {
 		Post post = postDAO.getPostById(idPost);
 		if(post.getLikes().add(user)) {
-			post.getLikes().clear();
-			modelDao.update(post);
-			if (modelDao.merge(user))
+//			post.getLikes().clear();
+			if (modelDao.update(post))
 				return true;
 		}
 		return false;
