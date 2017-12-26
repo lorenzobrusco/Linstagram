@@ -84,11 +84,14 @@ public class Hashtag {
 //		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
 //		})
 	
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+	@Fields({
+		  @Field(name = "hashtag", index = Index.YES, store = Store.YES),
+		  @Field(name = "edgeNGramHashtag", index = Index.YES, store = Store.NO,
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
+		})
 	private String hashtag;
 
 	@Column(name="counter")
-//	@Field
 	private int count;
 
 	@ManyToMany(mappedBy="hashtags")
