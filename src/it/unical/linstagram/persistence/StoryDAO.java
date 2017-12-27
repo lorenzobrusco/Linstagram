@@ -35,16 +35,25 @@ public class StoryDAO implements IStoryDAO{
 
 	@Override
 	public List<Story> getFollowedUsersStoriesByUsername(String username) {
+		Calendar now = Calendar.getInstance();
+		Calendar dayLimit = Calendar.getInstance();
+		dayLimit.setTimeInMillis(now.getTimeInMillis()-86400*1000);
+		
 		Session session = HibernateUtil.getHibernateSession();
-
 		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
 				.setParameter("username", username).list();
 		List<Story> stories = null;
 		if(followedUsers.isEmpty())
 			stories = session.createQuery("SELECT s FROM Story s  WHERE 1=0").list();
 		else
-			stories = session.createQuery("SELECT s FROM Story s  WHERE s.user in (:fUsers) order by s.creationDate desc")
-				.setParameter("fUsers",followedUsers).list();
+			stories = session.createQuery(""
+					+ "SELECT s "
+					+ "FROM Story s  "
+					+ "WHERE s.user in (:fUsers) and s.creationDate >= :dayLimit "
+					+ "order by s.creationDate desc")
+				.setParameter("fUsers",followedUsers)
+				.setParameter("dayLimit", dayLimit)
+				.list();
 		
 		session.close();
 		return stories;
