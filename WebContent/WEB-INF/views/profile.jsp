@@ -62,7 +62,7 @@
 									data-target="#modalFollower"><span><b>${fn:length(user.followers)}</b></span>
 									follower</li>
 								<li id="following" data-toggle="modal"
-									data-target="#modalFollowing"><span><b>${fn:length(user.followings)}</b></span>
+									data-target="#modalFollowUserSession"><span><b>${fn:length(user.followings)}</b></span>
 									profili seguiti</li>
 							</ul>
 						</div>
@@ -131,7 +131,7 @@
 		</section>
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
-	<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
+	<jsp:include page="./fragment/followFragment/modalFollowUserSession.jsp"></jsp:include>
 	<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
 </body>
 

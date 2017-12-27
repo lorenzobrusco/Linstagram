@@ -10,12 +10,12 @@
 <html>
 <head>
 <title>Listagram</title>
-<script src="./resources/js/follow_event/follower_event.js"></script>
+<script src="./resources/js/follow_event/modal_follow_event.js"></script>
 </head>
 <body>
 
 <!-- Modal -->
-	<div class="modal fade" id="modalFollowing" role="dialog">
+	<div class="modal fade" id="modalFollowUserSession" role="dialog">
   		<div class="modal-dialog">
 	  
 		    <!-- Modal content-->
@@ -45,25 +45,9 @@
         						</form>
         						<c:if test="${follow.username != userSession.username }">
 	        						<div id="fol-div${follow.id }">
-	        							<c:set var="found" value="${false}"/>
-	        							<c:forEach items="${followingsUserSession}" var="followSession">
-	       									<c:if test="${followSession.id == follow.id }">
-	       										<c:set var="found" value="${true}"/>
-	       									</c:if>
-		        						</c:forEach>
-		        						
-		        						<c:choose>
-	       									<c:when test="${found }">
-	       										<div id="button${follow.id }" class="pull-right">
-				        							<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
-				        						</div>
-	       									</c:when>
-			        						<c:otherwise>
-				        						<div id="button${follow.id }" class="pull-right">
-				        							<button name="${follow.id }" value="${follow.username }" id="follow-btn">Follow</button>
-				        						</div>
-			        						</c:otherwise>
-		        						</c:choose>
+    									<div id="button${follow.id }" class="pull-right">
+	        								<button name="${follow.id }" value="${follow.username }" id="unfollowModal-btn">Unfollow</button>
+	        							</div>
 	        						</div>
         						</c:if>
         					</div>

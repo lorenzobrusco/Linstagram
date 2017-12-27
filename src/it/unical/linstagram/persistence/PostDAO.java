@@ -54,7 +54,9 @@ public class PostDAO implements IPostDAO {
 		if(!followedUsers.isEmpty())
 			posts = session.createQuery("SELECT p FROM Post p  WHERE p.user in (:fUsers) or p.user.username=:username order by p.postDate desc")
 				.setParameter("fUsers",followedUsers).setParameter("username", username).list();
-		
+		else
+			posts = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.postDate desc")
+			.setParameter("username", username).list();
 		session.close();
 		return posts;
 	}
