@@ -21,16 +21,16 @@
 	<header>
 		<div id="rainbow-progress-bar"></div>
 		<div id="navbar-mobile">
+		<span id="logo-container"><a href="index" id="logo"></a></span>
 			<div class="search-bar">
-				<input type="text" class="form-control transparent"
-					placeholder="Search" id="search-input">
+				<input type="text" class="form-control transparent" placeholder="Search" id="search-input">
 			</div>
 			<div class="bottom-nav-menu">
 				<ul id="horizontal-list">
-					<li><a href="index" id="home-mobile"></a></li>
-					<li><a href="profile" role="button" id="profile-mobile"></a></li>
-					<li><a href="#create-post-modal" id="add-mobile"></a></li>
-					<li><a href="" id="notification-mobile"></a></li>
+					<li class="active-menu-item"><a href="index" id="home-mobile" class="item-mobile" ></a></li>
+					<li><a href="profile" role="button" id="profile-mobile" class="item-mobile"></a></li>
+					<li><a href="#create-post-modal" id="add-mobile" class="item-mobile"></a></li>
+					<li><a href="" id="notification-mobile" class="item-mobile"></a></li>
 				</ul>
 			</div>
 		</div>
@@ -65,6 +65,19 @@
 	$(document)
 			.ready(
 					function() {
+						
+					//mobile navbar event
+					if($("#navbar-mobile").css('display')!="none"){
+						var localpathname = window.location.pathname;
+						var res = localpathname.split("/");
+						if(res[2] == "profile"){
+							$("#horizontal-list li").removeClass("active-menu-item");
+							$("#profile-mobile").parent().addClass("active-menu-item");
+							$("#add-mobile").parent().css("display","none");
+						}
+					}
+						
+						
 						var title_popover = "<img class='user-img' src='${user.photoProfile}'/><b><span id='username-popover'>${user.username}</span></b>";
 						var content_popover = "<a href='profile' class='popover-option' id='profile-option-popover'><i class='fa fa-user'></i>Profile</a> <hr> <a href='logout' class='popover-option' id='logout-option-popover'><i class='fa fa-sign-out'></i>Logout</a>";
 
@@ -102,6 +115,8 @@
 							$("#search-div").css("width", "50%");
 						});
 
+						
+						
 					});
 </script>
 </html>
