@@ -1,5 +1,6 @@
 package it.unical.linstagram.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
+import it.unical.linstagram.dto.UserResearchDTO;
 import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
@@ -86,6 +88,32 @@ public class UserService {
 	
 	public void getListsUser(String username) {
 		userDAO.inizializeLists(username);
+	}
+	
+	public List<UserResearchDTO> getSuggestionsUsername(String usernameQuery)
+	{
+		List<User> users = userDAO.getSuggestions(usernameQuery);
+		
+		List<UserResearchDTO> usersDTO = new ArrayList<>();
+		
+		for (User user : users) {
+			usersDTO.add(new UserResearchDTO(user));	
+		}
+		
+		return usersDTO;
+	}
+	
+	public List<UserResearchDTO> getSuggestionsName(String nameQuery)
+	{
+		List<User> users = userDAO.getSuggestionsName(nameQuery);
+		
+		List<UserResearchDTO> usersDTO = new ArrayList<>();
+		
+		for (User user : users) {
+			usersDTO.add(new UserResearchDTO(user));	
+		}
+		
+		return usersDTO;
 	}
 	
 }
