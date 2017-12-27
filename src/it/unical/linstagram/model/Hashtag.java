@@ -63,8 +63,25 @@ import org.hibernate.search.annotations.*;
 			@TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
 					@Parameter(name = "pattern", value = "([^a-zA-Z0-9\\.])"),
 					@Parameter(name = "replacement", value = " "),
-					@Parameter(name = "replace", value = "all") })
-	}) // Def
+					@Parameter(name = "replace", value = "all") }),
+			
+	}), // Def
+	@AnalyzerDef(name = "autocompleteAnalyzer",
+
+	// Split input into tokens according to tokenizer
+	tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
+
+	filters = {
+			// Normalize token text to lowercase, as the user is unlikely to
+			// care about casing when searching for matches
+			@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
+			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+			@TokenFilterDef(factory = StopFilterFactory.class),
+			// Index partial words starting at the front, so we can provide
+			// Autocomplete functionality
+			@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
+					@Parameter(name = "minGramSize", value = "1"),
+					@Parameter(name = "maxGramSize", value = "50") }) })
 })
 
 
@@ -87,7 +104,7 @@ public class Hashtag {
 	@Fields({
 		  @Field(name = "hashtag", index = Index.YES, store = Store.YES),
 		  @Field(name = "edgeNGramHashtag", index = Index.YES, store = Store.NO,
-		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
 		})
 	private String hashtag;
 

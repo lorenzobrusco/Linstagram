@@ -65,11 +65,11 @@ public class ResearchTest extends AbstractModelTest {
 		modelDAO.save(new Hashtag("CIA"));
 		
 		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
-		List<Hashtag> hashtags = hibernateTestSession.createQuery("FROM Hashtag").list();
-
-		for (Hashtag h : hashtags) {
-			System.out.println(h.getHashtag());
-		}
+//		List<Hashtag> hashtags = hibernateTestSession.createQuery("FROM Hashtag").list();
+//
+//		for (Hashtag h : hashtags) {
+//			System.out.println(h.getHashtag());
+//		}
 
 		List<Hashtag> suggestions = hashtagDAO.getSuggestions("CIA");
 
@@ -78,7 +78,7 @@ public class ResearchTest extends AbstractModelTest {
 		}
 
 		hibernateTestSession.close();
-		Assert.assertEquals(3, suggestions.size());
+		Assert.assertEquals(4, suggestions.size());
 	}
 	
 	@Test
@@ -92,15 +92,15 @@ public class ResearchTest extends AbstractModelTest {
 		
 
 		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
-		List<User> users = hibernateTestSession.createQuery("FROM User").list();
+//		List<User> users = hibernateTestSession.createQuery("FROM User").list();
 
-		for (User u : users) {
-			System.out.println(u.getUsername());
-		}
+//		for (User u : users) {
+//			System.out.println(u.getUsername());
+//		}
 
 		
 		
-		List<User> suggestions = userDAO.getSuggestions("ana");
+		List<User> suggestions = userDAO.getSuggestions("el");
 		System.out.println("la size della lista è "+ suggestions.size());
 		
 		System.out.println("SONO QUI");
@@ -108,9 +108,33 @@ public class ResearchTest extends AbstractModelTest {
 		for (User user : suggestions) {
 			System.out.println(user.getUsername());
 		}
-		hibernateTestSession.close();
+//		hibernateTestSession.close();
 		
 		Assert.assertEquals(2, suggestions.size());
 	}
 
+	
+	@Test
+	public void researchUserAutocompleteName() {
+		
+		HibernateUtil.init();
+		
+		modelDAO.save(new User("Eliana","email","pass", "Eliana", "Cannella"));
+		modelDAO.save(new User("cicciociccio","emaill","pass", "","ell"));
+		modelDAO.save(new User("lana","email2","pass","ciccio", "pasticcio"));
+		modelDAO.save(new User("paola","email1","pass", "Paola", "AruQ"));
+				
+		
+		List<User> suggestions = userDAO.getSuggestionsName("el");
+		System.out.println("la size della lista è "+ suggestions.size());
+		
+		System.out.println("SONO QUI");
+		
+		for (User user : suggestions) {
+			System.out.println(user.getUsername());
+		}
+//		hibernateTestSession.close();
+		
+		Assert.assertEquals(2, suggestions.size());
+	}
 }
