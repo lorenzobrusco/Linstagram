@@ -4,6 +4,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
+<script>
+function verify_check(cb) {
+	if (document.getElementById('checkbox').checked) 
+		document.getElementById('check').value = "true";
+	else
+		document.getElementById('check').value = "false";
+
+//	$('button').prop('disabled', false);
+};
+</script>
 
 <div id="form-container">
 	<div class="info">

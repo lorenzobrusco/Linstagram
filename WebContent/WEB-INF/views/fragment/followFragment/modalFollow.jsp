@@ -54,12 +54,12 @@
 		        						
 		        						<c:choose>
 	       									<c:when test="${found }">
-	       										<div id="button${follow.id }" class="pull-right">
+	       										<div id="buttonFollow${follow.id }" class="pull-right">
 				        							<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
 				        						</div>
 	       									</c:when>
 			        						<c:otherwise>
-				        						<div id="button${follow.id }" class="pull-right">
+				        						<div id="buttonFollow${follow.id }" class="pull-right">
 				        							<button name="${follow.id }" value="${follow.username }" id="follow-btn">Follow</button>
 				        						</div>
 			        						</c:otherwise>

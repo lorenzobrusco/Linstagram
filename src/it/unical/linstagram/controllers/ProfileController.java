@@ -74,26 +74,27 @@ public class ProfileController {
 			@RequestParam("privateCheck") String privateCheck) {
 		
 		User user = (User) session.getAttribute("user");
-		String usernameSession = user.getUsername();
+
 		if (!name.equals(""))
-			if(!profileService.changeName(usernameSession, name))
-				return new MessageResponse(MessageCode.FAILED, user, "NAME_FAILED").getMessage();
-			
+			user.setName(name);
+		
 		if (!surname.equals(""))
-			if(!profileService.changeSurname(usernameSession, surname))
-				return new MessageResponse(MessageCode.FAILED, user, "SURNAME_FAILED").getMessage();
+			user.setSurname(surname);
 		
 		if (!username.equals("")) {
-			if (!profileService.changeUsername(usernameSession, username))
-				return new MessageResponse(MessageCode.USERNAME_FAILED, user, "USERNAME_FAILED").getMessage();
+			if (!profileService.changeUsername(username))
+				return  new MessageResponse(MessageCode.USERNAME_FAILED, user, "USERNAME_FAILED").getMessage();
+			user.setUsername(username);
 		}
+		
 		if (!email.equals("")) {
-			if (!profileService.changeEmail(usernameSession, email))
-				return new MessageResponse(MessageCode.EMAIL_FAILED, user, "EMAIL_FAILED").getMessage();
+			if (!profileService.changeEmail(email))
+				return  new MessageResponse(MessageCode.EMAIL_FAILED, user, "EMAIL_FAILED").getMessage();
+			user.setEmail(email);
 		}
+		
 		if (!gender.equals("-1"))
-			if(!profileService.changeGender(usernameSession, gender))
-				return new MessageResponse(MessageCode.FAILED, user, "GENDER_FAILED").getMessage();
+			user.setGender(Gender.values()[Integer.parseInt(gender)-1]);
 		
 		if (!date.equals("")) {
 			try {
@@ -103,9 +104,8 @@ public class ProfileController {
 				cal.setTime(dateNew);
 				if (!cal.before(Calendar.getInstance()))
 					return new MessageResponse(MessageCode.FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
-				
-				if(!profileService.changeBirthday(usernameSession, cal))
-					return new MessageResponse(MessageCode.FAILED, user, "BIRTHDATE_FAILED").getMessage();
+
+				user.setBirthdate(cal);
 				
 			} catch (ParseException e) {
 				return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
@@ -113,18 +113,17 @@ public class ProfileController {
 		}
 		
 		if (!bio.equals(""))
-			if(!profileService.changeBiography(usernameSession, bio))
-				return new MessageResponse(MessageCode.FAILED, user, "BIO_FAILED").getMessage();
-		
+			user.setBiography(bio);
+
 		if (!privateCheck.equals(""))
-			if (!profileService.changePrivate(usernameSession, privateCheck))
-				return new MessageResponse(MessageCode.FAILED, user, "PRIVATE_FAILED").getMessage();
-//		if (!profileService.updateUser(user))
-//			return  new MessageResponse(MessageCode.FAILED, user, "FAILED").getMessage();
+			if (privateCheck.equals("true"))
+				user.setPrivateProfile(true);
+			else 
+				user.setPrivateProfile(false);
 		
-		User userDB = userService.getUser(usernameSession);
+		if (!profileService.updateUser(user))
+			return  new MessageResponse(MessageCode.FAILED, user, "FAILED").getMessage();
 		
-		session.setAttribute("user", userDB);
 		return  new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	

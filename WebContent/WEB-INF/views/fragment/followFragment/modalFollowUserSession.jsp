@@ -46,7 +46,7 @@
         						<c:if test="${follow.username != userSession.username }">
 	        						<div id="fol-div${follow.id }">
     									<div id="button${follow.id }" class="pull-right">
-	        								<button name="${follow.id }" value="${follow.username }" id="unfollowModal-btn">Unfollow</button>
+	        								<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
 	        							</div>
 	        						</div>
         						</c:if>

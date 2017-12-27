@@ -7,7 +7,7 @@
 
 <script>
 $(document).ready(function() {
-	$(document).on('click', '#follow-btn', function() {
+	$(document).on('click', '#followProfile-btn', function() {
 		var username = $('#username_hidden').val();
 		var popupFail = document.getElementById("popupFAIL");
 		
@@ -17,7 +17,7 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();
-					$("#follow_ul").append("<li><button id='unfollow-btn'>Unfollow</button></li>");
+					$("#follow_ul").append("<li><button id='unfollowProfile-btn'>Unfollow</button></li>");
 					$("#count_follower").html(parseInt($("#count_follower").html(), 10)+1)
 				}
 				/* else {
@@ -28,7 +28,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(document).on('click', '#unfollow-btn', function() {
+	$(document).on('click', '#unfollowProfile-btn', function() {
 		var username = $('#username_hidden').val();
 		var popupFail = document.getElementById("popupFAIL");
 		
@@ -38,7 +38,7 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();
-					$("#follow_ul").append("<li><button id='follow-btn'>Follow</button></li>");
+					$("#follow_ul").append("<li><button id='followProfile-btn'>Follow</button></li>");
 					$("#count_follower").html(parseInt($("#count_follower").html(), 10)-1)
 				}
 				/* else {
@@ -96,10 +96,10 @@ $(document).ready(function() {
 	<ul id="follow_ul">
 		<c:choose>
 			<c:when test="${user.followed == false }">
-				<li><button id="follow-btn">Follow</button></li>
+				<li><button id="followProfile-btn">Follow</button></li>
 			</c:when>
 			<c:otherwise>
-				<li><button id="unfollow-btn">Unfollow</button></li>
+				<li><button id="unfollowProfile-btn">Unfollow</button></li>
 			</c:otherwise>
 		</c:choose>
 	</ul>

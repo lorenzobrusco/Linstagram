@@ -166,16 +166,6 @@ $(function () {
 });
 
 
-function verify_check(cb) {
-	// .checked considera nel momento in cui si trasforma [quindi si ragiona al contrario]
-	if (document.getElementById('checkbox').checked) 
-		document.getElementById('check').value = "true";
-	else
-		document.getElementById('check').value = "false";
-
-//	$('button').prop('disabled', false);
-};
-
 
 
 //EVENT FOR PASSWORD'S PAGE

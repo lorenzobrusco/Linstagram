@@ -42,8 +42,8 @@
 
 #unfollow-btn,
 #follow-btn,
-#unfollowModal-btn,
-#followModal-btn {
+#unfollowProfile-btn,
+#followProfile-btn {
 	position: absolute;
 	right: 10%;
 	padding-top: 1%;
