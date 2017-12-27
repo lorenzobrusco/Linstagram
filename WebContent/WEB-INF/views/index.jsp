@@ -52,8 +52,10 @@
 		<div id="container-floating">
 
 			<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
-				data-original-title="Story" id="create-story">
-				<i class="fa fa-clock-o center-icon" aria-hidden="true"></i>
+				data-original-title="Story">
+				<a id="open-story-modal" href="#story-modal"> <i
+					class="fa fa-clock-o center-icon" aria-hidden="true"></i>
+				</a>			
 			</div>
 
 			<div class="nd2 nds" data-toggle="tooltip" data-placement="left"
@@ -76,6 +78,7 @@
 		</div>
 
 	<jsp:include page="./fragment/createPostModal.jsp"></jsp:include>
+	<jsp:include page="./fragment/createStoryModal.jsp"></jsp:include>
 	
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>

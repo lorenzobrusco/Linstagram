@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import it.unical.linstagram.dto.FollowedUserStoriesDTO;
 import it.unical.linstagram.dto.StoryDTO;
+import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
@@ -54,5 +55,10 @@ public class StoriesService {
 			story.addViewer(user);
 		
 		modelDAO.update(story);
+	}
+	
+	public void saveStory(Media media, User user) {
+		Story story = new Story(user, media);
+		modelDAO.save(story);
 	}
 }

@@ -5,30 +5,25 @@ function resize_canvas(canvas) {
 //	canvas.css("height", "100%");
 }
 
-//function getContextPath() {
-//var domanin=document.location.origin;
-//return domanin+window.location.pathname.substring(0, window.location.pathname.indexOf("/",2))+"/";
-//}
-
-function UploadPic(canvas,filename) {
+function UploadPicStory(canvas,filename) {
 	canvas.toBlob(function(blob){
 //		console.log(blob);
 		var formData = new FormData();
 		formData.append('file', blob,filename);
-		formData.append('postDescription', $("#create-post-modal #post-description-input").val());
+		
 		$.ajax({
 			type: 'POST',
-			url: 'createPost',
+			url: 'addStory',
 			enctype: 'multipart/form-data',
 			data: formData,
 			processData: false,
 			contentType: false,
 			success: function(msg) {
-				$(".close-create-post-modal").click(); //close modal
+				$(".close-story-modal").click(); //close modal
 //				location.reload(true);
 				
 				new Noty({
-					text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your post is created!',
+					text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your story has been added!',
 					theme: 'nest',
 					type: 'success',
 					layout: 'bottomLeft',
@@ -87,18 +82,18 @@ $(document).ready(function () {
 			addRemoveLinks: true,
 			dictDefaultMessage: 'Drop yuor photos or videos here',
 			//     Tweek dropzone to use another container for file previews
-			previewsContainer: "#create-post-modal .dropzone-previews",
+			previewsContainer: "#story-modal .dropzone-previews",
 
 			init: function () {
 				var myDropzone = this;
-				var submit_file = $('#create-post-modal #submit-file');
+				var submit_file = $('#story-modal #submit-file');
 				var filename="";
 				submit_file.prop("disabled", true);
 
 				this.on("thumbnail", function (file) {
 					if (myDropzone.getAcceptedFiles().length > 0) {
 						//enable submit_file
-						$("#create-post-modal div.dz-default.dz-message").addClass("hide");
+						$("#story-modal div.dz-default.dz-message").addClass("hide");
 						submit_file.prop("disabled", false);
 					}
 				});
@@ -107,7 +102,7 @@ $(document).ready(function () {
 					//console.log(myDropzone.getAcceptedFiles());
 					//disable submit_file
 					if (myDropzone.getAcceptedFiles().length == 0) {
-						$("#create-post-modal div.dz-default.dz-message").removeClass("hide");
+						$("#story-modal div.dz-default.dz-message").removeClass("hide");
 						submit_file.prop("disabled", true);
 					}
 				});
@@ -130,28 +125,27 @@ $(document).ready(function () {
 //					console.log(response[0].url);
 
 					//hide dropzone section
-					$("#create-post-modal #post-dropzone").addClass("hide");
+					$("#story-modal #story-dropzone").addClass("hide");
 					var file = myDropzone.getAcceptedFiles();
 					filename = file[0].name;
-					var filter_section = $("#create-post-modal #apply-filter-section");
+					var filter_section = $("#story-modal #apply-filter-section");
 
 					filter_section.append("<canvas class='filter-img' id='img-to-modify'></canvas>");
 					filter_section.append('<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter </button>');
 
-					var canvas=$('#create-post-modal #apply-filter-section > canvas');
+					var canvas=$('#story-modal #apply-filter-section > canvas');
 
 					createCanvas(canvas.get(0),file[0].dataURL);
 					resize_canvas(canvas);
 					filter_section.removeClass("hide");
 
-					var post_description_section = $("#create-post-modal #post-description");
-					var loader=$('#create-post-modal #loader');
-					var submit_filter=$('#create-post-modal #submit-filter');
+					var loader=$('#story-modal #loader');
+					var submit_filter=$('#story-modal #submit-filter');
 
-					$("#create-post-modal #apply-filter-section #filter-btn-group button").click(function () {
+					$("#story-modal #apply-filter-section #filter-btn-group button").click(function () {
 						var filterType = $(this).attr("id");
 //						console.log(filterType);
-						$("#create-post-modal #filter-btn-group button").removeClass("btn-active");
+						$("#story-modal #filter-btn-group button").removeClass("btn-active");
 						$(this).addClass("btn-active");
 						Caman(canvas[0], function () {
 							startFilter(canvas);
@@ -162,34 +156,37 @@ $(document).ready(function () {
 
 					function endFilter(canvas){
 						loader.addClass('hide');
-						$('#create-post-modal #apply-filter-section .btn').removeClass('hide');
+						$('#story-modal #apply-filter-section .btn').removeClass('hide');
 						canvas.removeClass('hide');
 						submit_filter.removeClass('hide');
 					}
 
 					function startFilter(canvas){
 						canvas.addClass("hide");
-						$('#create-post-modal #apply-filter-section .btn').addClass('hide');
+						$('#story-modal #apply-filter-section .btn').addClass('hide');
 						submit_filter.addClass('hide');
 						loader.removeClass("hide");
 					}
 
-					//submit filter event -> go to description section
-					$("#create-post-modal #submit-filter").on("click", function () {
-						var canvas = $('#create-post-modal #apply-filter-section > canvas');
-						endFilter(canvas);
-						filter_section.addClass("hide");
-						post_description_section.removeClass("hide");
-					});
+//					//submit filter event -> go to description section
+//					$("#story-modal #submit-filter").on("click", function () {
+//						var canvas = $('#apply-filter-section > canvas');
+//						endFilter(canvas);
+//						filter_section.addClass("hide");
+//					});
 
 
-				});
-
-				$("#create-post-modal #submit-description").click(e => {
+					$("#story-modal #submit-filter").on("click", function () {
+//						alert("submit story");
 //					myDropzone.processQueue(); 
-					var canvas = $('#create-post-modal #apply-filter-section > canvas').get(0);
-					UploadPic(canvas,filename);
+						var canvas = $('#story-modal #apply-filter-section > canvas');
+						endFilter(canvas);
+//						filter_section.addClass("hide");
+						var canvas = $('#story-modal #apply-filter-section > canvas').get(0);
+						UploadPicStory(canvas,filename);
+					});
 				});
+
 
 
 //				this.on("successmultiple", function (files, response) {});
@@ -197,13 +194,13 @@ $(document).ready(function () {
 			} //close init
 	}; //close option
 
-	var uploader = document.querySelector('#create-post-modal #post-dropzone');
+	var uploader = document.querySelector('#story-dropzone');
 	//	CREATE DROPZONE
 	var myDropzone = new Dropzone(uploader,dropzoneOptions);
 
 	//	Active modal
 	var modalConfiguration = {
-			modalTarget: 'create-post-modal',
+			modalTarget: 'story-modal',
 			animatedIn: 'lightSpeedIn',
 			animatedOut: 'bounceOutDown',
 			color: '#fafafa80',
@@ -212,19 +209,17 @@ $(document).ready(function () {
 			afterOpen: function () {},
 			beforeClose: function () {},
 			afterClose: function () {
-				$("#create-post-modal #post-dropzone").removeClass("hide");
+				$("#story-dropzone").removeClass("hide");
 //				$("#apply-filter-section").empty();
-				$("#create-post-modal #img-to-modify").remove();
-				$("#create-post-modal #submit-filter").remove();
-				$("#create-post-modal #apply-filter-section").addClass("hide");
-				$("#create-post-modal #filter-btn-group button").removeClass("btn-active");
-				$("#create-post-modal #post-description").addClass("hide");
-				$("#create-post-modal #post-description-input").val("")//
+				$("#story-modal #img-to-modify").remove();
+				$("#story-modal #submit-filter").remove();
+				$("#story-modal #apply-filter-section").addClass("hide");
+				$("#story-modal #filter-btn-group button").removeClass("btn-active");
 				//clean dropzone uploads
 				myDropzone.removeAllFiles(true);
 			}
 	}
-
-	$("#open-create-post-modal").animatedModal(modalConfiguration);
-	$("#create-post-modal #add-mobile").animatedModal(modalConfiguration);
+	
+	$("#open-story-modal").animatedModal(modalConfiguration);
+	$("#story-modal #add-mobile").animatedModal(modalConfiguration);
 });

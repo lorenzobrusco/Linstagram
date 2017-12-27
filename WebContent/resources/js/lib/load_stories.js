@@ -1,13 +1,5 @@
 var createStories = function(){
-	skin = 'Snapgram';
-	var skins = {
-			'Snapgram': {
-				'avatars': true,
-				'list': false,
-				'autoFullScreen': false,
-				'cubeEffect': true
-			}
-	};
+
 	var timestamp = function(date) {
 		return date/1000;
 	};
@@ -15,11 +7,11 @@ var createStories = function(){
 	var stories = new Zuck('stories', {
 		backNative: true,
 		previousTap: true,
-		autoFullScreen: skins['autoFullScreen'],
-		skin: skin,
-		avatars: skins['avatars'],
-		list: skins['list'],
-		cubeEffect: skins['cubeEffect'],
+		autoFullScreen: false,
+		skin: 'Snapgram',
+		avatars: true,
+		list: false,
+		cubeEffect: true,
 		localStorage: false,
 		stories: [
 			<c:forEach items="${followedUsersStories}" var="user">

@@ -103,5 +103,15 @@ public class HomePageController {
 		return mediaInfo;
 	}
 	
+	@RequestMapping(value ="/addStory", method = RequestMethod.POST)
+	public String addStory(@RequestParam MultipartFile file,HttpSession session) throws IOException {
+		
+		Media mediaStory = uploadService.createMedia(file, session);
+		storiesService.saveStory(mediaStory, (User) session.getAttribute("user"));
+		return "redirect:index";
+	}
+	
+	
+	
 }
 	
