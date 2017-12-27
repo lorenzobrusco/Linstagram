@@ -3,125 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script>
-function getElapsedTime(postedTime){
-	var now = (new Date()).getTime();
-	var diff=now-postedTime;
-	var second = diff/1000;
-	var min = second/60;
-	var round=Math.round(min);
-	if(	round<=60)
-		return round+" MIN AGO";
-	else if(round > 60 && round < 24*60){
-		round = round/60;
-		round = Math.round(round);
-		return round+" HOURS AGO";
-	}
-	else{
-		round = round/60;
-		round = round/24;
-		round = Math.round(round);
-		return round+" DAYS AGO";
-	}	
-};
-
-$(document).on('click', '.love', function() {
-	var postID = $(this).attr('name');
-	var count_like = $("#count_like"+postID)
-	var love_id = $("#love_div"+postID)
-
-	$.ajax({
-		url : "addLike",
-		data:{postID:postID},
-		success : function(result) {
-			if(result == "OK") {
-				$(count_like).html(parseInt($(count_like).html(), 10)+1)
-				$(love_id).empty();
-				$(love_id).append("<a name="+postID+" id=loveFull"+postID+
-				" class=loveFull><span class=loveFull></span></a>");
-			}
-			//altrimenti dare un messaggio di errore??					
-		}
-	});
-});
-
-$(document).on('click', '.loveFull', function() {
-	var postID = $(this).attr('name');
-	var count_like = $("#count_like"+postID)
-	var love_id = $("#love_div"+postID)
-
-	$.ajax({
-		url : "removeLike",
-		data:{postID:postID},
-		success : function(result) {
-			if(result == "OK") {
-				$(count_like).html(parseInt($(count_like).html(), 10)-1)
-				$(love_id).empty();
-				$(love_id).append("<a name="+postID+" id=love"+postID+
-				" class=love><span class=love></span></a>");
-			}
-			//altrimenti dare un messaggio di errore??					
-		}
-	});
-});
-
-$(document).on('click', '.bookmark', function() {
-	var postID = $(this).attr('name');
-	var bookmark_id = $("#bookmark_div"+postID)
-	
-	$.ajax({
-		url : "addBookmark",
-		data:{postID:postID},
-		success : function(result) {
-			if(result == "OK") {
-				$(bookmark_id).empty();
-				$(bookmark_id).append("<a name="+postID+" id=bookmark"+postID+
-				" class=bookmarkFull><span class=saveFull></span></a>");
-			}
-			//altrimenti dare un messaggio di errore??					
-		}
-	});
-});
-
-$(document).on('click', '.bookmarkFull', function() {
-	var postID = $(this).attr('name');
-	var bookmark_id = $("#bookmark_div"+postID)
-	
-	$.ajax({
-		url : "removeBookmark",
-		data:{postID:postID},
-		success : function(result) {
-			if(result == "OK") {
-				$(bookmark_id).empty();
-				$(bookmark_id).append("<a name="+postID+" id=bookmark"+postID+
-				" class=bookmark><span class=save></span></a>");
-			}
-			//altrimenti dare un messaggio di errore??					
-		}
-	});
-});
-
-/* $(document).on('click', '.submit_comment', function() {
-	var postID = $(this).attr('id');
-	var comm = $("#comment"+postID).val()
-	
-	$.ajax({
-		url : "comment",
-		data:{postID:postID, comment:comm},
-		success : function(result) {		if(resesult == "OK") {
-				$(comm).val('');
-				alert("AAAAAAAAAAAAAAAAAAAAAA")
-			}
-			else
-				alert("NOOOOOOOOO");
-			//altrimenti dare un messaggio di errore??					
-		}
-	});
-}); */
-
-
-</script>
-
+<script src="./resources/js/event_post.js"></script>
 
 <!-- start body-section -->
 <c:forEach items="${posts}" var="post">
@@ -198,12 +80,13 @@ $(document).on('click', '.bookmarkFull', function() {
 							<a href='#'>${post.user.username }</a><span>${post.content}</span>
 						</div>
 
-						<div class='list-comments-section${post.id }'>
-							<c:forEach items="${post.comments}" var="comment">
-								<a href='#'>${comment.user.username}</a>
-								<span> ${comment.content}</span>
-								<br>
-							</c:forEach>
+						<div class='list-comments-section'>
+							<div class='list-comments${post.id }'>
+								<c:forEach items="${post.comments}" var="comment">
+									<a href='#'><b>${comment.user.username}</b></a>
+									<span> ${comment.content}</span>
+									<br>
+								</c:forEach>
 							<!-- <a href='#'>Lorenzo</a><span> testo del commento</span><br>
 										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
 										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
@@ -213,7 +96,7 @@ $(document).on('click', '.bookmarkFull', function() {
 											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
 											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
 										</div> -->
-
+							</div>
 							<a class="show-all-comments" href="#postcibo"
 								data-toggle="collapse"><span class="show-comments"></span>
 								Carica altri commenti</a><br>
@@ -230,7 +113,9 @@ $(document).on('click', '.bookmarkFull', function() {
 						<div class='comment-section'>
 							<input id="comment${post.id }" name="comment" type='text' class='comment-text'
 								placeholder='Add a comment...'>
-							<%-- <button id="${post.id }" class="submit_comment" type="submit">Submit</button> --%>
+							<button id="${post.id }" class="submit_comment" type="submit"></button>
+							<input type="hidden" id="username" value="${user.username }"/>
+							
 						</div>
 					</div>
 				</div>

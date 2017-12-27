@@ -42,12 +42,12 @@ public class OtherUserController {
 	public String getUserPage(HttpSession session, Model model, @RequestParam("usernameOther") String usernameOther) {
 		
 		User user = (User) session.getAttribute("user");
-		if (usernameOther.equals(user.getUsername()))
-			return "profile";
+		if (usernameOther.equals(user.getUsername())) 
+			return "redirect:/profile";
 		
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
 		model.addAttribute("followers", userService.getFollowers(userDTO.getUsername()));
-		model.addAttribute("followings", userService.getFollowings(userDTO.getUsername()));
+		model.addAttribute("followings", userService.getFollowings(user.getUsername()));
 		
 		model.addAttribute("user", userDTO);
 		model.addAttribute("userSession", user);

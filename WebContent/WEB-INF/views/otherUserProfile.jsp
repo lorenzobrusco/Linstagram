@@ -50,16 +50,16 @@
 										<li></li>
 									</ul>
 								</div>
-								<div class="row item-user-info" style="padding-bottom:0% !important">
+								<div class="row item-user-info">
 									<ul>
-									 <c:choose>
-									  <c:when test ="!empty ${user.name}  || !empty ${user.surname}">
+										<c:set var="name" value="${user.name}" />
+										<c:set var="surname" value="${user.surname}" />
+										<c:if test="${ empty name  && empty surname}">
+											<li><i>Name & Surname unknown</i></li>
+										</c:if>
+										<c:if test="${ not empty name  || not empty surname}">
 											<li>${user.name} ${user.surname}</li>
-										</c:when>
-										<c:otherwise>
-											<li><b>Name</b> & <b>Surname</b> Unknow ..</li>
-										</c:otherwise>
-									</c:choose>
+										</c:if>
 									</ul>
 								</div>
 								<div class="row item-user-info">

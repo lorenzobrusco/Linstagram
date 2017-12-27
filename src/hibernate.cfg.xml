@@ -16,6 +16,7 @@
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 		<property name="hbm2ddl.auto">update</property>
 		<property name="hibernate.enable_lazy_load_no_trans">true</property>
+		<property name="hibernate.event.merge.entity_copy_observer">allow</property>
 		
 		<mapping class="it.unical.linstagram.model.User" />
 		<mapping class="it.unical.linstagram.model.Post" />

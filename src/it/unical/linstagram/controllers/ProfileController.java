@@ -97,7 +97,7 @@ public class ProfileController {
 		
 		if (!date.equals("")) {
 			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 				Date dateNew = sdf.parse(date);
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(dateNew);
@@ -116,15 +116,15 @@ public class ProfileController {
 			if(!profileService.changeBiography(usernameSession, bio))
 				return new MessageResponse(MessageCode.FAILED, user, "BIO_FAILED").getMessage();
 		
-		if (privateCheck == "true")
-			user.setPrivateProfile(true);
-		else 
-			user.setPrivateProfile(false);
-	
+		if (!privateCheck.equals(""))
+			if (!profileService.changePrivate(usernameSession, privateCheck))
+				return new MessageResponse(MessageCode.FAILED, user, "PRIVATE_FAILED").getMessage();
 //		if (!profileService.updateUser(user))
 //			return  new MessageResponse(MessageCode.FAILED, user, "FAILED").getMessage();
 		
-		session.setAttribute("user", user);
+		User userDB = userService.getUser(usernameSession);
+		
+		session.setAttribute("user", userDB);
 		return  new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	

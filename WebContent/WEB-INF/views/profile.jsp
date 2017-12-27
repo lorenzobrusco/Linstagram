@@ -71,18 +71,18 @@
 								<c:set var="name" value="${user.name}" />
 								<c:set var="surname" value="${user.surname}" />
 								<c:if test="${ empty name  && empty surname}">
-									<li><i>Name & Surname unknown<i></li>
+									<li><i>Name & Surname unknown</i></li>
 								</c:if>
 								<c:if test="${ not empty name  || not empty surname}">
-									<li>${user.name}${user.surname}</li>
+									<li>${user.name} ${user.surname}</li>
 								</c:if>
 							</ul>
 						</div>
 						<div class="row item-user-info">
 							<ul>
-								<c:set var="bio" value="${user.biography}" />
-								<c:if test="${not empty bio}">
-									<hr>
+								<%-- <c:set var="bio" value="${user.biography}" /> --%>
+								<c:if test="${not empty user.biography}">
+									<!-- <hr> -->
 									<li>${user.biography }</li>
 								</c:if>
 							</ul>

@@ -51,9 +51,11 @@ public class PostController {
 	@ResponseBody
 	public String insertBookmark(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
-		if (postService.insertBookmark(user.getUsername(), idPost))
+		User userDB = postService.insertBookmark(user.getUsername(), idPost);
+		if (userDB != null) {
+			session.setAttribute("user", userDB);
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
-		
+		}
 		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
 	}
 	
@@ -61,23 +63,22 @@ public class PostController {
 	@ResponseBody
 	public String removeBookmark(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
-		if (postService.removeBookmark(user.getUsername(), idPost))
+		User userDB = postService.removeBookmark(user.getUsername(), idPost);
+		if (userDB != null) {
+			session.setAttribute("user", userDB);
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
-		
+		}
 		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
 	}
 	
 	
-	@RequestMapping("comment")
+	@RequestMapping("addComment")
 	@ResponseBody
 	public String insertComment(HttpSession session, Model model, @RequestParam("postID") int idPost, @RequestParam("comment") String comment) {
 		User user = (User) session.getAttribute("user");
-		Post post = postService.getPost(idPost);
-		System.out.println("POST "+post);
-		Comment c = new Comment(comment, user, post, Calendar.getInstance());
-		
-		if (postService.insertComment(idPost, c))
-			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+		if (!comment.equals(""))
+			if (postService.insertComment(idPost, user.getUsername() ,comment, Calendar.getInstance()))
+				return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
 		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
 	}

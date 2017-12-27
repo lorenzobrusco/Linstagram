@@ -41,7 +41,9 @@
 }
 
 #unfollow-btn,
-#follow-btn {
+#follow-btn,
+#unfollowModal-btn,
+#followModal-btn {
 	position: absolute;
 	right: 10%;
 	padding-top: 1%;
@@ -54,7 +56,9 @@
 }
 
 #unfollow-btn:hover,
-#follow-btn:hover {
+#follow-btn:hover,
+#unfollowModal-btn:hover,
+#followModal-btn:hover {
 	background-color: #89ABE3;
 	border-color: #bbbbbb;
 	color: black;

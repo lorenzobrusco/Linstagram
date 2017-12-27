@@ -1,5 +1,6 @@
 package it.unical.linstagram.services;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -43,8 +44,7 @@ public class PostService {
 		Post post = postDAO.getPostById(idPost);
 		User u = userDAO.getUserByUsername(username);
 		if(post.getLikes().add(u)) {
-//			post.getLikes().clear();
-			if (modelDao.update(post))
+			if (modelDao.merge(post))
 				return true;
 		}
 		return false;
@@ -60,33 +60,36 @@ public class PostService {
 		return false;
 	}
 	
-	public boolean insertComment(int idPost, Comment comment) {
+	public boolean insertComment(int idPost, String username, String contentComment, Calendar date) {
 		Post post = postDAO.getPostById(idPost);
+		User user = userDAO.getUserByUsername(username);
+
+		Comment comment = new Comment(contentComment, user, post, date);
 		post.getComments().add(comment);
 		
-		if(modelDao.save(comment))
+		if(modelDao.merge(comment))
 			return true;
 		return false;
 	}
 	
-	public boolean insertBookmark(String username, int idPost) {
+	public User insertBookmark(String username, int idPost) {
 		User u = userDAO.getUserByUsername(username);
 		Post post = postDAO.getPostById(idPost);
 		u.getBookmarks().add(post);
 		
 		if(modelDao.merge(u))
-			return true;
-		return false;
+			return u;
+		return null;
 	}
 	
-	public boolean removeBookmark(String username, int idPost) {
+	public User removeBookmark(String username, int idPost) {
 		Post post = postDAO.getPostById(idPost);
 		User u = userDAO.getUserByUsername(username);
 		u.getBookmarks().remove(post);
 		
-		if(modelDao.update(u))
-			return true;
-		return false;
+		if(modelDao.merge(u))
+			return u;
+		return null;
 	}
 	
 	public void savePost(Post post) {

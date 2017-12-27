@@ -12,7 +12,7 @@
 				<label for="name">Nome</label>
 				<div class="input-inline">
 					<input type="text" class="form-control" id="name"
-						value="${user.username}">
+						value="${user.name}">
 				</div>
 			</div>
 			<div class="form-inline-profile">
