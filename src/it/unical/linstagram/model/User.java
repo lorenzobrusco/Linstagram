@@ -15,11 +15,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.apache.lucene.analysis.core.*;
+import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.apache.lucene.analysis.pattern.PatternReplaceFilterFactory;
+import org.hibernate.search.annotations.*;
 
 @Entity
 @Table(name="user")
+@Indexed
 public class User{
 
 	@Id
@@ -27,7 +32,12 @@ public class User{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(nullable = false, unique = true)
+	@Column(name="username", nullable = false, unique = true)
+	@Fields({
+		@Field(name = "username", index = Index.YES, store = Store.YES),
+		@Field(name = "edgeNGramUsername", index = Index.YES, store = Store.NO,
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
+	})
 	private String username;
 
 	@Column(unique = true, nullable = false)
@@ -36,10 +46,20 @@ public class User{
 	@Column(nullable = false)
 	private String password;
 
-	@Column
+	@Column(name="name")
+	@Fields({
+		@Field(name = "username", index = Index.YES, store = Store.YES),
+		@Field(name = "edgeNGramName", index = Index.YES, store = Store.NO,
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
+	})
 	private String name;
 
-	@Column
+	@Column (name="surname")
+	@Fields({
+		@Field(name = "username", index = Index.YES, store = Store.YES),
+		@Field(name = "edgeNGramSurname", index = Index.YES, store = Store.NO,
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
+	})
 	private String surname;
 
 	@Column
@@ -89,6 +109,14 @@ public class User{
 		this.username = username;
 		this.email = email;
 		this.password = password;
+	}
+	
+	public User(String username, String email, String password, String name, String surname) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
 	}
 
 	public int getId() {

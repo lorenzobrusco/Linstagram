@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
+import it.unical.linstagram.dto.UserResearchDTO;
 import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
@@ -132,5 +133,6 @@ public class UserService {
 	public void inizialiteList(Set<Post> set) {
 		userDAO.inizializeListUser(set);
 	}
+	
 	
 }
