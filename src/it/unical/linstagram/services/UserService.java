@@ -90,30 +90,5 @@ public class UserService {
 		userDAO.inizializeLists(username);
 	}
 	
-	public List<UserResearchDTO> getSuggestionsUsername(String usernameQuery)
-	{
-		List<User> users = userDAO.getSuggestions(usernameQuery);
-		
-		List<UserResearchDTO> usersDTO = new ArrayList<>();
-		
-		for (User user : users) {
-			usersDTO.add(new UserResearchDTO(user));	
-		}
-		
-		return usersDTO;
-	}
-	
-	public List<UserResearchDTO> getSuggestionsName(String nameQuery)
-	{
-		List<User> users = userDAO.getSuggestionsName(nameQuery);
-		
-		List<UserResearchDTO> usersDTO = new ArrayList<>();
-		
-		for (User user : users) {
-			usersDTO.add(new UserResearchDTO(user));	
-		}
-		
-		return usersDTO;
-	}
 	
 }
