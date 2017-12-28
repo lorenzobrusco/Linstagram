@@ -129,19 +129,19 @@ public class UserDAO implements IUserDAO {
 		return users;
 	}
 
-	
+
 	public List<User> getFollowerByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
 		List<User> users = session.createQuery("SELECT user.followers FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
-		
+
 		session.close();
 		return users;
 	}
-	
-	
 
-	public void inizializeLists(String username) {
+
+
+	public User inizializeLists(String username) {
 		Session session = HibernateUtil.getHibernateSession();
 		User user = (User) session.createQuery("FROM  User u where u.username=:username")
 				.setParameter("username", username).uniqueResult();
@@ -151,22 +151,22 @@ public class UserDAO implements IUserDAO {
 		Hibernate.initialize(user.getBookmarks());
 		Hibernate.initialize(user.getFollowings());
 		Hibernate.initialize(user.getFollowers());
-		
+
 		session.close();
 		return user;
 	}
-	
+
 	public void inizializeListUser(Set<Post> set) {
 		Session session = HibernateUtil.getHibernateSession();
-		
+
 		Hibernate.initialize(set);
-		
+
 		session.close();
-		
+
 	}
-	
-	
-}
+
+
+
 
 
 	@Override
@@ -200,9 +200,9 @@ public class UserDAO implements IUserDAO {
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
 				.buildQueryBuilder().forEntity(User.class).get();
 		org.apache.lucene.search.Query luceneQuery = queryBuilder.bool()
-			    .should(queryBuilder.keyword().onField(NAME_EDGE_NGRAM_INDEX).matching(queryString).createQuery())
-			    .should(queryBuilder.keyword().onField(SURNAME_EDGE_NGRAM_INDEX).matching(queryString).createQuery())
-			    .createQuery();
+				.should(queryBuilder.keyword().onField(NAME_EDGE_NGRAM_INDEX).matching(queryString).createQuery())
+				.should(queryBuilder.keyword().onField(SURNAME_EDGE_NGRAM_INDEX).matching(queryString).createQuery())
+				.createQuery();
 
 
 		// wrap Lucene query in a javax.persistence.Query
