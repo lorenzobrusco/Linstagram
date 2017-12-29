@@ -48,7 +48,7 @@ public class User{
 
 	@Column(name="name")
 	@Fields({
-		@Field(name = "username", index = Index.YES, store = Store.YES),
+		@Field(name = "name", index = Index.YES, store = Store.YES),
 		@Field(name = "edgeNGramName", index = Index.YES, store = Store.NO,
 		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
 	})
@@ -56,7 +56,7 @@ public class User{
 
 	@Column (name="surname")
 	@Fields({
-		@Field(name = "username", index = Index.YES, store = Store.YES),
+		@Field(name = "surname", index = Index.YES, store = Store.YES),
 		@Field(name = "edgeNGramSurname", index = Index.YES, store = Store.NO,
 		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
 	})
