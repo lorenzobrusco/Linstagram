@@ -112,7 +112,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public List<Post> getTaggedPostByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
-		List<Post> posts = session.createQuery("SELECT user.tagged FROM User user, Post p JOIN FETCH p.media WHERE user.username=:username")
+		List<Post> posts = session.createQuery("SELECT user.tagged FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
 
 		session.close();
@@ -156,7 +156,7 @@ public class UserDAO implements IUserDAO {
 		return user;
 	}
 
-	public void inizializeListUser(Set<Post> set) {
+	public void inizializeListUser(Set<?> set) {
 		Session session = HibernateUtil.getHibernateSession();
 
 		Hibernate.initialize(set);
@@ -164,6 +164,7 @@ public class UserDAO implements IUserDAO {
 		session.close();
 
 	}
+
 
 
 

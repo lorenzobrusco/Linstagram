@@ -10,7 +10,6 @@
 <html>
 <head>
 <title>Listagram</title>
-<script src="./resources/js/follow_event/modal_follow_event.js"></script>
 </head>
 <body>
 
@@ -25,35 +24,7 @@
 		        <h4 class="modal-title"><b>Followings</b></h4>
 		      </div>
 		      <div class="modal-body">
-	      		<ul>
-        			<c:forEach items="${followings}" var="follow">
-        				<li id="users">
-        					<div id="user_enter">
-        						<form role="form" action="userPage">
-	        						<button id="button_form" name="usernameOther" value="${follow.username }">
-		        						<div id="button_user">
-			        						<div id="img_div">
-	        									<img id="img" src="${follow.photoProfile }"></img>
-			        						</div>
-			        							
-			        						<div id="info_div">
-			        							<div id="username${follow.id }"><b>${follow.username }</b></div>
-			        							<div id="name">${follow.name } ${follow.surname }</div>
-			        						</div>
-		        						</div>
-	        						</button>
-        						</form>
-        						<c:if test="${follow.username != userSession.username }">
-	        						<div id="fol-div${follow.id }">
-    									<div id="button${follow.id }" class="pull-right">
-	        								<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
-	        							</div>
-	        						</div>
-        						</c:if>
-        					</div>
-        				</li>
-        			</c:forEach>
-       			</ul>
+	      		
 		      </div>
 <!-- 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -7,7 +7,7 @@
 
 <!-- VISUALIZZAZIONE POST TAGGED DELL'UTENTE [Sia per utente nella sessione che per gli altri] -->
 
-<c:if test="${fn:length(user.tagged) == 0}">
+<c:if test="${fn:length(posts) == 0}">
 	<div id="tag">
 		<div class="tags">
 			<span></span>
@@ -20,7 +20,7 @@
 	</div>
 </c:if>
 
-<c:forEach items="${user.tagged}" var="post">
+<c:forEach items="${posts}" var="post">
 	<!--  Il numero dei like e comment e post-->
 	<div class="col-md-4 col-sm-6 post-section">
 		<div class="post">

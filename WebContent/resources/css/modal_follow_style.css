@@ -42,6 +42,8 @@
 
 #unfollow-btn,
 #follow-btn,
+#unfollower-btn,
+#follower-btn,
 #unfollowProfile-btn,
 #followProfile-btn {
 	position: absolute;
@@ -57,6 +59,8 @@
 
 #unfollow-btn:hover,
 #follow-btn:hover,
+#unfollower-btn:hover,
+#follower-btn:hover,
 #unfollowModal-btn:hover,
 #followModal-btn:hover {
 	background-color: #89ABE3;
