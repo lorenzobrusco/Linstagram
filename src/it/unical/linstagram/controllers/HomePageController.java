@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.helper.UserManager;
-import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.persistence.UserDAO;
+import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.PostService;
 import it.unical.linstagram.services.StoriesService;
-import it.unical.linstagram.services.MediaService;
-import it.unical.linstagram.services.UserService;
 
 @Controller
 public class HomePageController {
@@ -36,42 +35,28 @@ public class HomePageController {
 	private MediaService uploadService;
 	
 	@Autowired
-	private UserService userService;
-	
-	@Autowired
 	private StoriesService storiesService;
-	
+	@Autowired
+	UserDAO userDAO;
 	
 	@RequestMapping("/index")
 	public String homePageController(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
-			model.addAttribute("posts", postService.getPosts());
+			List<Post> posts = postService.getFollowedPosts(((User)session.getAttribute("user")).getUsername());
+			
+			model.addAttribute("posts", posts);
 			model.addAttribute("followedUsersStories",storiesService.getFollowedStories((User)session.getAttribute("user")));
 			return "index";
 		}
 		return "redirect:/";
+		
 	}
 	
-	@RequestMapping("/like")
-	public String insertLike(HttpSession session, Model model, @RequestParam int idPost) {
+	@RequestMapping("/storyViewed")
+	public String viewStory(HttpSession session, @RequestParam int idStory) {
 		if(UserManager.checkLogged(session)) {
-			User user = userService.getUser((String) session.getAttribute("username"));
-			postService.insertLike(idPost, user);
-			return "redirect:index";
-		}
-		return "redirect:index";
-	}
-	
-	@RequestMapping("/comment")
-	public String insertComment(HttpSession session, Model model, @RequestParam int idPost, @RequestParam String comment) {
-		if(UserManager.checkLogged(session)) {
-			User user = userService.getUser((String) session.getAttribute("username"));
-			Post post = postService.getPost(idPost);
-			System.out.println("POST "+post);
-			Comment c = new Comment(comment, user, post, Calendar.getInstance());
-			
-			postService.insertComment(idPost, c);
-			
+			User loggedUser = (User) session.getAttribute("user");
+			storiesService.AddViewerToStory(loggedUser, idStory);
 			return "redirect:index";
 		}
 		return "redirect:index";
@@ -113,6 +98,16 @@ public class HomePageController {
 		postService.savePost(new_post);
 		return mediaInfo;
 	}
+	
+	@RequestMapping(value ="/addStory", method = RequestMethod.POST)
+	public String addStory(@RequestParam MultipartFile file,HttpSession session) throws IOException {
+		
+		Media mediaStory = uploadService.createMedia(file, session);
+		storiesService.saveStory(mediaStory, (User) session.getAttribute("user"));
+		return "redirect:index";
+	}
+	
+	
 	
 }
 	

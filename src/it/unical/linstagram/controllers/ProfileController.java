@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.helper.EncryptPassword;
-import it.unical.linstagram.helper.MessageResponce;
+import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Gender;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
@@ -45,8 +46,12 @@ public class ProfileController {
 	public String getSignInPage(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
 			User user = (User) session.getAttribute("user");
-			userService.getListsUser(user.getUsername());
-
+//			userService.getListsUser(user.getUsername());
+			
+//			model.addAttribute("userSession", user);
+			userService.inizialiteList(user.getBookmarks());
+			model.addAttribute("followers", userService.getFollowers(user.getUsername()));
+			model.addAttribute("followings", userService.getFollowings(user.getUsername()));
 			return "profile";
 		}
 		return "redirect:/";
@@ -55,7 +60,7 @@ public class ProfileController {
 	@RequestMapping("modifyProfile")
 	public String getModifyProfile(HttpSession session) {
 		if(UserManager.checkLogged(session))
-			return "modify_profile";
+			return "modifyProfile";
 		return "redirect:/";
 	}
 
@@ -69,50 +74,57 @@ public class ProfileController {
 			@RequestParam("privateCheck") String privateCheck) {
 		
 		User user = (User) session.getAttribute("user");
+
 		if (!name.equals(""))
-			if (!profileService.changeName(user, name))
-				return new MessageResponce(MessageCode.NAME_FAILED, user, "Non è stato possibile cambiare il nome.").getMessage();
+			user.setName(name);
+		
 		if (!surname.equals(""))
-			if (!profileService.changeSurname(user, surname))
-				return new MessageResponce(MessageCode.SURNAME_FAILED, user, "Non è stato possibile cambiare il cognome.").getMessage();
+			user.setSurname(surname);
 		
 		if (!username.equals("")) {
-			if (!profileService.changeUsername(user, username))
-				return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Username già esistente.").getMessage();
+			if (!profileService.changeUsername(username))
+				return  new MessageResponse(MessageCode.USERNAME_FAILED, user, "USERNAME_FAILED").getMessage();
+			user.setUsername(username);
 		}
+		
 		if (!email.equals("")) {
-			if (!profileService.changeEmail(user, email))
-				return new MessageResponce(MessageCode.EMAIL_FAILED, user, "Email già esistente.").getMessage();
+			if (!profileService.changeEmail(email))
+				return  new MessageResponse(MessageCode.EMAIL_FAILED, user, "EMAIL_FAILED").getMessage();
+			user.setEmail(email);
 		}
+		
 		if (!gender.equals("-1"))
-			if (!profileService.changeGender(user, gender))
-				return new MessageResponce(MessageCode.GENDER_FAILED, user, "Non è stato possibile cambiare il genere.").getMessage();
+			user.setGender(Gender.values()[Integer.parseInt(gender)-1]);
 		
 		if (!date.equals("")) {
 			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 				Date dateNew = sdf.parse(date);
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(dateNew);
 				if (!cal.before(Calendar.getInstance()))
-					return new MessageResponce(MessageCode.DATE_FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
-				
-				if (!profileService.changeDate(user, cal))
-					return  new MessageResponce(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+					return new MessageResponse(MessageCode.FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
+
+				user.setBirthdate(cal);
 				
 			} catch (ParseException e) {
-				return  new MessageResponce(MessageCode.DATE_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+				return  new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
 			}
 		}
 		
 		if (!bio.equals(""))
-			if (!profileService.changeBiography(user, bio))
-				return  new MessageResponce(MessageCode.BIO_FAILED, user, "Non è stato possibile cambiare la biografia.").getMessage();
+			user.setBiography(bio);
+
+		if (!privateCheck.equals(""))
+			if (privateCheck.equals("true"))
+				user.setPrivateProfile(true);
+			else 
+				user.setPrivateProfile(false);
 		
-		if (!profileService.changePrivateField(user, privateCheck))
-			return  new MessageResponce(MessageCode.PRIVATE_FAILED, user, "Non è stato possibile cambiare il campo di privacy.").getMessage();
+		if (!profileService.updateUser(user))
+			return  new MessageResponse(MessageCode.FAILED, user, "FAILED").getMessage();
 		
-		return  new MessageResponce(MessageCode.OK, user, "OK").getMessage();
+		return  new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
 	@RequestMapping("sendChangePassword")
@@ -124,10 +136,10 @@ public class ProfileController {
 		String pass = profileService.getPassword(user.getUsername());
 		
 		if (!pass.equals(EncryptPassword.checkPassword(old_password, pass)))
-			return  new MessageResponce(MessageCode.PASS_WRONG, user, "La password inserita non corrisponde alla password corrente.").getMessage();
+			return  new MessageResponse(MessageCode.PASS_WRONG, user, "La password inserita non corrisponde alla password corrente.").getMessage();
 		
 		if (!new_password.equals(repeat_password))
-			return  new MessageResponce(MessageCode.PASS_DIFFERENT, user, "Le due password inserite sono diverse.").getMessage();
+			return  new MessageResponse(MessageCode.PASS_DIFFERENT, user, "Le due password inserite sono diverse.").getMessage();
 		
 		String password = EncryptPassword.encrypt(new_password);
 		profileService.changePassword(user, password);
@@ -149,15 +161,13 @@ public class ProfileController {
 	
 	@RequestMapping(value ="uploadPhotoProfile", method = RequestMethod.POST)
 	public String uploadProfilePhoto(@RequestParam MultipartFile file,HttpSession session) throws FileNotFoundException, IOException {
-		//TODO overwrite old img profile
-		//TODO resize img profile
-		Media mediaInfo = uploadService.createMedia(file, session);
+		Media mediaInfo = uploadService.createProfilePhoto(file, session);
 		User user = (User) session.getAttribute("user");
 		user.setPhotoProfile(mediaInfo.getUrl());
 		System.out.println(user.getPhotoProfile());
 		boolean result = profileService.uploadPhotoProfile(user);
 		if(result)
-			return "modify_profile";
+			return "modifyProfile";
 		else
 			return "redirect:/";
 	}
@@ -168,6 +178,7 @@ public class ProfileController {
 	public String getTaggedPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
 		if(UserManager.checkLogged(session)) {
 			User user = userService.getUser(username);
+			userService.inizialiteList(user.getTagged());
 			model.addAttribute("user", user);
 			return "fragment/userProfileFragment/taggedPhotoSection";	//Per aggiungere solo i post in cui e' taggato l'utente [utilizzato sia per utente nella sessione che per gli altri utenti]
 		}
@@ -181,7 +192,7 @@ public class ProfileController {
 			List<Post> postOfUser = profileService.getBookmarkOfUser(user.getUsername());
 			
 			model.addAttribute("posts", postOfUser);
-			return "fragment/userProfileFragment/postSection";	//profilePost.jsp
+			return "fragment/userProfileFragment/bookmarkPhotoSection";	
 		}
 		return "redirect:/";
 	}

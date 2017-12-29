@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
-import it.unical.linstagram.helper.MessageResponce;
+import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
@@ -42,7 +42,13 @@ public class OtherUserController {
 	public String getUserPage(HttpSession session, Model model, @RequestParam("usernameOther") String usernameOther) {
 		
 		User user = (User) session.getAttribute("user");
+		if (usernameOther.equals(user.getUsername())) 
+			return "redirect:/profile";
+		
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
+		model.addAttribute("followers", userService.getFollowers(userDTO.getUsername()));
+		model.addAttribute("followings", userService.getFollowings(userDTO.getUsername()));
+		model.addAttribute("followingsUserSession", userService.getFollowings(user.getUsername()));
 		
 		model.addAttribute("user", userDTO);
 		model.addAttribute("userSession", user);
@@ -51,27 +57,25 @@ public class OtherUserController {
 	
 	@RequestMapping("followUser")
 	@ResponseBody
-	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
+	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
-		User userToFollow = userService.getUser(usernameOther);
 		
-		if (!userService.addFollowing(user, userToFollow))
-			return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
+		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user))
+			return new MessageResponse(MessageCode.FOLLOW_FAILED, user, "Non è stato possibile inserire l'utente come following.").getMessage();
 		
-		return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
+		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
 	@RequestMapping("unfollowUser")
 	@ResponseBody
-	public String unfollowUser(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
+	public String unfollowUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 
 		User user = (User) session.getAttribute("user");
-		User userToFollow = userService.getUser(usernameOther);
+		System.out.println(user.getUsername()+" "+usernameToFollow);
+		if (!userService.removeFollowing(user.getUsername(), usernameToFollow, user))
+			return new MessageResponse(MessageCode.UNFOLLOW_FAILED, user, "Non è stato possibile eliminare l'utente dai following.").getMessage();
 		
-		if (!userService.removeFollowing(user, userToFollow))
-			return new MessageResponce(MessageCode.USERNAME_FAILED, user, "Non è stato possibile cambiare la data di nascita.").getMessage();
-		
-		return new MessageResponce(MessageCode.OK, user, "OK").getMessage();
+		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
 }

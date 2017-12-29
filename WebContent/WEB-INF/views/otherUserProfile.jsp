@@ -18,9 +18,9 @@
 
 <script src="resources/js/userPhotoProfile.js"></script>
 
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile_style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
 
 
 </head>
@@ -37,7 +37,7 @@
 					<div class="col-sm-3">
 						<div class="user-img-container">
 							<div class="user-img">
-								<img src="resources/images/user_login_img.png" class="img-circle">
+								<img src='${user.photoProfile}' class="img-circle">
 							</div>
 						</div>
 					</div>
@@ -50,16 +50,16 @@
 										<li></li>
 									</ul>
 								</div>
-								<div class="row item-user-info" style="padding-bottom:0% !important">
+								<div class="row item-user-info">
 									<ul>
-									 <c:choose>
-									  <c:when test ="!empty ${user.name}  || !empty ${user.surname}">
+										<c:set var="name" value="${user.name}" />
+										<c:set var="surname" value="${user.surname}" />
+										<c:if test="${ empty name  && empty surname}">
+											<li><i>Name & Surname unknown</i></li>
+										</c:if>
+										<c:if test="${ not empty name  || not empty surname}">
 											<li>${user.name} ${user.surname}</li>
-										</c:when>
-										<c:otherwise>
-											<li><b>Name</b> & <b>Surname</b> Unknow ..</li>
-										</c:otherwise>
-									</c:choose>
+										</c:if>
 									</ul>
 								</div>
 								<div class="row item-user-info">
@@ -96,19 +96,18 @@
 											<div class="tab-pane active" id="tab_default_1">
 												<div id="colum">
 													<jsp:include page="./fragment/userProfileFragment/postSection.jsp"></jsp:include>
-		
 												</div>
 											</div>
 											<div class="tab-pane" id="tab_default_2">
 												<div id="tag">
-													<div class="tags">
+													<!-- <div class="tags">
 														<span></span>
 														<div>Tag</div>
 														<br>
 														<div id="contentTag">
 															Devi essere taggato per porter rivedere i post.<br>
 														</div>
-													</div>
+													</div> -->
 												</div>
 											</div>
 										</div>
@@ -142,5 +141,10 @@
 		</section>
 	</div>
  <jsp:include page="./fragment/footer.jsp"></jsp:include>
+ 
+<c:if test="${user.privateProfile == false }">
+	<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
+	<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
+</c:if>
 </body>
 </html>

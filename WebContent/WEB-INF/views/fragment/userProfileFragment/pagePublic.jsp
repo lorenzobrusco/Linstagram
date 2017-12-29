@@ -7,7 +7,7 @@
 
 <script>
 $(document).ready(function() {
-	$(document).on('click', '#follow-btn', function() {
+	$(document).on('click', '#followProfile-btn', function() {
 		var username = $('#username_hidden').val();
 		var popupFail = document.getElementById("popupFAIL");
 		
@@ -17,7 +17,7 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();
-					$("#follow_ul").append("<li><button id='unfollow-btn'>Unfollow</button></li>");
+					$("#follow_ul").append("<li><button id='unfollowProfile-btn'>Unfollow</button></li>");
 					$("#count_follower").html(parseInt($("#count_follower").html(), 10)+1)
 				}
 				/* else {
@@ -28,7 +28,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(document).on('click', '#unfollow-btn', function() {
+	$(document).on('click', '#unfollowProfile-btn', function() {
 		var username = $('#username_hidden').val();
 		var popupFail = document.getElementById("popupFAIL");
 		
@@ -38,7 +38,7 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();
-					$("#follow_ul").append("<li><button id='follow-btn'>Follow</button></li>");
+					$("#follow_ul").append("<li><button id='followProfile-btn'>Follow</button></li>");
 					$("#count_follower").html(parseInt($("#count_follower").html(), 10)-1)
 				}
 				/* else {
@@ -63,26 +63,32 @@ $(document).ready(function() {
 </div>
 <div class="row item-user-info">
 	<ul>
-		<li><span>${fn:length(user.posts)}</span> post</li>
-		<li><span id="count_follower">${fn:length(user.followers)}</span> follower</li>
-		<li><span>${fn:length(user.followings)}</span> profili seguiti</li>
+		<li><span><b>${fn:length(user.posts)}</b></span> post</li>
+		<li id="follower" data-toggle="modal" data-target="#modalFollower">
+		<span><b id="count_follower">${fn:length(user.followers)}</b></span> follower</li>
+		<li id="following" data-toggle="modal" data-target="#modalFollowing">
+		<span><b>${fn:length(user.followings)}</b></span> profili seguiti</li>
 	</ul>
 </div>
-<div class="row item-user-info" style="padding-bottom:0% !important">
+<div class="row item-user-info">
 	<ul>
-	 <c:choose>
-	  <c:when test ="!empty ${user.name}  || !empty ${user.surname}">
+		<c:set var="name" value="${user.name}" />
+		<c:set var="surname" value="${user.surname}" />
+		<c:if test="${ empty name  && empty surname}">
+			<li><i>Name & Surname unknown</i></li>
+		</c:if>
+		<c:if test="${ not empty name  || not empty surname}">
 			<li>${user.name} ${user.surname}</li>
-		</c:when>
-		<c:otherwise>
-			<li><b>Name</b> & <b>Surname</b> Unknow ..</li>
-		</c:otherwise>
-	</c:choose>
+		</c:if>
 	</ul>
 </div>
-<div class="row item-user-info" style="padding-top:0% !important">
+<div class="row item-user-info">
 	<ul>
-		<li><b>Biography</b> ${user.biography }</li>
+		<%-- <c:set var="bio" value="${user.biography}" /> --%>
+		<c:if test="${not empty user.biography}">
+			<!-- <hr> -->
+			<li>${user.biography }</li>
+		</c:if>
 	</ul>
 </div>
 <c:if test="${user.username != userSession.username }">
@@ -90,10 +96,10 @@ $(document).ready(function() {
 	<ul id="follow_ul">
 		<c:choose>
 			<c:when test="${user.followed == false }">
-				<li><button id="follow-btn">Follow</button></li>
+				<li><button id="followProfile-btn">Follow</button></li>
 			</c:when>
 			<c:otherwise>
-				<li><button id="unfollow-btn">Unfollow</button></li>
+				<li><button id="unfollowProfile-btn">Unfollow</button></li>
 			</c:otherwise>
 		</c:choose>
 	</ul>

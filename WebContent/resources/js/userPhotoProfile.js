@@ -9,8 +9,7 @@ $(document).ready(function() {
 			url : "taggedPhoto",
 			data:{username:username},
 			success : function(result) {
-				/* $("#tag").empty(); */
-				$("#tag").html(result); //TODO fa un brutto effetto la prima volta!
+				$("#tag").html(result);
 			}
 		});
 	});
@@ -19,8 +18,7 @@ $(document).ready(function() {
 		$.ajax({
 			url : "bookmarkPhoto",
 			success : function(result) {
-				/* $("#tag").empty(); */
-				$("#bookmark").html(result); //TODO fa un brutto effetto la prima volta!
+				$("#bookmark").html(result);
 			}
 		});
 	});

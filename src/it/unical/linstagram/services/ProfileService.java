@@ -35,76 +35,19 @@ public class ProfileService {
 	}
 
 	
-	public boolean changeName(User user, String name) {
-		user.setName(name);
-		if (modelDAO.merge(user))
-			return true;
-		return false;
-	}
-	
-	public boolean changeSurname(User user, String surname) {
-		user.setSurname(surname);
-		if (modelDAO.merge(user))
-			return true;
-		return false;
-	}
-	
-	public boolean changeUsername(User user, String username) {
+	public boolean changeUsername(String username) {
 		User userFound = userDAO.getUserByUsername(username);
-		if (userFound == null) {
-			user.setUsername(username);
-			if (modelDAO.merge(user))
-				return true;
-			return false;
-		}
-		
+		if (userFound == null) 
+			return true;
 		return false;		
 	}
-
-	public boolean changeEmail(User user, String email) {
+	
+	public boolean changeEmail(String email) {
 		User userFound = userDAO.getUserByEmail(email);
-		if (userFound == null) {
-			user.setEmail(email);
-			if (modelDAO.merge(user))
-				return true;
-			return false;
-		}
-		
+		if (userFound == null) 
+			return true;
 		return false;	
 	}
-
-	public boolean changeGender(User user, String gender) {
-		user.setGender(Gender.values()[Integer.parseInt(gender)-1]);
-		if (modelDAO.merge(user))
-			return true;
-		return false;
-	}
-
-	public boolean changeBiography(User user, String bio) {
-		user.setBiography(bio);
-		if (modelDAO.merge(user))
-			return true;
-		return false;
-	}
-
-	public boolean changeDate(User user, Calendar date) {
-		user.setBirthdate(date);
-		if (modelDAO.merge(user))
-			return true;
-		return false;
-	}
-
-	public boolean changePrivateField(User user, String privateCheck) {
-		if (privateCheck == "true")
-			user.setPrivateProfile(true);
-		else 
-			user.setPrivateProfile(false);
-		
-		if (modelDAO.merge(user))
-			return true;
-		return false;
-	}
-	
 	
 	public String getPassword(String username) {
 		return userDAO.getPasswordByUsername(username);
@@ -122,5 +65,12 @@ public class ProfileService {
 			return true;
 		return false;
 	}
+	
+	public boolean updateUser(User user) {
+		if (modelDAO.merge(user))
+			return true;
+		return false;
+	}
+
 	
 }

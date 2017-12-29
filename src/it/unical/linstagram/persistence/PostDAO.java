@@ -1,5 +1,6 @@
 package it.unical.linstagram.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -43,6 +44,23 @@ public class PostDAO implements IPostDAO {
 		session.close();
 		return post;
 	}
+	
+	public List<Post> getFollowedPosts(String username) {
+		Session session = HibernateUtil.getHibernateSession();
+
+		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
+				.setParameter("username", username).list();
+		List<Post> posts = new ArrayList<>();
+		if(!followedUsers.isEmpty())
+			posts = session.createQuery("SELECT p FROM Post p  WHERE p.user in (:fUsers) or p.user.username=:username order by p.postDate desc")
+				.setParameter("fUsers",followedUsers).setParameter("username", username).list();
+		else
+			posts = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.postDate desc")
+			.setParameter("username", username).list();
+		session.close();
+		return posts;
+	}
+	
 	
 	@Override
 	public List<User> getLikesByPostId(int idPost) {

@@ -1,6 +1,8 @@
 package it.unical.linstagram.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
+import it.unical.linstagram.dto.UserResearchDTO;
 import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
@@ -25,32 +28,34 @@ public class UserService {
 	
 	UserManager userManager;
 	
-	public List<ProfilePreview> getFollowers() {
-		// TODO: to implement
-		return null;
-	}
-
-	public List<ProfilePreview> getFollowing() {
-		// TODO: to implement
-		return null;
-	}
-	
-	
-	public boolean addFollowing(User userSession, User userToFollow) {
+	public boolean addFollowing(String usernameSession, String usernameToFollow, User user) {
+		
+		User userSession = userDAO.getUserByUsername(usernameSession);
+		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
+		
 		userSession.getFollowings().add(userToFollow);
 		userToFollow.getFollowers().add(userSession);
 		
-		if (modelDAO.merge(userToFollow))
+		if (modelDAO.update(userSession)) {
+			user.getFollowings().add(userToFollow);
 			return true;
+		}
 		return false;
 	}
 	
-	public boolean removeFollowing(User userSession, User userToFollow) {
+	public boolean removeFollowing(String usernameSession, String usernameToFollow, User user) {
+
+		
+		User userSession = userDAO.getUserByUsername(usernameSession);
+		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
+		
 		userSession.getFollowings().remove(userToFollow);
 		userToFollow.getFollowers().remove(userSession);
 		
-		if (modelDAO.merge(userSession))
+		if (modelDAO.update(userSession)) {
+			user.getFollowings().remove(userToFollow);
 			return true;
+		}
 		return false;
 	}
 	
@@ -86,8 +91,48 @@ public class UserService {
 		return userDAO.getTaggedPostByUsername(username);
 	}
 	
-	public void getListsUser(String username) {
-		userDAO.inizializeLists(username);
+	/**
+	 * Initialize the list of the user
+	 * @param username 
+	 */
+//	public User getListsUser(String username) {
+//		
+//		
+//		User user = userDAO.getUserByUsername(username);
+//		for (User follow : user.getFollowings()) {
+//			
+//		}
+//		
+//		
+//		return null;
+//	}
+	
+	public List<UserDTO> getFollowers(String username) {
+		List<User> followers = userDAO.getFollowerByUsername(username);
+		
+		List<UserDTO> followersDTO = new ArrayList<>();
+		for (User user : followers) {
+			followersDTO.add(new UserPrivateDTO(user));
+		}
+		
+		return followersDTO;
 	}
+	
+	public List<UserDTO> getFollowings(String username) {
+		List<User> followings = userDAO.getFollowingByUsername(username);
+		
+		List<UserDTO> followingsDTO = new ArrayList<>();
+		for (User user : followings) {
+			followingsDTO.add(new UserPrivateDTO(user));
+		}
+		
+		return followingsDTO;
+	}
+	
+	
+	public void inizialiteList(Set<Post> set) {
+		userDAO.inizializeListUser(set);
+	}
+	
 	
 }

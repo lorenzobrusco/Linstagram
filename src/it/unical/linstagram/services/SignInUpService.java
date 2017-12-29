@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.linstagram.helper.EncryptPassword;
-import it.unical.linstagram.helper.MessageResponce;
+import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -25,7 +25,7 @@ public class SignInUpService {
 	 * @param password
 	 * @return
 	 */
-	public MessageResponce signInAttempt(String access, String password) {
+	public MessageResponse signInAttempt(String access, String password) {
 		EmailValidator ev = EmailValidator.getInstance();
 		User user = null;
 		if (ev.isValid(access)) {
@@ -46,8 +46,8 @@ public class SignInUpService {
 				user = null;
 		}
 		if (user == null)
-			return new MessageResponce(MessageCode.ERROR_SIGN_IN, null, "");
-		return new MessageResponce(MessageCode.SUCCESS_SIGN_IN, user, "");
+			return new MessageResponse(MessageCode.ERROR_SIGN_IN, null, "");
+		return new MessageResponse(MessageCode.SUCCESS_SIGN_IN, user, "");
 	}
 
 	/**
@@ -62,11 +62,11 @@ public class SignInUpService {
 	public MessageCode signUpAttempt(String email, String username, String password) {
 		User user1 = userDao.getUserByEmail(email);
 		if (user1 != null)
-			return MessageCode.ERROR_SIGN_UP;
+			return MessageCode.ERROR_EMAIL_ALREADY_USED;
 
 		User user2 = userDao.getUserByUsername(username);
 		if (user2 != null)
-			return MessageCode.ERROR_SIGN_UP;
+			return MessageCode.ERROR_USERNAME_ALREADY_USED;
 
 		String passEncrypted = EncryptPassword.encrypt(password);
 		

@@ -182,9 +182,10 @@ progress {
   padding: 0 16px;
 }
 
-.react {
+.react div{
   margin-top: 4px;
   position: relative;
+  display: inline-block;
 }
 
 .react a {
@@ -206,6 +207,14 @@ progress {
   display: inline-block;
 }
 
+.react .loveFull {
+  background-image: url(../images/icons.png);
+  background-position: -407px -129px;
+  height: 24px;
+  width: 27px;
+  display: inline-block;
+}
+
 .react .comment {
   background-image: url(../images/icons.png);
   background-position: -407px -26px;
@@ -218,6 +227,15 @@ progress {
   background-image: url(../images/icons.png);
   background-repeat: no-repeat;
   background-position: -104px -389px;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+}
+
+.react .saveFull {
+  background-image: url(../images/icons.png);
+  background-repeat: no-repeat;
+  background-position: -183px -389px;
   height: 24px;
   width: 24px;
   display: inline-block;
@@ -254,7 +272,9 @@ progress {
   border-top: 1px solid #efefef;
   padding: 15px;
   margin-top: 4px;
-  overflow: hidden
+  overflow: hidden;
+  width: 100%;
+  display: inline-block;
 }
 
 .comment-text {
@@ -263,10 +283,27 @@ progress {
   padding: 0;
   background: none;
   border: none;
-  width: 100%;
+  width: 95%;
   height: 18px;
   max-height: 80px;
   resize: none;
+  
+}
+
+.submit_comment {
+	background-image: url(../images/send_icon.png);
+	background-size: 100% 100%;
+	height: 24px;
+	width: 27px;
+	float: right;
+	
+	background-color: #ffffff;
+	color: inherit;
+    border: none;
+    padding: 0! important;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit !important;
 }
 
 /* #################### FLOATING BUTTON ###########################*/

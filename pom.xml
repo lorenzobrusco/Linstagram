@@ -81,7 +81,7 @@
 			<version>1.6</version>
 		</dependency>
 
-<!-- Upload Image -->
+		<!-- Upload Image -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -89,9 +89,9 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>2.5</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
 		</dependency>
 
 
@@ -103,14 +103,19 @@
 			<version>2.5</version>
 		</dependency>
 
-		<dependency>  
-		    <groupId>javax</groupId>    
-		    <artifactId>javaee-web-api</artifactId>    
-		    <version>7.0</version> <!-- Put here the version of your Java EE app, in my case 7.0 -->
-		    <scope>provided</scope>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>7.0</version> <!-- Put here the version of your Java EE app, in my case 7.0 -->
+			<scope>provided</scope>
 		</dependency>
 
-
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search-orm</artifactId>
+			<version>5.8.2.Final</version>
+		</dependency>
 
 	</dependencies>
 

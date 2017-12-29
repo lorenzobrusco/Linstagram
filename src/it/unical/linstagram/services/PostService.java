@@ -1,8 +1,9 @@
 package it.unical.linstagram.services;
 
+import java.util.Calendar;
 import java.util.List;
 
-import org.hsqldb.lib.HsqlArrayHeap;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +12,10 @@ import it.unical.linstagram.helper.TagFinder;
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Post;
+import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HashtagDAO;
+import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.PostDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -37,20 +40,56 @@ public class PostService {
 		return postDAO.getPostById(idPost);
 	}
 	
-	public void insertLike(int idPost, User user) {
+	public boolean insertLike(int idPost, String username) {
 		Post post = postDAO.getPostById(idPost);
-		post.getLikes().add(user);
-		
-		modelDao.update(post);
+		User u = userDAO.getUserByUsername(username);
+		if(post.getLikes().add(u)) {
+			if (modelDao.merge(post))
+				return true;
+		}
+		return false;
 	}
 	
-	public void insertComment(int idPost, Comment comment) {
+	public boolean removeLike(String username, int idPost) {
 		Post post = postDAO.getPostById(idPost);
-		System.out.println("POST2 "+post);
+		User u = userDAO.getUserByUsername(username);
+		post.getLikes().remove(u);
+		
+		if(modelDao.update(post))
+			return true;
+		return false;
+	}
+	
+	public boolean insertComment(int idPost, String username, String contentComment, Calendar date) {
+		Post post = postDAO.getPostById(idPost);
+		User user = userDAO.getUserByUsername(username);
 
+		Comment comment = new Comment(contentComment, user, post, date);
 		post.getComments().add(comment);
 		
-		modelDao.update(post);
+		if(modelDao.merge(comment))
+			return true;
+		return false;
+	}
+	
+	public User insertBookmark(String username, int idPost) {
+		User u = userDAO.getUserByUsername(username);
+		Post post = postDAO.getPostById(idPost);
+		u.getBookmarks().add(post);
+		
+		if(modelDao.merge(u))
+			return u;
+		return null;
+	}
+	
+	public User removeBookmark(String username, int idPost) {
+		Post post = postDAO.getPostById(idPost);
+		User u = userDAO.getUserByUsername(username);
+		u.getBookmarks().remove(post);
+		
+		if(modelDao.merge(u))
+			return u;
+		return null;
 	}
 	
 	public void savePost(Post post) {
@@ -65,12 +104,12 @@ public class PostService {
 				hashtagByValue.setCount(hashtagByValue.getCount()+1);
 				modelDao.update(hashtagByValue);
 				
-				post.getHashtags().add(hashtagByValue);
 			}
 			else
 			{
-				hashtagByValue = new Hashtag(fh, 1);
+				hashtagByValue = new Hashtag(fh.toLowerCase(), 1);
 			}
+			post.getHashtags().add(hashtagByValue);
 		}
 		
 		for (String tag : findTags) {
@@ -82,7 +121,13 @@ public class PostService {
 		}
 		
 		
-		modelDao.save(post);
+		modelDao.merge(post);
 	}
+	
+	public List<Post> getFollowedPosts(String username) {
+		return postDAO.getFollowedPosts(username);
+	}
+	
+	
 	
 }
