@@ -27,6 +27,7 @@
 		<mapping class="it.unical.linstagram.model.Media" />
 		<mapping class="it.unical.linstagram.model.Hashtag" />
 		<mapping class="it.unical.linstagram.model.Story" />
+		<mapping class="it.unical.linstagram.model.Notification" />
 
 	</session-factory>
 </hibernate-configuration>
