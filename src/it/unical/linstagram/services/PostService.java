@@ -1,5 +1,6 @@
 package it.unical.linstagram.services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.linstagram.dto.UserDTO;
+import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.helper.HashtagFinder;
 import it.unical.linstagram.helper.TagFinder;
 import it.unical.linstagram.model.Comment;
@@ -126,6 +129,19 @@ public class PostService {
 	
 	public List<Post> getFollowedPosts(String username) {
 		return postDAO.getFollowedPosts(username);
+	}
+
+	public List<UserDTO> getLikesOfPost(int idPost) {
+		
+		List<User> likes = postDAO.getLikesByPostId(idPost);
+		
+		List<UserDTO> likesDTO = new ArrayList<>();
+		for (User user : likes) {
+			System.out.println(user.getUsername());
+			likesDTO.add(new UserPrivateDTO(user, false));
+		}
+		
+		return likesDTO;
 	}
 	
 	

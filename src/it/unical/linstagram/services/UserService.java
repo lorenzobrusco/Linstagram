@@ -111,6 +111,17 @@ public class UserService {
 	}
 	
 	public List<UserDTO> getFollowings(String username, String usernameSession) {
+		if (username.equals(usernameSession)) {
+			List<User> followings = userDAO.getFollowingByUsername(username);
+
+			List<UserDTO> followingsDTO = new ArrayList<>();
+			for (User user : followings) {
+				followingsDTO.add(new UserPrivateDTO(user, true));
+			}
+			
+			return followingsDTO;
+		}
+		
 		List<User> followings = userDAO.getFollowingByUsername(username);
 		List<User> followingsSession = userDAO.getFollowingByUsername(usernameSession);
 

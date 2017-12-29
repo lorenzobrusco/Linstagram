@@ -1,3 +1,5 @@
+// To reload follower and following of the users, before that the modal is opened.
+
 $(document).ready(function() {
 	$(function(){
 		$('#modalFollowUserSession').on('show.bs.modal', function (e) {

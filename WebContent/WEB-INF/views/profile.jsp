@@ -22,7 +22,7 @@
 <script src="./resources/js/userPhotoProfile.js"></script>
 <script src="./resources/js/follow_event/modal_follow_event.js"></script>
 <script src="./resources/js/follow_event/follower_event.js"></script>
-<script src="./resources/js/follow_event/modal_follow.js"></script>
+<script src="./resources/js/follow_event/event_get_follow.js"></script>
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">

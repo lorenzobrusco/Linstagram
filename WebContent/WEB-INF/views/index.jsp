@@ -23,6 +23,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
 
 <!-- NOTY -->	
 <link rel="stylesheet"

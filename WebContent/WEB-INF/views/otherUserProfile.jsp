@@ -40,28 +40,28 @@
 					<div class="col-sm-3">
 						<div class="user-img-container">
 							<div class="user-img">
-								<img src='${user.photoProfile}' class="img-circle">
+								<img src='${userPublic.photoProfile}' class="img-circle">
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-5">
 						<c:choose>
-							<c:when test="${user.privateProfile == true }">
+							<c:when test="${userPublic.privateProfile == true }">
 								<div class="row item-user-info">
 									<ul>
-										<li><b>@${user.username}</b></li>
+										<li><b>@${userPublic.username}</b></li>
 										<li></li>
 									</ul>
 								</div>
 								<div class="row item-user-info">
 									<ul>
-										<c:set var="name" value="${user.name}" />
-										<c:set var="surname" value="${user.surname}" />
+										<c:set var="name" value="${userPublic.name}" />
+										<c:set var="surname" value="${userPublic.surname}" />
 										<c:if test="${ empty name  && empty surname}">
 											<li><i>Name & Surname unknown</i></li>
 										</c:if>
 										<c:if test="${ not empty name  || not empty surname}">
-											<li>${user.name} ${user.surname}</li>
+											<li>${userPublic.name} ${userPublic.surname}</li>
 										</c:if>
 									</ul>
 								</div>
@@ -88,7 +88,7 @@
 						<div class="col-md-8">
 							<div class="tabbable-line">
 								<c:choose>
-									<c:when test="${user.privateProfile == false }">
+									<c:when test="${userPublic.privateProfile == false }">
 									
 										<ul class="nav nav-tabs ">
 											<li class="active"><a href="#tab_default_1"
@@ -145,7 +145,7 @@
 	</div>
  <jsp:include page="./fragment/footer.jsp"></jsp:include>
  
-<c:if test="${user.privateProfile == false }">
+<c:if test="${userPublic.privateProfile == false }">
 	<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
 	<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
 </c:if>

@@ -72,8 +72,9 @@
 								</c:choose>
 							</div>
 						</div>
-						<div class="likes-section">
-							<a href='#'><b>Piace a <span id="count_like${post.id }">
+						<div class="likes-section" style="cursor: pointer;">
+							<a id="likes" data-toggle="modal"
+								data-target="#modalLike" name="${post.id }"><b>Piace a <span id="count_like${post.id }">
 										${fn:length(post.likes)}</span> persone</b></a>
 						</div>
 						<div class='caption-section'>
@@ -123,6 +124,7 @@
 			<!-- end body-section -->
 			<div class="col-md-2"></div>
 		</div>
+		<jsp:include page="./indexFragment/modalLike.jsp"></jsp:include>
 	</section>
 	<!-- end section -->
 </c:forEach>
