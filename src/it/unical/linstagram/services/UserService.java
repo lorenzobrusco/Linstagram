@@ -145,4 +145,8 @@ public class UserService {
 		userDAO.inizializeListUser(set);
 	}
 
+	public List<Post> getPostOfUser(String username) {
+		return userDAO.getPostByUsername(username);
+	}
+
 }

@@ -17,7 +17,7 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<script src="resources/js/userPhotoProfile.js"></script>
+<script src="./resources/js/userPhotoProfile.js"></script>
 <script src="./resources/js/follow_event/modal_follow_event.js"></script>
 <script src="./resources/js/follow_event/follower_event.js"></script>
 
@@ -46,7 +46,7 @@
 					</div>
 					<div class="col-sm-5">
 						<c:choose>
-							<c:when test="${userPublic.privateProfile == true }">
+							<c:when test="${userPublic.privateProfile == true && userPublic.followed == false}">
 								<div class="row item-user-info">
 									<ul>
 										<li><b>@${userPublic.username}</b></li>
@@ -67,9 +67,14 @@
 								</div>
 								<div class="row item-user-info">
 									<ul>
-										<li><button>Follow</button></li>
+										<!-- L'evento dovrà fare la richiesta e poi sostituire questo bottone con uno con scritto "Richiesta effettuata" -->
+										<li><button value="${userPublic.username }" id="followerPrivate-btn">Follow</button></li>
 									</ul>
 								</div>
+							
+							</c:when>
+							<c:when test="${userPublic.privateProfile == true && userPublic.followed == true}">
+								<jsp:include page="./fragment/userProfileFragment/pagePrivate.jsp"></jsp:include>
 							</c:when>
 							<c:otherwise>
 								<jsp:include page="./fragment/userProfileFragment/pagePublic.jsp"></jsp:include>
@@ -88,10 +93,10 @@
 						<div class="col-md-8">
 							<div class="tabbable-line">
 								<c:choose>
-									<c:when test="${userPublic.privateProfile == false }">
+									<c:when test="${userPublic.privateProfile == false || (userPublic.privateProfile == true && userPublic.followed == true)}">
 									
 										<ul class="nav nav-tabs ">
-											<li class="active"><a href="#tab_default_1"
+											<li class="active"><a id="post_user" href="#tab_default_1"
 												data-toggle="tab"> Posts </a></li>
 											<li><a id="tags" href="#tab_default_2" data-toggle="tab"> Tags </a> </li>
 										</ul>
@@ -103,14 +108,6 @@
 											</div>
 											<div class="tab-pane" id="tab_default_2">
 												<div id="tag">
-													<!-- <div class="tags">
-														<span></span>
-														<div>Tag</div>
-														<br>
-														<div id="contentTag">
-															Devi essere taggato per porter rivedere i post.<br>
-														</div>
-													</div> -->
 												</div>
 											</div>
 										</div>
@@ -145,7 +142,7 @@
 	</div>
  <jsp:include page="./fragment/footer.jsp"></jsp:include>
  
-<c:if test="${userPublic.privateProfile == false }">
+<c:if test="${userPublic.privateProfile == false  || (userPublic.privateProfile == true && userPublic.followed == true)}">
 	<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
 	<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
 </c:if>

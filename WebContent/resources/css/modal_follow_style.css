@@ -1,17 +1,21 @@
 #users {
 	border-bottom: solid 1px #efefef;
 	display: flex;
-/* 	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal; */
 	
 	flex-direction: column;
 	padding: 8px 16px;
-
 }
 
-#user_enter,
+#user_enter {
+	display: flex;
+    height: 42px !important;
+	
+}
 #button_user {
  	display: flex;
+ 	
+ 	height: 42px !important;
+	width: 440px;
 }
 
 #button_form {
@@ -44,6 +48,8 @@
 #follow-btn,
 #unfollower-btn,
 #follower-btn,
+#unfollowerPrivate-btn,
+#followerPrivate-btn,
 #unfollowProfile-btn,
 #followProfile-btn {
 	position: absolute;
@@ -61,6 +67,8 @@
 #follow-btn:hover,
 #unfollower-btn:hover,
 #follower-btn:hover,
+#unfollowerPrivate-btn:hover,
+#followerPrivate-btn:hover,
 #unfollowModal-btn:hover,
 #followModal-btn:hover {
 	background-color: #89ABE3;

@@ -3,9 +3,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script src="./resources/js/follow_event/follow_event_profile_public.js"></script>
 <script src="./resources/js/follow_event/event_get_follow.js"></script>
-<!-- VISUALIZZAZIONE DEL PROFILO PUBBLICO, LA PRIMA PARTE [sono esclusi i post che sono fatti in postSection.jsp] -->
+<!-- VISUALIZZAZIONE DEL PROFILO PRIVATO, LA PRIMA PARTE [sono esclusi i post che sono fatti in postSection.jsp] -->
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$(document).on('click', '#unfollowerPrivate-btn', function() {
+		var username = $('#username_hidden').val();
+		
+		$.ajax({
+			url : "unfollowUser",
+			data:{username:username},
+			success : function(result) {
+				if (result == "OK") {
+					location.reload();
+				}
+			}
+		});
+	});
+});
+
+</script>
 
 <div class="row item-user-info">
 	<ul>
@@ -50,14 +69,8 @@
 <c:if test="${userPublic.username != user.username }">
 <div class="row item-user-info">
 	<ul id="follow_ul">
-		<c:choose>
-			<c:when test="${userPublic.followed == false }">
-				<li><button id="followProfile-btn">Follow</button></li>
-			</c:when>
-			<c:otherwise>
-				<li><button id="unfollowProfile-btn">Unfollow</button></li>
-			</c:otherwise>
-		</c:choose>
+		<li><button value="${userPublic.username }" id="unfollowerPrivate-btn">Unfollow</button></li>
+		 <!-- QUI RELOAD perchè il profilo è privato e si deve rifare la richiesta -->
 	</ul>
 </div>
 </c:if>

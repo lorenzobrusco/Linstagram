@@ -92,7 +92,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public List<Post> getPostByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
-		List<Post> posts = session.createQuery("SELECT user.posts FROM User user, Post p JOIN FETCH p.media WHERE user.username=:username")
+		List<Post> posts = session.createQuery("SELECT user.posts FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
 
 		session.close();

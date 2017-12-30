@@ -101,7 +101,7 @@
 						<div class="col-md-8">
 							<div class="tabbable-line">
 								<ul class="nav nav-tabs ">
-									<li class="active"><a href="#tab_default_1"
+									<li class="active"><a id="post_user" href="#tab_default_1"
 										data-toggle="tab"> Posts </a></li>
 									<li><a id="tags" href="#tab_default_2" data-toggle="tab">
 											Tags </a></li>
@@ -118,8 +118,6 @@
 									</div>
 									<div class="tab-pane" id="tab_default_2">
 										<div id="tag"></div>
-										<%-- <jsp:include page="./fragment/userProfileFragment/taggedPhotoSection.jsp"></jsp:include>
-									 --%>
 									</div>
 									<div class="tab-pane" id="tab_default_3">
 										<div id="bookmark"></div>

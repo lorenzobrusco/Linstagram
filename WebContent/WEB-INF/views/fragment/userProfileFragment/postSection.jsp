@@ -6,7 +6,7 @@
 
 <!-- VISUALIZZAZIONE DEI POST DELL'UTENTE [utente della sessione e altri] -->
 
-<c:if test="${fn:length(user.posts) == 0}">
+<c:if test="${fn:length(posts) == 0}">
 	<div class="empty_post">
 		<span></span>
 		<div>Nessun Post</div>
@@ -17,7 +17,7 @@
 	</div>
 </c:if>
 
-<c:forEach items="${user.posts}" var="post">
+<c:forEach items="${posts}" var="post">
 	<!--  Il numero dei like e comment e post-->
 	<div class="col-md-4 col-sm-6 post-section">
 		<div class="post">
