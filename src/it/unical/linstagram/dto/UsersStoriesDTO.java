@@ -8,14 +8,14 @@ import java.util.Map;
 import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 
-public class FollowedUserStoriesDTO {
+public class UsersStoriesDTO {
 	
 	private String username;
 	private String photoProfile;
 	private boolean allSeen;
 	private List<StoryDTO> stories;
 	
-	public FollowedUserStoriesDTO(String username, String photoProfile) {
+	public UsersStoriesDTO(String username, String photoProfile) {
 		this.username = username;
 		this.photoProfile = photoProfile;
 		this.allSeen = true;
@@ -40,7 +40,7 @@ public class FollowedUserStoriesDTO {
 		return stories;
 	}
 	
-	public boolean isAllSeen() {
+	public boolean getAllSeen() {
 		return allSeen;
 	}
 }

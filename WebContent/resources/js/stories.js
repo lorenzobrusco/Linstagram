@@ -1,10 +1,42 @@
-var createStories = function(){
+var loadStories = function(){
 
 	var timestamp = function(date) {
 		return date/1000;
 	};
-
-	var stories = new Zuck('stories', {
+	
+	var createStories = function(){
+		var stories = [];
+		var list = $(".story");
+		for(var i=0; i < list.length;i++){
+			stories[i] = [];
+			var el = list[i];
+			stories[i]["id"] = $(el).attr("data-id");
+			stories[i]["photo"] = $(el).attr("data-photo");
+			stories[i]["name"]= $(el).attr("data-id");
+			stories[i]["seen"] = $(el).attr("data-seen");
+			stories[i]["items"] = [];
+			
+			var items = $(list).children(".items").children("li");
+			for(var j=0; j < items.length;j++){
+				var a = $(items[j]).children("a");
+				var item = buildItem(
+						$(items[j]).attr("data-id"),
+						$(a).attr("data-type"),
+						$(a).attr("data-length"),
+						$(a).attr("href"),
+						"",
+						"",
+						false,
+						$(a).attr("data-seen"),
+						timestamp($(items[j]).attr("data-time")));
+				stories[i]["items"][j] = item;
+			}
+			
+		}
+		return stories;
+	}
+	
+	var zuck = new Zuck('stories', {
 		backNative: true,
 		previousTap: true,
 		autoFullScreen: false,
@@ -13,30 +45,7 @@ var createStories = function(){
 		list: false,
 		cubeEffect: true,
 		localStorage: false,
-		stories: [
-			<c:forEach items="${followedUsersStories}" var="user">
-			{
-				id: "${user.username}",
-				photo: "${user.photoProfile}",
-				name: "${user.username}",
-				seen:"${user.allSeen}",
-				items: [
-					<c:forEach items="${user.stories}" var="story">
-					buildItem(	"${story.id}",
-							"${story.type}",
-							3,
-							"${story.url}",
-							"",
-							'',
-							false,
-							"${story.viewed}", 
-							timestamp("${story.date}")
-					),
-					</c:forEach>
-					]
-			},
-			</c:forEach>
-			], 
+		stories: createStories(),
 			callbacks : {
 				'onOpen': function(storyId, callback) { // on open story viewer
 					document.getElementById("posts").classList.add("hidden-posts");
@@ -44,6 +53,7 @@ var createStories = function(){
 				},
 				'onClose': function(storyId, callback) { // on close story viewer
 					document.getElementById("posts").classList.remove("hidden-posts");
+					
 					callback();
 				},
 				'onNavigateItem': function(storyId, nextStoryId, callback) { // on navigate item of story
@@ -61,7 +71,8 @@ var createStories = function(){
 					callback();
 				},
 				'onView': function onView(storyId) {
-					var currStory = stories.data[storyId]['currentItem'];
+					console.log(stories);
+					var currStory = zuck.data[storyId]['currentItem'];
 					var id = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 //					console.log("update viewer for story "+id);
 					
@@ -79,4 +90,4 @@ var createStories = function(){
 	});
 };
 
-createStories();
+loadStories();

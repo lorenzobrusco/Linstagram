@@ -20,8 +20,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index_style.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
+
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
 
@@ -41,7 +40,7 @@
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
 				<div id="story-nav" style="margin-top: 20px;">
-					<div id="stories"></div>
+					<jsp:include page="./fragment/stories.jsp"></jsp:include>
 				</div>
 			</div>
 		</div>
@@ -85,14 +84,6 @@
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
 	
 	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
-<!-- 	<script -->
-<%-- 		src="${pageContext.request.contextPath}/resources/js/create_stories.js"></script> --%>
-	<script>
-	<%@ include file="../../resources/js/lib/load_stories.js" %>
-	</script>
-
 </body>
 
 </html>
