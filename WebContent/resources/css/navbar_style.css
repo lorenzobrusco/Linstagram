@@ -279,3 +279,38 @@ background-position
 .active-menu-item{
 	border-bottom: 3px solid #cb567e;
 }
+
+
+#notification_list .user_from_notification{
+	
+	float = rigth;
+	width: 25%;
+}
+
+#notification_list .user_from_notification img{
+	height = 40px;
+	width: 40px;
+}
+
+#notification_list .context_notification{
+	
+	width: 40%;
+}
+
+#notification_list .follow_btn_notification{
+	
+	float = left;
+	width: 25%;
+}
+
+
+
+
+
+
+
+
+
+
+
+

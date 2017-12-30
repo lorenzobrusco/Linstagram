@@ -1,5 +1,7 @@
 package it.unical.linstagram.model;
 
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,21 +33,36 @@ public class Notification {
 	@JoinColumn(name = "userto")
 	private User UserTo;
 
-	@Column
-	private String type;
+	@ManyToOne
+	@Cascade(value = CascadeType.ALL)
+	@JoinColumn(name = "post")
+	private Post post;
 
-	@Column
+	@ManyToOne
+	@Cascade(value = CascadeType.ALL)
+	@JoinColumn(name = "comment")
+	private Comment comment;
+
+	@Column(nullable = false)
+	private Calendar date;
+
+	@Column(nullable = false)
+	private NotificationType type;
+
+	@Column(nullable = false)
 	private boolean toSee;
 
 	public Notification() {
 	}
 
-	public Notification(User userFrom, User userTo, String type, boolean toSee) {
-		super();
+	public Notification(User userFrom, User userTo, Post post, Comment comment, NotificationType type) {
 		this.userFrom = userFrom;
-		UserTo = userTo;
+		this.UserTo = userTo;
 		this.type = type;
-		this.toSee = toSee;
+		this.toSee = true;
+		this.post = post;
+		this.comment = comment;
+		this.date = Calendar.getInstance();
 	}
 
 	public int getId() {
@@ -72,11 +89,11 @@ public class Notification {
 		UserTo = userTo;
 	}
 
-	public String getType() {
+	public NotificationType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(NotificationType type) {
 		this.type = type;
 	}
 
@@ -86,6 +103,30 @@ public class Notification {
 
 	public void setToSee(boolean toSee) {
 		this.toSee = toSee;
+	}
+
+	public Post getPost() {
+		return post;
+	}
+
+	public void setPost(Post post) {
+		this.post = post;
+	}
+
+	public Calendar getDate() {
+		return date;
+	}
+
+	public void setDate(Calendar date) {
+		this.date = date;
+	}
+
+	public Comment getComment() {
+		return comment;
+	}
+
+	public void setComment(Comment comment) {
+		this.comment = comment;
 	}
 
 }
