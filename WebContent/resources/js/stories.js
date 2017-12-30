@@ -16,7 +16,7 @@ var loadStories = function(){
 			stories[i]["seen"] = $(el).attr("data-seen");
 			stories[i]["items"] = [];
 			
-			var items = $(list).children(".items").children("li");
+			var items = $(el).children(".items").children("li");
 			for(var j=0; j < items.length;j++){
 				var a = $(items[j]).children("a");
 				var item = buildItem(

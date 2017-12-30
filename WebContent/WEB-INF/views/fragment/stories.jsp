@@ -22,16 +22,19 @@
 				</span> </a>
 				<ul class="items">
 					<c:forEach items="${user.stories}" var="story">
-						<li data-id="${story.id}" data-time="${story.date}" >
-							<a href="${story.url}" data-time="${story.date}" data-seen="${story.viewed}" data-type="${story.type}" data-length="3"  data-link="" data-linkText=""> <img src="">
-						</a>
-						</li>
+						<li data-id="${story.id}" data-time="${story.date}"><a
+							href="${story.url}" data-time="${story.date}"
+							data-seen="${story.viewed}" data-type="${story.type}"
+							data-length="3" data-link="" data-linkText=""> <img src="">
+						</a></li>
 					</c:forEach>
 				</ul>
 			</div>
 		</c:forEach>
 	</div>
-<script	src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
-<script	src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
 </body>
 </html>
