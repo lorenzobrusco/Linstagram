@@ -13,18 +13,21 @@ public class UsersStoriesDTO {
 	private String username;
 	private String photoProfile;
 	private boolean allSeen;
+	private boolean loggedUser;
 	private List<StoryDTO> stories;
 	
-	public UsersStoriesDTO(String username, String photoProfile) {
+	public UsersStoriesDTO(String username, String photoProfile,boolean loggedUser) {
 		this.username = username;
 		this.photoProfile = photoProfile;
 		this.allSeen = true;
+		this.loggedUser = loggedUser;
 		stories = new ArrayList<StoryDTO>();
 	}
 	
 	public void addStoryDTO(StoryDTO storyDTO) {
 		if(!storyDTO.getViewed())
 			allSeen = false;
+		System.out.println(allSeen);
 		stories.add(storyDTO);
 	}
 	
@@ -42,5 +45,8 @@ public class UsersStoriesDTO {
 	
 	public boolean getAllSeen() {
 		return allSeen;
+	}
+	public boolean isLoggedUser() {
+		return loggedUser;
 	}
 }

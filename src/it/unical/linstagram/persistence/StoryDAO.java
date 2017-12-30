@@ -51,18 +51,18 @@ public class StoryDAO implements IStoryDAO{
 		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
 				.setParameter("username", username).list();
 		List<Story> stories = null;
+		
 		if(followedUsers.isEmpty())
 			stories = session.createQuery("SELECT s FROM Story s  WHERE 1=0").list();
 		else
 			stories = session.createQuery(""
 					+ "SELECT s "
-					+ "FROM Story s  "
+					+ "FROM Story s "
 					+ "WHERE s.user in (:fUsers) and s.creationDate >= :dayLimit "
 					+ "order by s.creationDate desc")
 				.setParameter("fUsers",followedUsers)
 				.setParameter("dayLimit", dayLimit)
 				.list();
-		
 		session.close();
 		return stories;
 	}

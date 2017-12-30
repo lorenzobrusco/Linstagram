@@ -35,9 +35,12 @@ public class TestStoryInsert {
 		UserDAO userDAO = new UserDAO();
 		StoryDAO storyDAO = new StoryDAO();
 		
-		
+		User dragmaf = userDAO.getUserByUsername("dragmaf");
 		List<Story> stories = storyDAO.getFollowedUsersStoriesByUsername("dragmaf");
 		
+		for (Story story : stories) {
+			System.out.println(story.isAViewer(dragmaf));
+		}
 		
 		Assert.assertEquals(6, stories.size());
 

@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
+<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
+<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/css/stories_style.css">
 
 </head>
 <body>
@@ -14,7 +14,7 @@
 		<c:forEach items="${followedUsersStories}" var="user">
 			<div class="story" data-id="${user.username}"
 				data-photo="${user.photoProfile}" data-seen="${user.allSeen}"
-				data-last-updated="">
+				data-last-updated="" data-logged-user="${user.loggedUser}">
 				<a href=""><span><u
 						style="background-image: url(${user.photoProfile})"></u></span> <span
 					class="info"> <strong>${user.username}</strong> <span

@@ -35,7 +35,8 @@ public class StoriesService {
 
 			if(!usersStories.containsKey(story.getUser().getId())) {
 				usersStories.put(story.getUser().getId(), 
-						new UsersStoriesDTO(story.getUser().getUsername(),story.getUser().getPhotoProfile()));
+						new UsersStoriesDTO(story.getUser().getUsername(),
+								story.getUser().getPhotoProfile(),false));
 			}
 
 			UsersStoriesDTO userStoriesDTO = usersStories.get(story.getUser().getId());
@@ -44,7 +45,7 @@ public class StoriesService {
 			userStoriesDTO.addStoryDTO(storyDTO);
 		}
 
-		UsersStoriesDTO userStoriesDTO = new UsersStoriesDTO(user.getUsername(),user.getPhotoProfile());
+		UsersStoriesDTO userStoriesDTO = new UsersStoriesDTO(user.getUsername(),user.getPhotoProfile(),true);
 		List<Story> userStories = storyDAO.getStoriesByUsername(user.getUsername());
 		usersStories.put(user.getId(),userStoriesDTO);
 		
@@ -63,7 +64,7 @@ public class StoriesService {
 		if(!story.isAViewer(user))
 			story.addViewer(user);
 
-		modelDAO.update(story);
+		modelDAO.merge(story);
 	}
 
 	public void saveStory(Media media, User user) {
