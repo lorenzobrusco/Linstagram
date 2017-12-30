@@ -82,9 +82,7 @@
 	
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
-	<%@ include file="../../resources/js/lib/load_stories.jsp"%>
 	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 </body>
 
 </html>
->>>>>>> development

@@ -21,6 +21,8 @@ var loadStories = function(){
 			if(isLoggedUser == "true"){
 //				$(list[i]).addClass("logged-user");
 				loggedUser = $(el).attr("data-id");
+				stories[i]["name"]="Tu";
+
 			}
 			var items = $(el).children(".items").children("li");
 			for(var j=0; j < items.length;j++){
@@ -124,8 +126,6 @@ var loadStories = function(){
 	}
 	
 	setUserStories(loggedUser);
-
-
 };
 
 
