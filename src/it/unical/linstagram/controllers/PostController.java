@@ -95,4 +95,14 @@ public class PostController {
 		return "fragment/indexFragment/body/body_likes";
 	}
 	
+	
+	@RequestMapping("getPost")
+	public String getPost(HttpSession session, Model model, @RequestParam("post") int idPost) {
+
+		Post post = postService.getPost(idPost);
+		model.addAttribute("post", post);
+		
+		return "fragment/userProfileFragment/body/post";
+	}
+	
 }

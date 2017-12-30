@@ -20,13 +20,13 @@
 <c:forEach items="${posts}" var="post">
 	<!--  Il numero dei like e comment e post-->
 	<div class="col-md-4 col-sm-6 post-section">
-		<div class="post">
+		<div id="${post.id }" class="post" data-toggle="modal" data-target="#modalPost">
 			<c:forEach items="${post.media}" var="media">
 				<img class="picture img-responsive" src="${media.url }">
 			</c:forEach>
 			<div class="links">
-				<a href=""><span class="fa fa-heart"> ${fn:length(post.likes)}</span></a> <a
-					href=""><span class="fa fa-comment"> ${fn:length(post.comments)}</span></a>
+				<a><span class="fa fa-heart"> ${fn:length(post.likes)}</span></a>
+				<a><span class="fa fa-comment"> ${fn:length(post.comments)}</span></a>
 			</div>
 		</div>
 	</div>

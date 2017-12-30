@@ -130,7 +130,19 @@ $(document).ready(function() {
 				$(".modal-body").append(result);
 			}
 		});
-		
+    });
+	
+	$(document).on('click', '#comment', function() {
+		var post = $(this).attr("name");
+
+		$.get({
+			url : "getComment",
+			data:{post:post},
+			success : function(result) {
+				$(".modal-body").empty();
+				$(".modal-body").append(result);
+			}
+		});
     });
 	
 });

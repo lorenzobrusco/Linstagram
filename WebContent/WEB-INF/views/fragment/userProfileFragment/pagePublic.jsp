@@ -5,6 +5,7 @@
 
 <script src="./resources/js/follow_event/follow_event_profile_public.js"></script>
 <script src="./resources/js/follow_event/event_get_follow.js"></script>
+<script src="./resources/js/event_modal_post_profile.js"></script>
 <!-- VISUALIZZAZIONE DEL PROFILO PUBBLICO, LA PRIMA PARTE [sono esclusi i post che sono fatti in postSection.jsp] -->
 
 <div class="row item-user-info">
@@ -48,22 +49,18 @@
 	</ul>
 </div>
 <c:if test="${userPublic.username != user.username }">
-<div class="row item-user-info">
-	<ul id="follow_ul">
-		<c:choose>
-			<c:when test="${userPublic.followed == false }">
-				<li><button id="followProfile-btn">Follow</button></li>
-			</c:when>
-			<c:otherwise>
-				<li><button id="unfollowProfile-btn">Unfollow</button></li>
-			</c:otherwise>
-		</c:choose>
-	</ul>
-</div>
+	<div class="row item-user-info">
+		<ul id="follow_ul">
+			<c:choose>
+				<c:when test="${userPublic.followed == false }">
+					<li><button id="followProfile-btn">Follow</button></li>
+				</c:when>
+				<c:otherwise>
+					<li><button id="unfollowProfile-btn">Unfollow</button></li>
+				</c:otherwise>
+			</c:choose>
+		</ul>
+	</div>
 </c:if>
 
-<!-- <div class="popup popupFAIL">
-	<span class="popuptext alert" id="popupFAIL">
-	 <a onclick="close" class="close">&times;</a> <br> <br> <a id="text"></a>
-	</span>
-</div> -->
+<jsp:include page="./modalPost.jsp"></jsp:include>

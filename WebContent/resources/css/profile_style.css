@@ -238,8 +238,8 @@ footer {
 
 .tags, .bookmark, .private, .empty_post {
 	text-align: center;
-	padding: 24px 44px;
-	background-color: #fafafafa !important
+	/* padding: 24px 44px;
+	background-color: #fafafafa !important */
 }
 
 .bookmark span {
