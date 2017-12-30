@@ -76,7 +76,7 @@ public class UserService {
 		}
 		
 		if (userOther.isPrivateProfile())
-			return new UserPrivateDTO(userOther);
+			return new UserPrivateDTO(userOther, false);
 		
 		return new UserPublicDTO(userOther, false);
 	}
@@ -90,49 +90,63 @@ public class UserService {
 	public List<Post> getPostTaggedOfUser(String username) {
 		return userDAO.getTaggedPostByUsername(username);
 	}
-	
-	/**
-	 * Initialize the list of the user
-	 * @param username 
-	 */
-//	public User getListsUser(String username) {
-//		
-//		
-//		User user = userDAO.getUserByUsername(username);
-//		for (User follow : user.getFollowings()) {
-//			
-//		}
-//		
-//		
-//		return null;
-//	}
-	
-	public List<UserDTO> getFollowers(String username) {
+
+	public List<UserDTO> getFollowers(String username, String usernameSession) {
+		List<User> followings = userDAO.getFollowingByUsername(usernameSession);
 		List<User> followers = userDAO.getFollowerByUsername(username);
 		
 		List<UserDTO> followersDTO = new ArrayList<>();
 		for (User user : followers) {
-			followersDTO.add(new UserPrivateDTO(user));
+			boolean isFollow = false;
+			for (User follow : followings) {
+				if (user.getId() == follow.getId()) {
+					isFollow = true;
+					break;
+				}
+			}
+			followersDTO.add(new UserPrivateDTO(user, isFollow));
 		}
 		
 		return followersDTO;
 	}
 	
-	public List<UserDTO> getFollowings(String username) {
-		List<User> followings = userDAO.getFollowingByUsername(username);
+	public List<UserDTO> getFollowings(String username, String usernameSession) {
+		if (username.equals(usernameSession)) {
+			List<User> followings = userDAO.getFollowingByUsername(username);
+
+			List<UserDTO> followingsDTO = new ArrayList<>();
+			for (User user : followings) {
+				followingsDTO.add(new UserPrivateDTO(user, true));
+			}
+			
+			return followingsDTO;
+		}
 		
+		List<User> followings = userDAO.getFollowingByUsername(username);
+		List<User> followingsSession = userDAO.getFollowingByUsername(usernameSession);
+
 		List<UserDTO> followingsDTO = new ArrayList<>();
 		for (User user : followings) {
-			followingsDTO.add(new UserPrivateDTO(user));
+			boolean isFollow = false;
+			for (User follow : followingsSession) {
+				if (user.getId() == follow.getId()) {
+					isFollow = true;
+					break;
+				}
+			}
+			followingsDTO.add(new UserPrivateDTO(user, isFollow));
 		}
 		
 		return followingsDTO;
 	}
 	
 	
-	public void inizialiteList(Set<Post> set) {
+	public void inizialiteList(Set<?> set) {
 		userDAO.inizializeListUser(set);
 	}
-	
-	
+
+	public List<Post> getPostOfUser(String username) {
+		return userDAO.getPostByUsername(username);
+	}
+
 }

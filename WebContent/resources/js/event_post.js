@@ -115,3 +115,22 @@ $(document).on('click', '.submit_comment', function() {
 		}
 	});
 });
+
+
+
+$(document).ready(function() {
+	$(document).on('click', '#likes', function() {
+		var post = $(this).attr("name");
+
+		$.get({
+			url : "getLikes",
+			data:{post:post},
+			success : function(result) {
+				$(".modal-body").empty();
+				$(".modal-body").append(result);
+			}
+		});
+		
+    });
+	
+});

@@ -10,28 +10,21 @@
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/index_style.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index_style.css">
 
 
-<!-- NOTY -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
+
+<!-- NOTY -->	
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/lib/noty/noty.css">
 <link rel="stylesheet"
@@ -47,7 +40,7 @@
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
 				<div id="story-nav" style="margin-top: 20px;">
-					<div id="stories"></div>
+					<jsp:include page="./fragment/stories.jsp"></jsp:include>
 				</div>
 			</div>
 		</div>
@@ -62,7 +55,7 @@
 				data-original-title="Story">
 				<a id="open-story-modal" href="#story-modal"> <i
 					class="fa fa-clock-o center-icon" aria-hidden="true"></i>
-				</a>
+				</a>			
 			</div>
 
 			<div class="nd2 nds" data-toggle="tooltip" data-placement="left"
@@ -84,17 +77,14 @@
 			</div>
 		</div>
 
-		<jsp:include page="./fragment/createPostModal.jsp"></jsp:include>
-		<jsp:include page="./fragment/createStoryModal.jsp"></jsp:include>
-
+	<jsp:include page="./fragment/createPostModal.jsp"></jsp:include>
+	<jsp:include page="./fragment/createStoryModal.jsp"></jsp:include>
+	
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
-
-	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
-	<!-- 	<script -->
-	<%-- 		src="${pageContext.request.contextPath}/resources/js/create_stories.js"></script> --%>
 	<%@ include file="../../resources/js/lib/load_stories.jsp"%>
+	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 </body>
+
 </html>
+>>>>>>> development

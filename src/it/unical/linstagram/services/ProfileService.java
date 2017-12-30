@@ -1,12 +1,10 @@
 package it.unical.linstagram.services;
 
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.unical.linstagram.model.Gender;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;

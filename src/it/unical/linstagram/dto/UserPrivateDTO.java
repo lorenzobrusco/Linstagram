@@ -10,15 +10,19 @@ public class UserPrivateDTO extends UserDTO{
 	protected boolean privateProfile;
 
 	protected String photoProfile;
+	
+	protected boolean followed;
 
 	
-	public UserPrivateDTO (User user) {
+	public UserPrivateDTO (User user, boolean followed) {
 		super(user);
 		this.name = user.getName();
 		this.surname = user.getSurname();
 		
 		this.privateProfile = user.isPrivateProfile();
 		this.photoProfile = user.getPhotoProfile();
+		
+		this.followed = followed;
 		
 	}
 	
@@ -39,6 +43,9 @@ public class UserPrivateDTO extends UserDTO{
 		return photoProfile;
 	}
 	
+	public boolean isFollowed() {
+		return followed;
+	}
 	
 	
 	

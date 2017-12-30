@@ -15,10 +15,18 @@ public class StoryDAO implements IStoryDAO{
 
 	@Override
 	public List<Story> getStoriesByUsername(String username) {
+		Calendar now = Calendar.getInstance();
+		Calendar dayLimit = Calendar.getInstance();
+		dayLimit.setTimeInMillis(now.getTimeInMillis()-86400*1000);
+		
 		Session session = HibernateUtil.getHibernateSession();
 
-		List<Story> stories = session.createQuery("FROM Story s WHERE s.user.username=:username")
-				.setParameter("username",username).list();
+		List<Story> stories = session.createQuery("FROM Story s "
+				+ "WHERE s.user.username=:username and s.creationDate >= :dayLimit "
+				+ "order by s.creationDate desc ")
+				.setParameter("username",username)
+				.setParameter("dayLimit", dayLimit)
+				.list();
 		session.close();
 		return stories;
 	}

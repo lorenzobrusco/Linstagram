@@ -468,6 +468,10 @@ progress {
   animation-fill-mode: forwards;
 }
 
+.likes-section {
+	cursor: pointer;
+}
+
 /* #################### STORIES SECTION ###########################*/
 
 #stories {

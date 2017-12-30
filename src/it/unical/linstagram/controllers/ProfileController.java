@@ -46,12 +46,8 @@ public class ProfileController {
 	public String getSignInPage(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
 			User user = (User) session.getAttribute("user");
-//			userService.getListsUser(user.getUsername());
-			
-//			model.addAttribute("userSession", user);
-			userService.inizialiteList(user.getBookmarks());
-			model.addAttribute("followers", userService.getFollowers(user.getUsername()));
-			model.addAttribute("followings", userService.getFollowings(user.getUsername()));
+			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
+			model.addAttribute("posts", postOfUser);
 			return "profile";
 		}
 		return "redirect:/";
@@ -174,12 +170,24 @@ public class ProfileController {
 	
 	
 // Controllo sugli eventi quando vengono richieste le foto in cui gli utenti sono taggati e i bookmarks	
+
+	@RequestMapping("postPhoto")
+	public String getPostPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
+		if(UserManager.checkLogged(session)) {
+			User user = userService.getUser(username);
+			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
+			model.addAttribute("posts", postOfUser);
+			return "fragment/userProfileFragment/postSection";	//Per aggiungere solo i post in cui e' taggato l'utente [utilizzato sia per utente nella sessione che per gli altri utenti]
+		}
+		return "redirect:/";
+	}
+	
 	@RequestMapping("taggedPhoto")
 	public String getTaggedPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
 		if(UserManager.checkLogged(session)) {
 			User user = userService.getUser(username);
-			userService.inizialiteList(user.getTagged());
-			model.addAttribute("user", user);
+			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
+			model.addAttribute("posts", postOfUser);
 			return "fragment/userProfileFragment/taggedPhotoSection";	//Per aggiungere solo i post in cui e' taggato l'utente [utilizzato sia per utente nella sessione che per gli altri utenti]
 		}
 		return "redirect:/";

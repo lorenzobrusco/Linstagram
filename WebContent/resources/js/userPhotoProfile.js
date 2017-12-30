@@ -2,6 +2,18 @@
 // nel caso di un altro profilo, il bookmark non verrà chiamato perchè non c'è la scheda
 
 $(document).ready(function() {
+	$("#post_user").on('click', function() {
+		var username = $('#username_hidden').val();
+		
+		$.ajax({
+			url : "postPhoto",
+			data:{username:username},
+			success : function(result) {
+				$("#colum").html(result);
+			}
+		});
+	});
+	
 	$("#tags").on('click', function() {
 		var username = $('#username_hidden').val();
 		

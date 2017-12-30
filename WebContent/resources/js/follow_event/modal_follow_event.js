@@ -14,6 +14,7 @@ $(document).ready(function() {
 				if (result == "OK") {
 					$(btn).empty();
 					$(btn).append("<button id='unfollow-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
+					$("#count_following").html(parseInt($("#count_following").html(), 10)+1)
 				}
 			}
 		});
@@ -31,6 +32,7 @@ $(document).ready(function() {
 				if (result == "OK") {
 					$(btn).empty();
 					$(btn).append("<button id='follow-btn' name='"+id+"' value='"+username+"'>Follow</button>");
+					$("#count_following").html(parseInt($("#count_following").html(), 10)-1)
 				}
 			}
 		});

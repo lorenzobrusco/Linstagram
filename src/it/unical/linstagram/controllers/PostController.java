@@ -1,6 +1,7 @@
 package it.unical.linstagram.controllers;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Comment;
@@ -81,6 +83,16 @@ public class PostController {
 				return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
 		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+	}
+	
+	
+	@RequestMapping("getLikes")
+	public String getLikes(HttpSession session, Model model, @RequestParam("post") int idPost) {
+
+		List<UserDTO> users = postService.getLikesOfPost(idPost);
+		model.addAttribute("userLike", users);
+		
+		return "fragment/indexFragment/body/body_likes";
 	}
 	
 }
