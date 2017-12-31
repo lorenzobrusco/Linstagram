@@ -103,7 +103,7 @@ h1.Snapssenger {
 }
 
 .stories.carousel .story.empty-stories>a>.img>u {
-	border: 0;
+/* 	border: 0; */
 }
 
 .stories.snapgram .story.logged-user.seen>a>.img>u {
@@ -196,7 +196,11 @@ h1.Snapssenger {
     float: right;
     margin-right: 32px;
 }
-    
-    
-    
-}
+
+#viewerModal{
+	z-index:999999;
+	background:#333a;
+}  
+#viewerModal li{
+	list-style-type: none; 
+}  

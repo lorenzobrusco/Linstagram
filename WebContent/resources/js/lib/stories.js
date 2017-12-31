@@ -563,7 +563,7 @@ var ZuckJS = function () {
 
                     var pageX = touches.pageX;
                     var pageY = touches.pageY;
-
+                    console.log(touches);
                     touchOffset = {
                         x: pageX,
                         y: pageY,
@@ -627,7 +627,6 @@ var ZuckJS = function () {
                         var duration = touchOffset ? Date.now() - touchOffset.time : undefined;
                         var isValid = Number(duration) < 300 && Math.abs(delta.x) > 25 || Math.abs(delta.x) > modalContainer.slideWidth / 3;
                         var direction = delta.x < 0;
-
                         var index = direction ? query('#zuck-modal .story-viewer.next') : query('#zuck-modal .story-viewer.previous');
                         var isOutOfBounds = direction && !index || !direction && !index;
 

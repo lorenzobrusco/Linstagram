@@ -131,7 +131,7 @@ var Stories = function(){
 		$(".logged-user .info strong").html("Tu");
 
 		if($(".logged-user .items").children("li").length == 0){
-			$(".logged-user").saddClass("empty-stories");
+			$(".logged-user").addClass("empty-stories");
 			$(".logged-user > a").append('<a class="plus-badge"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle"></span></a>');
 		}
 	}
@@ -152,15 +152,17 @@ var Stories = function(){
 	var addNumberViewersToStoryModal = function(){
 		var footer ='<div class="footer"><div class="left"><a id="viewers-button" data-toggle="modal" data-target="#viewerModal"><i class="glyphicon glyphicon-eye-open"></i><strong></strong></a></div><div class="right"></div></div>';
 		$("#zuck-modal-content .story-viewer").append(footer);
-		var modalViewer = '<div class="modal fade" id="viewerModal" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title"><b>Viewer</b></h4></div><div class="modal-body"><ul></ul></div></div></div></div>';
+		var modalViewer = '<div class="modal fade" id="viewerModal" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title"><b>Viewer</b></h4></div><div class="modal-body"><ul></ul></div></div></div></div>';
 		$("#zuck-modal-content .story-viewer").append(modalViewer);
 
-		$("#zuck-modal-content .story-viewer #viewers-button").click(function(){
+		$("#viewerModal").on('show.bs.modal',function(e){
 			$("#zuck-modal .viewing").addClass("paused");
 			var currStory = zuck.data[loggedUser]['currentItem'];
 			var id = $("#stories [data-id='"+loggedUser+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 			addViewer(id);
 		});
+//		$("#zuck-modal-content .story-viewer #viewers-button").click(function(event){
+//		});
 
 	}
 
