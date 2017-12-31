@@ -11,4 +11,5 @@ public interface IStoryDAO {
 	List<User> getViewersOfStory(int id);
 	List<Story> getFollowedUsersStoriesByUsername(String username);
 	Story getStoryById(int idStory);
+	List<Story> getStoriesById(int idUser);
 }

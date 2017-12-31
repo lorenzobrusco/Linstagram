@@ -32,9 +32,10 @@
 			</div>
 		</c:forEach>
 	</div>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
+	
+	<script	src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
+	<script	src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
+<%-- 	<jsp:include page="../fragment/viewerModal.jsp"></jsp:include> --%>
+	
 </body>
 </html>

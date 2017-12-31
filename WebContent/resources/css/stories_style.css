@@ -106,10 +106,11 @@ h1.Snapssenger {
 	border: 0;
 }
 
-.stories.snapgram .story.logged-user.seen >a>.img>u {
-	border: 0;
-	border-radius: 0;
+.stories.snapgram .story.logged-user.seen>a>.img>u {
+/* 	border: 0; */
+/* 	border-radius: 0; */
 }
+
 .stories.snapgram .story.logged-user strong {
 	color: #333 !important;
 }
@@ -163,4 +164,39 @@ h1.Snapssenger {
 		font-size: 16px;
 	}
 }
+
+#zuck-modal-content .story-viewer .footer {
+	position: absolute;
+	height: 56px;
+	bottom: 0;
+	left: 0;
+	line-height: 56px;
+	z-index: 100010;
+	color: #fff;
+	font-size: 14px;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.35), 1px 0 1px
+		rgba(0, 0, 0, 0.35);
+	padding: 0 6px;
+}
+#zuck-modal-content .story-viewer .footer .left {
+    line-height: 1 !important;
+    display: inline-block;
+    margin-left: 32px;
+}
+#zuck-modal-content .story-viewer .footer .left strong{
+    font-weight:500;
+    margin-left: 5px;
+}
+#zuck-modal-content .story-viewer .footer .left a{
+    color:#fff;
+    cursor:pointer;
+}
+
+#zuck-modal-content .story-viewer .footer .right {
+    float: right;
+    margin-right: 32px;
+}
+    
+    
+    
 }

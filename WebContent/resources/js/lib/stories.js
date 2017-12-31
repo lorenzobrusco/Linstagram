@@ -449,7 +449,6 @@ var ZuckJS = function () {
                     }
                 	var itemId = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(i+1)+")").attr("data-id");
 //                    var itemId = storyData["items"][i].id;
-                    
                     var length = get(item, 'length');
                     var linkText = get(item, 'linkText');
                     var seenClass = get(item, 'seen') === true ? 'seen' : '';
@@ -823,7 +822,6 @@ var ZuckJS = function () {
             each(storyItems, function (i, el) {
                 var a = el.firstElementChild;
                 var img = a.firstElementChild;
-
                 items.push({
                     'src': a.getAttribute('href'),
                     'length': a.getAttribute('data-length'),
@@ -831,7 +829,8 @@ var ZuckJS = function () {
                     'time': a.getAttribute('data-time'),
                     'link': a.getAttribute('data-link'),
                     'linkText': a.getAttribute('data-linkText'),
-                    'preview': img.getAttribute('src')
+                    'preview': img.getAttribute('src'),
+                    'id': el.getAttribute('data-id')
                 });
             });
 
@@ -1059,6 +1058,7 @@ var ZuckJS = function () {
             var story = query('#' + id + ' > [data-id="' + storyId + '"]');
             var li = d.createElement('li');
             li.className = get(data, 'seen') ? 'seen' : '';
+//            console.log(data.id);
             li.setAttribute('data-id', data.id);
 
             li.innerHTML = '<a href="' + get(data, 'src') + '" data-link="' + get(data, 'link') + '" data-linkText="' + get(data, 'linkText') + '" data-time="' + get(data, 'time') + '" data-type="' + get(data, 'type') + '" data-length="' + get(data, 'length') + '"><img src="' + get(data, 'preview') + '"></a>';

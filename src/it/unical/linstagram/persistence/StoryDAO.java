@@ -14,6 +14,23 @@ import it.unical.linstagram.model.User;
 public class StoryDAO implements IStoryDAO{
 
 	@Override
+	public List<Story> getStoriesById(int idUser) {
+		Calendar now = Calendar.getInstance();
+		Calendar dayLimit = Calendar.getInstance();
+		dayLimit.setTimeInMillis(now.getTimeInMillis()-86400*1000);
+		
+		Session session = HibernateUtil.getHibernateSession();
+		
+		List<Story> stories = session.createQuery("FROM Story s "
+				+ "WHERE s.user.id =:idUser and s.creationDate >= :dayLimit "
+				+ "order by s.creationDate desc ")
+				.setParameter("idUser",idUser)
+				.setParameter("dayLimit", dayLimit)
+				.list();
+		session.close();
+		return stories;
+	}
+	@Override
 	public List<Story> getStoriesByUsername(String username) {
 		Calendar now = Calendar.getInstance();
 		Calendar dayLimit = Calendar.getInstance();

@@ -27,7 +27,6 @@ public class UsersStoriesDTO {
 	public void addStoryDTO(StoryDTO storyDTO) {
 		if(!storyDTO.getViewed())
 			allSeen = false;
-		System.out.println(allSeen);
 		stories.add(storyDTO);
 	}
 	

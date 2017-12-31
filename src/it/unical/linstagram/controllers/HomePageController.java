@@ -3,6 +3,7 @@ package it.unical.linstagram.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.unical.linstagram.dto.StoryViewerDTO;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
@@ -107,6 +109,12 @@ public class HomePageController {
 		return "redirect:index";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value ="/storiesViewer")
+	public Collection<StoryViewerDTO> getStoriesViewer(HttpSession session){
+		Collection<StoryViewerDTO> storyViewerDTOs =storiesService.getViewersUserStory((User) session.getAttribute("user"));
+		return storyViewerDTOs;
+	}
 	
 	
 }

@@ -1,5 +1,6 @@
 package it.unical.linstagram.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.linstagram.dto.UsersStoriesDTO;
+import it.unical.linstagram.dto.ViewerDTO;
 import it.unical.linstagram.dto.StoryDTO;
+import it.unical.linstagram.dto.StoryViewerDTO;
+import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
@@ -70,5 +74,21 @@ public class StoriesService {
 	public void saveStory(Media media, User user) {
 		Story story = new Story(user, media);
 		modelDAO.save(story);
+	}
+	
+	public Collection<StoryViewerDTO> getViewersUserStory(User user){
+		
+		List<Story> stories = storyDAO.getStoriesById(user.getId());
+		List<StoryViewerDTO> storyViewerDTOs = new ArrayList<>();
+		
+		for(Story story : stories){
+			StoryViewerDTO svDTO = new StoryViewerDTO(story.getId());
+			
+			for(User viewer :story.getViewers()) {
+				svDTO.addViewer(new ViewerDTO(viewer));
+			}
+			storyViewerDTOs.add(svDTO);
+		}
+		return storyViewerDTOs;
 	}
 }
