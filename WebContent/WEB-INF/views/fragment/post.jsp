@@ -32,17 +32,21 @@
 										<a name="${post.id }" id="love${post.id }" class="love"><span class='love'></span></a> 
 									</c:when>
 									<c:otherwise>
+										<c:set var="foundLike" value="${false}" />
 										<c:forEach  items="${post.likes}" var="like">
-											<c:choose>
-												<c:when test="${like.id == user.id}">
-													<a name="${post.id }" id="loveFull${post.id }" class="loveFull"><span class='loveFull'></span></a> 
-												</c:when>
-												<c:otherwise>
-													<a name="${post.id }" id="love${post.id }" class="love"><span class='love'></span></a> 
-												</c:otherwise>
-											</c:choose>
+											<c:if test="${like.id == user.id}">
+												<c:set var="foundLike" value="${true}" />
+											</c:if>
 										</c:forEach>
-									</c:otherwise>
+										<c:choose>
+											<c:when test="${foundLike == true}">
+												<a name="${post.id }" id="loveFull${post.id }" class="loveFull"><span class='loveFull'></span></a> 
+											</c:when>
+											<c:otherwise>
+												<a name="${post.id }" id="love${post.id }" class="love"><span class='love'></span></a> 
+											</c:otherwise>
+										</c:choose>
+								</c:otherwise>
 								</c:choose>
 							</div>
 							<div id="comment_div">
