@@ -86,7 +86,7 @@ public class Notification {
 	}
 
 	public void setUserTo(User userTo) {
-		userTo = userTo;
+		this.userTo = userTo;
 	}
 
 	public NotificationType getType() {

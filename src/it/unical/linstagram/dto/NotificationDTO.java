@@ -16,14 +16,14 @@ public class NotificationDTO {
 		this.userName = notification.getUserFrom().getName();
 		this.data = notification.getDate().toString();
 		if (notification.getType().equals(NotificationType.COMMENT)) {
-			this.context = String.format("%s ha commentato: %s", notification.getUserFrom().getName(),
+			this.context = String.format("%s ha commentato: %s", notification.getUserFrom().getUsername(),
 					notification.getComment().getContent());
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 		} else if (notification.getType().equals(NotificationType.LIKE)) {
-			this.context = String.format("%s ha messo mi piace al tuo post", notification.getUserFrom().getName());
+			this.context = String.format("%s ha messo mi piace al tuo post", notification.getUserFrom().getUsername());
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 		} else {
-			this.context = String.format("%s ha iniziato a seguirti", notification.getUserFrom().getName());
+			this.context = String.format("%s ha iniziato a seguirti", notification.getUserFrom().getUsername());
 			this.urlPost = null;
 		}
 
