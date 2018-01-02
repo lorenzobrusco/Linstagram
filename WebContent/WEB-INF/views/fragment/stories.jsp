@@ -5,8 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
-<link rel="stylesheet"	href="${pageContext.request.contextPath}/resources/css/stories_style.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/stories_style.css">
 
 </head>
 <body>
@@ -32,10 +34,46 @@
 			</div>
 		</c:forEach>
 	</div>
-	
-	<script	src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
-	<script	src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
-<%-- 	<jsp:include page="../fragment/viewerModal.jsp"></jsp:include> --%>
-	
+
+	<%-- 	<jsp:include page="../fragment/viewerModal.jsp"></jsp:include> --%>
+	<div class="modal fade" id="removeModal">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Sicuro di voler eliminare la storia?</p>
+				</div>
+				<div class="modal-footer">
+					<button id="remove-modal-button" type="button" class="btn btn-primary">Rimuovi</button>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Chiudi</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="viewerModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<b>Viewer</b>
+					</h4>
+				</div>
+				<div class="modal-body">
+					<ul></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/stories.js"></script>
 </body>
 </html>

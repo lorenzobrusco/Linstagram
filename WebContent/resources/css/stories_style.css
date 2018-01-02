@@ -168,6 +168,7 @@ h1.Snapssenger {
 #zuck-modal-content .story-viewer .footer {
 	position: absolute;
 	height: 56px;
+	width:100%;
 	bottom: 0;
 	left: 0;
 	line-height: 56px;
@@ -178,29 +179,41 @@ h1.Snapssenger {
 		rgba(0, 0, 0, 0.35);
 	padding: 0 6px;
 }
-#zuck-modal-content .story-viewer .footer .left {
-    line-height: 1 !important;
-    display: inline-block;
-    margin-left: 32px;
-}
-#zuck-modal-content .story-viewer .footer .left strong{
+#zuck-modal-content .story-viewer .footer .left-button strong{
     font-weight:500;
     margin-left: 5px;
 }
-#zuck-modal-content .story-viewer .footer .left a{
+#zuck-modal-content .story-viewer .footer .buttons-container a{
     color:#fff;
     cursor:pointer;
 }
 
-#zuck-modal-content .story-viewer .footer .right {
-    float: right;
-    margin-right: 32px;
+#zuck-modal-content .story-viewer .footer .right-button {
+    position:absolute;
+	margin-right: 32px;
+	right: 0px;
 }
 
-#viewerModal{
+#zuck-modal-content .story-viewer .footer .left-button {
+    position:absolute;
+    margin-left: 32px;
+	left: 0px;
+}
+#zuck-modal-content .story-viewer .buttons-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+#viewerModal, #removeModal{
 	z-index:999999;
 	background:#333a;
 }  
 #viewerModal li{
 	list-style-type: none; 
+	margin:15px 0px;
 }  
+#viewerModal #img_div{
+	margin-right:15px;
+}  
+

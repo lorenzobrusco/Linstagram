@@ -554,7 +554,8 @@ var ZuckJS = function () {
 
                     var touches = event.touches ? event.touches[0] : event;
                     var pos = findPos(query('#zuck-modal .story-viewer.viewing'));
-
+                    if(!$(touches.target).hasClass("item"))
+                    	return;
                     modalContainer.slideWidth = query('#zuck-modal .story-viewer').offsetWidth;
                     position = {
                         x: pos[0],
@@ -563,7 +564,6 @@ var ZuckJS = function () {
 
                     var pageX = touches.pageX;
                     var pageY = touches.pageY;
-                    console.log(touches);
                     touchOffset = {
                         x: pageX,
                         y: pageY,
