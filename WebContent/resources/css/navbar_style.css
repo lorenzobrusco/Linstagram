@@ -173,16 +173,32 @@ keyframes rainbow { 0% {
 50%
 {
 background-position
+
+
+
+
 :
+
+
  
+
+
 100%
 200%;
 }
 100%
 {
 background-position
+
+
+
+
 :
+
+
  
+
+
 0%
 100%;
 }
@@ -219,11 +235,11 @@ background-position
 }
 
 #horizontal-list {
-	display:flex;
-	justify-content:space-around;
+	display: flex;
+	justify-content: space-around;
 	list-style: none;
-	padding:5px 0px 0px 0px !important;
-	margin-bottom:0px !important; 
+	padding: 5px 0px 0px 0px !important;
+	margin-bottom: 0px !important;
 }
 
 #horizontal-list li {
@@ -260,57 +276,52 @@ background-position
 	background-position: -407px -261px;
 }
 
-.item-mobile{
+.item-mobile {
 	background-repeat: no-repeat;
 	position: relative;
 	top: 7px;
 }
 
-#logo-container{
+#logo-container {
 	width: 10%;
 	margin: 6px 0px;
 }
 
-#logo-container #logo{
-    margin-left: 20%;
-    margin-right: 5%;
+#logo-container #logo {
+	margin-left: 20%;
+	margin-right: 5%;
 }
 
-.active-menu-item{
+.active-menu-item {
 	border-bottom: 3px solid #cb567e;
 }
 
-
-#notification_list .user_from_notification{
-	
-	float = rigth;
-	width: 25%;
+#notification_list {
+	width: 700px;
 }
 
-#notification_list .user_from_notification img{
-	height = 40px;
+.notification_item{
+	margin-top: 10px;
+}
+
+
+#notification_list .notification_item .user_from_notification {
+	display: inline;
+}
+
+#notification_list .notification_item .user_from_notification img {
+	height: 40px;
 	width: 40px;
 }
 
-#notification_list .context_notification{
-	
-	width: 40%;
+#notification_list .notification_item .context_notification {
+	display: inline;
+	position: relative;
+	padding: 0 18px;
 }
 
-#notification_list .follow_btn_notification{
+#notification_list .notification_item .follow_btn_notification {
+	display: inline;
+	position: relative;
 	
-	float = left;
-	width: 25%;
 }
-
-
-
-
-
-
-
-
-
-
-
-

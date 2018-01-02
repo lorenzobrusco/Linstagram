@@ -20,6 +20,7 @@ import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
+import it.unical.linstagram.services.NotificationService;
 import it.unical.linstagram.services.PostService;
 import it.unical.linstagram.services.UserService;
 
@@ -29,12 +30,17 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
+	@Autowired
+	private NotificationService notificationService;
+	
 	@RequestMapping("addLike")
 	@ResponseBody
 	public String insertLike(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
-		if (postService.insertLike(idPost, user.getUsername()))
+		if (postService.insertLike(idPost, user.getUsername())) {
+			notificationService.generateLikeNotification(user, idPost);
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+		}
 		
 		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
 	}

@@ -34,7 +34,12 @@
 						class="item-mobile"></a></li>
 					<li><a href="#create-post-modal" id="add-mobile"
 						class="item-mobile"></a></li>
-					<li><a href="" id="notification-mobile" class="item-mobile"></a></li>
+					<li><a href="" id="notification-mobile" class="item-mobile"></a>
+						<ul>
+							<li><a href="#">Option1</a></li>
+							<li><a href="#">Option2 A Long One</a></li>
+							<li><a href="#">Option3</a></li>
+						</ul></li>
 				</ul>
 			</div>
 		</div>
@@ -107,19 +112,27 @@
 							}, 300);
 						});
 
-						//<c:forEach items="${notifications}" var="notification">
-						//</c:forEach>
-						var content_notification_popover = "<div id='notification_list'>";
-							content_notification_popover += "<div class='user_from_notification'>"
-								content_notification_popover += "<img src='${pageContext.request.contextPath}/resources/images/user_login_img.png'>"
-							content_notification_popover += "</div>"
-							content_notification_popover += "<div class='context_notification'>"
-								content_notification_popover += "<span>Qui ci va il testo</span>"
-							content_notification_popover += "</div>"
-							content_notification_popover += "<div class='follow_btn_notification'>"
-								content_notification_popover += "<button class='btn btn-primary'>Follow</button>"
-							content_notification_popover += "</div>"
-						
+						var content_notification_popover = "<div id='notification_list'>"
+						<c:forEach items="${notifications}" var="notification">
+						content_notification_popover += "<div class='notification_item'>"
+						content_notification_popover += "<div class='user_from_notification'>"
+						content_notification_popover += "<img src='${notification.userPhoto}'>"
+						content_notification_popover += "</div>"
+						content_notification_popover += "<div class='context_notification'>"
+						content_notification_popover += "<span>${notification.context}</span>"
+						content_notification_popover += "</div>"
+						content_notification_popover += "<c:if test='${empty notification.urlPost}'>"
+						content_notification_popover += "<div class='follow_btn_notification'>"
+						content_notification_popover += "<button class='btn btn-primary'>Follow</button>"
+						content_notification_popover += "</div>"
+						content_notification_popover += "</c:if>"
+						content_notification_popover += "<c:if test='${not empty notification.urlPost}'>"
+						content_notification_popover += "<div class='user_from_notification'>"
+						content_notification_popover += "<img src='${notification.urlPost}'>"
+						content_notification_popover += "</div>"
+						content_notification_popover += "</c:if>"
+						content_notification_popover += "</div>"
+						</c:forEach>
 						content_notification_popover += "</div>"
 						$('#notification').popover({
 							selector : "#notification",
@@ -127,7 +140,7 @@
 							html : true,
 							placement : "bottom",
 							trigger : "manual",
-							container : "header"	
+							container : "body"
 						}).on("mouseenter", function() {
 							var _this = this;
 							$(this).popover("show");

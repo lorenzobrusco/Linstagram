@@ -2,17 +2,22 @@ package it.unical.linstagram.persistence;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-
 import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.User;
 
 @Repository
-public class NotificationDAO implements INotificationDAO{
+public class NotificationDAO implements INotificationDAO {
 
 	@Override
 	public List<Notification> getAllNotification(User user) {
-		return null;
+		final Session session = HibernateUtil.getHibernateSession();
+		final List<Notification> notifications = session
+				.createNativeQuery("SELECT * FROM notification ", Notification.class)
+				.list();
+		session.close();
+		return notifications;
 	}
 
 	@Override

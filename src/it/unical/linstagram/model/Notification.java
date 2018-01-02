@@ -31,7 +31,7 @@ public class Notification {
 	@ManyToOne
 	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "userto")
-	private User UserTo;
+	private User userTo;
 
 	@ManyToOne
 	@Cascade(value = CascadeType.ALL)
@@ -57,7 +57,7 @@ public class Notification {
 
 	public Notification(User userFrom, User userTo, Post post, Comment comment, NotificationType type) {
 		this.userFrom = userFrom;
-		this.UserTo = userTo;
+		this.userTo = userTo;
 		this.type = type;
 		this.toSee = true;
 		this.post = post;
@@ -82,11 +82,11 @@ public class Notification {
 	}
 
 	public User getUserTo() {
-		return UserTo;
+		return userTo;
 	}
 
 	public void setUserTo(User userTo) {
-		UserTo = userTo;
+		userTo = userTo;
 	}
 
 	public NotificationType getType() {
