@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Post;
+import it.unical.linstagram.model.RequestFollow;
 import it.unical.linstagram.model.User;
 
 @Repository
@@ -139,7 +140,24 @@ public class UserDAO implements IUserDAO {
 		return users;
 	}
 
-
+	public int searchRequestFollow(String usernameFrom, String usernameTo) {
+		Session session = HibernateUtil.getHibernateSession();
+		
+		boolean exist = (Long) session.createQuery("SELECT count(*) FROM RequestFollow r where r.userFrom.username=:usernameFrom "
+				+ "AND r.userTo.username=:usernameTo")
+					.setParameter("usernameFrom", usernameFrom).setParameter("usernameTo", usernameTo)
+					.uniqueResult() > 0;
+		int id = -1;		
+		if (exist) {
+			id = (int) session.createQuery("SELECT r.id FROM RequestFollow r where r.userFrom.username=:usernameFrom "
+				+ "AND r.userTo.username=:usernameTo")
+					.setParameter("usernameFrom", usernameFrom).setParameter("usernameTo", usernameTo)
+					.uniqueResult();
+		}
+		
+		session.close();
+		return id;
+	}
 
 	public User inizializeLists(String username) {
 		Session session = HibernateUtil.getHibernateSession();

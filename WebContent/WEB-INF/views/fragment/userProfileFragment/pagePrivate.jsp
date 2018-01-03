@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <script src="./resources/js/follow_event/event_get_follow.js"></script>
+
 <!-- VISUALIZZAZIONE DEL PROFILO PRIVATO, LA PRIMA PARTE [sono esclusi i post che sono fatti in postSection.jsp] -->
 
 <script type="text/javascript">
@@ -67,12 +68,11 @@ $(document).ready(function() {
 	</ul>
 </div>
 <c:if test="${userPublic.username != user.username }">
-<div class="row item-user-info">
-	<ul id="follow_ul">
-		<li><button value="${userPublic.username }" id="unfollowerPrivate-btn">Unfollow</button></li>
-		 <!-- QUI RELOAD perchè il profilo è privato e si deve rifare la richiesta -->
-	</ul>
-</div>
+	<div class="row item-user-info">
+		<ul id="follow_ul">
+			<jsp:include page="./buttonPrivate.jsp"></jsp:include>
+		</ul>
+	</div>
 </c:if>
 
 <!-- <div class="popup popupFAIL">

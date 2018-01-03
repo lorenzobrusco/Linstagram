@@ -14,6 +14,8 @@ import it.unical.linstagram.dto.UserResearchDTO;
 import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
+import it.unical.linstagram.model.RequestFollow;
+import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -28,7 +30,7 @@ public class UserService {
 	
 	UserManager userManager;
 	
-	public boolean addFollowing(String usernameSession, String usernameToFollow, User user) {
+	public boolean addFollowing(String usernameSession, String usernameToFollow) {
 		
 		User userSession = userDAO.getUserByUsername(usernameSession);
 		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
@@ -37,15 +39,12 @@ public class UserService {
 		userToFollow.getFollowers().add(userSession);
 		
 		if (modelDAO.update(userSession)) {
-			user.getFollowings().add(userToFollow);
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean removeFollowing(String usernameSession, String usernameToFollow, User user) {
-
-		
 		User userSession = userDAO.getUserByUsername(usernameSession);
 		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
 		
@@ -148,5 +147,35 @@ public class UserService {
 	public List<Post> getPostOfUser(String username) {
 		return userDAO.getPostByUsername(username);
 	}
-
+	
+	public boolean sendRequest(String usernameSession, String username) {
+		User userSession = userDAO.getUserByUsername(usernameSession);
+		User user = userDAO.getUserByUsername(username);
+		
+		RequestFollow request = new RequestFollow(userSession, user);
+		if (modelDAO.save(request))
+			return true;
+		return false;
+	}
+	
+	public boolean acceptRequest(String usernameSession, String username) {
+		int id = userDAO.searchRequestFollow(username, usernameSession);
+		if(addFollowing(username, usernameSession) && modelDAO.delete(RequestFollow.class, id))
+			return true;
+		return false;
+	}
+	
+	public boolean rejectRequest (String usernameSession, String username) {
+		int id = userDAO.searchRequestFollow(username, usernameSession);
+		if(modelDAO.delete(RequestFollow.class, id))
+			return true;
+		return false;
+	}
+	
+	public int searchRequestFollow (String usernameSession, String username) {
+		int id = -1;
+		id = userDAO.searchRequestFollow(username, usernameSession);
+		return id;
+	}
+	
 }

@@ -66,9 +66,8 @@
 									</ul>
 								</div>
 								<div class="row item-user-info">
-									<ul>
-										<!-- L'evento dovrà fare la richiesta e poi sostituire questo bottone con uno con scritto "Richiesta effettuata" -->
-										<li><button value="${userPublic.username }" id="followerPrivate-btn">Follow</button></li>
+									<ul id="follow_ul">
+										<jsp:include page="./fragment/userProfileFragment/buttonPrivate.jsp"></jsp:include>
 									</ul>
 								</div>
 							

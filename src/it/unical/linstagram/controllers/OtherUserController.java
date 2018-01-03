@@ -53,7 +53,50 @@ public class OtherUserController {
 		List<Post> postOfUser = userService.getPostOfUser(usernameOther);
 		model.addAttribute("userPublic", userDTO);
 		model.addAttribute("posts", postOfUser);
+		
+		if (userService.searchRequestFollow(user.getUsername(), usernameOther) != -1) 
+			model.addAttribute("request_send", true);
+		else 
+			model.addAttribute("request_send", false);
+		
+		if (userService.searchRequestFollow(usernameOther, user.getUsername()) != -1)
+			model.addAttribute("request_received", true);
+		else
+			model.addAttribute("request_received", false);
 		return "otherUserProfile";
+	}
+	
+	@RequestMapping("sendRequest")
+	@ResponseBody
+	public String sendRequest(HttpSession session, Model model, @RequestParam("username") String username) {
+		User user = (User) session.getAttribute("user");
+		
+		if (!userService.sendRequest(user.getUsername(), username))
+			return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile inoltrare la richiesta.").getMessage();
+		
+		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+	}
+	
+	@RequestMapping("acceptRequest")
+	@ResponseBody
+	public String acceptRequest(HttpSession session, Model model, @RequestParam("username") String username) {
+		User user = (User) session.getAttribute("user");
+		
+		if (!userService.acceptRequest(user.getUsername(), username))
+			return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile inoltrare la richiesta.").getMessage();
+//		
+		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+	}
+	
+	@RequestMapping("rejectRequest")
+	@ResponseBody
+	public String rejectRequest(HttpSession session, Model model, @RequestParam("username") String username) {
+		User user = (User) session.getAttribute("user");
+		
+		if (!userService.rejectRequest(user.getUsername(), username))
+			return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile inoltrare la richiesta.").getMessage();
+//		
+		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
 	@RequestMapping("getFollowings")
@@ -84,7 +127,7 @@ public class OtherUserController {
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
 		
-		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user))
+		if (!userService.addFollowing(user.getUsername(), usernameToFollow))
 			return new MessageResponse(MessageCode.FOLLOW_FAILED, user, "Non è stato possibile inserire l'utente come following.").getMessage();
 		
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();

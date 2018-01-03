@@ -22,12 +22,10 @@ public class RequestFollow {
 	private int id;
 
 	@ManyToOne
-	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "userfrom")
 	private User userFrom;
 
 	@ManyToOne
-	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "userto")
 	private User userTo;
 

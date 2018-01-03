@@ -37,4 +37,48 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	
+	$(document).on('click', '#sendRequest-btn', function() {
+		var username = $(this).attr('value');
+
+		$.ajax({
+			url : "sendRequest",
+			data:{username:username},
+			success : function(result) {
+				if (result == "OK") {
+					$("#follow_ul").empty();
+					$("#follow_ul").append("<button value='"+username+"' id='sendedRequest-btn' disabled>Request Sended</button>");
+				}
+			}
+		});
+	});
+	
+	$(document).on('click', '#acceptRequest-btn', function() {
+		var username = $(this).attr('value');
+
+		$.ajax({
+			url : "acceptRequest",
+			data:{username:username},
+			success : function(result) {
+				if (result == "OK") {
+					location.reload();
+				}
+			}
+		});
+	});
+	
+	$(document).on('click', '#rejectRequest-btn', function() {
+		var username = $(this).attr('value');
+
+		$.ajax({
+			url : "rejectRequest",
+			data:{username:username},
+			success : function(result) {
+				if (result == "OK") {
+					location.reload();
+				}
+			}
+		});
+	});
 });
