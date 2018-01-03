@@ -29,7 +29,7 @@ public class TestStoryInsert {
 		HibernateUtil.CreateSessionFactory(false);
 	}
 	
-	@Test
+//	@Test
 	public void getStory() {
 		
 		UserDAO userDAO = new UserDAO();
@@ -45,7 +45,7 @@ public class TestStoryInsert {
 		Assert.assertEquals(6, stories.size());
 
 	}
-	@Test
+//	@Test
 	public void testDifferenceDate() {
 		
 		Session session = HibernateUtil.getHibernateSession();
@@ -63,6 +63,24 @@ public class TestStoryInsert {
 		
 		session.close();
 		Assert.assertEquals(6, calendars.size());
+	}
+	
+	@Test
+	public void testRemoveStory() {
+		ModelDAO modelDAO = new ModelDAO();
+		UserDAO userDAO = new UserDAO();
+
+		StoryDAO storyDAO = new StoryDAO();
+
+		User dragmaf = userDAO.getUserByUsername("dragmaf");
+		List<Story> stories = storyDAO.getStoriesById(dragmaf.getId());
+		
+		Story story = stories.get(0);
+		
+		modelDAO.delete(Story.class, story.getId());
+		
+		Assert.assertEquals(true, modelDAO.delete(Story.class, story.getId()));
+		
 	}
 
 }

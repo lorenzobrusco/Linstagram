@@ -92,6 +92,4 @@ public class StoryDAO implements IStoryDAO{
 		session.close();
 		return story;
 	}
-
-	
 }
