@@ -10,29 +10,33 @@ function UploadPicStory(canvas,filename) {
 //		console.log(blob);
 		var formData = new FormData();
 		formData.append('file', blob,filename);
-		
-		$.ajax({
-			type: 'POST',
-			url: 'addStory',
-			enctype: 'multipart/form-data',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function(msg) {
-				$(".close-story-modal").click(); //close modal
-//				location.reload(true);
-				
-				new Noty({
-					text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your story has been added!',
-					theme: 'nest',
-					type: 'success',
-					layout: 'bottomLeft',
-					timeout:2000,
-					progressBar: true
-				}).show();
-				
-			}
-		});
+		Stories.addStory(formData);
+		$(".close-story-modal").click(); //close modal
+
+//		$.ajax({
+//			type: 'POST',
+//			url: 'addStory',
+//			enctype: 'multipart/form-data',
+//			data: formData,
+//			processData: false,
+//			contentType: false,
+//			success: function(response) {
+//				$(".close-story-modal").click(); //close modal
+////				location.reload(true);
+//				if(response != null){
+//					
+//					new Noty({
+//						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your story has been added!',
+//						theme: 'nest',
+//						type: 'success',
+//						layout: 'bottomLeft',
+//						timeout:2000,
+//						progressBar: true
+//					}).show();
+//				}
+//
+//			}
+//		});
 	});
 }
 
@@ -170,15 +174,15 @@ $(document).ready(function () {
 
 //					//submit filter event -> go to description section
 //					$("#story-modal #submit-filter").on("click", function () {
-//						var canvas = $('#apply-filter-section > canvas');
-//						endFilter(canvas);
-//						filter_section.addClass("hide");
+//					var canvas = $('#apply-filter-section > canvas');
+//					endFilter(canvas);
+//					filter_section.addClass("hide");
 //					});
 
 
 					$("#story-modal #submit-filter").on("click", function () {
 //						alert("submit story");
-//					myDropzone.processQueue(); 
+//						myDropzone.processQueue(); 
 						var canvas = $('#story-modal #apply-filter-section > canvas');
 						endFilter(canvas);
 //						filter_section.addClass("hide");
@@ -219,7 +223,7 @@ $(document).ready(function () {
 				myDropzone.removeAllFiles(true);
 			}
 	}
-	
+
 	$("#open-story-modal").animatedModal(modalConfiguration);
 	$("#story-modal #add-mobile").animatedModal(modalConfiguration);
 });

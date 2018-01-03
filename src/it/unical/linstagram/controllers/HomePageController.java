@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.dto.NotificationDTO;
+import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
@@ -113,12 +114,13 @@ public class HomePageController {
 		return mediaInfo;
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/addStory", method = RequestMethod.POST)
-	public String addStory(@RequestParam MultipartFile file, HttpSession session) throws IOException {
+	public StoryDTO addStory(@RequestParam MultipartFile file, HttpSession session) throws IOException {
 
 		Media mediaStory = uploadService.createMedia(file, session);
-		storiesService.saveStory(mediaStory, (User) session.getAttribute("user"));
-		return "redirect:index";
+		StoryDTO storyDTO = storiesService.saveStory(mediaStory, (User) session.getAttribute("user"));
+		return storyDTO;
 	}
 
 	@ResponseBody

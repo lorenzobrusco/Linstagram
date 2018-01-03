@@ -71,9 +71,12 @@ public class StoriesService {
 		modelDAO.merge(story);
 	}
 
-	public void saveStory(Media media, User user) {
+	public StoryDTO saveStory(Media media, User user) {
 		Story story = new Story(user, media);
-		modelDAO.save(story);
+		if(modelDAO.save(story))
+			return new StoryDTO(story, false);
+		
+		return null;
 	}
 	
 	public Collection<StoryViewerDTO> getViewersUserStory(User user){

@@ -1,4 +1,4 @@
-var Stories = function(){
+function Stories(){
 
 	var timestamp = function(date) {
 		return date/1000;
@@ -48,8 +48,9 @@ var Stories = function(){
 	var checkAllViewed = function(idStory){
 		var list = $("#stories [data-id='"+idStory+"'] .items").children("li");
 		for(var i = 0; i< list.length;i++){
-			if(!$(list[i]).hasClass("seen"))
+			if(!$(list[i]).hasClass("seen")){
 				return;
+			}
 		}
 		$("#stories [data-id='"+idStory+"']").addClass("seen");
 
@@ -137,9 +138,13 @@ var Stories = function(){
 		$(".logged-user").prependTo("#stories");
 		$(".logged-user .info strong").html("Tu");
 
-		if($(".logged-user .items").children("li").length == 0){
+		if(zuck.data[loggedUser].items.length == 0){
 			$(".logged-user").addClass("empty-stories");
 			$(".logged-user > a").append('<a class="plus-badge"><span class="glyphicon btn-glyphicon glyphicon-plus img-circle"></span></a>');
+		}else{
+			$(".logged-user").removeClass("empty-stories");
+			$(".logged-user  a.plus-badge").remove();
+
 		}
 	}
 
@@ -210,13 +215,12 @@ var Stories = function(){
 		$("#stories [data-id='"+user+"'] [data-id='"+story+"']").remove();
 		var storylist = zuck.data[user].items;
 		zuck.data[user]['currentItem'] = 0;
-		setUserStories(user);
 		for(var i=0; i < storylist.length;i++)
 			if(storylist[i].id == story){
 				storylist.splice(i,1);
-				return;
+				break;
 			}
-		
+		setUserStories(user);
 		
 	}
 
@@ -242,11 +246,53 @@ var Stories = function(){
 		}
 
 	}
-	var hideViewer=function(bool){
-		if(bool===true)
-			$("#zuck-modal-content .story-viewer #footer").addClass("hide");
-		else
-			$("#zuck-modal-content .story-viewer #footer").removeClass("hide");
+	
+	var addStoryItem = function(data){
+		var item = buildItem(data.id,data.type,3,data.url,"","",false,data.viewed,timestamp(data.date));
+		zuck.addItem(loggedUser,item);
+		viewers[data.id]=[];
+		$("#stories [data-id='"+loggedUser+"']").removeClass("seen");
+
+		setUserStories(loggedUser);
+		
+		
+	}
+	this.addStory = function(sData){
+		$.ajax({
+			type: 'POST',
+			url: 'addStory',
+			enctype: 'multipart/form-data',
+			data: sData,
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				console.log(data);
+				if(data != null){
+					
+					addStoryItem(data);
+
+					new Noty({
+						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your story has been added!',
+						theme: 'nest',
+						type: 'success',
+						layout: 'bottomLeft',
+						timeout:2000,
+						progressBar: true
+					}).show();
+				}else{
+					
+					new Noty({
+						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> You story has not been added!',
+						theme: 'nest',
+						type: 'error',
+						layout: 'bottomLeft',
+						timeout:4000,
+						progressBar: true
+				}).show();
+				}
+
+			}
+		});
 	}
 	
 	$("#viewerModal").on('show.bs.modal',function(e){
