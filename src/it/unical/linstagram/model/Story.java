@@ -51,7 +51,6 @@ public class Story {
 	@JoinTable(name="viewed_story",
 			joinColumns=@JoinColumn(name="story_id"),
 			inverseJoinColumns=@JoinColumn(name="user_id"))
-	@Cascade(value=CascadeType.ALL)
 	private Set<User> viewers = new HashSet<User>();
 	
 	public Story() {

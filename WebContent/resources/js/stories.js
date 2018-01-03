@@ -160,13 +160,33 @@ var Stories = function(){
 		var currStory = zuck.data[loggedUser]['currentItem'];
 		var id = $("#stories [data-id='"+loggedUser+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 		$.ajax({
-			url:"deleteStory", 
+			url:"deleteStory",
 			type:"POST",
-			data:{storyId:id},
+			data:{idStory:id},
 			success: function(result) {
-				
+				if(result == "OK"){
+					removeStoryItem(loggedUser,id);
+					new Noty({
+						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your story has been deleted!',
+						theme: 'nest',
+						type: 'success',
+						layout: 'bottomLeft',
+						timeout:2000,
+						progressBar: true
+					}).show();
+				}else{
+					new Noty({
+							text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> You story has not been deleted!',
+							theme: 'nest',
+							type: 'error',
+							layout: 'bottomLeft',
+							timeout:4000,
+							progressBar: true
+					}).show();
+				}
 			}
 		});
+		
 	}
 		
 	var setUserStoryModal = function(){
@@ -183,6 +203,21 @@ var Stories = function(){
 
 	var setNumberViewers = function(idStory){
 		$("#zuck-modal-content .story-viewer #viewers-button strong").text(viewers[idStory].length);
+	}
+	
+	var removeStoryItem = function(user,story){
+		
+		$("#stories [data-id='"+user+"'] [data-id='"+story+"']").remove();
+		var storylist = zuck.data[user].items;
+		zuck.data[user]['currentItem'] = 0;
+		setUserStories(user);
+		for(var i=0; i < storylist.length;i++)
+			if(storylist[i].id == story){
+				storylist.splice(i,1);
+				return;
+			}
+		
+		
 	}
 
 	var addViewer = function(idStory){
@@ -231,9 +266,13 @@ var Stories = function(){
 	$("#removeModal").on('hide.bs.modal',function(e){
 		$("#zuck-modal .viewing").removeClass("paused");
 	});
+	
 	$("#removeModal #remove-modal-button").click(function(){
 		deleteStory();
+		$("#removeModal").modal('toggle');
+		$("#zuck-modal .close").click();
 	});
+	
 	setUserStories(loggedUser);
 	loadStoriesViewer();
 };

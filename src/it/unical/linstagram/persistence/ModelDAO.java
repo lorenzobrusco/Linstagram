@@ -1,5 +1,6 @@
 package it.unical.linstagram.persistence;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -59,6 +60,27 @@ public class ModelDAO {
 			session.merge(model);
 			transaction.commit();
 			return true;
+		} catch (Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+			return false;
+		} finally {
+			session.close();
+		}
+	}
+	public boolean delete(Class<?> type, Serializable id) {
+		final Session session = HibernateUtil.getHibernateSession();
+	    Object persistentInstance = session.load(type, id);
+	    Transaction transaction = null;
+		
+	    try {
+	    	if (persistentInstance != null) {
+	    		transaction = session.beginTransaction();
+				session.delete(persistentInstance);
+				transaction.commit();
+				return true;
+			}
+			return false;
 		} catch (Exception e) {
 			transaction.rollback();
 			e.printStackTrace();

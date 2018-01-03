@@ -19,12 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.dto.NotificationDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
+import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.UserDAO;
 import it.unical.linstagram.services.MediaService;
+import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.NotificationService;
 import it.unical.linstagram.services.PostService;
 import it.unical.linstagram.services.StoriesService;
@@ -52,7 +54,7 @@ public class HomePageController {
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
 			List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
-//			final List<Post> posts = postService.getPosts();
+			//			final List<Post> posts = postService.getPosts();
 			final List<NotificationDTO> notifications = notificationService.getAllNotificationToSee(loggedUser, 10);
 			model.addAttribute("posts", posts);
 			model.addAttribute("notifications", notifications);
@@ -125,6 +127,16 @@ public class HomePageController {
 		Collection<StoryViewerDTO> storyViewerDTOs = storiesService
 				.getViewersUserStory((User) session.getAttribute("user"));
 		return storyViewerDTOs;
+	}
+
+	@RequestMapping(value = "/deleteStory",method=RequestMethod.POST)
+	@ResponseBody
+	public String removeStory(@RequestParam int idStory, HttpSession session) {
+		if(storiesService.removeStory(idStory))
+			return new MessageResponse(MessageCode.OK,(User) session.getAttribute("user"),"OK").getMessage();
+
+		return new MessageResponse(MessageCode.FAILED,
+				(User) session.getAttribute("user"),"Non è stato possibile rimuovere la storia.").getMessage();
 	}
 
 }

@@ -91,4 +91,9 @@ public class StoriesService {
 		}
 		return storyViewerDTOs;
 	}
+
+
+	public boolean removeStory(int idStory) {
+		return modelDAO.delete(Story.class,idStory);
+	}
 }
