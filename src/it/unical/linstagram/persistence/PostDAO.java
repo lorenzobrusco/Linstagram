@@ -1,9 +1,11 @@
 package it.unical.linstagram.persistence;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import it.unical.linstagram.model.Comment;
@@ -26,6 +28,8 @@ public class PostDAO implements IPostDAO {
 //		new ModelDAO().save(p);
 //	}
 
+	private static final int MAX_RESULTS = 2;
+
 	public List<Post> getPosts() {
 		Session session = HibernateUtil.getHibernateSession();
 	
@@ -43,6 +47,27 @@ public class PostDAO implements IPostDAO {
 		
 		session.close();
 		return post;
+	}
+	public List<Post> getLastPosts(String username,Calendar calendar, int last){
+		Session session = HibernateUtil.getHibernateSession();
+
+		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
+				.setParameter("username", username).list();
+		List<Post> posts = new ArrayList<>();
+		Query query = null;
+		if(!followedUsers.isEmpty())
+			query = session.createQuery("SELECT p FROM Post p  WHERE p.user in (:fUsers) or p.user.username=:username order by p.postDate desc")
+				.setParameter("fUsers",followedUsers).setParameter("username", username);
+		else
+			query = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.postDate desc")
+			.setParameter("username", username);
+		
+		query.setFirstResult(last*MAX_RESULTS);
+		query.setMaxResults(MAX_RESULTS);
+		posts = query.list();
+		session.close();
+		
+		return posts;
 	}
 	
 	public List<Post> getFollowedPosts(String username) {

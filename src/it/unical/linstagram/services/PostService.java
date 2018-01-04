@@ -43,6 +43,10 @@ public class PostService {
 		return postDAO.getPostById(idPost);
 	}
 	
+	public List<Post> getLatestPost(User user, Calendar date,int last){
+		return postDAO.getLastPosts(user.getUsername(), date, last);
+	}
+	
 	public boolean insertLike(int idPost, String username) {
 		Post post = postDAO.getPostById(idPost);
 		User u = userDAO.getUserByUsername(username);

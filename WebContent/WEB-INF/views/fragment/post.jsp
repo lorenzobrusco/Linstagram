@@ -2,10 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<script src="./resources/js/event_post.js"></script>
-
-<!-- start body-section -->
 <c:forEach items="${posts}" var="post">
 	<section>
 		<div class="row">
@@ -92,15 +88,6 @@
 									<span> ${comment.content}</span>
 									<br>
 								</c:forEach>
-							<!-- <a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										<div id="postcibo" class="collapse">
-											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-											<a href='#'>Lorenzo</a><span> testo del commento</span><br>
-										</div> -->
 							</div>
 							<a class="show-all-comments" href="#postcibo"
 								data-toggle="collapse"><span class="show-comments"></span>
@@ -128,7 +115,5 @@
 			<!-- end body-section -->
 			<div class="col-md-2"></div>
 		</div>
-		<jsp:include page="./indexFragment/modalLike.jsp"></jsp:include>
 	</section>
-	<!-- end section -->
 </c:forEach>

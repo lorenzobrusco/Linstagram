@@ -32,6 +32,7 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
+	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
@@ -49,6 +50,7 @@
 			<jsp:include page="./fragment/post.jsp"></jsp:include>
 
 		</div>
+		<div id="loading" class="fixed-bottom hide text-center"><img class="img-fluid" alt="" src="${pageContext.request.contextPath}/resources/images/loader.gif"></div>
 		<div id="container-floating">
 
 			<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
@@ -79,10 +81,12 @@
 
 	<jsp:include page="./fragment/createPostModal.jsp"></jsp:include>
 	<jsp:include page="./fragment/createStoryModal.jsp"></jsp:include>
+	<jsp:include page="./fragment/indexFragment/modalLike.jsp"></jsp:include>
 	
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
-	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/event_post.js"></script>
+	
 </body>
 
 </html>

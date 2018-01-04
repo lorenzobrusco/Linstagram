@@ -1,4 +1,25 @@
+function getElapsedTime(postedTime){
+	var now = (new Date()).getTime();
+	var diff=now-postedTime;
+	var second = diff/1000;
+	var min = second/60;
+	var round=Math.round(min);
+	if(	round<=60)
+		return round+" MIN AGO";
+	else if(round > 60 && round < 24*60){
+		round = round/60;
+		round = Math.round(round);
+		return round+" HOURS AGO";
+	}
+	else{
+		round = round/60;
+		round = round/24;
+		round = Math.round(round);
+		return round+" DAYS AGO";
+	}	
+};
 $(document).ready(function () {
+	window.scrollTo(0,0);
 	//show comment event
 	$('.show-all-comments')
 	.click(
@@ -19,4 +40,30 @@ $(document).ready(function () {
 		console.log("Create Story");
 	});
 
+	var postsrequest=1;
+	var entered=false;
+	var currentTime = new Date();
+	
+	$(window).scroll(function(){
+		if ($(document).height() -  $(window).height() <=  $(window).scrollTop() && !entered) {
+			entered=true;
+				$("#loading").removeClass("hide");
+				setTimeout(function(){
+					
+				$.ajax({
+					url:"latestPost", 
+					data:{time:currentTime.getTime(),last:postsrequest},
+					success: function(result) {
+						var html = $.parseHTML(result)
+						if(html.length != 1){
+							$("#posts").append(html);
+							postsrequest++;
+						}
+						$("#loading").addClass("hide");
+						entered=false;
+					}	
+				}) 		 
+				},1000);
+		}
+	});
 });
