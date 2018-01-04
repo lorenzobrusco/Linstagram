@@ -47,12 +47,15 @@ public class HibernateUtil {
 					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
 					init();
 				}
+				else
+				{
+					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();					
+				}
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
 
 		}
 		System.out.println(factory);
