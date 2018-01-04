@@ -1,5 +1,10 @@
 package it.unical.linstagram.persistence;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -22,7 +27,6 @@ public class HibernateUtil {
 			else
 				factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
 		}
-
 		init();
 
 	}
@@ -30,9 +34,28 @@ public class HibernateUtil {
 	public static Session getHibernateSession() {
 
 		if(factory==null) {
-			factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
 
-			init();
+			Configuration configuration = new Configuration();
+			String path = HibernateUtil.class.getClassLoader().getResource("").getPath();
+
+			try {
+				String fullPath = URLDecoder.decode(path, "UTF-8");
+				configuration.setProperty("hibernate.search.default.indexBase",fullPath+"../build/indexes");
+				configuration.setProperty("hihibernate.search.default.locking_strategy", "naive");
+
+				if (!Files.exists(Paths.get(fullPath+"../build/indexes"))) {
+					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
+					init();
+				}
+				else
+				{
+					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();					
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 
 		}
 		System.out.println(factory);
@@ -43,8 +66,9 @@ public class HibernateUtil {
 	public static Session getHibernateTestSession() {
 
 		if(factory==null) {
-			factory = new Configuration().configure("hibernateTest.cfg.xml").buildSessionFactory();
 
+			Configuration configuration = new Configuration();
+			factory = configuration.configure("hibernateTest.cfg.xml").buildSessionFactory();
 			init();
 		}
 		final Session session = factory.openSession();
@@ -54,6 +78,7 @@ public class HibernateUtil {
 	public static void init()
 	{
 		Session session = factory.openSession();
+		System.out.println("SONO LA INIT");
 		reindex(Hashtag.class, session);
 		reindex(User.class, session);
 		session.close();
