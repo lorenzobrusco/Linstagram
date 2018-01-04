@@ -6,17 +6,17 @@
 <script src="./resources/js/follow_event/event_get_follow.js"></script>
 
 <c:choose>
-	<c:when test="${request_send == false && request_received == false && userPublic.followed == false}">
+	<c:when test="${userPublic.request_send == false && userPublic.request_received == false && userPublic.followed == false}">
 		<li><button value="${userPublic.username }" id="sendRequest-btn">Send Request</button></li>
 	</c:when>
-	<c:when test="${request_send == false && request_received == false && userPublic.followed == true}">
+	<c:when test="${userPublic.request_send == false && userPublic.request_received == false && userPublic.followed == true}">
 		<li><button value="${userPublic.username }" id="unfollowerPrivate-btn">Unfollow</button></li>
 	</c:when>
-	<c:when test="${request_send == true }">
+	<c:when test="${userPublic.request_send == true }">
 		<li><button value="${userPublic.username }" id="acceptRequest-btn" class="btn btn-info">Accept</button></li>
 		<li><button value="${userPublic.username }" id="rejectRequest-btn" class="btn btn-secondary">Reject</button></li>
 	</c:when>
-	<c:when test="${request_received == true }">
+	<c:when test="${userPublic.request_received == true }">
 		<li><button disabled id="sendedRequest-btn">Request Sended</button></li>
 	</c:when>
 </c:choose>

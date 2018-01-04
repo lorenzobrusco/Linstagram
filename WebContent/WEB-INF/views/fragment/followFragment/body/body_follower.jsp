@@ -38,9 +38,12 @@
   								</div>
 							</c:when>
 	 						<c:otherwise>
-		  						<div id="buttonFollow${follow.id }" class="pull-right">
-		  							<button class="button" name="${follow.id }" value="${follow.username }" id="follower-btn">Follow</button>
-		  						</div>
+	 							<c:if test="${follow.privateProfile == false }">
+		  							<input type="hidden" id="private${follow.id }" value="${follow.privateProfile }"/>
+			  						<div id="buttonFollow${follow.id }" class="pull-right">
+			  							<button class="button" name="${follow.id }" value="${follow.username }" id="follower-btn">Follow</button>
+			  						</div>
+			  					</c:if>
 	 						</c:otherwise>
 						</c:choose>
 					</div>

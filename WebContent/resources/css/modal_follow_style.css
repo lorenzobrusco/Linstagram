@@ -78,7 +78,8 @@
 
 #sendedRequest-btn,
 #rejectRequest-btn,
-#sendRequest-btn {
+#sendRequest-btn,
+#sendRequestFollower-btn {
 	position: absolute;
 	right: 10%;
 	padding-top: 1%;

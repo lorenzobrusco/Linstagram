@@ -30,7 +30,7 @@ public class UserService {
 	
 	UserManager userManager;
 	
-	public boolean addFollowing(String usernameSession, String usernameToFollow) {
+	public boolean addFollowing(String usernameSession, String usernameToFollow, User user) {
 		
 		User userSession = userDAO.getUserByUsername(usernameSession);
 		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
@@ -39,6 +39,7 @@ public class UserService {
 		userToFollow.getFollowers().add(userSession);
 		
 		if (modelDAO.update(userSession)) {
+			user.getFollowings().add(userToFollow);
 			return true;
 		}
 		return false;
@@ -68,16 +69,18 @@ public class UserService {
 		User userOther = userDAO.getUserByUsername(usernameOther);
 		
 		List<User> userFollowing = userDAO.getFollowingByUsername(user.getUsername());
+		boolean request_send = userDAO.existRequestFollow(usernameOther, user.getUsername());
+		boolean request_received = userDAO.existRequestFollow(user.getUsername(), usernameOther);
 		
 		for (User u : userFollowing) {
-			if (u.getId() == userOther.getId())
-				return new UserPublicDTO(userOther, true);
+			if (u.getId() == userOther.getId()) {
+				return new UserPublicDTO(userOther, true, request_send, request_received);
+			}
 		}
-		
-		if (userOther.isPrivateProfile())
-			return new UserPrivateDTO(userOther, false);
-		
-		return new UserPublicDTO(userOther, false);
+		if (userOther.isPrivateProfile()) {
+			return new UserPrivateDTO(userOther, false, request_send, request_received);
+		}
+		return new UserPublicDTO(userOther, false, false, false);
 	}
 	
 
@@ -103,7 +106,9 @@ public class UserService {
 					break;
 				}
 			}
-			followersDTO.add(new UserPrivateDTO(user, isFollow));
+			boolean request_send = userDAO.existRequestFollow(usernameSession, username);
+			boolean request_received = userDAO.existRequestFollow(username, usernameSession);
+			followersDTO.add(new UserPrivateDTO(user, isFollow, request_send, request_received));
 		}
 		
 		return followersDTO;
@@ -115,7 +120,7 @@ public class UserService {
 
 			List<UserDTO> followingsDTO = new ArrayList<>();
 			for (User user : followings) {
-				followingsDTO.add(new UserPrivateDTO(user, true));
+				followingsDTO.add(new UserPrivateDTO(user, true, false, false));
 			}
 			
 			return followingsDTO;
@@ -133,7 +138,7 @@ public class UserService {
 					break;
 				}
 			}
-			followingsDTO.add(new UserPrivateDTO(user, isFollow));
+			followingsDTO.add(new UserPrivateDTO(user, isFollow, false, false));
 		}
 		
 		return followingsDTO;
@@ -160,7 +165,8 @@ public class UserService {
 	
 	public boolean acceptRequest(String usernameSession, String username) {
 		int id = userDAO.searchRequestFollow(username, usernameSession);
-		if(addFollowing(username, usernameSession) && modelDAO.delete(RequestFollow.class, id))
+		User user = userDAO.getUserByUsername(usernameSession);
+		if(addFollowing(username, usernameSession, user) && modelDAO.delete(RequestFollow.class, id))
 			return true;
 		return false;
 	}

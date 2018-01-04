@@ -159,6 +159,19 @@ public class UserDAO implements IUserDAO {
 		return id;
 	}
 
+
+	public boolean existRequestFollow(String usernameFrom, String usernameTo) {
+		Session session = HibernateUtil.getHibernateSession();
+		
+		boolean exist = (Long) session.createQuery("SELECT count(*) FROM RequestFollow r where r.userFrom.username=:usernameFrom "
+				+ "AND r.userTo.username=:usernameTo")
+					.setParameter("usernameFrom", usernameFrom).setParameter("usernameTo", usernameTo)
+					.uniqueResult() > 0;
+	
+		session.close();
+		return exist;
+	}
+					
 	public User inizializeLists(String username) {
 		Session session = HibernateUtil.getHibernateSession();
 		User user = (User) session.createQuery("FROM  User u where u.username=:username")

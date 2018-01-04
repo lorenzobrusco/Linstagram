@@ -52,7 +52,7 @@
 	<div class="row item-user-info">
 		<ul id="follow_ul">
 			<c:choose>
-				<c:when test="${request_send == true }">
+				<c:when test="${userPublic.request_send == true }">
 					<li><button value="${userPublic.username }" id="acceptRequest-btn" class="btn btn-info">Accept</button></li>
 					<li><button value="${userPublic.username }" id="rejectRequest-btn" class="btn btn-secondary">Reject</button></li>
 				</c:when>

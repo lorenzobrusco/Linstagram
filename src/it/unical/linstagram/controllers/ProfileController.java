@@ -46,6 +46,7 @@ public class ProfileController {
 	public String getSignInPage(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
 			User user = (User) session.getAttribute("user");
+			
 			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
 			model.addAttribute("posts", postOfUser);
 			return "profile";

@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$(document).on('click', '#follower-btn', function() {
 		var id = $(this).attr('name');
 		var username = $(this).attr('value');
-
+		
 		var btn = "#fol-div"+id+" div";
 		$.ajax({
 			url : "followUser",
@@ -23,7 +23,8 @@ $(document).ready(function() {
 	$(document).on('click', '#unfollower-btn', function() {
 		var id = $(this).attr('name');
 		var username = $(this).attr('value');
-		
+		var privateProfile = $('#private'+id).val();
+
 		var btn = "#fol-div"+id+" div";
 		$.ajax({
 			url : "unfollowUser",
@@ -32,7 +33,28 @@ $(document).ready(function() {
 				if (result == "OK") {
 					$("#count_following").html(parseInt($("#count_following").html(), 10)-1)
 					$(btn).empty();
-					$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
+					if (privateProfile == "false")
+						$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
+					else
+						$(btn).append("<button value="+username+" name='"+id+"' id='sendRequestFollower-btn'>Send Request</button>")
+				}
+			}
+		});
+	});
+	
+	$(document).on('click', '#sendRequestFollower-btn', function() {
+		var id = $(this).attr('name');
+		var username = $(this).attr('value');
+
+		var btn = "#fol-div"+id+" div";
+
+		$.ajax({
+			url : "sendRequest",
+			data:{username:username},
+			success : function(result) {
+				if (result == "OK") {
+					$(btn).empty();
+					$(btn).append("<button value='"+username+"' id='sendedRequest-btn' disabled>Request Sended</button>");
 				}
 			}
 		});

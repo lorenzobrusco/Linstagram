@@ -17,16 +17,14 @@ public class UserPublicDTO extends UserPrivateDTO {
 //	private boolean followed; //se questo utente è seguito da un'altro utente(della sessione)
 	
 	
-	public UserPublicDTO(User user, boolean followed) {
-		super(user, followed);
+	public UserPublicDTO(User user, boolean followed, boolean request_send, boolean request_received) {
+		super(user, followed, request_send, request_received);
 		this.biography = user.getBiography();
 		
 		this.followings = user.getFollowings();
 		this.followers = user.getFollowers();
 		this.posts = user.getPosts();
 		this.tagged = user.getTagged();
-		
-//		this.followed = followed;
 	}
 
 	public String getBiography() {

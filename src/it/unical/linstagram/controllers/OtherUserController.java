@@ -1,11 +1,7 @@
 package it.unical.linstagram.controllers;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.linstagram.dto.UserDTO;
-import it.unical.linstagram.dto.UserPrivateDTO;
-import it.unical.linstagram.dto.UserPublicDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
@@ -54,15 +48,6 @@ public class OtherUserController {
 		model.addAttribute("userPublic", userDTO);
 		model.addAttribute("posts", postOfUser);
 		
-		if (userService.searchRequestFollow(user.getUsername(), usernameOther) != -1) 
-			model.addAttribute("request_send", true);
-		else 
-			model.addAttribute("request_send", false);
-		
-		if (userService.searchRequestFollow(usernameOther, user.getUsername()) != -1)
-			model.addAttribute("request_received", true);
-		else
-			model.addAttribute("request_received", false);
 		return "otherUserProfile";
 	}
 	
@@ -84,7 +69,7 @@ public class OtherUserController {
 		
 		if (!userService.acceptRequest(user.getUsername(), username))
 			return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile inoltrare la richiesta.").getMessage();
-//		
+		
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
@@ -95,7 +80,7 @@ public class OtherUserController {
 		
 		if (!userService.rejectRequest(user.getUsername(), username))
 			return new MessageResponse(MessageCode.FAILED, user, "Non è stato possibile inoltrare la richiesta.").getMessage();
-//		
+		
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
@@ -127,7 +112,7 @@ public class OtherUserController {
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
 		
-		if (!userService.addFollowing(user.getUsername(), usernameToFollow))
+		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user))
 			return new MessageResponse(MessageCode.FOLLOW_FAILED, user, "Non è stato possibile inserire l'utente come following.").getMessage();
 		
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();

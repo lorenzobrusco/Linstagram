@@ -138,7 +138,7 @@ public class PostService {
 		List<UserDTO> likesDTO = new ArrayList<>();
 		for (User user : likes) {
 			System.out.println(user.getUsername());
-			likesDTO.add(new UserPrivateDTO(user, false));
+			likesDTO.add(new UserPrivateDTO(user, false, false, false));
 		}
 		
 		return likesDTO;
