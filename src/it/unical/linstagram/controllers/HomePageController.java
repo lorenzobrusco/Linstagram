@@ -62,7 +62,8 @@ public class HomePageController {
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
 			//List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
-						final List<Post> posts = postService.getPosts();
+//						final List<Post> posts = postService.getPosts();
+			List<Post> posts = postService.getLatestPost(loggedUser,null, 0);
 			final List<NotificationDTO> notifications = notificationService.getAllNotificationToSee(loggedUser, 10);
 			model.addAttribute("posts", posts);
 			model.addAttribute("notifications", notifications);
@@ -121,6 +122,14 @@ public class HomePageController {
 		return mediaInfo;
 	}
 
+	@RequestMapping("/latestPost")
+	public String latestPost(@RequestParam int last,@RequestParam long time,HttpSession session,Model model) {
+		User loggedUser = (User) session.getAttribute("user");
+
+		List<Post> posts = postService.getLatestPost(loggedUser,null, last);
+		model.addAttribute("posts", posts);
+		return "fragment/post";
+	}
 	@ResponseBody
 	@RequestMapping(value = "/addStory", method = RequestMethod.POST)
 	public StoryDTO addStory(@RequestParam MultipartFile file, HttpSession session) throws IOException {
