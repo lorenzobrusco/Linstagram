@@ -14,6 +14,7 @@ import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.NotificationDAO;
 import it.unical.linstagram.persistence.PostDAO;
+import it.unical.linstagram.persistence.UserDAO;
 
 @Service
 public class NotificationService {
@@ -26,6 +27,9 @@ public class NotificationService {
 
 	@Autowired
 	private PostDAO postDAO;
+
+	@Autowired
+	private UserDAO userDAO;
 
 	/**
 	 * Used to save the notification
@@ -45,6 +49,18 @@ public class NotificationService {
 	public void generateLikeNotification(User user, int idPost) {
 		final Post post = postDAO.getPostById(idPost);
 		final Notification notification = new Notification(user, post.getUser(), post, null, NotificationType.LIKE);
+		modelDAO.save(notification);
+	}
+
+	/**
+	 * Generate notification when user follow another user
+	 * 
+	 * @param user
+	 * @param follow
+	 */
+	public void generateFollowNotification(User user, String follow) {
+		final User userToFollow = userDAO.getUserByUsername(follow);
+		final Notification notification = new Notification(user, userToFollow, null, null, NotificationType.FOLLOW);
 		modelDAO.save(notification);
 	}
 

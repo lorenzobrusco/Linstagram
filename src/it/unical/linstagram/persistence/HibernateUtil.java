@@ -1,5 +1,11 @@
 package it.unical.linstagram.persistence;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -16,25 +22,43 @@ public class HibernateUtil {
 
 	public static void CreateSessionFactory(boolean test) {
 
-		if(factory == null) {
-			if(test)
-				factory =  new Configuration().configure("hibernateTest.cfg.xml").buildSessionFactory();
+		if (factory == null) {
+			if (test)
+				factory = new Configuration().configure("hibernateTest.cfg.xml").buildSessionFactory();
 			else
 				factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
 		}
-
 		init();
 
 	}
 
 	public static Session getHibernateSession() {
 
-		if(factory==null) {
-			factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+		if (factory == null) {
 
-			init();
+			Configuration configuration = new Configuration();
+			String path = HibernateUtil.class.getClassLoader().getResource("").getPath();
+
+			try {
+				String fullPath = URLDecoder.decode(path, "UTF-8");
+				fullPath = new File(fullPath).getPath();
+
+				configuration.setProperty("hibernate.search.default.indexBase", fullPath + "/../build/indexes");
+				configuration.setProperty("hihibernate.search.default.locking_strategy", "naive");
+
+				if (!Files.exists(Paths.get(fullPath + "/../build/indexes"))) {
+					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
+					init();
+				} else {
+					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
+		
 		System.out.println(factory);
 		final Session session = factory.openSession();
 		return session;
@@ -42,18 +66,19 @@ public class HibernateUtil {
 
 	public static Session getHibernateTestSession() {
 
-		if(factory==null) {
-			factory = new Configuration().configure("hibernateTest.cfg.xml").buildSessionFactory();
+		if (factory == null) {
 
+			Configuration configuration = new Configuration();
+			factory = configuration.configure("hibernateTest.cfg.xml").buildSessionFactory();
 			init();
 		}
 		final Session session = factory.openSession();
 		return session;
 	}
 
-	public static void init()
-	{
+	public static void init() {
 		Session session = factory.openSession();
+		System.out.println("SONO LA INIT");
 		reindex(Hashtag.class, session);
 		reindex(User.class, session);
 		session.close();

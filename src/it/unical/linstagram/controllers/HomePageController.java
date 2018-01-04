@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,8 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 import it.unical.linstagram.dto.NotificationDTO;
 import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
+import it.unical.linstagram.dto.UserResearchDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
@@ -30,6 +33,7 @@ import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.NotificationService;
 import it.unical.linstagram.services.PostService;
+import it.unical.linstagram.services.ResearchService;
 import it.unical.linstagram.services.StoriesService;
 
 @Controller
@@ -46,6 +50,9 @@ public class HomePageController {
 
 	@Autowired
 	private NotificationService notificationService;
+	
+	@Autowired 
+	private ResearchService researchService;
 
 	@Autowired
 	UserDAO userDAO;
@@ -54,8 +61,8 @@ public class HomePageController {
 	public String homePageController(HttpSession session, Model model) {
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
-			List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
-			//			final List<Post> posts = postService.getPosts();
+			//List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
+						final List<Post> posts = postService.getPosts();
 			final List<NotificationDTO> notifications = notificationService.getAllNotificationToSee(loggedUser, 10);
 			model.addAttribute("posts", posts);
 			model.addAttribute("notifications", notifications);
@@ -138,7 +145,27 @@ public class HomePageController {
 			return new MessageResponse(MessageCode.OK,(User) session.getAttribute("user"),"OK").getMessage();
 
 		return new MessageResponse(MessageCode.FAILED,
-				(User) session.getAttribute("user"),"Non è stato possibile rimuovere la storia.").getMessage();
+				(User) session.getAttribute("user"),"Non ï¿½ stato possibile rimuovere la storia.").getMessage();
+	}
+	
+	
+	@RequestMapping(value="/research",method=RequestMethod.POST)
+	@ResponseBody
+	public String research(@RequestParam String text, HttpSession session) {
+		Set<Hashtag> suggestionsHashtag = researchService.getSuggestionsHashtag(text);
+		Set<UserResearchDTO> suggestionsUsers = researchService.getSuggestionsUsername(text);
+		suggestionsUsers.addAll(researchService.getSuggestionsName(text));
+		
+		for (Hashtag hashtag : suggestionsHashtag) {
+			System.out.println(hashtag.getHashtag());
+		}
+				
+		session.setAttribute("hashtagSearch", suggestionsHashtag);
+		session.setAttribute("userSearch", suggestionsUsers);
+		
+		
+		return "SUCCESS";
+		
 	}
 
 }
