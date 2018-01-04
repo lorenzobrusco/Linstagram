@@ -23,9 +23,10 @@
  					</button>
 				</form>
 				<c:if test="${follow.username != userSession.username }">
+					<input type="hidden" id="private${follow.id }" value="${follow.privateProfile }"/>
 					<div id="fol-div${follow.id }">
 						<div id="button${follow.id }" class="pull-right">
-							<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
+							<button name="${follow.id }" value="${follow.username }" id="unfollower-btn">Unfollow</button>
  						</div>
  					</div>
 				</c:if>

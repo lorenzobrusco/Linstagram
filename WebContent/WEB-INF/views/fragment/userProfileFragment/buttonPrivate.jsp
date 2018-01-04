@@ -7,7 +7,7 @@
 
 <c:choose>
 	<c:when test="${userPublic.request_send == false && userPublic.request_received == false && userPublic.followed == false}">
-		<li><button value="${userPublic.username }" id="sendRequest-btn">Send Request</button></li>
+		<li><button name="${userPublic.id }" value="${userPublic.username }" id="sendRequest-btn">Send Request</button></li>
 	</c:when>
 	<c:when test="${userPublic.request_send == false && userPublic.request_received == false && userPublic.followed == true}">
 		<li><button value="${userPublic.username }" id="unfollowerPrivate-btn">Unfollow</button></li>
@@ -17,6 +17,6 @@
 		<li><button value="${userPublic.username }" id="rejectRequest-btn" class="btn btn-secondary">Reject</button></li>
 	</c:when>
 	<c:when test="${userPublic.request_received == true }">
-		<li><button disabled id="sendedRequest-btn">Request Sended</button></li>
+		<li><button name="${userPublic.id }" value="${userPublic.username }" id="cancelRequest-btn">Cancel Request</button></li>
 	</c:when>
 </c:choose>

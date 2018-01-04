@@ -106,8 +106,8 @@ public class UserService {
 					break;
 				}
 			}
-			boolean request_send = userDAO.existRequestFollow(usernameSession, username);
-			boolean request_received = userDAO.existRequestFollow(username, usernameSession);
+			boolean request_received = userDAO.existRequestFollow(usernameSession, user.getUsername());
+			boolean request_send = userDAO.existRequestFollow(user.getUsername(), usernameSession);
 			followersDTO.add(new UserPrivateDTO(user, isFollow, request_send, request_received));
 		}
 		
@@ -138,7 +138,9 @@ public class UserService {
 					break;
 				}
 			}
-			followingsDTO.add(new UserPrivateDTO(user, isFollow, false, false));
+			boolean request_received = userDAO.existRequestFollow(usernameSession, user.getUsername());
+			boolean request_send = userDAO.existRequestFollow(user.getUsername(), usernameSession);
+			followingsDTO.add(new UserPrivateDTO(user, isFollow, request_send, request_received));
 		}
 		
 		return followingsDTO;
@@ -166,15 +168,17 @@ public class UserService {
 	public boolean acceptRequest(String usernameSession, String username) {
 		int id = userDAO.searchRequestFollow(username, usernameSession);
 		User user = userDAO.getUserByUsername(usernameSession);
-		if(addFollowing(username, usernameSession, user) && modelDAO.delete(RequestFollow.class, id))
-			return true;
+		if (id != -1)
+			if(addFollowing(username, usernameSession, user) && modelDAO.delete(RequestFollow.class, id))
+				return true;
 		return false;
 	}
 	
 	public boolean rejectRequest (String usernameSession, String username) {
-		int id = userDAO.searchRequestFollow(username, usernameSession);
-		if(modelDAO.delete(RequestFollow.class, id))
-			return true;
+		int id = userDAO.searchRequestFollow(usernameSession, username);
+		if (id != -1)
+			if(modelDAO.delete(RequestFollow.class, id))
+				return true;
 		return false;
 	}
 	

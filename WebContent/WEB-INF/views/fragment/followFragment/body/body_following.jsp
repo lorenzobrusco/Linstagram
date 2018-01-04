@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
 
 <ul>
 <c:forEach items="${followings}" var="follow">
@@ -25,16 +25,37 @@
 				</button>
 			</form>
 			<c:if test="${follow.username != user.username }">
+				<input type="hidden" id="private${follow.id }" value="${follow.privateProfile }"/>
 				<div id="fol-div${follow.id }">
 					<c:choose>
-						<c:when test="${follow.followed == true }">
-							<div id="button${follow.id }" class="pull-right">
-								<button name="${follow.id }" value="${follow.username }" id="unfollow-btn">Unfollow</button>
+						<c:when test="${follow.privateProfile == false }">
+							<div id="buttonFollow${follow.id }" class="pull-right">
+								<c:choose>
+									<c:when test="${follow.followed == true }">
+											<button class="button" name="${follow.id }" value="${follow.username }" id="unfollower-btn">Unfollow</button>
+									</c:when>
+									<c:otherwise>
+											<button class="button" name="${follow.id }" value="${follow.username }" id="follower-btn">Follow</button>
+									</c:otherwise> 
+							 	</c:choose>
 							</div>
 						</c:when>
 						<c:otherwise>
-							<div id="button${follow.id }" class="pull-right">
-								<button name="${follow.id }" value="${follow.username }" id="follow-btn">Follow</button>
+							<div id="buttonFollow${follow.id }" class="pull-right">
+								<c:choose>
+									<c:when test="${follow.request_send == false && follow.request_received == false && follow.followed == false}">
+											<button name="${follow.id }" value="${follow.username }" id="sendRequest-btn">Send Request</button>
+									</c:when>
+									<c:when test="${follow.request_send == false && follow.request_received == false && follow.followed == true}">
+										<button name="${follow.id }" value="${follow.username }" id="unfollower-btn">Unfollow</button>
+									</c:when>
+									<c:when test="${follow.request_send == true }">
+										<button disabled id="waiting-btn">Waiting...</button>
+									</c:when> 
+									<c:when test="${follow.request_received == true }">
+										<button name="${follow.id }" value="${follow.username }" id="cancelRequest-btn">Cancel Request</button>
+									</c:when>
+								</c:choose>
 							</div>
 						</c:otherwise>
 					</c:choose>

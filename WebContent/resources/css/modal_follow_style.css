@@ -76,10 +76,11 @@
 	color: black;
 }
 
-#sendedRequest-btn,
+#cancelRequest-btn,
 #rejectRequest-btn,
 #sendRequest-btn,
-#sendRequestFollower-btn {
+#sendRequestFollower-btn,
+#waiting-btn {
 	position: absolute;
 	right: 10%;
 	padding-top: 1%;

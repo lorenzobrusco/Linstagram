@@ -54,14 +54,31 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$(btn).empty();
-					$(btn).append("<button value='"+username+"' id='sendedRequest-btn' disabled>Request Sended</button>");
+					$(btn).append("<button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Cancel Request</button>");
+				}
+			}
+		});
+	});
+	
+	$(document).on('click', '#cancelRequest-btn', function() {
+		var username = $(this).attr('value');
+		$.ajax({
+			url : "rejectRequest",
+			data:{username:username},
+			success : function(result) {
+				if (result == "OK") {
+					location.reload();
 				}
 			}
 		});
 	});
 	
 	
+	
+	
+	//questo è per il profilo
 	$(document).on('click', '#sendRequest-btn', function() {
+		var id = $(this).attr('name');
 		var username = $(this).attr('value');
 
 		$.ajax({
@@ -70,7 +87,7 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();
-					$("#follow_ul").append("<button value='"+username+"' id='sendedRequest-btn' disabled>Request Sended</button>");
+					$("#follow_ul").append("<button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Cancel Request</button>");
 				}
 			}
 		});
