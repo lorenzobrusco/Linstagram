@@ -45,7 +45,7 @@ public class HibernateUtil {
 
 				if (!Files.exists(Paths.get(fullPath+"../build/indexes"))) {
 					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
-					init();
+					//init();
 				}
 				else
 				{
