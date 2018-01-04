@@ -54,8 +54,8 @@ public class HomePageController {
 	public String homePageController(HttpSession session, Model model) {
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
-			List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
-			//			final List<Post> posts = postService.getPosts();
+			//List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
+						final List<Post> posts = postService.getPosts();
 			final List<NotificationDTO> notifications = notificationService.getAllNotificationToSee(loggedUser, 10);
 			model.addAttribute("posts", posts);
 			model.addAttribute("notifications", notifications);

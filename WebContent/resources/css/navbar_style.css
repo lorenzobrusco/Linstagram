@@ -177,10 +177,18 @@ background-position
 
 
 
+
+
+
+
 :
 
 
+
+
  
+
+
 
 
 100%
@@ -193,10 +201,18 @@ background-position
 
 
 
+
+
+
+
 :
 
 
+
+
  
+
+
 
 
 0%
@@ -297,31 +313,57 @@ background-position
 }
 
 #notification_list {
-	width: 700px;
+	position: fixed;
+	height: 350px;
+	width: 500px;
+	background: #ffffff;
+	z-index: 999;
+	top: 44px;
+	right: 256px;
+	border-radius: 5px;
+	border: 0.5px solid #ccc;
+	box-shadow: -6px 6px 10px 0px rgba(0, 0, 0, .1);
+	opacity: 0;
 }
 
-.notification_item{
+.notification_item {
 	margin-top: 10px;
 }
 
-
 #notification_list .notification_item .user_from_notification {
 	display: inline;
-}
-
-#notification_list .notification_item .user_from_notification img {
-	height: 40px;
-	width: 40px;
+	margin: 0 20px;
+	float: left;
 }
 
 #notification_list .notification_item .context_notification {
 	display: inline;
 	position: relative;
-	padding: 0 18px;
+	margin-left:20px;
+	line-height: 3.5;
 }
 
 #notification_list .notification_item .follow_btn_notification {
 	display: inline;
 	position: relative;
-	
+}
+
+#notification_list .notification_item .post_notification {
+	float: right;
+	margin-right:20px;
+}
+
+#notification_list .notification_item .user_from_notification img {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+}
+
+#notification_list .notification_item .post_notification img {
+	height: 40px;
+	width: 40px;
+}
+
+#notification_list .hr_notification{
+	margin: 12px 12px 12px 32px !important;
 }

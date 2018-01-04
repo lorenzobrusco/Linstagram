@@ -17,7 +17,6 @@
 
 </head>
 <body>
-
 	<header>
 		<div id="rainbow-progress-bar"></div>
 		<div id="navbar-mobile">
@@ -35,11 +34,7 @@
 					<li><a href="#create-post-modal" id="add-mobile"
 						class="item-mobile"></a></li>
 					<li><a href="" id="notification-mobile" class="item-mobile"></a>
-						<ul>
-							<li><a href="#">Option1</a></li>
-							<li><a href="#">Option2 A Long One</a></li>
-							<li><a href="#">Option3</a></li>
-						</ul></li>
+						</li>
 				</ul>
 			</div>
 		</div>
@@ -60,8 +55,10 @@
 			</span>
 		</nav>
 	</header>
+	<div id="notification_list"></div>
 </body>
-
+<script
+	src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
 <script>
 	let progressBar = document.querySelector("#rainbow-progress-bar");
 	window.onload = function() {
@@ -112,7 +109,7 @@
 							}, 300);
 						});
 
-						var content_notification_popover = "<div id='notification_list'>"
+						/*var content_notification_popover = "<div id='notification_list'>"
 						<c:forEach items="${notifications}" var="notification">
 						content_notification_popover += "<div class='notification_item'>"
 						content_notification_popover += "<div class='user_from_notification'>"
@@ -154,7 +151,7 @@
 									$(_this).popover("hide");
 								}
 							}, 300);
-						});
+						});*/
 						$('[data-toggle="tooltip"]').tooltip();
 
 						$('[data-toggle="tooltip"]').tooltip();
