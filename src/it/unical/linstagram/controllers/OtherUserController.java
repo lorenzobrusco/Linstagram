@@ -120,10 +120,12 @@ public class OtherUserController {
 	@ResponseBody
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
-		
+		System.out.println("here follow");
 		if (!userService.addFollowing(user.getUsername(), usernameToFollow))
 			return new MessageResponse(MessageCode.FOLLOW_FAILED, user, "Non è stato possibile inserire l'utente come following.").getMessage();
+		System.out.println("after follow");
 		notificationService.generateFollowNotification(user, usernameToFollow);
+		System.out.println("after notification");
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 	
