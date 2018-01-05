@@ -62,7 +62,7 @@ public class PostDAO implements IPostDAO {
 		else
 			query = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.postDate desc")
 			.setParameter("username", username);
-		
+
 		query.setFirstResult(last*MAX_RESULTS_POST);
 		query.setMaxResults(MAX_RESULTS_POST);
 		posts = query.list();
@@ -126,7 +126,7 @@ public class PostDAO implements IPostDAO {
 		session.close();
 		return comments;
 	}
-	
+
 	public List<Comment> getCommentByPostId(int idPost, int index) {
 		Session session = HibernateUtil.getHibernateSession();
 		Query query = session.createQuery("FROM Comment c WHERE c.post.id=:idPost order by c.date")
@@ -139,10 +139,10 @@ public class PostDAO implements IPostDAO {
 	}
 
 
-	public List<Post> getPostsByHashtag(Hashtag hashtag) {
+	public List<Post> getPostsByHashtag(String hashtag) {
 		Session session = HibernateUtil.getHibernateSession();
 
-		List<Post> posts = session.createQuery("FROM Post p join fetch p.hashtags h WHERE h.hashtag=:_hashtag")
+		List<Post> posts = session.createQuery("FROM Post p join fetch p.hashtags h WHERE h.hashtag.hashtag=:_hashtag")
 				.setParameter("_hashtag", hashtag).list();
 
 		session.close();

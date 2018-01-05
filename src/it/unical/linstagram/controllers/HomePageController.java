@@ -50,7 +50,7 @@ public class HomePageController {
 
 	@Autowired
 	private NotificationService notificationService;
-	
+
 	@Autowired 
 	private ResearchService researchService;
 
@@ -62,8 +62,8 @@ public class HomePageController {
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
 			//List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
-//						final List<Post> posts = postService.getPosts();
-			List<Post> posts = postService.getLatestPost(loggedUser,null, 0);
+			final List<Post> posts = postService.getPosts();
+			//			List<Post> posts = postService.getLatestPost(loggedUser,null, 0);
 			final List<NotificationDTO> notifications = notificationService.getAllNotificationToSee(loggedUser, 10);
 			model.addAttribute("posts", posts);
 			model.addAttribute("notifications", notifications);
@@ -156,25 +156,38 @@ public class HomePageController {
 		return new MessageResponse(MessageCode.FAILED,
 				(User) session.getAttribute("user"),"Non � stato possibile rimuovere la storia.").getMessage();
 	}
-	
-	
+
+
 	@RequestMapping(value="/research",method=RequestMethod.POST)
 	@ResponseBody
 	public String research(@RequestParam String text, HttpSession session) {
 		Set<Hashtag> suggestionsHashtag = researchService.getSuggestionsHashtag(text);
 		Set<UserViewerDTO> suggestionsUsers = researchService.getSuggestionsUsername(text);
 		suggestionsUsers.addAll(researchService.getSuggestionsName(text));
-		
+
 		for (Hashtag hashtag : suggestionsHashtag) {
 			System.out.println(hashtag.getHashtag());
 		}
-				
+
 		session.setAttribute("hashtagSearch", suggestionsHashtag);
 		session.setAttribute("userSearch", suggestionsUsers);
-		
-		
+
+
 		return "SUCCESS";
+
+	}
+
+
+	@RequestMapping(value="hashtagPosts",method=RequestMethod.POST)
+	public String hashtagPosts(@RequestParam String hashtag, HttpSession session, Model model) {
+		List<Post> posts = postService.getPostsbyHashtag(hashtag);
+		model.addAttribute("posts", posts);
+		System.out.println(posts.size());
 		
+		//TODO SISTEMARE IL METODO
+		return "redirect:index";
+
+
 	}
 
 }

@@ -44,10 +44,9 @@ public class PostService {
 		return postDAO.getPostById(idPost);
 	}
 	
-	public List<Post> getPostbyHashtag(String hashtag)
+	public List<Post> getPostsbyHashtag(String hashtag)
 	{
-		Hashtag ht = hashtagDAO.getHashtagByValue(hashtag);
-		List<Post> posts = postDAO.getPostsByHashtag(ht);
+		List<Post> posts = postDAO.getPostsByHashtag(hashtag);
 		
 		return posts;
 	}
