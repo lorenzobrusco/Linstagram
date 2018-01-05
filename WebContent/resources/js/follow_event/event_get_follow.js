@@ -1,4 +1,4 @@
-// To reload follower and following of the users, before that the modal is opened.
+//TO RELOAD FOLLOWER AND FOLLOWING POPUP OF USERS, BEFORE THAT THE MODAL IS OPENED.
 
 $(document).ready(function() {
 	$(function(){

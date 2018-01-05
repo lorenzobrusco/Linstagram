@@ -44,14 +44,18 @@
 	text-align: left;
 }
 
-#unfollow-btn,
-#follow-btn,
+/* #unfollow-btn,
+#follow-btn, */
 #unfollower-btn,
 #follower-btn,
 #unfollowerPrivate-btn,
 #followPrivate-btn,
 #unfollowProfile-btn,
-#followProfile-btn {
+#followProfile-btn,
+#cancelRequest-btn,
+#cancelRequestPopup-btn,
+#sendRequestPopup-btn,
+#sendRequest-btn {
 	position: absolute;
 	right: 10%;
 	padding-top: 1%;
@@ -63,23 +67,24 @@
 	transition: all .5s;
 }
 
-#unfollow-btn:hover,
+/* #unfollow-btn:hover,
 #follow-btn:hover,
+#unfollowModal-btn:hover,
+#followModal-btn:hover, */
 #unfollower-btn:hover,
 #follower-btn:hover,
 #unfollowerPrivate-btn:hover,
 #followPrivate-btn:hover,
-#unfollowModal-btn:hover,
-#followModal-btn:hover {
+#cancelRequest-btn:hover,
+#cancelRequestPopup-btn:hover,
+#sendRequestPopup-btn:hover,
+#sendRequestPopup-btn:hover {
 	background-color: #89ABE3;
 	border-color: #bbbbbb;
 	color: black;
 }
 
-#cancelRequest-btn,
 #rejectRequest-btn,
-#sendRequest-btn,
-#sendRequestFollower-btn,
 #waiting-btn {
 	position: absolute;
 	right: 10%;

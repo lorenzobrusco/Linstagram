@@ -4,8 +4,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <script src="./resources/js/follow_event/follow_event_profile_public.js"></script>
-<script src="./resources/js/follow_event/event_get_follow.js"></script>
-<script src="./resources/js/event_modal_post_profile.js"></script>
+<!-- <script src="./resources/js/follow_event/event_get_follow.js"></script>
+<script src="./resources/js/event_modal_post_profile.js"></script> -->
 <!-- VISUALIZZAZIONE DEL PROFILO PUBBLICO, LA PRIMA PARTE [sono esclusi i post che sono fatti in postSection.jsp] -->
 
 <div class="row item-user-info">
