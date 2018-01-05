@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import it.unical.linstagram.dto.CommentDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
@@ -111,4 +112,10 @@ public class PostController {
 		return "fragment/userProfileFragment/body/post";
 	}
 	
+	@RequestMapping("getPostComment")
+	@ResponseBody
+	public List<CommentDTO> getPostComment(HttpSession session, @RequestParam("post") int idPost,@RequestParam("index") int index) {
+		List<CommentDTO> comments = postService.getPostComment(idPost,index);
+		return comments;
+	}
 }

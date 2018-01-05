@@ -218,8 +218,7 @@ public class TestPostDAO extends AbstractModelTest{
 		}
 		
 		md.update(post);
-		post = pd.getPostById(post.getId());
-		Set<Comment> comments = post.getComments();
+		List<Comment> comments = pd.getCommentByPostId(post.getId(),0);
 		
 		for(Comment c : comments) {
 			System.out.println(c.getContent());

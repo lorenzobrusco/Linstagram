@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.linstagram.dto.CommentDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.helper.HashtagFinder;
@@ -146,6 +147,16 @@ public class PostService {
 		}
 		
 		return likesDTO;
+	}
+	
+	public List<CommentDTO> getPostComment(int idPost, int index){
+		List<Comment> comments =  postDAO.getCommentByPostId(idPost, index);
+		List<CommentDTO> commentDTOs = new ArrayList<>();
+		
+		for (Comment comment : comments) {
+			commentDTOs.add(new CommentDTO(comment));
+		}
+		return commentDTOs;
 	}
 	
 	

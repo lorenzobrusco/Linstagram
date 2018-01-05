@@ -28,7 +28,7 @@ $(document).ready(function() {
 		var postID = $(this).attr('name');
 		var count_like = $("#count_like"+postID)
 		var love_id = $("#love_div"+postID)
-	
+
 		$.ajax({
 			url : "addLike",
 			data:{postID:postID},
@@ -42,13 +42,13 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	//EVENTO "RIMOZIONE LIKE"
 	$(document).on('click', '.loveFull', function() {
 		var postID = $(this).attr('name');
 		var count_like = $("#count_like"+postID)
 		var love_id = $("#love_div"+postID)
-	
+
 		$.ajax({
 			url : "removeLike",
 			data:{postID:postID},
@@ -62,12 +62,12 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	//EVENTO "INSERIMENTO BOOKMARK"
 	$(document).on('click', '.bookmark', function() {
 		var postID = $(this).attr('name');
 		var bookmark_id = $("#bookmark_div"+postID)
-		
+
 		$.ajax({
 			url : "addBookmark",
 			data:{postID:postID},
@@ -80,12 +80,12 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	//EVENTO "RIMOZIONE BOOKMARK"
 	$(document).on('click', '.bookmarkFull', function() {
 		var postID = $(this).attr('name');
 		var bookmark_id = $("#bookmark_div"+postID)
-		
+
 		$.ajax({
 			url : "removeBookmark",
 			data:{postID:postID},
@@ -98,23 +98,23 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
 	//EVENTO "INSERIMENTO COMMENTO"
 	$(document).on('click', '.submit_comment', function() {
 		var postID = $(this).attr('id');
 		var comm = $("#comment"+postID).val();
 		var username = $("#username").val();
-		
+
 		var listComment = $('.list-comments'+postID);
-		
+
 		$.ajax({
 			url : "addComment",
 			data:{postID:postID, comment:comm},
 			success : function(result) {		
 				if(result == "OK") {
 					$("#comment"+postID).val('');
-					$(listComment).append("<a href='#'><b>"+username+"</b></a>"+
-									"<span>"+comm+"</span><br>");
+					$(listComment).append("<div class='comment'><a href='userPage?usernameOther="+username+"'><b>"+username+"</b></a>"+
+							"<span>"+comm+"</span></div>");
 				}
 			}
 		});
@@ -133,20 +133,50 @@ $(document).ready(function() {
 				$(".modal-body").append(result);
 			}
 		});
-    });
-	
-	//EVENTO PER APRIRE IL POPUP DEI COMMENTI E VEDERE GLI UTENTI CHE HANNO COMMENTATO UN POST
-	$(document).on('click', '#comment', function() {
-		var post = $(this).attr("name");
+	});
 
-		$.get({
-			url : "getComment",
-			data:{post:post},
-			success : function(result) {
-				$(".modal-body").empty();
-				$(".modal-body").append(result);
+	//EVENTO PER APRIRE IL POPUP DEI COMMENTI E VEDERE GLI UTENTI CHE HANNO COMMENTATO UN POST
+//	$(document).on('click', '#comment', function() {
+//		var post = $(this).attr("name");
+//
+//		$.get({
+//			url : "getComment",
+//			data:{post:post},
+//			success : function(result) {
+//				$(".modal-body").empty();
+//				$(".modal-body").append(result);
+//			}
+//		});
+//	});
+
+	$(document).on('click', '.show-all-comments', function() {
+		var postID = $(this).parent().siblings('.comment-section').children("button").attr("id");
+		var thiss = this;
+		var listComment = $('.list-comments'+postID);
+		var listSize = $(listComment).children(".comment").length;
+		$(this).children("#loader-comments").removeClass("hide");
+		$.ajax({
+			url : "getPostComment",
+			data:{post:postID, index:listSize},
+			success : function(result) {	
+				if(result.length > 0){
+					for(var i=0; i < result.length; i++)
+						$(listComment).append("<div class='comment'><a href='userPage?usernameOther="+result[i].username+"'><b>"+result[i].username+"</b></a>"+
+								"<span>"+result[i].comment+"</span></div>");
+
+					$(listComment).siblings(".hide-all-comments").removeClass("hide");
+				}
+				$(thiss).children("#loader-comments").addClass("hide");
 			}
 		});
-    });
-	
+	});
+
+	$(document).on('click', '.hide-all-comments', function() {
+		var postID = $(this).parent().siblings('.comment-section').children("button").attr("id");
+		var listComment = $('.list-comments'+postID);
+		$(listComment).children(".comment:gt(3)").remove();
+		$(this).addClass("hide");
+		
+	});
+
 });

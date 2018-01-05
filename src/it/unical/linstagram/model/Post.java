@@ -23,6 +23,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OrderBy;
 
 @Entity
 @Table(name="post")
@@ -67,6 +68,7 @@ public class Post {
 
 	@OneToMany(mappedBy="post", fetch=FetchType.EAGER)
 	@Cascade(value=CascadeType.ALL)
+	@OrderBy(clause = "date asc")
 	private Set<Comment> comments = new HashSet<Comment>();
 	
 	@ManyToMany

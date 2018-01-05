@@ -248,7 +248,7 @@ progress {
   margin: 5px 0;
 }
 
-.show-all-comments {
+.show-all-comments, .hide-all-comments  {
   font-size: 0.9em;
   color: #999999ba !important;
 
@@ -260,7 +260,7 @@ progress {
   font-weight: 600;
 }
 
-.show-all-comments {
+.show-all-comments, .hide-all-comments {
   margin-right: .3em;
   font-weight: 600;
   color: #999999ba;
@@ -491,4 +491,7 @@ progress {
   }
   
 }
-
+#loader-comments{
+	height:12px;
+	margin-left:5px;
+}

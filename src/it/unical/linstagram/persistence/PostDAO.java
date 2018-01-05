@@ -28,7 +28,8 @@ public class PostDAO implements IPostDAO {
 //		new ModelDAO().save(p);
 //	}
 
-	private static final int MAX_RESULTS = 2;
+	private static final int MAX_RESULTS_POST = 2;
+	private static final int MAX_RESULTS_COMMENTS = 2;
 
 	public List<Post> getPosts() {
 		Session session = HibernateUtil.getHibernateSession();
@@ -62,8 +63,8 @@ public class PostDAO implements IPostDAO {
 			query = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.postDate desc")
 			.setParameter("username", username);
 		
-		query.setFirstResult(last*MAX_RESULTS);
-		query.setMaxResults(MAX_RESULTS);
+		query.setFirstResult(last*MAX_RESULTS_POST);
+		query.setMaxResults(MAX_RESULTS_POST);
 		posts = query.list();
 		session.close();
 		
@@ -126,4 +127,14 @@ public class PostDAO implements IPostDAO {
 		return comments;
 	}
 	
+	public List<Comment> getCommentByPostId(int idPost, int index) {
+		Session session = HibernateUtil.getHibernateSession();
+		Query query = session.createQuery("FROM Comment c WHERE c.post.id=:idPost order by c.date")
+				.setParameter("idPost", idPost);
+		query.setFirstResult(index);
+		query.setMaxResults(MAX_RESULTS_COMMENTS);
+		List<Comment> comments = query.list();
+		session.close();
+		return comments;
+	}
 }
