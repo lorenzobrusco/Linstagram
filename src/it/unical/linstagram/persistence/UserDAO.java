@@ -24,6 +24,7 @@ public class UserDAO implements IUserDAO {
 	private static final String NAME_EDGE_NGRAM_INDEX = "edgeNGramName";
 	private static final String SURNAME_EDGE_NGRAM_INDEX = "edgeNGramSurname";
 
+	@Override
 	public List<User> getAllUser() {
 		Session session = HibernateUtil.getHibernateSession();
 		List<User> users = session.createQuery("FROM  User").list();
@@ -120,7 +121,7 @@ public class UserDAO implements IUserDAO {
 		return posts;
 	}
 
-
+	@Override
 	public List<User> getFollowingByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
 		List<User> users = session.createQuery("SELECT user.followings FROM User user WHERE user.username=:username")
@@ -130,7 +131,7 @@ public class UserDAO implements IUserDAO {
 		return users;
 	}
 
-
+	@Override
 	public List<User> getFollowerByUsername(String username) {
 		Session session = HibernateUtil.getHibernateSession();
 		List<User> users = session.createQuery("SELECT user.followers FROM User user WHERE user.username=:username")
@@ -139,16 +140,13 @@ public class UserDAO implements IUserDAO {
 		session.close();
 		return users;
 	}
-
+	
+	@Override
 	public int searchRequestFollow(String usernameFrom, String usernameTo) {
 		Session session = HibernateUtil.getHibernateSession();
 		
-		boolean exist = (Long) session.createQuery("SELECT count(*) FROM RequestFollow r where r.userFrom.username=:usernameFrom "
-				+ "AND r.userTo.username=:usernameTo")
-					.setParameter("usernameFrom", usernameFrom).setParameter("usernameTo", usernameTo)
-					.uniqueResult() > 0;
 		int id = -1;		
-		if (exist) {
+		if (existRequestFollow(usernameFrom, usernameTo)) {
 			id = (int) session.createQuery("SELECT r.id FROM RequestFollow r where r.userFrom.username=:usernameFrom "
 				+ "AND r.userTo.username=:usernameTo")
 					.setParameter("usernameFrom", usernameFrom).setParameter("usernameTo", usernameTo)
@@ -159,7 +157,7 @@ public class UserDAO implements IUserDAO {
 		return id;
 	}
 
-
+	@Override
 	public boolean existRequestFollow(String usernameFrom, String usernameTo) {
 		Session session = HibernateUtil.getHibernateSession();
 		
@@ -171,7 +169,8 @@ public class UserDAO implements IUserDAO {
 		session.close();
 		return exist;
 	}
-					
+		
+	@Override
 	public User inizializeLists(String username) {
 		Session session = HibernateUtil.getHibernateSession();
 		User user = (User) session.createQuery("FROM  User u where u.username=:username")
@@ -187,13 +186,13 @@ public class UserDAO implements IUserDAO {
 		return user;
 	}
 
+	@Override
 	public void inizializeListUser(Set<?> set) {
 		Session session = HibernateUtil.getHibernateSession();
 
 		Hibernate.initialize(set);
 
 		session.close();
-
 	}
 
 
