@@ -45,11 +45,12 @@ $(document).ready(function () {
 	var currentTime = new Date();
 	
 	$(window).scroll(function(){
-		if ($(document).height() -  $(window).height() <=  $(window).scrollTop() && !entered) {
+//		console.log(($(document).height() -  $(window).height())+" minore di "+$(window).scrollTop());
+		if (($(document).height() -  $(window).height()) <=  $(window).scrollTop()+10 && !entered) {
 			entered=true;
-				$("#loading").removeClass("hide");
-				setTimeout(function(){
-					
+			$("#loading").removeClass("hide");
+			setTimeout(function(){
+
 				$.ajax({
 					url:"latestPost", 
 					data:{time:currentTime.getTime(),last:postsrequest},
@@ -63,7 +64,7 @@ $(document).ready(function () {
 						entered=false;
 					}	
 				}) 		 
-				},1000);
+			},1000);
 		}
 	});
 });
