@@ -1,3 +1,6 @@
+<!-- BODY PER IL POPUP DEI FOLLOWING DEL PROFILO UTENTE LOGGATO -->
+<!-- SEPARATO DA QUELLO DEGLI ALTRI UTENTI PER NON MISCHIARE TROPPO, VISTO CHE HA SOLO I TASTI UNFOLLOW -->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
