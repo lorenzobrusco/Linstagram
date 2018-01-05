@@ -2,13 +2,13 @@ package it.unical.linstagram.dto;
 
 import it.unical.linstagram.model.User;
 
-public class ViewerDTO extends UserDTO{
+public class UserViewerDTO extends UserDTO{
 
 	private String photo;
 	private String name;
 	private String surname;
 	
-	public ViewerDTO(User user) {
+	public UserViewerDTO(User user) {
 		super(user);
 		this.photo = user.getPhotoProfile();
 		this.name = user.getName();

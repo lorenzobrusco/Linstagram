@@ -44,6 +44,14 @@ public class PostService {
 		return postDAO.getPostById(idPost);
 	}
 	
+	public List<Post> getPostbyHashtag(String hashtag)
+	{
+		Hashtag ht = hashtagDAO.getHashtagByValue(hashtag);
+		List<Post> posts = postDAO.getPostsByHashtag(ht);
+		
+		return posts;
+	}
+	
 	public List<Post> getLatestPost(User user, Calendar date,int last){
 		return postDAO.getLastPosts(user.getUsername(), date, last);
 	}
