@@ -37,14 +37,8 @@
 											class='love'></span></a>
 									</c:when>
 									<c:otherwise>
-										<c:set var="foundLike" value="${false}" />
-										<c:forEach items="${post.likes}" var="like">
-											<c:if test="${like.id == user.id}">
-												<c:set var="foundLike" value="${true}" />
-											</c:if>
-										</c:forEach>
 										<c:choose>
-											<c:when test="${foundLike == true}">
+											<c:when test="${post.likeUser == true}">
 												<a name="${post.id }" id="loveFull${post.id }"
 													class="loveFull"><span class='loveFull'></span></a>
 											</c:when>
@@ -66,14 +60,8 @@
 											class="bookmark"><span class='save'></span></a>
 									</c:when>
 									<c:otherwise>
-										<c:set var="found" value="${false}" />
-										<c:forEach items="${user.bookmarks}" var="bookmark">
-											<c:if test="${bookmark.id == post.id}">
-												<c:set var="found" value="${true}" />
-											</c:if>
-										</c:forEach>
 										<c:choose>
-											<c:when test="${found }">
+											<c:when test="${post.bookmarkUser }">
 												<a name="${post.id }" id="bookmark${post.id }"
 													class="bookmarkFull"><span class='saveFull'></span></a>
 											</c:when>

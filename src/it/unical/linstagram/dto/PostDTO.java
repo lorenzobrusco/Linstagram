@@ -27,26 +27,30 @@ public class PostDTO {
 	
 	private Set<Comment> comments = new HashSet<Comment>();
 	
-	private List<String> hashtags = new ArrayList<String>();
+	private List<Hashtag> hashtags = new ArrayList<Hashtag>();
 	
-	public PostDTO(Post post) {
+	private boolean likeUser;
+	private boolean bookmarkUser;
+	
+	public PostDTO(Post post, boolean likeUser, boolean bookmarkUser) {
 		this.id = post.getId();
 		this.user = post.getUser();
 		this.postDate = post.getPostDate();
 		this.media = post.getMedia();
 		this.likes = post.getLikes();
 		
-		for(User u: post.getTags())
-		{
+		for(User u: post.getTags())	{
 			this.tags.add(new UserDTO(u));
 		}
 		
 		this.comments = post.getComments();
 		
-		for(Hashtag h: post.getHashtags())
-		{
-			this.hashtags.add(h.getHashtag());
+		for(Hashtag h: post.getHashtags()) {
+			this.hashtags.add(h);
 		}
+		
+		this.likeUser = likeUser;
+		this.bookmarkUser = bookmarkUser;
 		
 	}
 
@@ -114,13 +118,28 @@ public class PostDTO {
 		this.comments = comments;
 	}
 
-	public List<String> getHashtags() {
+	public List<Hashtag> getHashtags() {
 		return hashtags;
 	}
 
-	public void setHashtags(List<String> hashtags) {
+	public void setHashtags(List<Hashtag>hashtags) {
 		this.hashtags = hashtags;
 	}
 	
+	public boolean isLikeUser() {
+		return likeUser;
+	}
+	
+	public void setLikeUser(boolean likeUser) {
+		this.likeUser = likeUser;
+	}
+	
+	public boolean isBookmarkUser() {
+		return bookmarkUser;
+	}
+	
+	public void setBookmarkUser(boolean bookmarkUser) {
+		this.bookmarkUser = bookmarkUser;
+	}
 	
 }

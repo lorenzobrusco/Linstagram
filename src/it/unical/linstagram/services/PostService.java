@@ -3,12 +3,14 @@ package it.unical.linstagram.services;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.linstagram.dto.CommentDTO;
+import it.unical.linstagram.dto.PostDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.helper.HashtagFinder;
@@ -51,8 +53,26 @@ public class PostService {
 		return posts;
 	}
 	
-	public List<Post> getLatestPost(User user, Calendar date,int last){
-		return postDAO.getLastPosts(user.getUsername(), date, last);
+	public List<PostDTO> getLatestPost(User user, Calendar date,int last){
+		List<Post> posts = postDAO.getLastPosts(user.getUsername(), date, last);
+		
+		List<PostDTO> postsDTO = new ArrayList<>();
+		Set<Post> bookmarks = user.getBookmarks();
+		List<User> likes = null;
+		for (Post post : posts) {
+			boolean hasLike = false;
+			boolean hasBookmark = false;
+			likes = postDAO.getLikesByPostId(post.getId());
+			
+			if (likes.contains(user))
+				hasLike = true;
+			if (bookmarks.contains(post))
+				hasBookmark = true;
+
+			postsDTO.add(new PostDTO(post, hasLike, hasBookmark));
+		}
+		
+		return postsDTO;
 	}
 	
 	public boolean insertLike(int idPost, String username) {
