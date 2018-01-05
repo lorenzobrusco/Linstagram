@@ -8,7 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.unical.linstagram.dto.UserResearchDTO;
+import it.unical.linstagram.dto.UserViewerDTO;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HashtagDAO;
@@ -22,27 +22,27 @@ public class ResearchService {
 	@Autowired
 	private HashtagDAO hashtagDAO;
 	
-	public Set<UserResearchDTO> getSuggestionsUsername(String usernameQuery)
+	public Set<UserViewerDTO> getSuggestionsUsername(String usernameQuery)
 	{
 		List<User> users = userDAO.getSuggestions(usernameQuery);
 		
-		Set<UserResearchDTO> usersDTO = new HashSet<>();
+		Set<UserViewerDTO> usersDTO = new HashSet<>();
 		
 		for (User user : users) {
-			usersDTO.add(new UserResearchDTO(user));	
+			usersDTO.add(new UserViewerDTO(user));	
 		}
 		
 		return usersDTO;
 	}
 	
-	public Set<UserResearchDTO> getSuggestionsName(String nameQuery)
+	public Set<UserViewerDTO> getSuggestionsName(String nameQuery)
 	{
 		List<User> users = userDAO.getSuggestionsName(nameQuery);
 		
-		Set<UserResearchDTO> usersDTO = new HashSet<>();
+		Set<UserViewerDTO> usersDTO = new HashSet<>();
 		
 		for (User user : users) {
-			usersDTO.add(new UserResearchDTO(user));	
+			usersDTO.add(new UserViewerDTO(user));	
 		}
 		
 		return usersDTO;

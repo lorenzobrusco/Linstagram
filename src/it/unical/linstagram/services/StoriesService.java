@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.unical.linstagram.dto.UsersStoriesDTO;
-import it.unical.linstagram.dto.ViewerDTO;
+import it.unical.linstagram.dto.UserViewerDTO;
 import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
 import it.unical.linstagram.dto.UserDTO;
@@ -88,7 +88,7 @@ public class StoriesService {
 			StoryViewerDTO svDTO = new StoryViewerDTO(story.getId());
 			
 			for(User viewer :story.getViewers()) {
-				svDTO.addViewer(new ViewerDTO(viewer));
+				svDTO.addViewer(new UserViewerDTO(viewer));
 			}
 			storyViewerDTOs.add(svDTO);
 		}
