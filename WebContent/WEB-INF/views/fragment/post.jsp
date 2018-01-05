@@ -2,6 +2,12 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="json" uri="http://www.atg.com/taglibs/json"%>
+
+<script
+	src="${pageContext.request.contextPath}/resources/js/event_post.js"></script>
+
+
 <c:forEach items="${posts}" var="post">
 	<section>
 		<div class="row">
@@ -88,20 +94,40 @@
 							</b></a>
 						</div>
 						<div class='caption-section'>
-							<a href='userPage?usernameOther=${post.user.username}'>${post.user.username }</a><span>${post.content}</span>
+							<a href='userPage?usernameOther=${post.user.username}'>${post.user.username }</a>
+							<span><script>
+								var tags = <json:array
+							name="tags" items="${post.tags}" var="tag">
+								<json:object>
+								<json:property name="id" value="${tag.id}" />
+								<json:property name="username" value="${tag.username}"/>
+								</json:object>
+								</json:array>;
+
+								var hashtags = <json:array
+						name="hashtags" items="${post.hashtags}" var="hashtag">
+								<json:object>
+								<json:property name="id" value="${hashtag.id}" />
+								<json:property name="hashtag" value="${hashtag.hashtag}"/>
+								</json:object>
+								</json:array>;
+								document.write(getContentPost(
+										"${post.content}", tags, hashtags))
+							</script></span>
 						</div>
 
 						<div class='list-comments-section'>
 							<a class="show-all-comments" href="#postcibo"
 								data-toggle="collapse"><span class="show-comments"></span>
-								Carica altri commenti<img class="hide" id="loader-comments"src="${pageContext.request.contextPath}/resources/images/loaderComm.gif"></a><br>
+								Carica altri commenti<img class="hide" id="loader-comments"
+								src="${pageContext.request.contextPath}/resources/images/loaderComm.gif"></a><br>
 							<div class='list-comments${post.id }'>
 								<c:forEach items="${post.comments}" var="comment"
 									varStatus="loop">
 									<c:if test="${loop.index <4}">
 										<div class="comment">
-										<a href='userPage?usernameOther=${comment.user.username}'><b>${comment.user.username}</b></a>
-										<span> ${comment.content}</span>
+											<a href='userPage?usernameOther=${comment.user.username}'><b>${comment.user.username}</b></a>
+											<span> ${comment.content}</span>
 										</div>
 									</c:if>
 								</c:forEach>

@@ -180,3 +180,62 @@ $(document).ready(function() {
 	});
 
 });
+
+
+function getPostsByHashtags(h) {
+	
+	//TODO
+	$.ajax({
+		url : "hashtagPosts",
+		type:"POST",
+		data:{hashtag:h},
+		success : function(result) {
+//			var html = $.parseHTML(result);
+//				$("#posts").append(html);
+			
+			}
+		});
+	
+	
+}
+
+function getContentPost(content, tags, hashtags) {
+	if (tags.length == 0 && hashtags.length == 0)
+	{
+		console.log (content);
+		return content;
+	}
+	if (tags.length !=0)
+	{
+		tags= tags.sort(function(a,b){return a.username<b.username});
+		console.log (tags);
+		for (i = 0; i < tags.length; i++)
+		{
+			var startingIndex = content.indexOf(tags[i]["username"]);
+			if (startingIndex >=1 && content[startingIndex-1] == "@")
+			{
+				content = content.replace("@"+tags[i]["username"], "<a href='userPage?usernameOther="+tags[i]["username"]+"'>"+"@"+tags[i]["username"]+"</a>");
+
+			}
+		}
+
+	}
+	if (hashtags.length !=0)
+	{
+		hashtags= hashtags.sort(function(a,b){return a.hashtag < b.hashtag});
+		console.log (hashtags);
+
+		for (i = 0; i < hashtags.length; i++)
+		{
+			var startingIndex = content.indexOf(hashtags[i]["hashtag"]);
+			if (startingIndex >=1 && content[startingIndex-1] == "#")
+			{
+				content = content.replace("#"+hashtags[i]["hashtag"], "<a href='javascript:getPostsByHashtags(\""+hashtags[i]["hashtag"]+"\")'>"+"#"+hashtags[i]["hashtag"]+"</a>");
+
+			}
+		}
+	}
+
+	return content;
+
+};

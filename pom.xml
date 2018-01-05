@@ -117,6 +117,13 @@
 			<version>5.8.2.Final</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.github.livesense</groupId>
+			<artifactId>org.liveSense.scripting.jsp.taglib.jsonatg</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+
+
 	</dependencies>
 
 </project>
