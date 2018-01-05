@@ -38,6 +38,7 @@ public class PostDTO {
 		this.postDate = post.getPostDate();
 		this.media = post.getMedia();
 		this.likes = post.getLikes();
+		this.content = post.getContent();
 		
 		for(User u: post.getTags())	{
 			this.tags.add(new UserDTO(u));

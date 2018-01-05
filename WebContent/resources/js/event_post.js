@@ -137,16 +137,16 @@ $(document).ready(function() {
 
 	//EVENTO PER APRIRE IL POPUP DEI COMMENTI E VEDERE GLI UTENTI CHE HANNO COMMENTATO UN POST
 //	$(document).on('click', '#comment', function() {
-//		var post = $(this).attr("name");
-//
-//		$.get({
-//			url : "getComment",
-//			data:{post:post},
-//			success : function(result) {
-//				$(".modal-body").empty();
-//				$(".modal-body").append(result);
-//			}
-//		});
+//	var post = $(this).attr("name");
+
+//	$.get({
+//	url : "getComment",
+//	data:{post:post},
+//	success : function(result) {
+//	$(".modal-body").empty();
+//	$(".modal-body").append(result);
+//	}
+//	});
 //	});
 
 	$(document).on('click', '.show-all-comments', function() {
@@ -176,14 +176,14 @@ $(document).ready(function() {
 		var listComment = $('.list-comments'+postID);
 		$(listComment).children(".comment:gt(3)").remove();
 		$(this).addClass("hide");
-		
+
 	});
 
 });
 
 
 function getPostsByHashtags(h) {
-	
+
 	//TODO
 	$.ajax({
 		url : "hashtagPosts",
@@ -191,23 +191,19 @@ function getPostsByHashtags(h) {
 		data:{hashtag:h},
 		success : function(result) {
 //			var html = $.parseHTML(result);
-//				$("#posts").append(html);
-			
-			}
-		});
-	
-	
+//			$("#posts").append(html);
+
+		}
+	});
+
+
 }
 
 function getContentPost(content, tags, hashtags) {
-	if (tags.length == 0 && hashtags.length == 0)
-	{
-		console.log (content);
-		return content;
-	}
+
 	if (tags.length !=0)
 	{
-		tags= tags.sort(function(a,b){return a.username<b.username});
+		tags= tags.sort(function(a,b){return a.username.length<b.username.length});
 		console.log (tags);
 		for (i = 0; i < tags.length; i++)
 		{
@@ -222,7 +218,7 @@ function getContentPost(content, tags, hashtags) {
 	}
 	if (hashtags.length !=0)
 	{
-		hashtags= hashtags.sort(function(a,b){return a.hashtag < b.hashtag});
+		hashtags= hashtags.sort(function(a,b){return a.hashtag.length < b.hashtag.length});
 		console.log (hashtags);
 
 		for (i = 0; i < hashtags.length; i++)
@@ -236,6 +232,7 @@ function getContentPost(content, tags, hashtags) {
 		}
 	}
 
+	console.log("content "+ content);
 	return content;
 
 };
