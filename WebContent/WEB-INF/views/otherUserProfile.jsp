@@ -20,6 +20,7 @@
 <script src="./resources/js/eventLoadPost.js"></script>
 <!-- <script src="./resources/js/follow_event/modal_follow_event.js"></script> -->
 <script src="./resources/js/follow_event/follower_event.js"></script>
+<script src="./resources/js/event_modal_post_profile.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile_style.css">
@@ -139,11 +140,12 @@
 			</div>
 		</section>
 	</div>
- <jsp:include page="./fragment/footer.jsp"></jsp:include>
+	<jsp:include page="./fragment/footer.jsp"></jsp:include>
  
-<c:if test="${userPublic.privateProfile == false  || (userPublic.privateProfile == true && userPublic.followed == true)}">
-	<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
-	<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
-</c:if>
+	<c:if test="${userPublic.privateProfile == false  || (userPublic.privateProfile == true && userPublic.followed == true)}">
+		<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
+		<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
+		<jsp:include page="./fragment/userProfileFragment/modalPost.jsp"></jsp:include>
+	</c:if>
 </body>
 </html>
