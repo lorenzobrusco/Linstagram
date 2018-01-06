@@ -79,25 +79,7 @@
 						</div>
 						<div class='caption-section'>
 							<a href='userPage?usernameOther=${post.user.username}'>${post.user.username }</a>
-							<span><script>
-								var tags = <json:array
-							name="tags" items="${post.tags}" var="tag">
-								<json:object>
-								<json:property name="id" value="${tag.id}" />
-								<json:property name="username" value="${tag.username}"/>
-								</json:object>
-								</json:array>;
-
-								var hashtags = <json:array
-						name="hashtags" items="${post.hashtags}" var="hashtag">
-								<json:object>
-								<json:property name="id" value="${hashtag.id}" />
-								<json:property name="hashtag" value="${hashtag.hashtag}"/>
-								</json:object>
-								</json:array>;
-								document.write(getContentPost(
-										"${post.content}", tags, hashtags))
-							</script></span>
+							<span>${post.content}</span>
 						</div>
 
 						<div class='list-comments-section'>

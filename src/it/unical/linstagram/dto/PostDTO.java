@@ -1,22 +1,20 @@
 package it.unical.linstagram.dto;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
-import javassist.bytecode.Mnemonic;
 
 public class PostDTO {
 
@@ -47,7 +45,7 @@ public class PostDTO {
 		this.postDate = post.getPostDate();
 		this.media = post.getMedia();
 		this.likes = post.getLikes();
-		this.content = post.getContent();
+		this.content = getConvertedContent(post.getContent(), post.getTags(), post.getHashtags());
 		this.setElapsedTime(calculateElapsedTime());
 
 		for(User u: post.getTags())	{
@@ -152,6 +150,13 @@ public class PostDTO {
 	public void setBookmarkUser(boolean bookmarkUser) {
 		this.bookmarkUser = bookmarkUser;
 	}
+	public String getElapsedTime() {
+		return elapsedTime;
+	}
+	
+	public void setElapsedTime(String elapsedTime) {
+		this.elapsedTime = elapsedTime;
+	}
 
 	private String calculateElapsedTime ()
 	{
@@ -185,12 +190,30 @@ public class PostDTO {
 
 		return "";
 	}
-
-	public String getElapsedTime() {
-		return elapsedTime;
+	
+	private String getConvertedContent (String content, Set<User> tags, List<Hashtag> hashtags)
+	{
+		
+		//TODO E SE UN TAG FOSSE UNA SOTTOSTRINGA DI UN ALTRO
+		if (tags.size() != 0)
+		{
+			List<User> tagsSorted = tags.stream().collect(Collectors.toList());
+			Collections.sort(tagsSorted, (o1, o2) -> o2.getUsername().length()-o1.getUsername().length());
+			
+			for (User u : tags) {
+				content = content.replaceAll("@"+u.getUsername(), "<a href='userPage?usernameOther="+u.getUsername()+"'>"+"@"+u.getUsername()+"</a>");
+			}
+		}
+		if (hashtags.size() != 0)
+		{
+			Collections.sort(hashtags, (o1, o2) -> o2.getHashtag().length()-o1.getHashtag().length());
+			for (Hashtag h : hashtags) {				
+				content = content.replaceAll("#"+h.getHashtag(), "<a href='hashtagPosts?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>");				
+			}
+			
+		}
+		return content;
 	}
+	
 
-	public void setElapsedTime(String elapsedTime) {
-		this.elapsedTime = elapsedTime;
-	}
 }

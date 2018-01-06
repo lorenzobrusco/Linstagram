@@ -199,40 +199,40 @@ function getPostsByHashtags(h) {
 
 }
 
-function getContentPost(content, tags, hashtags) {
-
-	if (tags.length !=0)
-	{
-		tags= tags.sort(function(a,b){return a.username.length<b.username.length});
-		console.log (tags);
-		for (i = 0; i < tags.length; i++)
-		{
-			var startingIndex = content.indexOf(tags[i]["username"]);
-			if (startingIndex >=1 && content[startingIndex-1] == "@")
-			{
-				content = content.replace("@"+tags[i]["username"], "<a href='userPage?usernameOther="+tags[i]["username"]+"'>"+"@"+tags[i]["username"]+"</a>");
-
-			}
-		}
-
-	}
-	if (hashtags.length !=0)
-	{
-		hashtags= hashtags.sort(function(a,b){return a.hashtag.length < b.hashtag.length});
-		console.log (hashtags);
-
-		for (i = 0; i < hashtags.length; i++)
-		{
-			var startingIndex = content.indexOf(hashtags[i]["hashtag"]);
-			if (startingIndex >=1 && content[startingIndex-1] == "#")
-			{
-				content = content.replace("#"+hashtags[i]["hashtag"], "<a href='javascript:getPostsByHashtags(\""+hashtags[i]["hashtag"]+"\")'>"+"#"+hashtags[i]["hashtag"]+"</a>");
-
-			}
-		}
-	}
-
-	console.log("content "+ content);
-	return content;
-
-};
+//function getContentPost(content, tags, hashtags) {
+//
+//	if (tags.length !=0)
+//	{
+//		tags= tags.sort(function(a,b){return a.username.length<b.username.length});
+//		console.log (tags);
+//		for (i = 0; i < tags.length; i++)
+//		{
+//			var startingIndex = content.indexOf(tags[i]["username"]);
+//			if (startingIndex >=1 && content[startingIndex-1] == "@")
+//			{
+//				content = content.replace("@"+tags[i]["username"], "<a href='userPage?usernameOther="+tags[i]["username"]+"'>"+"@"+tags[i]["username"]+"</a>");
+//
+//			}
+//		}
+//
+//	}
+//	if (hashtags.length !=0)
+//	{
+//		hashtags= hashtags.sort(function(a,b){return a.hashtag.length < b.hashtag.length});
+//		console.log (hashtags);
+//
+//		for (i = 0; i < hashtags.length; i++)
+//		{
+//			var startingIndex = content.indexOf(hashtags[i]["hashtag"]);
+//			if (startingIndex >=1 && content[startingIndex-1] == "#")
+//			{
+//				content = content.replace("#"+hashtags[i]["hashtag"], "<a href='javascript:getPostsByHashtags(\""+hashtags[i]["hashtag"]+"\")'>"+"#"+hashtags[i]["hashtag"]+"</a>");
+//
+//			}
+//		}
+//	}
+//
+//	console.log("content "+ content);
+//	return content;
+//
+//};
