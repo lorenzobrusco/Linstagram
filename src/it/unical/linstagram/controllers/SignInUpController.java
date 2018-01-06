@@ -27,6 +27,11 @@ public class SignInUpController {
 	public String getSignInPage() {
 		return "signin";
 	}
+	
+	@RequestMapping(value = "/forgotPassword", method=RequestMethod.POST)
+	public String forgotPasswordPage() {
+		return "fragment/forgotPassword";
+	}
 
 	@RequestMapping(value = "/signUpAttempt", method = RequestMethod.POST)
 	@ResponseBody
