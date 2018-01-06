@@ -4,10 +4,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="json" uri="http://www.atg.com/taglibs/json"%>
 
-<script
-	src="${pageContext.request.contextPath}/resources/js/event_post.js"></script>
-
-
 <c:forEach items="${posts}" var="post">
 	<section>
 		<div class="row">
@@ -127,10 +123,7 @@
 
 						<div class='time-section'>
 							<p>
-								<script>
-									var postedTime = "${post.postDate.getTimeInMillis()}";
-									document.write(getElapsedTime(postedTime));
-								</script>
+							${post.elapsedTime}
 							</p>
 						</div>
 

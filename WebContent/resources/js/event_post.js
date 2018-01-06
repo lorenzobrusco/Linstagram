@@ -1,26 +1,26 @@
 //EVENTI DEI POST
 
 //CALCOLO DEL TEMPO PASSATO DAL CARICAMENTO DEL POST
-function getElapsedTime(postedTime){
-	var now = (new Date()).getTime();
-	var diff=now-postedTime;
-	var second = diff/1000;
-	var min = second/60;
-	var round=Math.round(min);
-	if(	round<=60)
-		return round+" MIN AGO";
-	else if(round > 60 && round < 24*60){
-		round = round/60;
-		round = Math.round(round);
-		return round+" HOURS AGO";
-	}
-	else{
-		round = round/60;
-		round = round/24;
-		round = Math.round(round);
-		return round+" DAYS AGO";
-	}	
-};
+//function getElapsedTime(postedTime){
+//	var now = (new Date()).getTime();
+//	var diff=now-postedTime;
+//	var second = diff/1000;
+//	var min = second/60;
+//	var round=Math.round(min);
+//	if(	round<=60)
+//		return round+" MIN AGO";
+//	else if(round > 60 && round < 24*60){
+//		round = round/60;
+//		round = Math.round(round);
+//		return round+" HOURS AGO";
+//	}
+//	else{
+//		round = round/60;
+//		round = round/24;
+//		round = Math.round(round);
+//		return round+" DAYS AGO";
+//	}	
+//};
 
 $(document).ready(function() {
 	//EVENTO "INSERIMENTO LIKE"
