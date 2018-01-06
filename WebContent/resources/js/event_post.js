@@ -190,8 +190,10 @@ function getPostsByHashtags(h) {
 		type:"POST",
 		data:{hashtag:h},
 		success : function(result) {
-//			var html = $.parseHTML(result);
-//			$("#posts").append(html);
+			var html = $.parseHTML(result);
+			$("#posts").empty();
+			$("#posts").append(html);
+			console.log ("ciao");
 
 		}
 	});

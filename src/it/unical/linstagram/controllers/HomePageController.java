@@ -181,12 +181,12 @@ public class HomePageController {
 
 	@RequestMapping(value="hashtagPosts",method=RequestMethod.POST)
 	public String hashtagPosts(@RequestParam String hashtag, HttpSession session, Model model) {
-		List<Post> posts = postService.getPostsbyHashtag(hashtag);
+		List<PostDTO> posts = postService.getPostsbyHashtag((User)session.getAttribute("user"), hashtag);
 		model.addAttribute("posts", posts);
 		System.out.println(posts.size());
 		
 		//TODO SISTEMARE IL METODO
-		return "redirect:index";
+		return "fragment/post";
 
 
 	}

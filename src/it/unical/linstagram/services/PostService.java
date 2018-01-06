@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +17,8 @@ import it.unical.linstagram.helper.TagFinder;
 import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Post;
-import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HashtagDAO;
-import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.PostDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -46,11 +43,18 @@ public class PostService {
 		return postDAO.getPostById(idPost);
 	}
 	
-	public List<Post> getPostsbyHashtag(String hashtag)
+	public List<PostDTO> getPostsbyHashtag(User user, String hashtag)
 	{
 		List<Post> posts = postDAO.getPostsByHashtag(hashtag);
+		List<PostDTO> postsDTO = new ArrayList<>();
 		
-		return posts;
+		for (Post post : posts) {	
+			System.out.println("creo il post "+post.getContent());
+			postsDTO.add(new PostDTO
+					(post, postDAO.doesTheUserLikeThePost(post.getId(), user), user.getBookmarks().contains(post)));		
+		}
+		
+		return postsDTO;
 	}
 	
 	public List<PostDTO> getLatestPost(User user, Calendar date,int last){

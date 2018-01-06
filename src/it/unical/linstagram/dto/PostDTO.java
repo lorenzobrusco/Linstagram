@@ -29,12 +29,8 @@ public class PostDTO {
 	private List<Media> media = new ArrayList<Media>();
 
 	private Set<User> likes = new HashSet<User>();
-
-	private Set<UserDTO> tags = new HashSet<UserDTO>();
-
+	
 	private Set<Comment> comments = new HashSet<Comment>();
-
-	private List<Hashtag> hashtags = new ArrayList<Hashtag>();
 
 	private boolean likeUser;
 	private boolean bookmarkUser;
@@ -48,16 +44,8 @@ public class PostDTO {
 		this.content = getConvertedContent(post.getContent(), post.getTags(), post.getHashtags());
 		this.setElapsedTime(calculateElapsedTime());
 
-		for(User u: post.getTags())	{
-			this.tags.add(new UserDTO(u));
-		}
-
 		this.comments = post.getComments();
-
-		for(Hashtag h: post.getHashtags()) {
-			this.hashtags.add(h);
-		}
-
+		
 		this.likeUser = likeUser;
 		this.bookmarkUser = bookmarkUser;
 
@@ -111,28 +99,12 @@ public class PostDTO {
 		this.likes = likes;
 	}
 
-	public Set<UserDTO> getTags() {
-		return tags;
-	}
-
-	public void setTags(Set<UserDTO> tags) {
-		this.tags = tags;
-	}
-
 	public Set<Comment> getComments() {
 		return comments;
 	}
 
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
-	}
-
-	public List<Hashtag> getHashtags() {
-		return hashtags;
-	}
-
-	public void setHashtags(List<Hashtag>hashtags) {
-		this.hashtags = hashtags;
 	}
 
 	public boolean isLikeUser() {
@@ -206,9 +178,15 @@ public class PostDTO {
 		}
 		if (hashtags.size() != 0)
 		{
+			
+			for (Hashtag hashtag : hashtags) {
+				System.out.println(hashtag.getHashtag());
+			}
 			Collections.sort(hashtags, (o1, o2) -> o2.getHashtag().length()-o1.getHashtag().length());
-			for (Hashtag h : hashtags) {				
-				content = content.replaceAll("#"+h.getHashtag(), "<a href='hashtagPosts?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>");				
+			for (Hashtag h : hashtags) {
+				
+//				content = content.replaceAll("#"+h.getHashtag(), "<a href='hashtagPosts?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>");				
+				content = content.replaceAll("#"+h.getHashtag(), "<a href='javascript:getPostsByHashtags(\""+h.getHashtag()+"\")'>"+"#"+h.getHashtag()+"</a>");
 			}
 			
 		}

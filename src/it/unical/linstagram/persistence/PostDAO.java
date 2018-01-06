@@ -98,6 +98,16 @@ public class PostDAO implements IPostDAO {
 		session.close();
 		return users;
 	}
+	
+	public boolean doesTheUserLikeThePost(int idPost, User user) {
+		Session session = HibernateUtil.getHibernateSession();
+
+		List<User> users = session.createQuery("SELECT post.likes FROM Post post WHERE post.id =:idPost")
+				.setParameter("idPost", idPost).list();
+		
+		session.close();
+		return users.contains(user);
+	}
 
 	@Override
 	public List<User> getUserTaggedByPostId(int idPost) {
@@ -139,10 +149,12 @@ public class PostDAO implements IPostDAO {
 	}
 
 
+	//TODO MIGLIORARE
 	public List<Post> getPostsByHashtag(String hashtag) {
 		Session session = HibernateUtil.getHibernateSession();
 
-		List<Post> posts = session.createQuery("FROM Post p join fetch p.hashtags h WHERE h.hashtag.hashtag=:_hashtag")
+		List<Post> posts = session.createQuery("FROM Post p join fetch p.hashtags h WHERE p.id = "
+				+ "(SELECT p1.id FROM Post p1 join p1.hashtags h1 WHERE h1.hashtag = :_hashtag)")
 				.setParameter("_hashtag", hashtag).list();
 
 		session.close();
