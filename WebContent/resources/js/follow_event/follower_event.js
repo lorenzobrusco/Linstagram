@@ -2,20 +2,44 @@
 
 
 $(document).ready(function() {
+	
+	var notyerror={
+			text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> The changes have not been made!',
+			theme: 'nest',
+			type: 'error',
+			layout: 'bottomLeft',
+			timeout:4000,
+			progressBar: true
+	}
+	
+	function showResultMessage(result){
+		if (result == "FAILED"){
+			new Noty(notyerror).show();
+		}
+	}
+	
+	
 	//EVENTO DEL TASTO "FOLLOW" [PER SEGUIRE UN UTENTE CON IL PROFILO PUBBLICO]
 	$(document).on('click', '#follower-btn', function() {
 		var id = $(this).attr('name');
 		var username = $(this).attr('value');
 		
 		var btn = "#fol-div"+id+" div";
+
+		$(btn).empty();
+		$(btn).append("<button id='unfollower-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
 		$.ajax({
 			url : "followUser",
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
 					$("#count_following").html(parseInt($("#count_following").html(), 10)+1)
+				}
+				else {
 					$(btn).empty();
-					$(btn).append("<button id='unfollower-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
+					$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
+				
+					showResultMessage("FAILED");
 				}
 			}
 		});
@@ -28,17 +52,25 @@ $(document).ready(function() {
 		var privateProfile = $('#private'+id).val();
 
 		var btn = "#fol-div"+id+" div";
+		
+		$(btn).empty();
+		if (privateProfile == "false")
+			$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
+		else
+			$(btn).append("<button value="+username+" name='"+id+"' id='sendRequestPopup-btn'>Send Request</button>")
+		
 		$.ajax({
 			url : "unfollowUser",
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
 					$("#count_following").html(parseInt($("#count_following").html(), 10)-1)
+				}
+				else {
 					$(btn).empty();
-					if (privateProfile == "false")
-						$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
-					else
-						$(btn).append("<button value="+username+" name='"+id+"' id='sendRequestPopup-btn'>Send Request</button>")
+					$(btn).append("<button id='unfollower-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
+					
+					showResultMessage("FAILED");
 				}
 			}
 		});

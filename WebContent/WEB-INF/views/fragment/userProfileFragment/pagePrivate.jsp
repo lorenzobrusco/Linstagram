@@ -5,7 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!-- <script src="./resources/js/follow_event/event_get_follow.js"></script> -->
 
 <!-- <script type="text/javascript">
 $(document).ready(function() {
