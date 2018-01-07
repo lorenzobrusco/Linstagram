@@ -141,7 +141,7 @@ h1.Snapssenger {
 	border: 2px white solid;
 }
 
-@media ( max-width : 1024px) {
+@media ( max-width : 800px) {
 	.container {
 		width: 100% !important;
 	}

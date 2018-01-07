@@ -1,6 +1,5 @@
 package it.unical.linstagram.persistence;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -11,9 +10,7 @@ import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 
-import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Post;
-import it.unical.linstagram.model.RequestFollow;
 import it.unical.linstagram.model.User;
 
 @Repository
@@ -62,13 +59,23 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public User getUserEmailAndPass(String email, String password) {
+	public User getUserByEmailAndPass(String email, String password) {
 		Session session = HibernateUtil.getHibernateSession();
 		User user = (User) session.createQuery("FROM  User u where u.email=:email and u.password=:password")
 				.setParameter("email", email).setParameter("password", password).uniqueResult();
 		session.close();
 		return user;
 	}
+	
+	@Override
+	public User getUserByUsernameAndEmail(String username, String email) {
+		Session session = HibernateUtil.getHibernateSession();
+		User user = (User) session.createQuery("FROM  User u where u.email=:email and u.username=:username")
+				.setParameter("username", username).setParameter("email", email).uniqueResult();
+		session.close();
+		return user;
+	}
+	
 
 	@Override
 	public String getPasswordByUsername(String username) {
@@ -194,10 +201,6 @@ public class UserDAO implements IUserDAO {
 
 		session.close();
 	}
-
-
-
-
 
 
 	@Override

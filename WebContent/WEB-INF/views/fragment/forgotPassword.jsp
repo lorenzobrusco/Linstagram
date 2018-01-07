@@ -2,8 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 
 <div class="login-form text-center reset-pass-container">
-	<form method="post" class="reset-pass">
-		<h3 id="recover-pass-title">Recover Your Password</h3>
+	<h3 id="recover-pass-title">Recover Your Password</h3>
+	<form class="reset-pass">
 		<div class="group">
 			<label for="user-recovery" class="label">Username</label> <input
 				id="user-recovery" name="user-recovery" type="text" class="input"
@@ -22,6 +22,9 @@
 			<a href="" class="button cancel-button" id="cancel-btn">Cancel</a>
 		</div>
 	</form>
+</div>
+
+
 </div>
 
 <script>
@@ -50,41 +53,119 @@
 							return true;
 						}
 
-						function buildNoty(customtext) {
+						const errorNotyType = "error";
+						const successNotyType = "success";
+
+						function buildNoty(customtext, type) {
+							var text = "";
+							var time = 3000;
+							if (type == "error") {
+								text = '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p>'
+										+ customtext + ' !';
+							} else if (type == "success") {
+								text = '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p>'
+										+ customtext + ' !';
+								time = 1500;
+							}
+							
+
 							var notyconf = {
-								text : '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p>'
-										+ customtext + ' !',
+								text : text,
 								theme : 'nest',
-								type : 'error',
+								type : type,
 								layout : 'bottomLeft',
-								timeout : 4000,
+								timeout : time,
 								progressBar : true
 							}
-							new Noty(notyconf).show();
+							return new Noty(notyconf);
 						}
 
-						$("#confirm-recovery-btn").click(function(e) {
-							e.preventDefault();
-							var email = $("#email-recovery").val();
-							var user = $("#user-recovery").val();
-							console.log("email:" + email);
-							if (validationMail(email)) {
-								/*
-								TODO: 
-									1.send data to server 
-									2.search user with this user and mail
-										2.1. notify error if not exist
-									3.generate random pass 
-									4.send email
-									5.notify success
-									6.return to login
-								*/
-								console.log(user+" - "+email);
-							} else {
-								buildNoty("Sorry, but the entered EMAIL is NOT VALID");
-							}
+						function returnToLogin() {
+							location.reload();
+						}
 
-						});
+						function showLoading() {
+							$("#loader").removeClass("hide");
+							$(".login-wrap").addClass("hide");
+
+						}
+
+						function hideLoading() {
+							$("#loader").addClass("hide");
+							$(".login-wrap").removeClass("hide");
+						}
+
+						/*
+						function showLoading(){
+										$("#loader").removeClass("hide");
+										$(".reset-pass").addClass("hide");
+										
+									}
+									
+									function hideLoading(){
+										$("#loader").addClass("hide");
+										$(".reset-pass").removeClass("hide");
+									}
+						 */
+
+						$("#confirm-recovery-btn")
+								.click(
+										function(e) {
+											e.preventDefault();
+											var email = $("#email-recovery").val();
+											var user = $("#user-recovery").val();
+											if (email == "" || user == "") {
+												buildNoty("Please, fill all fields", errorNotyType)
+														.show();
+												return;
+											}
+
+											if (validationMail(email)) {
+												showLoading();
+												$
+														.ajax({
+															url : "forgotPassword",
+															method : 'post',
+															data : {
+																'username' : user,
+																'email' : email
+															},
+															success : function(resp) {
+																//$("#email-recovery").val("");
+																//$("#user-recovery").val("");
+																
+																console.log(resp);
+																if (resp == "USER_NOT_EXIST") {
+																	buildNoty("Sorry, but the user not exist",errorNotyType).show();
+																	hideLoading();
+																} else if (resp == "OK") {
+																	buildNoty(
+																			"You will receive an email with the new credentials",
+																			successNotyType).on('onClose',
+																			function() {
+																				returnToLogin();
+																			}).show();
+																}
+															}
+														});
+
+												/*
+												TODO: 
+													1.send data to server 
+													2.search user with this user and mail
+														2.1. notify error if not exist
+													3.generate random pass 
+													4.send email
+													5.notify success
+													6.return to login
+												 */
+												console.log(user + " - " + email);
+											} else {
+												buildNoty("Sorry, but the entered EMAIL is NOT VALID",
+														errorNotyType).show();
+											}
+
+										});
 
 					}); //close ready
 </script>

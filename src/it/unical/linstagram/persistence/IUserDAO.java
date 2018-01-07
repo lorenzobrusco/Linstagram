@@ -3,9 +3,6 @@ package it.unical.linstagram.persistence;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 
@@ -16,7 +13,8 @@ public interface IUserDAO {
 	User getUserByUsername(String username);
 	User getUserByUsernameAndPass(String username, String password);
 	User getUserByEmail(String email);
-	User getUserEmailAndPass(String email, String password);
+	User getUserByEmailAndPass(String email, String password);
+	User getUserByUsernameAndEmail(String username, String email);
 	
 	String getPasswordByUsername(String username);
 	String getPasswordByEmail(String email);

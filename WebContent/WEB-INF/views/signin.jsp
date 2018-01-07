@@ -99,6 +99,7 @@ Signed in</label>
 					</div>
 				</div>
 			</div>
+			<div id="loader" class="hide"></div>
 		</div>
 	</div>
 	<!--  Container close   -->
@@ -107,7 +108,6 @@ Signed in</label>
 	$(document)
 			.ready(
 					function() {
-
 						const SUCCESS_SING_UP = "SUCCESS_SIGN_UP";
 						const EMAIL_ALREADY_USED = "ERROR_EMAIL_ALREADY_USED";
 						const USERNAME_ALREADY_USED = "ERROR_USERNAME_ALREADY_USED";
@@ -146,7 +146,7 @@ Signed in</label>
 						
 						$("#forgot-pass-btn").click(function(){
 							$.ajax({
-								url: "forgotPassword",
+								url: "forgotPasswordPage",
 								method : 'post',
 								success:function(resp){
 									$(".login-html").empty();
@@ -155,6 +155,18 @@ Signed in</label>
 							});
 						
 						});
+						
+						function showLoading(){
+							$("#loader").removeClass("hide");
+							$(".login-wrap").addClass("hide");
+							
+						}
+						
+						function hideLoading(){
+							$("#loader").addClass("hide");
+							$(".login-wrap").removeClass("hide");
+						}
+
 
 						$("#signup-btn")
 								.click(
@@ -182,6 +194,7 @@ Signed in</label>
 														var pass = pass_field.val();
 
 														if (validationMail(email)) {
+															showLoading();
 															$.ajax({
 																		url : "signUpAttempt",
 																		method : 'post',
@@ -191,9 +204,12 @@ Signed in</label>
 																			password : pass
 																		},
 																		success : function(result) {
+																		
 																			if (result == EMAIL_ALREADY_USED) {
+																				hideLoading();
 																				buildNoty("Sorry, but the entered EMAIL is ALREADY USED");
 																			} else if (result == USERNAME_ALREADY_USED) {
+																				hideLoading();
 																				buildNoty("Sorry, but the entered USERNAME is ALREADY USED");
 																			} else if (result == SUCCESS_SING_UP) {
 																				//fill sign-in form with the data of the just registered user and submit 
