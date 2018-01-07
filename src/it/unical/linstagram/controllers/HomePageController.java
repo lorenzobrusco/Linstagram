@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonArray;
+
 import it.unical.linstagram.dto.NotificationDTO;
 import it.unical.linstagram.dto.PostDTO;
 import it.unical.linstagram.dto.StoryDTO;
@@ -161,22 +163,26 @@ public class HomePageController {
 
 	@RequestMapping(value="/research",method=RequestMethod.POST)
 	@ResponseBody
-	public String research(@RequestParam String text, HttpSession session) {
-		Set<Hashtag> suggestionsHashtag = researchService.getSuggestionsHashtag(text);
-		Set<UserViewerDTO> suggestionsUsers = researchService.getSuggestionsUsername(text);
-		suggestionsUsers.addAll(researchService.getSuggestionsName(text));
-
-		for (Hashtag hashtag : suggestionsHashtag) {
-			System.out.println(hashtag.getHashtag());
+	public JsonArray research(@RequestParam String text, HttpSession session) {
+//		Set<Hashtag> suggestionsHashtag = researchService.getSuggestionsHashtag(text);
+//		Set<UserViewerDTO> suggestionsUsers = researchService.getSuggestionsUsername(text);
+//		suggestionsUsers.addAll(researchService.getSuggestionsName(text));
+//
+//		for (Hashtag hashtag : suggestionsHashtag) {
+//			System.out.println(hashtag.getHashtag());
+//		}
+//
+//		session.setAttribute("hashtagSearch", suggestionsHashtag);
+//		session.setAttribute("userSearch", suggestionsUsers);
+//
+//
+//		return "SUCCESS";
+		//TODO DA SISTEMARE
+		System.out.println(text);
+		JsonArray generalQuery = researchService.generalQuery(text);
+		System.out.println(generalQuery);
+		return generalQuery;
 		}
-
-		session.setAttribute("hashtagSearch", suggestionsHashtag);
-		session.setAttribute("userSearch", suggestionsUsers);
-
-
-		return "SUCCESS";
-
-	}
 
 
 	@RequestMapping(value="hashtagPosts",method=RequestMethod.POST)
