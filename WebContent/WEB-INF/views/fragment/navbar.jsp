@@ -166,6 +166,23 @@
 						$('#search-input-desktop').focusout(function() {
 							$("#search-div").css("width", "50%");
 						});
+						
+						//TODO DA FINIRE						
+						$('#search-input-desktop').keyup(function () {
+							var text = $("#search-input-desktop").val();
+							console.log (text);
+							
+							$.ajax({
+								url : "research",
+								type:"POST",
+								data:{text:text},
+								success : function(result) {
+									console.log (result);
+												
+								}
+							});
+							
+						});
 
 					});
 </script>
