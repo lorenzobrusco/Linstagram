@@ -25,10 +25,12 @@ import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.UserDAO;
+import it.unical.linstagram.services.HashtagService;
 import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.NotificationService;
@@ -55,8 +57,8 @@ public class HomePageController {
 	private ResearchService researchService;
 
 	@Autowired
-	UserDAO userDAO;
-
+	private HashtagService hashtagService;
+	
 	@RequestMapping("/index")
 	public String homePageController(HttpSession session, Model model) {
 		if (UserManager.checkLogged(session)) {
@@ -189,16 +191,18 @@ public class HomePageController {
 		}
 
 
-	@RequestMapping(value="hashtagPosts")
+	@RequestMapping(value="hashtags")
 	public String hashtagPosts(@RequestParam String hashtag, HttpSession session, Model model) {
 		
 		List<PostDTO> posts = postService.getPostsbyHashtag((User)session.getAttribute("user"), hashtag,0);
 		model.addAttribute("posts", posts);
 		session.setAttribute("hashtagPost",hashtag);
-		System.out.println(posts.size());
+		
+		Hashtag ht = hashtagService.getHashtag(hashtag);
+		model.addAttribute("hashtag",ht);
 		
 		//TODO SISTEMARE IL METODO
-		return "fragment/post";
+		return "hashtags";
 
 
 	}

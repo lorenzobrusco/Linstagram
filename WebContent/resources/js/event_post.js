@@ -188,12 +188,13 @@ function getPostsByHashtags(h) {
 	$.ajax({
 		url : "hashtagPosts",
 		type:"GET",
+		async:false,
 		data:{hashtag:h},
 		success : function(result) {
-			var html = $.parseHTML(result);
-			$("#posts").empty();
-			$("#posts").append(html);
-			console.log (html);
+//			var html = $.parseHTML(result);
+//			$("#posts").empty();
+//			$("#posts").append(html);
+//			console.log (html);
 		}
 	});
 
