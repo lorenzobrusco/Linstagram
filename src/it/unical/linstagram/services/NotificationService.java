@@ -66,20 +66,28 @@ public class NotificationService {
 	}
 
 	/**
-	 * Used to get all notification to see from db
+	 * Used to get all notification from db
 	 * 
 	 * @param user
 	 * @param maxNumberOfNotification
 	 * @return
 	 */
-	public List<NotificationDTO> getAllNotificationToSee(User user, int maxNumberOfNotification) {
+	public List<NotificationDTO> getAllNotification(User user, int maxNumberOfNotification) {
 		final List<Notification> notifications = notificationDAO.getAllNotification(user);
-		final List<NotificationDTO> notificationDTO = new ArrayList<>();
+		final List<NotificationDTO> notificationsDTO = new ArrayList<>();
 		for (Notification notification : notifications) {
-			notificationDTO.add(new NotificationDTO(notification));
-			if (notificationDTO.size() > maxNumberOfNotification)
+			notificationsDTO.add(new NotificationDTO(notification));
+			if (notification.isToSee()) {
+				notification.setToSee(false);
+				modelDAO.update(notification);
+			}
+			if (notificationsDTO.size() > maxNumberOfNotification)
 				break;
 		}
-		return notificationDTO;
+		return notificationsDTO;
+	}
+
+	public Long getAllNumberOfNotificationToSee(User user) {
+		return notificationDAO.getAllNotificationToSee(user);
 	}
 }

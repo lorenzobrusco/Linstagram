@@ -25,7 +25,13 @@ public class NotificationController {
 	@ResponseBody
 	public Collection<NotificationDTO> openNotification(HttpSession session) {
 		Collection<NotificationDTO> notifications = notificationService
-				.getAllNotificationToSee((User) session.getAttribute("user"), maxNumberOfNotification);
+				.getAllNotification((User) session.getAttribute("user"), maxNumberOfNotification);
 		return notifications;
+	}
+
+	@RequestMapping(value = "notificationToSee", method = RequestMethod.POST)
+	@ResponseBody
+	public Long notificationNumber(HttpSession session) {
+		return notificationService.getAllNumberOfNotificationToSee((User) session.getAttribute("user"));
 	}
 }

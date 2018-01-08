@@ -62,7 +62,8 @@ public class HibernateUtil {
 
 		}
 
-		System.out.println(factory);
+		// TODO Se vuoi le stampe caccia il commento
+		//System.out.println(factory);
 		final Session session = factory.openSession();
 		return session;
 	}
@@ -99,21 +100,15 @@ public class HibernateUtil {
 		FullTextSession txtSession = Search.getFullTextSession(sess);
 		MassIndexer massIndexer = txtSession.createIndexer(clazz);
 
-
 		MassIndexerProgressMonitor monitor = new SimpleIndexingProgressMonitor();
 		try {
-			massIndexer.batchSizeToLoadObjects( 25 )
-			.cacheMode( CacheMode.NORMAL )
-			.threadsToLoadObjects( 12 )
-			.idFetchSize( 150 )
-			.transactionTimeout( 1800 )
-			.progressMonitor(monitor) //a MassIndexerProgressMonitor implementation
-			.startAndWait();
+			massIndexer.batchSizeToLoadObjects(25).cacheMode(CacheMode.NORMAL).threadsToLoadObjects(12).idFetchSize(150)
+					.transactionTimeout(1800).progressMonitor(monitor) // a MassIndexerProgressMonitor implementation
+					.startAndWait();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			System.err.println("mass reindexing interrupted: " + e.getMessage());
-		}
-		finally {
+		} finally {
 			txtSession.flushToIndexes();
 		}
 	}

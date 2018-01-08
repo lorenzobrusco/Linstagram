@@ -6,8 +6,13 @@
 	href="${pageContext.request.contextPath}/resources/css/navbar_style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/popover_style.css">
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
-<link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
+	type="image/x-icon">
+<link rel="icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
+	type="image/x-icon">
+<script src="${pageContext.request.contextPath}/resources/js/navbar.js"></script>
 <header>
 	<div id="rainbow-progress-bar"></div>
 	<div id="navbar-mobile">
@@ -101,50 +106,7 @@
 							}, 300);
 						});
 
-						/*var content_notification_popover = "<div id='notification_list'>"
-						<c:forEach items="${notifications}" var="notification">
-						content_notification_popover += "<div class='notification_item'>"
-						content_notification_popover += "<div class='user_from_notification'>"
-						content_notification_popover += "<img src='${notification.userPhoto}'>"
-						content_notification_popover += "</div>"
-						content_notification_popover += "<div class='context_notification'>"
-						content_notification_popover += "<span>${notification.context}</span>"
-						content_notification_popover += "</div>"
-						content_notification_popover += "<c:if test='${empty notification.urlPost}'>"
-						content_notification_popover += "<div class='follow_btn_notification'>"
-						content_notification_popover += "<button class='btn btn-primary'>Follow</button>"
-						content_notification_popover += "</div>"
-						content_notification_popover += "</c:if>"
-						content_notification_popover += "<c:if test='${not empty notification.urlPost}'>"
-						content_notification_popover += "<div class='user_from_notification'>"
-						content_notification_popover += "<img src='${notification.urlPost}'>"
-						content_notification_popover += "</div>"
-						content_notification_popover += "</c:if>"
-						content_notification_popover += "</div>"
-						</c:forEach>
-						content_notification_popover += "</div>"
-						$('#notification').popover({
-							selector : "#notification",
-							content : content_notification_popover,
-							html : true,
-							placement : "bottom",
-							trigger : "manual",
-							container : "body"
-						}).on("mouseenter", function() {
-							var _this = this;
-							$(this).popover("show");
-							$(".popover").on("mouseleave", function() {
-								$(_this).popover('hide');
-							});
-						}).on("mouseleave", function() {
-							var _this = this;
-							setTimeout(function() {
-								if (!$(".popover:hover").length) {
-									$(_this).popover("hide");
-								}
-							}, 300);
-						});*/
-
+						
 						$('[data-toggle="tooltip"]').tooltip();
 
 						//TODO not work	
@@ -179,4 +141,5 @@
 
 					});
 </script>
-<script src="${pageContext.request.contextPath}/resources/js/follow_event/follow_event_profile_public.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/follow_event/follow_event_profile_public.js"></script>

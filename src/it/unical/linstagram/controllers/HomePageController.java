@@ -61,13 +61,9 @@ public class HomePageController {
 	public String homePageController(HttpSession session, Model model) {
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
-			//List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
-//			final List<Post> posts = postService.getPosts();
 			session.removeAttribute("hashtagPost");
 			List<PostDTO> posts = postService.getLatestPost(loggedUser,null, 0);
-			final List<NotificationDTO> notifications = notificationService.getAllNotificationToSee(loggedUser, 10);
 			model.addAttribute("posts", posts);
-			model.addAttribute("notifications", notifications);
 			model.addAttribute("followedUsersStories", storiesService.getFollowedStories(loggedUser));
 			return "index";
 		}

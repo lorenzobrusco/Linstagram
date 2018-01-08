@@ -139,6 +139,13 @@ header {
 	/*  cursor: default;*/
 }
 
+.badge{
+    position: absolute;
+    top: 1%;
+    left: 77%;
+    background-color: #ed4040 !important;
+    padding: 4px 6px !important;
+}
 .right-icon-nav {
 	background-image: url(../images/icons.png);
 	background-repeat: no-repeat;

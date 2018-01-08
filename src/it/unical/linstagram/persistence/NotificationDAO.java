@@ -14,17 +14,19 @@ public class NotificationDAO implements INotificationDAO {
 	public List<Notification> getAllNotification(User user) {
 		final Session session = HibernateUtil.getHibernateSession();
 		final List<Notification> notifications = session
-				.createQuery("FROM Notification n WHERE n.userTo=:user", Notification.class)
-				.setParameter("user", user)
+				.createQuery("FROM Notification n WHERE n.userTo=:user", Notification.class).setParameter("user", user)
 				.list();
 		session.close();
 		return notifications;
 	}
 
 	@Override
-	public int getAllNotificationToSee(User user) {
-		return 0;
+	public Long getAllNotificationToSee(User user) {
+		final Session session = HibernateUtil.getHibernateSession();
+		final Long notifications = (Long) session.createQuery("SELECT COUNT(*) FROM Notification n WHERE n.userTo=:user and toSee=1")
+				.setParameter("user", user).uniqueResult();
+		session.close();
+		return notifications;
 	}
-
 
 }

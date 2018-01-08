@@ -14,6 +14,7 @@ $('#notification')
 		arrow.removeClass("hide");
 	}
 	e.stopPropagation();
+	$(".badge").remove();
 	$.ajax({
 			url : "openNotification",
 			type : "POST",

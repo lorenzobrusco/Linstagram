@@ -8,6 +8,6 @@ import it.unical.linstagram.model.User;
 public interface INotificationDAO {
 	
 	List<Notification> getAllNotification(User user);
-	int getAllNotificationToSee(User user);
+	Long getAllNotificationToSee(User user);
 
 }
