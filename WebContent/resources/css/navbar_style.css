@@ -173,16 +173,48 @@ keyframes rainbow { 0% {
 50%
 {
 background-position
+
+
+
+
+
+
+
+
 :
+
+
+
+
  
+
+
+
+
 100%
 200%;
 }
 100%
 {
 background-position
+
+
+
+
+
+
+
+
 :
+
+
+
+
  
+
+
+
+
 0%
 100%;
 }
@@ -203,8 +235,8 @@ background-position
 }
 
 #navbar-mobile .search-bar {
-	width: 100%;
-	margin: 16px;
+	width: 75%;
+	margin: 10px auto;
 }
 
 #navbar-mobile .bottom-nav-menu {
@@ -218,63 +250,120 @@ background-position
 	box-shadow: 1px -4px 8px 0 rgba(0, 0, 0, 0.1);
 }
 
-ul#horizontal-list {
-	min-width: 696px;
+#horizontal-list {
+	display: flex;
+	justify-content: space-around;
 	list-style: none;
-	padding-top: 5px;
+	padding: 5px 0px 0px 0px !important;
+	margin-bottom: 0px !important;
 }
 
-ul#horizontal-list li {
+#horizontal-list li {
 	position: relative;
-	right: 28px;
 	display: inline;
-	padding: 0 15px;
+	padding: 0 10px 10px 10px;
 }
 
 #profile-mobile {
 	background-image: url(../images/icons.png);
-	background-repeat: no-repeat;
-	position: relative;
-	margin: 0 10px 0 20px;
-	transform: scale(1);
 	height: 24px;
 	width: 24px;
-	top: 7px;
-	background-position: -373px -353px;
+	background-position: -374px -353px;
 }
 
 #notification-mobile {
 	background-image: url(../images/icons.png);
-	background-repeat: no-repeat;
-	position: relative;
-	margin: 0 10px 0 20px;
-	transform: scale(1);
 	height: 24px;
 	width: 24px;
-	top: 7px;
 	background-position: -407px 1px;
 }
 
 #add-mobile {
 	background-image: url(../images/icons.png);
-	background-repeat: no-repeat;
-	position: relative;
-	margin: 0 10px 0 20px;
-	transform: scale(1);
 	height: 25px;
 	width: 25px;
-	top: 7px;
-	background-position: -407px -104px;
+	background-position: -407px -103px;
 }
 
 #home-mobile {
 	background-image: url(../images/icons.png);
-	background-repeat: no-repeat;
-	position: relative;
-	margin: 0 10px 0 20px;
-	transform: scale(1);
 	height: 24px;
 	width: 24px;
-	top: 7px;
 	background-position: -407px -261px;
+}
+
+.item-mobile {
+	background-repeat: no-repeat;
+	position: relative;
+	top: 7px;
+}
+
+#logo-container {
+	width: 10%;
+	margin: 6px 0px;
+}
+
+#logo-container #logo {
+	margin-left: 20%;
+	margin-right: 5%;
+}
+
+.active-menu-item {
+	border-bottom: 3px solid #cb567e;
+}
+
+#notification_list {
+	position: fixed;
+	height: 350px;
+	width: 500px;
+	background: #ffffff;
+	z-index: 999;
+	top: 44px;
+	right: 256px;
+	border-radius: 5px;
+	border: 0.5px solid #ccc;
+	box-shadow: -6px 6px 10px 0px rgba(0, 0, 0, .1);
+	display: none;
+}
+
+.notification_item {
+	margin-top: 10px;
+}
+
+#notification_list .notification_item .user_from_notification {
+	display: inline;
+	margin: 0 20px;
+	float: left;
+}
+
+#notification_list .notification_item .context_notification {
+	display: inline;
+	position: relative;
+	margin-left:20px;
+	line-height: 3.5;
+}
+
+#notification_list .notification_item .follow_btn_notification {
+	display: inline;
+	position: relative;
+}
+
+#notification_list .notification_item .post_notification {
+	float: right;
+	margin-right:20px;
+}
+
+#notification_list .notification_item .user_from_notification img {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+}
+
+#notification_list .notification_item .post_notification img {
+	height: 40px;
+	width: 40px;
+}
+
+#notification_list .hr_notification{
+	margin: 12px 12px 12px 32px !important;
 }

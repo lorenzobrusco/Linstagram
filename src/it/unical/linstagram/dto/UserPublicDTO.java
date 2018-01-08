@@ -14,19 +14,17 @@ public class UserPublicDTO extends UserPrivateDTO {
 	private Set<Post> posts;
 	private Set<Post> tagged;
 	
-	private boolean followed; //se questo utente è seguito da un'altro utente(della sessione)
+//	private boolean followed; //se questo utente è seguito da un'altro utente(della sessione)
 	
 	
-	public UserPublicDTO(User user, boolean followed) {
-		super(user);
+	public UserPublicDTO(User user, boolean followed, boolean request_send, boolean request_received) {
+		super(user, followed, request_send, request_received);
 		this.biography = user.getBiography();
 		
 		this.followings = user.getFollowings();
 		this.followers = user.getFollowers();
 		this.posts = user.getPosts();
 		this.tagged = user.getTagged();
-		
-		this.followed = followed;
 	}
 
 	public String getBiography() {
@@ -49,8 +47,8 @@ public class UserPublicDTO extends UserPrivateDTO {
 		return tagged;
 	}
 	
-	public boolean isFollowed() {
-		return followed;
-	}
-	
+//	public boolean isFollowed() {
+//		return followed;
+//	}
+//	
 }

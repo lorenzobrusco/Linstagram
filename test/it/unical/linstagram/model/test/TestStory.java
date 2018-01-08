@@ -29,7 +29,7 @@ public class TestStory extends AbstractModelTest {
 //	
 
 		
-	@Test
+//	@Test
 	public void addStory() {
 		User eliana = new User("Eliana","email","pass");
 		
@@ -47,7 +47,7 @@ public class TestStory extends AbstractModelTest {
 		Assert.assertEquals(1,stories.size());
 	}
 	
-	@Test
+//	@Test
 	public void addStoryViewer() {
 		User eliana = new User("Eliana","email","pass");
 		User manuel = new User("Manuel","e","pass");
@@ -74,7 +74,7 @@ public class TestStory extends AbstractModelTest {
 		
 	}
 	
-	@Test
+//	@Test
 	public void getFollowedUserStories() {
 		User eliana = new User("Eliana","email","pass");
 		User manuel = new User("Manuel","e","pass");
@@ -108,12 +108,12 @@ public class TestStory extends AbstractModelTest {
 		List<Story> stories = storyDAO.getFollowedUsersStoriesByUsername(paola.getUsername());
 		
 		Assert.assertEquals(3, stories.size());
-		Assert.assertEquals(2, stories.get(0).getViewers().size());
+//		Assert.assertEquals(2, stories.get(0).getViewers().size());
 
 		
 	}
 	
-	@Test
+//	@Test
 	public void testEmptyStories() {
 		User eliana = new User("Eliana","email","pass");
 		
@@ -122,5 +122,51 @@ public class TestStory extends AbstractModelTest {
 		
 		IStoryDAO storyDAO = new StoryDAO();
 		List<Story> stories = storyDAO.getFollowedUsersStoriesByUsername(eliana.getUsername());
+	}
+	
+//	@Test
+	public void testGetStoriesById() {
+		User eliana = new User("Eliana","email","pass");
+		
+		Media media = new Media(Media_Type.IMAGE,"urlmedia");
+		
+		Story story = new Story(eliana, media);
+		
+		ModelDAO modelDAO = new ModelDAO();
+		
+		modelDAO.save(eliana);
+		modelDAO.save(story);
+		
+		IStoryDAO storyDAO = new StoryDAO();
+		Story s = storyDAO.getStoryById(story.getId());
+		Assert.assertNotNull(s);
+	}
+	
+	@Test
+	public void testRemoveStory() {
+		
+		User eliana = new User("Eliana","email","pass");
+		User manuel = new User("Manuel","e","pass");
+		User paola = new User("Paola","paola","pass");
+		
+		ModelDAO modelDAO = new ModelDAO();
+		modelDAO.save(eliana);
+		modelDAO.save(manuel);
+		modelDAO.save(paola);
+
+		Media media = new Media(Media_Type.IMAGE,"urlmedia");
+		
+		Story story = new Story(eliana, media);
+		modelDAO.save(story);
+		
+		story.addViewer(manuel);
+		story.addViewer(paola);
+		modelDAO.merge(story);
+		
+		modelDAO.delete(Story.class, story.getId());
+		IStoryDAO storyDAO = new StoryDAO();
+		List<User> viewers = storyDAO.getViewersOfStory(story.getId());
+		
+		Assert.assertEquals(0, viewers.size());
 	}
 }

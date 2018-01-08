@@ -23,6 +23,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OrderBy;
 
 @Entity
 @Table(name="post")
@@ -67,6 +68,7 @@ public class Post {
 
 	@OneToMany(mappedBy="post", fetch=FetchType.EAGER)
 	@Cascade(value=CascadeType.ALL)
+	@OrderBy(clause = "date asc")
 	private Set<Comment> comments = new HashSet<Comment>();
 	
 	@ManyToMany
@@ -156,5 +158,29 @@ public class Post {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Post other = (Post) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 	
 }

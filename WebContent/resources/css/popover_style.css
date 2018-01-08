@@ -2,6 +2,7 @@
 
 .popover{
   min-width: 150px !important;
+  max-width: auto !important;
 }
 
 .popover-title .user-img {

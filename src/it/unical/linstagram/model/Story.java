@@ -51,7 +51,6 @@ public class Story {
 	@JoinTable(name="viewed_story",
 			joinColumns=@JoinColumn(name="story_id"),
 			inverseJoinColumns=@JoinColumn(name="user_id"))
-	@Cascade(value=CascadeType.ALL)
 	private Set<User> viewers = new HashSet<User>();
 	
 	public Story() {
@@ -101,6 +100,28 @@ public class Story {
 	}
 	public void setViewers(Set<User> viewers) {
 		this.viewers = viewers;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Story other = (Story) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 	
 }

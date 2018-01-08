@@ -4,10 +4,13 @@ import java.util.Collection;
 
 import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import it.unical.linstagram.model.RequestFollow;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
+import junit.framework.Assert;
 
 public class FollowerTest extends AbstractModelTest {
 
@@ -45,14 +48,19 @@ public class FollowerTest extends AbstractModelTest {
 		md.update(ciccio);
 		md.update(alessio);
 
+		RequestFollow request = new RequestFollow(eliana, manuel);
+		md.save(request);
+		
 		Session sex = HibernateUtil.getHibernateTestSession();
-		Collection<User> users = sex.createQuery("SELECT user.following FROM User user where user.id=:u1id")
+		Collection<User> users = sex.createQuery("SELECT r FROM RequestFollow r where r.userFrom.id=:u1id")
 				.setParameter("u1id", eliana.getId()).list();
 		System.out.println(users.size());
 
-		for (User user : users) {
-			System.out.println(user.getUsername());
-		}
+//		for (User user : users) {
+//			System.out.println(user.getUsername());
+//		}
 		sex.close();
+		
+		Assert.assertEquals(1, users.size());
 	}
 }

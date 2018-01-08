@@ -9,6 +9,7 @@
 	href="${pageContext.request.contextPath}/resources/css/create_post_modal_style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/lib/dropzone.css">
+	
 <script src="${pageContext.request.contextPath}/resources/js/lib/dropzone.js"></script>
 
 <script
@@ -18,8 +19,7 @@
 
 <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.0.0/caman.full.min.js"></script> -->
 	<script src="${pageContext.request.contextPath}/resources/js/lib/camanjs.js"></script>
-
-
+	
 <!--CREATE POST MODAL-->
 <div id="create-post-modal">
 	<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID  class="close-animatedModal" -->

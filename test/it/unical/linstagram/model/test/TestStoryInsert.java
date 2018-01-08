@@ -1,6 +1,9 @@
 package it.unical.linstagram.model.test;
 
+import java.util.Calendar;
 import java.util.List;
+
+import javax.persistence.TemporalType;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -26,48 +29,58 @@ public class TestStoryInsert {
 		HibernateUtil.CreateSessionFactory(false);
 	}
 	
-	@Test
-	public void addStory() {
+//	@Test
+	public void getStory() {
 		
 		UserDAO userDAO = new UserDAO();
+		StoryDAO storyDAO = new StoryDAO();
 		
-		User ciccio = userDAO.getUserByUsername("ciccio");
+		User dragmaf = userDAO.getUserByUsername("dragmaf");
+		List<Story> stories = storyDAO.getFollowedUsersStoriesByUsername("dragmaf");
 		
-		Media media = new Media(Media_Type.IMAGE,"https://scontent-gru2-2.cdninstagram.com/t51.2885-15/e15/10810091_1527190460857578_541280638_n.jpg");
-		Story story = new Story(ciccio, media);
+		for (Story story : stories) {
+			System.out.println(story.isAViewer(dragmaf));
+		}
 		
-//		User dragmaf = userDAO.getUserByUsername("dragmaf");
-//		
-//		Media media1 = new Media(Media_Type.VIDEO,"https://instagram.frao1-1.fna.fbcdn.net/t50.2886-16/17886251_1128605603951544_572796556789415936_n.mp4");
-//		Story story1 = new Story(dragmaf, media1);
-//		
-//		User root = userDAO.getUserByUsername("root");
-//		
-//		Story story2 = new Story(root, media);
-//		
-//		
-		
-		ModelDAO modelDAO = new ModelDAO();
-		modelDAO.save(story);
-//		modelDAO.save(story1);
-//		modelDAO.save(story2);
+		Assert.assertEquals(6, stories.size());
+
 	}
 //	@Test
-	public void addFollowedUsers() {
+	public void testDifferenceDate() {
 		
-		UserDAO userDAO = new UserDAO();
+		Session session = HibernateUtil.getHibernateSession();
+		Calendar now = Calendar.getInstance();
+		Calendar yestarday = Calendar.getInstance();
+		yestarday.setTimeInMillis(now.getTimeInMillis()-86400*1000);
 		
-		User ciccio = userDAO.getUserByUsername("ciccio");
-		User pippo = userDAO.getUserByUsername("pippo");
-		User dragmaf = userDAO.getUserByUsername("dragmaf");
+		List<Calendar> calendars = session.createQuery(""
+					+ "SELECT s.creationDate "
+					+ "FROM Story s  "
+					+ "WHERE s.user.id=:user and s.creationDate>=:dtime")
+				.setParameter("user",4)
+				.setParameter("dtime", yestarday,TemporalType.DATE)
+				.list();
 		
-//		Story story = new Story(ciccio, media);
-		
-		pippo.getFollowings().add(ciccio);
-		pippo.getFollowings().add(dragmaf);
-		
+		session.close();
+		Assert.assertEquals(6, calendars.size());
+	}
+	
+	@Test
+	public void testRemoveStory() {
 		ModelDAO modelDAO = new ModelDAO();
-		modelDAO.update(pippo);
+		UserDAO userDAO = new UserDAO();
+
+		StoryDAO storyDAO = new StoryDAO();
+
+		User dragmaf = userDAO.getUserByUsername("dragmaf");
+		List<Story> stories = storyDAO.getStoriesById(dragmaf.getId());
+		
+		Story story = stories.get(0);
+		
+		modelDAO.delete(Story.class, story.getId());
+		
+		Assert.assertEquals(true, modelDAO.delete(Story.class, story.getId()));
+		
 	}
 
 }

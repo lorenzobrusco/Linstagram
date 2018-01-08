@@ -182,9 +182,10 @@ progress {
   padding: 0 16px;
 }
 
-.react {
+.react div{
   margin-top: 4px;
   position: relative;
+  display: inline-block;
 }
 
 .react a {
@@ -201,6 +202,14 @@ progress {
 .react .love {
   background-image: url(../images/icons.png);
   background-position: -407px -156px;
+  height: 24px;
+  width: 27px;
+  display: inline-block;
+}
+
+.react .loveFull {
+  background-image: url(../images/icons.png);
+  background-position: -407px -129px;
   height: 24px;
   width: 27px;
   display: inline-block;
@@ -223,6 +232,15 @@ progress {
   display: inline-block;
 }
 
+.react .saveFull {
+  background-image: url(../images/icons.png);
+  background-repeat: no-repeat;
+  background-position: -183px -389px;
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+}
+
 .caption-section,
 .list-comments-section {
   color: #585858;
@@ -230,7 +248,7 @@ progress {
   margin: 5px 0;
 }
 
-.show-all-comments {
+.show-all-comments, .hide-all-comments  {
   font-size: 0.9em;
   color: #999999ba !important;
 
@@ -242,7 +260,7 @@ progress {
   font-weight: 600;
 }
 
-.show-all-comments {
+.show-all-comments, .hide-all-comments {
   margin-right: .3em;
   font-weight: 600;
   color: #999999ba;
@@ -254,7 +272,9 @@ progress {
   border-top: 1px solid #efefef;
   padding: 15px;
   margin-top: 4px;
-  overflow: hidden
+  overflow: hidden;
+  width: 100%;
+  display: inline-block;
 }
 
 .comment-text {
@@ -263,10 +283,27 @@ progress {
   padding: 0;
   background: none;
   border: none;
-  width: 100%;
+  width: 94%;
   height: 18px;
   max-height: 80px;
   resize: none;
+  
+}
+
+.submit_comment {
+	background-image: url(../images/send_icon.png);
+	background-size: 100% 100%;
+	height: 24px;
+	width: 27px;
+	float: right;
+	
+	background-color: #ffffff;
+	color: inherit;
+    border: none;
+    padding: 0! important;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit !important;
 }
 
 /* #################### FLOATING BUTTON ###########################*/
@@ -431,113 +468,9 @@ progress {
   animation-fill-mode: forwards;
 }
 
-/* #################### STORIES SECTION ###########################*/
-
-#stories {
-  padding: 12px;
-  margin-top: 16px;
+.likes-section {
+	cursor: pointer;
 }
-
-h1 {
-  text-align: center;
-  font-family: monospace;
-  padding: 0 12px;
-  border-bottom: 1px solid #ddd;
-  font-size: 24px;
-  height: 56px;
-  line-height: 56px;
-  margin-bottom: 0;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-h1.Snapgram {
-  background: #fff;
-  color: #333;
-}
-
-h1.FaceSnap {
-  background: #3B5998;
-  color: #fff;
-}
-
-h1.VemDeZAP {
-  background: #085E53;
-  color: #fff;
-}
-
-h1.Snapssenger {
-  background: #0084FF;
-  color: #fff;
-}
-
-.disclaimer {
-  display: block;
-  text-decoration: none !important;
-  color: #333;
-  line-height: 1.5em;
-  background: #ffffd2;
-  border-radius: 3px;
-  margin: 12px 12px 0;
-  padding: 12px 12px 12px 74px;
-  font-size: 13px;
-  max-width: 500px;
-  overflow: hidden;
-  min-height: 50px;
-}
-
-.disclaimer img {
-  float: left;
-  margin-right: 12px;
-  width: 50px;
-  position: absolute;
-  margin-left: -62px;
-}
-
-.disclaimer a {
-  color: inherit !important;
-  border: 0;
-}
-
-.disclaimer p {
-  margin: 0;
-}
-
-.disclaimer p + p {
-  margin-top: 1.25em
-}
-
-.skin {
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  font-weight: bold;
-  position: absolute;
-  z-index: 10;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #fff;
-  font-size: 16px;
-  padding: 12px;
-  color: #fff;
-  background: #333;
-}
-
-.skin select {
-  background: #fff;
-  font-size: inherit;
-  text-transform: none;
-  max-width: 30%;
-}
-
-#stories {
-  margin-top: 60px;
-  text-align: center;
-  margin: 0 auto;
-}
-
 
 @media (max-width: 800px) {
   .container {
@@ -558,4 +491,7 @@ h1.Snapssenger {
   }
   
 }
-
+#loader-comments{
+	height:12px;
+	margin-left:5px;
+}
