@@ -130,15 +130,12 @@ public class HomePageController {
 		User loggedUser = (User) session.getAttribute("user");
 	
 		List<PostDTO> posts =  null;
-		if(session.getAttribute("hashtagPost") == null)
-			posts = postService.getLatestPost(loggedUser,null, last);
-		else
-			posts = postService.getPostsbyHashtag(loggedUser,
-					(String)session.getAttribute("hashtagPost"),last);
-			
+		posts = postService.getLatestPost(loggedUser,null, last);
+		
 		model.addAttribute("posts", posts);
 		return "fragment/post";
 	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/addStory", method = RequestMethod.POST)
 	public StoryDTO addStory(@RequestParam MultipartFile file, HttpSession session) throws IOException {
@@ -189,22 +186,5 @@ public class HomePageController {
 		System.out.println(generalQuery);
 		return generalQuery;
 		}
-
-
-	@RequestMapping(value="hashtags")
-	public String hashtagPosts(@RequestParam String hashtag, HttpSession session, Model model) {
-		
-		List<PostDTO> posts = postService.getPostsbyHashtag((User)session.getAttribute("user"), hashtag,0);
-		model.addAttribute("posts", posts);
-		session.setAttribute("hashtagPost",hashtag);
-		
-		Hashtag ht = hashtagService.getHashtag(hashtag);
-		model.addAttribute("hashtag",ht);
-		
-		//TODO SISTEMARE IL METODO
-		return "hashtags";
-
-
-	}
 
 }
