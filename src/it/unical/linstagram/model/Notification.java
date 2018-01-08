@@ -11,9 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 @Entity
 @Table(name = "notification")
 public class Notification {
@@ -24,22 +21,22 @@ public class Notification {
 	private int id;
 
 	@ManyToOne
-	@Cascade(value = CascadeType.ALL)
+//	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "userfrom")
 	private User userFrom;
 
 	@ManyToOne
-	@Cascade(value = CascadeType.ALL)
+//	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "userto")
 	private User userTo;
 
 	@ManyToOne
-	@Cascade(value = CascadeType.ALL)
+//	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "post")
 	private Post post;
 
 	@ManyToOne
-	@Cascade(value = CascadeType.ALL)
+//	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "comment")
 	private Comment comment;
 

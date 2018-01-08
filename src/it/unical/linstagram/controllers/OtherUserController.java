@@ -17,6 +17,7 @@ import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
+import it.unical.linstagram.services.NotificationService;
 import it.unical.linstagram.services.UserService;
 
 @Controller
@@ -24,6 +25,8 @@ public class OtherUserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private NotificationService notificationService;
 
 	@RequestMapping("/usersList")
 	public String usersListPage(HttpSession session, Model model) {
@@ -114,9 +117,11 @@ public class OtherUserController {
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
 
-		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user))
+		notificationService.generateFollowNotification(user, usernameToFollow);
+		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user)) {
 			return new MessageResponse(MessageCode.FOLLOW_FAILED, user,
 					"Non e' stato possibile inserire l'utente come following.").getMessage();
+		}
 
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}

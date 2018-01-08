@@ -50,6 +50,7 @@ public class NotificationService {
 		final Post post = postDAO.getPostById(idPost);
 		final Notification notification = new Notification(user, post.getUser(), post, null, NotificationType.LIKE);
 		modelDAO.save(notification);
+		System.out.println("notification");
 	}
 
 	/**

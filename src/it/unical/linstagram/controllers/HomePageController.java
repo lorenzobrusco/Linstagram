@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,10 +23,8 @@ import it.unical.linstagram.dto.NotificationDTO;
 import it.unical.linstagram.dto.PostDTO;
 import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
-import it.unical.linstagram.dto.UserViewerDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
-import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
@@ -157,7 +154,7 @@ public class HomePageController {
 			return new MessageResponse(MessageCode.OK,(User) session.getAttribute("user"),"OK").getMessage();
 
 		return new MessageResponse(MessageCode.FAILED,
-				(User) session.getAttribute("user"),"Non � stato possibile rimuovere la storia.").getMessage();
+				(User) session.getAttribute("user"),"Non e' stato possibile rimuovere la storia.").getMessage();
 	}
 
 
