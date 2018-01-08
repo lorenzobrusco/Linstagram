@@ -29,7 +29,7 @@ $('#notification')
 					content_notification_popover += "</div>"
 					if(result[i].urlPost == null){
 						content_notification_popover += "<div class='follow_btn_notification'>"
-						content_notification_popover += "<button class='btn btn-primary'>Follow</button>"
+						content_notification_popover += "<button id='followProfile-btn'>Follow</button>"
 						content_notification_popover += "</div>"
 					} else {
 						content_notification_popover += "<div class='post_notification'>"
@@ -47,6 +47,9 @@ $('#notification')
 		})
 		return false;
 	});
+notification.click(function(e) {
+	e.stopPropagation();
+})
 $('body').click(function (e) {
 	notification.addClass("hide");
 	arrow.addClass("hide");

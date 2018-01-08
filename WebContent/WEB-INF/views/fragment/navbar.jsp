@@ -179,3 +179,4 @@
 
 					});
 </script>
+<script src="${pageContext.request.contextPath}/resources/js/follow_event/follow_event_profile_public.js"></script>

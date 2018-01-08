@@ -123,7 +123,7 @@ public class FileModel {
 //		);
 //
 //		return BufferedImageToByteArray(croppedImage);
-		return BufferedImageToByteArray(resizedImg);
+		return BufferedImageToByteArray(originalImage);
 	}
 
 	private static BufferedImage resize(BufferedImage orImage) {
