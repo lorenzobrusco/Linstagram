@@ -26,7 +26,7 @@ function UploadPic(canvas,filename) {
 			success: function(msg) {
 				$(".close-create-post-modal").click(); //close modal
 //				location.reload(true);
-				
+
 				new Noty({
 					text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your post is created!',
 					theme: 'nest',
@@ -34,8 +34,8 @@ function UploadPic(canvas,filename) {
 					layout: 'bottomLeft',
 					timeout:2000,
 					progressBar: true
-				}).show();
-				
+				}).on("onClose",function(){location.reload()}).show();
+
 			}
 		});
 	});
@@ -156,7 +156,12 @@ $(document).ready(function () {
 						Caman(canvas[0], function () {
 							startFilter(canvas);
 							this.revert(); //revert previous filter
-							eval("this." + filterType + "().render(function () {resize_canvas(canvas);endFilter(canvas);} );");
+							if(filterType!="normal"){
+								eval("this." + filterType + "().render(function () {resize_canvas(canvas);endFilter(canvas);} );");
+							} else if(filterType=="normal"){
+								resize_canvas(canvas);
+								endFilter(canvas);
+							}
 						});
 					});
 
