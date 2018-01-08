@@ -74,7 +74,6 @@ public class NotificationService {
 	 */
 	public List<NotificationDTO> getAllNotificationToSee(User user, int maxNumberOfNotification) {
 		final List<Notification> notifications = notificationDAO.getAllNotification(user);
-		System.out.println(notifications.size());
 		final List<NotificationDTO> notificationDTO = new ArrayList<>();
 		for (Notification notification : notifications) {
 			notificationDTO.add(new NotificationDTO(notification));

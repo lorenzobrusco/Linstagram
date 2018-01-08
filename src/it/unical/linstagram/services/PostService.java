@@ -43,13 +43,13 @@ public class PostService {
 		return postDAO.getPostById(idPost);
 	}
 	
-	public List<PostDTO> getPostsbyHashtag(User user, String hashtag)
+	public List<PostDTO> getPostsbyHashtag(User user, String hashtag, int last)
 	{
-		List<Post> posts = postDAO.getPostsByHashtag(hashtag);
+		List<Post> posts = postDAO.getPostsByHashtag(hashtag,null,last);
 		List<PostDTO> postsDTO = new ArrayList<>();
 		
 		for (Post post : posts) {	
-			System.out.println("creo il post "+post.getContent());
+//			System.out.println("creo il post "+post.getContent());
 			postsDTO.add(new PostDTO
 					(post, postDAO.doesTheUserLikeThePost(post.getId(), user), user.getBookmarks().contains(post)));		
 		}

@@ -2,64 +2,53 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon-32x32.png" />
-<link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.icon" type="image/x-icon" />
-
-<meta name="viewport"
-	content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/navbar_style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/popover_style.css">
-
-</head>
-<body>
-	<header>
-		<div id="rainbow-progress-bar"></div>
-		<div id="navbar-mobile">
-			<span id="logo-container"><a href="index" id="logo"></a></span>
-			<div class="search-bar">
-				<input type="text" class="form-control transparent"
-					placeholder="Search" id="search-input">
-			</div>
-			<div class="bottom-nav-menu">
-				<ul id="horizontal-list">
-					<li class="active-menu-item"><a href="index" id="home-mobile"
-						class="item-mobile"></a></li>
-					<li><a href="profile" role="button" id="profile-mobile"
-						class="item-mobile"></a></li>
-					<li><a href="#create-post-modal" id="add-mobile"
-						class="item-mobile"></a></li>
-					<li><a href="" id="notification-mobile" class="item-mobile"></a>
-						</li>
-				</ul>
-			</div>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
+<header>
+	<div id="rainbow-progress-bar"></div>
+	<div id="navbar-mobile">
+		<span id="logo-container"><a href="index" id="logo"></a></span>
+		<div class="search-bar">
+			<input type="text" class="form-control transparent"
+				placeholder="Search" id="search-input">
 		</div>
-		<nav id="navbar" class="transparent">
-			<span class="nav-left"> <a href="index"> <span id="logo"></span>
-					<span id="logo-text">linstagram</span>
-			</a>
-			</span> <span id="search-form" class="form-inline">
-				<div class="input-group" id="search-div">
-					<input type="text" class="form-control transparent"
-						placeholder="Search" id="search-input-desktop">
-				</div>
-			</span> <span class="nav-right"> <a href="" id="explore"
-				class="right-icon-nav disabled" data-toggle="tooltip"
-				data-placement="left" data-original-title="Coming Soon"></a> <a
-				href="#" id="notification" class="right-icon-nav"></a> <a href="#"
-				role="button" id="profile" class="right-icon-nav"></a>
-			</span>
-		</nav>
-	</header>
-	<div id="notification_list"></div>
-</body>
+		<div class="bottom-nav-menu">
+			<ul id="horizontal-list">
+				<li class="active-menu-item"><a href="index" id="home-mobile"
+					class="item-mobile"></a></li>
+				<li><a href="profile" role="button" id="profile-mobile"
+					class="item-mobile"></a></li>
+				<li><a href="#create-post-modal" id="add-mobile"
+					class="item-mobile"></a></li>
+				<li><a href="" id="notification-mobile" class="item-mobile"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<nav id="navbar" class="transparent">
+		<span class="nav-left"> <a href="index"> <span id="logo"></span>
+				<span id="logo-text">linstagram</span>
+		</a>
+		</span> <span id="search-form" class="form-inline">
+			<div class="input-group" id="search-div">
+				<input type="text" class="form-control transparent"
+					placeholder="Search" id="search-input-desktop">
+			</div>
+		</span> <span class="nav-right"> <a href="" id="explore"
+			class="right-icon-nav disabled" data-toggle="tooltip"
+			data-placement="left" data-original-title="Coming Soon"></a> <a
+			href="#"" id="notification" class="right-icon-nav"><span class="arrow hide"></span></a>
+			<a href="#" role="button" id="profile" class="right-icon-nav"></a>
+		</span>
+	</nav>
+</header>
+
+<div id="notification_list" class="hide"></div>
+
 <script
 	src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
 <script>
@@ -155,7 +144,6 @@
 								}
 							}, 300);
 						});*/
-						$('[data-toggle="tooltip"]').tooltip();
 
 						$('[data-toggle="tooltip"]').tooltip();
 
@@ -169,24 +157,25 @@
 						$('#search-input-desktop').focusout(function() {
 							$("#search-div").css("width", "50%");
 						});
-						
+
 						//TODO DA FINIRE						
-						$('#search-input-desktop').keyup(function () {
+						$('#search-input-desktop').keyup(function() {
 							var text = $("#search-input-desktop").val();
-							console.log (text);
-							
+							console.log(text);
+
 							$.ajax({
 								url : "research",
-								type:"POST",
-								data:{text:text},
+								type : "POST",
+								data : {
+									text : text
+								},
 								success : function(result) {
-									console.log (result);
-												
+									console.log(result);
+
 								}
 							});
-							
+
 						});
 
 					});
 </script>
-</html>
