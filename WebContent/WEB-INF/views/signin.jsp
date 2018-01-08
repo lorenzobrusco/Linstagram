@@ -44,7 +44,7 @@
 						for="tab-2" class="tab">Sign Up</label>
 
 					<div class="login-form">
-						<form class="sign-in-htm" action="signInAttempt" method="post">
+						<form class="sign-in-htm" action='login' method="post">
 							<div class="group">
 								<label for="user" class="label">Username</label> <input
 									id="user-singin" name="username" type="text" class="input"
