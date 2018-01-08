@@ -6,6 +6,8 @@
 <html lang="en">
 
 <head>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon-32x32.png" type="image/x-icon" />
+
 <title>Listagram</title>
 <meta charset="utf-8">
 <meta name="viewport"

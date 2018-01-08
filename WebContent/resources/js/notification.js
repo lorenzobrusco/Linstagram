@@ -1,9 +1,22 @@
+var notification =  $("#notification_list");
+var arrow = $(".arrow");
 $('#notification')
 	.click(function (e) {
-	$("#notification_list").html("");
+	e.preventDefault();
+	notification.html("");
+	if(!notification.hasClass("hide")){
+		notification.addClass("hide");
+		arrow.addClass("hide");
+	}
+		
+	else{
+		notification.removeClass("hide");
+		arrow.removeClass("hide");
+	}
+	e.stopPropagation();
 	$.ajax({
 			url : "openNotification",
-			type : "GET",
+			type : "POST",
 			success : function(result) {
 				var content_notification_popover = ""
 				for (var i = 0; i < result.length; i++) {
@@ -28,8 +41,13 @@ $('#notification')
 						if(i < (result.length -1))
 							content_notification_popover += "<hr class='hr_notification'>"
 				}
-				$("#notification_list").html("");
-				$("#notification_list").append(content_notification_popover);
+				notification.empty();
+				notification.html(content_notification_popover);
 			}
 		})
+		return false;
 	});
+$('body').click(function (e) {
+	notification.addClass("hide");
+	arrow.addClass("hide");
+});
