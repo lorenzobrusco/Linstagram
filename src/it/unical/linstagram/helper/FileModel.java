@@ -98,31 +98,32 @@ public class FileModel {
 		
 		BufferedImage resizedImg=resize(originalImage);
 		
-		// Get image dimensions
-		int height = resizedImg.getHeight();
-		int width = resizedImg.getWidth();
-
-		// The image is already a square
-		if (height == width) {
-			return BufferedImageToByteArray(resizedImg);
-		}
-		
-		// Compute the size of the square
-		int squareSize = (height > width ? width : height);
-
-		// Coordinates of the image's middle
-		int xc = width / 2;
-		int yc = height / 2;
-
-		// Crop
-		BufferedImage croppedImage = resizedImg.getSubimage(xc - (squareSize / 2), // x coordinate of the upper-left
-																						// corner
-				yc - (squareSize / 2), // y coordinate of the upper-left corner
-				squareSize, // widht
-				squareSize // height
-		);
-
-		return BufferedImageToByteArray(croppedImage);
+//		// Get image dimensions
+//		int height = resizedImg.getHeight();
+//		int width = resizedImg.getWidth();
+//
+//		// The image is already a square
+//		if (height == width) {
+//			return BufferedImageToByteArray(resizedImg);
+//		}
+//		
+//		// Compute the size of the square
+//		int squareSize = (height > width ? width : height);
+//
+//		// Coordinates of the image's middle
+//		int xc = width / 2;
+//		int yc = height / 2;
+//
+//		// Crop
+//		BufferedImage croppedImage = resizedImg.getSubimage(xc - (squareSize / 2), // x coordinate of the upper-left
+//																						// corner
+//				yc - (squareSize / 2), // y coordinate of the upper-left corner
+//				squareSize, // widht
+//				squareSize // height
+//		);
+//
+//		return BufferedImageToByteArray(croppedImage);
+		return BufferedImageToByteArray(resizedImg);
 	}
 
 	private static BufferedImage resize(BufferedImage orImage) {
