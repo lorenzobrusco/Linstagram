@@ -16,13 +16,13 @@ public class NotificationDTO {
 		this.userName = notification.getUserFrom().getUsername();
 		this.data = notification.getDate().toString();
 		if (notification.getType().equals(NotificationType.COMMENT)) {
-			this.context = String.format("ha commentato: %s",notification.getComment().getContent());
+			this.context = String.format("commented your post: %s",notification.getComment().getContent());
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 		} else if (notification.getType().equals(NotificationType.LIKE)) {
-			this.context ="ha messo mi piace al tuo post";
+			this.context ="liked your post";
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 		} else {
-			this.context =" ha iniziato a seguirti";
+			this.context ="started following you";
 			this.urlPost = null;
 		}
 
