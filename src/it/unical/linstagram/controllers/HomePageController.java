@@ -63,6 +63,7 @@ public class HomePageController {
 			final User loggedUser = (User) session.getAttribute("user");
 			//List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
 //			final List<Post> posts = postService.getPosts();
+			session.removeAttribute("hashtagPost");
 			List<PostDTO> posts = postService.getLatestPost(loggedUser,null, 0);
 			final List<NotificationDTO> notifications = notificationService.getAllNotificationToSee(loggedUser, 10);
 			model.addAttribute("posts", posts);
@@ -122,11 +123,17 @@ public class HomePageController {
 		return mediaInfo;
 	}
 
-	@RequestMapping("/latestPost")
-	public String latestPost(@RequestParam int last,@RequestParam long time,HttpSession session,Model model) {
+	@RequestMapping("/otherPosts")
+	public String otherPosts(@RequestParam int last,@RequestParam long time,HttpSession session,Model model) {
 		User loggedUser = (User) session.getAttribute("user");
-
-		List<PostDTO> posts = postService.getLatestPost(loggedUser,null, last);
+	
+		List<PostDTO> posts =  null;
+		if(session.getAttribute("hashtagPost") == null)
+			posts = postService.getLatestPost(loggedUser,null, last);
+		else
+			posts = postService.getPostsbyHashtag(loggedUser,
+					(String)session.getAttribute("hashtagPost"),last);
+			
 		model.addAttribute("posts", posts);
 		return "fragment/post";
 	}
@@ -182,10 +189,12 @@ public class HomePageController {
 		}
 
 
-	@RequestMapping(value="hashtagPosts",method=RequestMethod.POST)
+	@RequestMapping(value="hashtagPosts")
 	public String hashtagPosts(@RequestParam String hashtag, HttpSession session, Model model) {
-		List<PostDTO> posts = postService.getPostsbyHashtag((User)session.getAttribute("user"), hashtag);
+		
+		List<PostDTO> posts = postService.getPostsbyHashtag((User)session.getAttribute("user"), hashtag,0);
 		model.addAttribute("posts", posts);
+		session.setAttribute("hashtagPost",hashtag);
 		System.out.println(posts.size());
 		
 		//TODO SISTEMARE IL METODO

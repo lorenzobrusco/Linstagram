@@ -45,6 +45,7 @@ $(document).ready(function () {
 	var currentTime = new Date();
 	
 	$(window).scroll(function(){
+		var listSize = $("#posts").children("section").length;
 //		console.log(($(document).height() -  $(window).height())+" minore di "+$(window).scrollTop());
 		if (($(document).height() -  $(window).height()) <=  $(window).scrollTop()+10 && !entered) {
 			entered=true;
@@ -52,13 +53,12 @@ $(document).ready(function () {
 			setTimeout(function(){
 
 				$.ajax({
-					url:"latestPost", 
-					data:{time:currentTime.getTime(),last:postsrequest},
+					url:"otherPosts", 
+					data:{time:currentTime.getTime(),last:listSize},
 					success: function(result) {
 						var html = $.parseHTML(result)
 						if(html.length != 1){
 							$("#posts").append(html);
-							postsrequest++;
 						}
 						$("#loading").addClass("hide");
 						entered=false;
