@@ -60,7 +60,7 @@ footer {
 
 .user-img img {
 	border: 0;
-	cursor: pointer;
+	cursor: default;
 	height: 100%;
 	padding: 0;
 	width: 100%;
