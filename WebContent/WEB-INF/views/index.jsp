@@ -35,7 +35,6 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
-	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
@@ -94,6 +93,7 @@
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
 	<script src="${pageContext.request.contextPath}/resources/js/event_post.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 	
 </body>
 

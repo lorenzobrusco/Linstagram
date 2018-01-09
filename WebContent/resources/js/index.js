@@ -107,11 +107,11 @@ $(document).ready(function () {
 							if(html.length != 1){
 								$("#posts").append(html);
 								//allow to send comment with Enter button
-								$(".comment-section").on("keypress", function(e) {
-									if ( e.which == 13 ) { //enter press
-										$(this).find("button").click();
-									}
-								});
+//								$(".comment-section").on("keypress", function(e) {
+//									if ( e.which == 13 ) { //enter press
+//										$(this).find("button").click();
+//									}
+//								});
 							}
 							$("#loading").addClass("hide");
 							entered=false;
