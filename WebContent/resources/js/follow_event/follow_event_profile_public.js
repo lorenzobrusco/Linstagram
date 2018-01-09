@@ -33,7 +33,7 @@ $(document).ready(function() {
 				if (result == "OK") {
 					$("#follow_ul").empty();
 					$("#follow_ul").append("<li><button id='followProfile-btn'>Follow</button></li>");
-					$("#count_follower").html(parseInt($("#count_follower").html(), 10)-1)
+					$("#count_follower").text(parseInt($("#count_follower").html(), 10) - 1);
 				}
 			}
 		});
