@@ -413,7 +413,9 @@ header {
 }
 
 #notification_list .notification_item .follow_btn_notification .followProfile_btn,
-#notification_list_mobile .notification_item .follow_btn_notification .followProfile_btn {
+#notification_list .notification_item .follow_btn_notification .acceptfollowProfile_btn,
+#notification_list_mobile .notification_item .follow_btn_notification .followProfile_btn ,
+#notification_list_mobile .notification_item .follow_btn_notification .acceptfollowProfile_btn {
   border: 1px solid #cccccc;
   background: #3897f0;
   border-color: #3897f0;
