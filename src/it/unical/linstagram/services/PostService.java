@@ -105,7 +105,7 @@ public class PostService {
 		User u = userDAO.getUserByUsername(username);
 		post.getLikes().remove(u);
 		
-		if(modelDao.update(post))
+		if(modelDao.merge(post))
 			return true;
 		return false;
 	}

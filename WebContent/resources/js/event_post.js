@@ -24,7 +24,7 @@
 
 $(document).ready(function() {
 	//EVENTO "INSERIMENTO LIKE"
-	$(document).on('click', '.love', function() {
+	$(document).on('click', 'a.love', function() {
 		var postID = $(this).attr('name');
 		var count_like = $("#count_like"+postID)
 		var love_id = $("#love_div"+postID)
@@ -44,7 +44,7 @@ $(document).ready(function() {
 	});
 
 	//EVENTO "RIMOZIONE LIKE"
-	$(document).on('click', '.loveFull', function() {
+	$(document).on('click', 'a.loveFull', function() {
 		var postID = $(this).attr('name');
 		var count_like = $("#count_like"+postID)
 		var love_id = $("#love_div"+postID)
