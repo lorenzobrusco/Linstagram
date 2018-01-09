@@ -70,12 +70,17 @@
 				</a>
 			</div>
 
-			<div class="nd3 nds transparent" data-toggle="tooltip"
-				data-placement="left" data-original-title="Top">
-				<a href="#top"><i class="fa fa-arrow-up black-icon"
+			<div id="cng-order" class="nd3 nds transparent" data-toggle="tooltip"
+				data-placement="left" data-original-title="Popular posts" data-type="popular">
+				<a><i class="fa fa-exchange black-icon"
 					aria-hidden="true"></i></a>
 			</div>
-
+			
+			<div class="nd4 nds transparent" data-toggle="tooltip"
+				data-placement="left" data-original-title="Top">
+				<a href="#top"><i class="fa fa-arrow-up black-icon"	aria-hidden="true"></i></a>
+			</div>
+			
 			<div id="floating-button" data-toggle="tooltip" data-placement="left"
 				data-original-title="Create">
 				<p class="plus">+</p>

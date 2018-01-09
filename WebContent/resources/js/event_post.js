@@ -99,6 +99,8 @@ $(document).ready(function() {
 		});
 	});
 
+	
+	
 	//EVENTO "INSERIMENTO COMMENTO"
 	$(document).on('click', '.submit_comment', function() {
 		var postID = $(this).attr('id');
@@ -118,9 +120,9 @@ $(document).ready(function() {
 				}
 			}
 		});
+
 	});
-
-
+	
 	//EVENTO PER APRIRE IL POPUP DEI LIKE E VEDERE GLI UTENTI CHE HANNO MESSO LIKE AD UN POST
 	$(document).on('click', '#likes', function() {
 		var post = $(this).attr("name");
