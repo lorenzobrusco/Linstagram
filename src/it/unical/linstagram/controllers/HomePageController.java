@@ -25,10 +25,12 @@ import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.UserDAO;
+import it.unical.linstagram.services.HashtagService;
 import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.NotificationService;
@@ -55,8 +57,8 @@ public class HomePageController {
 	private ResearchService researchService;
 
 	@Autowired
-	UserDAO userDAO;
-
+	private HashtagService hashtagService;
+	
 	@RequestMapping("/index")
 	public String homePageController(HttpSession session, Model model) {
 		if (UserManager.checkLogged(session)) {
@@ -124,15 +126,12 @@ public class HomePageController {
 		User loggedUser = (User) session.getAttribute("user");
 	
 		List<PostDTO> posts =  null;
-		if(session.getAttribute("hashtagPost") == null)
-			posts = postService.getLatestPost(loggedUser,null, last);
-		else
-			posts = postService.getPostsbyHashtag(loggedUser,
-					(String)session.getAttribute("hashtagPost"),last);
-			
+		posts = postService.getLatestPost(loggedUser,null, last);
+		
 		model.addAttribute("posts", posts);
 		return "fragment/post";
 	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/addStory", method = RequestMethod.POST)
 	public StoryDTO addStory(@RequestParam MultipartFile file, HttpSession session) throws IOException {
@@ -183,20 +182,5 @@ public class HomePageController {
 		System.out.println(generalQuery);
 		return generalQuery;
 		}
-
-
-	@RequestMapping(value="hashtagPosts")
-	public String hashtagPosts(@RequestParam String hashtag, HttpSession session, Model model) {
-		
-		List<PostDTO> posts = postService.getPostsbyHashtag((User)session.getAttribute("user"), hashtag,0);
-		model.addAttribute("posts", posts);
-		session.setAttribute("hashtagPost",hashtag);
-		System.out.println(posts.size());
-		
-		//TODO SISTEMARE IL METODO
-		return "fragment/post";
-
-
-	}
 
 }

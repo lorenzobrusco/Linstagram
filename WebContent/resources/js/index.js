@@ -23,14 +23,14 @@ $(document).ready(function () {
 	//show comment event
 //	$('.show-all-comments')
 //	.click(
-//			function (e) {
-//				var target = $(e.target).find('span');
-//				if (target.hasClass('show-comments')) {
-//					$(e.target).html('<span class="hidden-comments"></span> Nascondi altri commenti');
-//				} else {
-//					$(e.target).html('<span class="show-comments"></span> Carica altri commenti');
-//				}
-//			});
+//	function (e) {
+//	var target = $(e.target).find('span');
+//	if (target.hasClass('show-comments')) {
+//	$(e.target).html('<span class="hidden-comments"></span> Nascondi altri commenti');
+//	} else {
+//	$(e.target).html('<span class="show-comments"></span> Carica altri commenti');
+//	}
+//	});
 
 	//Active tooltip
 	$('[data-toggle="tooltip"]').tooltip();
@@ -43,28 +43,35 @@ $(document).ready(function () {
 	var postsrequest=1;
 	var entered=false;
 	var currentTime = new Date();
-	
+	var lastScrollTop = 0;
 	$(window).scroll(function(){
-		var listSize = $("#posts").children("section").length;
-//		console.log(($(document).height() -  $(window).height())+" minore di "+$(window).scrollTop());
-		if (($(document).height() -  $(window).height()) <=  $(window).scrollTop()+10 && !entered) {
-			entered=true;
-			$("#loading").removeClass("hide");
-			setTimeout(function(){
 
-				$.ajax({
-					url:"otherPosts", 
-					data:{time:currentTime.getTime(),last:listSize},
-					success: function(result) {
-						var html = $.parseHTML(result)
-						if(html.length != 1){
-							$("#posts").append(html);
-						}
-						$("#loading").addClass("hide");
-						entered=false;
-					}	
-				}) 		 
-			},1000);
+		var st = $(this).scrollTop();
+
+		if (st > lastScrollTop){
+
+			if (($(document).height() -  $(window).height()) <=  $(window).scrollTop()+10 && !entered) {
+				var listSize = $("#posts").children("section").length;
+				entered=true;
+				$("#loading").removeClass("hide");
+
+				setTimeout(function(){
+
+					$.ajax({
+						url:"otherPosts", 
+						data:{time:currentTime.getTime(),last:listSize},
+						success: function(result) {
+							var html = $.parseHTML(result)
+							if(html.length != 1){
+								$("#posts").append(html);
+							}
+							$("#loading").addClass("hide");
+							entered=false;
+						}	
+					}) 		 
+				},1000);
+			}
 		}
+		lastScrollTop = st;
 	});
 });

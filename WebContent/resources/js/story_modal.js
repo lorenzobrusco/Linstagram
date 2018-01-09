@@ -154,7 +154,12 @@ $(document).ready(function () {
 						Caman(canvas[0], function () {
 							startFilter(canvas);
 							this.revert(); //revert previous filter
-							eval("this." + filterType + "().render(function () {resize_canvas(canvas);endFilter(canvas);} );");
+							if(filterType!="normal"){
+								eval("this." + filterType + "().render(function () {resize_canvas(canvas);endFilter(canvas);} );");
+							} else if(filterType=="normal"){
+								resize_canvas(canvas);
+								endFilter(canvas);
+							}
 						});
 					});
 

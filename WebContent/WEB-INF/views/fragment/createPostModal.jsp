@@ -48,6 +48,7 @@
 			</form>
 			<div id="apply-filter-section" class="hide">
 				<div id="filter-btn-group">
+					<button type="button" class="btn btn-default" id="normal">Normal</button>
 					<button type="button" class="btn btn-default" id="vintage">Vintage</button>
 					<button type="button" class="btn btn-default" id="lomo">Lomo</button>
 					<button type="button" class="btn btn-default" id="clarity">Clarity</button>
