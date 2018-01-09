@@ -23,14 +23,13 @@
 		</div>
 		<div class="bottom-nav-menu">
 			<ul id="horizontal-list">
-				<li class="active-menu-item"><a href="index" id="home-mobile"
-					class="item-mobile"></a></li>
-				<li><a href="profile" role="button" id="profile-mobile"
-					class="item-mobile"></a></li>
-				<li><a href="#create-post-modal" id="add-mobile"
-					class="item-mobile"></a></li>
-				<li><a href="" id="notification-mobile" class="item-mobile"></a>
-				</li>
+				<li class="active-menu-item"><a href="index" id="home-mobile" class="item-mobile"></a></li>
+					
+				<li><a href="profile" role="button" id="profile-mobile" class="item-mobile"></a></li>
+					
+				<li><a href="#create-post-modal" id="add-mobile" class="item-mobile"></a></li>
+					
+				<li><a href="#" id="notification-mobile" class="item-mobile"></a></li>
 			</ul>
 		</div>
 	</div>
@@ -42,16 +41,19 @@
 			<div class="input-group" id="search-div">
 				<input type="text" class="form-control transparent" placeholder="Search" id="search-input-desktop">
 			</div>
-		</span> <span class="nav-right"> <a href="" id="explore"
-			class="right-icon-nav disabled" data-toggle="tooltip"
-			data-placement="left" data-original-title="Coming Soon"></a> <a
-			href="#"" id="notification" class="right-icon-nav"><span class="arrow hide"></span></a>
+		</span> 
+		<span class="nav-right"> 
+			<a href="" id="explore" class="right-icon-nav disabled" data-toggle="tooltip"
+			data-placement="left" data-original-title="Coming Soon"></a>
+			 
+			<a href="#" id="notification" class="right-icon-nav"><span class="arrow hide"></span></a>
 			<a href="#" role="button" id="profile" class="right-icon-nav"></a>
 		</span>
 	</nav>
 </header>
 
 <div id="notification_list" class="hide"></div>
+<div id="notification_list_mobile" class="hide"></div>
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
