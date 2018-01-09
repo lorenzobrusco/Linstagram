@@ -31,39 +31,21 @@ public class HibernateUtil {
 			else
 				factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
 		}
-		init();
+		//		init();
 
 	}
 
 	public static Session getHibernateSession() {
 
+
 		if (factory == null) {
-
 			Configuration configuration = new Configuration();
-			String path = HibernateUtil.class.getClassLoader().getResource("").getPath();
 
-			try {
-				String fullPath = URLDecoder.decode(path, "UTF-8");
-				fullPath = new File(fullPath).getPath();
+			factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
 
-				configuration.setProperty("hibernate.search.default.indexBase", fullPath + "/../build/indexes");
-				configuration.setProperty("hihibernate.search.default.locking_strategy", "naive");
-
-				if (!Files.exists(Paths.get(fullPath + "/../build/indexes"))) {
-					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
-					init();
-				} else {
-					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
-				}
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			// TODO Se vuoi le stampe caccia il commento
+			//System.out.println(factory);
 		}
-
-		// TODO Se vuoi le stampe caccia il commento
-		//System.out.println(factory);
 		final Session session = factory.openSession();
 		return session;
 	}
@@ -74,7 +56,7 @@ public class HibernateUtil {
 
 			Configuration configuration = new Configuration();
 			factory = configuration.configure("hibernateTest.cfg.xml").buildSessionFactory();
-			init();
+			//			init();
 		}
 		final Session session = factory.openSession();
 		return session;
@@ -103,8 +85,8 @@ public class HibernateUtil {
 		MassIndexerProgressMonitor monitor = new SimpleIndexingProgressMonitor();
 		try {
 			massIndexer.batchSizeToLoadObjects(25).cacheMode(CacheMode.NORMAL).threadsToLoadObjects(12).idFetchSize(150)
-					.transactionTimeout(1800).progressMonitor(monitor) // a MassIndexerProgressMonitor implementation
-					.startAndWait();
+			.transactionTimeout(1800).progressMonitor(monitor) // a MassIndexerProgressMonitor implementation
+			.startAndWait();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			System.err.println("mass reindexing interrupted: " + e.getMessage());
