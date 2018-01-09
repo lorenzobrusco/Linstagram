@@ -90,7 +90,7 @@
 							content : content_popover,
 							html : true,
 							placement : "bottom",
-							trigger : "manual", //click
+							trigger : "manual",
 							container : "header"
 						}).click(function(e){
 							e.preventDefault();
@@ -109,8 +109,6 @@
 						window.addEventListener("scroll", closeProfilePopover);
 						
 						$('[data-toggle="tooltip"]').tooltip();
-
-						//TODO not work	
 
 						/*$('#search-input-desktop').focusin(function() {
 							$("#search-div").css("width", "70%");
@@ -166,5 +164,3 @@
 	
 	
 </script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/follow_event/follow_event_profile_public.js"></script>
