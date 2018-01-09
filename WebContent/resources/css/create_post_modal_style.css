@@ -33,6 +33,19 @@
   box-shadow: 4px 4px 10px 0px #7777778f;
 }
 
+
+@media (max-width: 800px) {
+	#modal-card {
+  	margin: 15% 10%;
+  	background: #fafafa;
+  	border: 1px solid lightgray;
+  	border-radius: 3px;
+  	box-shadow: 4px 4px 10px 0px #7777778f;
+		width: 80%;
+  	height: 50%;
+	}
+}
+
 #post-dropzone,
 #story-dropzone {
   text-align: center;
@@ -154,3 +167,5 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+
