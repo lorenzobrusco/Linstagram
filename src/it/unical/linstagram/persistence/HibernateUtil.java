@@ -22,15 +22,16 @@ import it.unical.linstagram.model.User;
 public class HibernateUtil {
 
 	private static SessionFactory factory;
+	private static SessionFactory testFactory;
 
 	public static void CreateSessionFactory(boolean test) {
 
-		if (factory == null) {
-			if (test)
-				factory = new Configuration().configure("hibernateTest.cfg.xml").buildSessionFactory();
-			else
-				factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
-		}
+
+		if (test && testFactory == null)
+			testFactory = new Configuration().configure("hibernateTest.cfg.xml").buildSessionFactory();
+		else if (!test && factory == null)
+			factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+
 		//		init();
 
 	}
@@ -40,11 +41,10 @@ public class HibernateUtil {
 
 		if (factory == null) {
 			Configuration configuration = new Configuration();
-
 			factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
 
 			// TODO Se vuoi le stampe caccia il commento
-			//System.out.println(factory);
+			System.out.println(factory);
 		}
 		final Session session = factory.openSession();
 		return session;
@@ -52,13 +52,13 @@ public class HibernateUtil {
 
 	public static Session getHibernateTestSession() {
 
-		if (factory == null) {
+		if (testFactory == null) {
 
 			Configuration configuration = new Configuration();
 			factory = configuration.configure("hibernateTest.cfg.xml").buildSessionFactory();
 			//			init();
 		}
-		final Session session = factory.openSession();
+		final Session session = testFactory.openSession();
 		return session;
 	}
 
@@ -84,8 +84,12 @@ public class HibernateUtil {
 
 		MassIndexerProgressMonitor monitor = new SimpleIndexingProgressMonitor();
 		try {
-			massIndexer.batchSizeToLoadObjects(25).cacheMode(CacheMode.NORMAL).threadsToLoadObjects(12).idFetchSize(150)
-			.transactionTimeout(1800).progressMonitor(monitor) // a MassIndexerProgressMonitor implementation
+			massIndexer.batchSizeToLoadObjects(25)
+			.cacheMode(CacheMode.NORMAL)
+			.threadsToLoadObjects(12)
+			.idFetchSize(150)
+			.transactionTimeout(1800)
+			.progressMonitor(monitor) // a MassIndexerProgressMonitor implementation
 			.startAndWait();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
