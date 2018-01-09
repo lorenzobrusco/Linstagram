@@ -36,7 +36,7 @@ public class User{
 	@Fields({
 		@Field(name = "username", index = Index.YES, store = Store.YES),
 		@Field(name = "edgeNGramUsername", index = Index.YES, store = Store.NO,
-		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "edgeNgram")),
 	})
 	private String username;
 
@@ -50,7 +50,7 @@ public class User{
 	@Fields({
 		@Field(name = "name", index = Index.YES, store = Store.YES),
 		@Field(name = "edgeNGramName", index = Index.YES, store = Store.NO,
-		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "edgeNgram")),
 	})
 	private String name;
 
@@ -58,7 +58,7 @@ public class User{
 	@Fields({
 		@Field(name = "surname", index = Index.YES, store = Store.YES),
 		@Field(name = "edgeNGramSurname", index = Index.YES, store = Store.NO,
-		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "edgeNgram")),
 	})
 	private String surname;
 

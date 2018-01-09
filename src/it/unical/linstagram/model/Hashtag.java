@@ -29,62 +29,73 @@ import org.hibernate.search.annotations.*;
 @Indexed
 @Table(name="hashtag")
 
-@AnalyzerDefs({
+//@AnalyzerDefs({
+//
+//	@AnalyzerDef(name = "autocompleteEdgeAnalyzer",
+//
+//			// Split input into tokens according to tokenizer
+//			tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
+//
+//			filters = {
+//					// Normalize token text to lowercase, as the user is unlikely to
+//					// care about casing when searching for matches
+//					@TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
+//							@Parameter(name = "pattern",value = "([^a-zA-Z0-9\\.])"),
+//							@Parameter(name = "replacement", value = " "),
+//							@Parameter(name = "replace", value = "all") }),
+//					@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+//					@TokenFilterDef(factory = StopFilterFactory.class),
+//					// Index partial words starting at the front, so we can provide
+//					// Autocomplete functionality
+//					@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
+//							@Parameter(name = "minGramSize", value = "3"),
+//							@Parameter(name = "maxGramSize", value = "50") }) }),
+//	@AnalyzerDef(name = "standardAnalyzer",
+//
+//	//Split input into tokens according to tokenizer
+//	tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+//
+//	filters = {
+//			// Normalize token text to lowercase, as the user is unlikely to
+//			// care about casing when searching for matches
+//			@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
+//			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+//			@TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
+//					@Parameter(name = "pattern", value = "([^a-zA-Z0-9\\.])"),
+//					@Parameter(name = "replacement", value = " "),
+//					@Parameter(name = "replace", value = "all") }),
+//			
+//	}), // Def
+//	@AnalyzerDef(name = "autocompleteAnalyzer",
+//
+//	// Split input into tokens according to tokenizer
+//	tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
+//
+//	filters = {
+//			// Normalize token text to lowercase, as the user is unlikely to
+//			// care about casing when searching for matches
+//			@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
+//			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
+//			@TokenFilterDef(factory = StopFilterFactory.class),
+//			// Index partial words starting at the front, so we can provide
+//			// Autocomplete functionality
+//			@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
+//					@Parameter(name = "minGramSize", value = "1"),
+//					@Parameter(name = "maxGramSize", value = "50") }) })
+//})
 
-	@AnalyzerDef(name = "autocompleteEdgeAnalyzer",
-
-			// Split input into tokens according to tokenizer
-			tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
-
-			filters = {
-					// Normalize token text to lowercase, as the user is unlikely to
-					// care about casing when searching for matches
-					@TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
-							@Parameter(name = "pattern",value = "([^a-zA-Z0-9\\.])"),
-							@Parameter(name = "replacement", value = " "),
-							@Parameter(name = "replace", value = "all") }),
-					@TokenFilterDef(factory = LowerCaseFilterFactory.class),
-					@TokenFilterDef(factory = StopFilterFactory.class),
-					// Index partial words starting at the front, so we can provide
-					// Autocomplete functionality
-					@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
-							@Parameter(name = "minGramSize", value = "3"),
-							@Parameter(name = "maxGramSize", value = "50") }) }),
-	@AnalyzerDef(name = "standardAnalyzer",
-
-	//Split input into tokens according to tokenizer
-	tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-
-	filters = {
-			// Normalize token text to lowercase, as the user is unlikely to
-			// care about casing when searching for matches
-			@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
-			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
-			@TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
-					@Parameter(name = "pattern", value = "([^a-zA-Z0-9\\.])"),
-					@Parameter(name = "replacement", value = " "),
-					@Parameter(name = "replace", value = "all") }),
-			
-	}), // Def
-	@AnalyzerDef(name = "autocompleteAnalyzer",
-
-	// Split input into tokens according to tokenizer
-	tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
-
-	filters = {
-			// Normalize token text to lowercase, as the user is unlikely to
-			// care about casing when searching for matches
-			@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
-			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
-			@TokenFilterDef(factory = StopFilterFactory.class),
-			// Index partial words starting at the front, so we can provide
-			// Autocomplete functionality
-			@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
-					@Parameter(name = "minGramSize", value = "1"),
-					@Parameter(name = "maxGramSize", value = "50") }) })
+@AnalyzerDef(name = "edgeNgram",
+tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+filters = {
+        @TokenFilterDef(factory = LowerCaseFilterFactory.class), // Lowercase all characters
+        @TokenFilterDef(
+                factory = EdgeNGramFilterFactory.class, // Generate prefix tokens
+                params = {
+                        @Parameter(name = "minGramSize", value = "1"),
+                        @Parameter(name = "maxGramSize", value = "10")
+                }
+        )
 })
-
-
 
 public class Hashtag {
 
@@ -104,7 +115,7 @@ public class Hashtag {
 	@Fields({
 		  @Field(name = "hashtag", index = Index.YES, store = Store.YES),
 		  @Field(name = "edgeNGramHashtag", index = Index.YES, store = Store.NO,
-		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
+		analyze = Analyze.YES, analyzer = @Analyzer(definition = "edgeNgram")),
 		})
 	private String hashtag;
 
