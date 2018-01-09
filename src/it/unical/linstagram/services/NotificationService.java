@@ -77,7 +77,12 @@ public class NotificationService {
 		final List<Notification> notifications = notificationDAO.getAllNotification(user);
 		final List<NotificationDTO> notificationsDTO = new ArrayList<>();
 		for (Notification notification : notifications) {
+			boolean exist_request = userDAO.existRequestFollow(notification.getUserFrom().getUsername(),
+					notification.getUserTo().getUsername());
+			
 			boolean alreadyFollow = notification.getUserTo().getFollowings().contains(notification.getUserFrom());
+			if (exist_request)
+				alreadyFollow = false;
 			notificationsDTO.add(new NotificationDTO(notification, alreadyFollow));
 			if (notification.isToSee()) {
 				notification.setToSee(false);

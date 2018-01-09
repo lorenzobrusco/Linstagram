@@ -58,7 +58,7 @@ $(document).ready(function() {
 		if (privateProfile == "false")
 			$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
 		else
-			$(btn).append("<button value="+username+" name='"+id+"' id='sendRequestPopup-btn'>Send Request</button>")
+			$(btn).append("<button value="+username+" name='"+id+"' id='sendRequestPopup-btn'>Follow</button>")
 		
 		$.ajax({
 			url : "unfollowUser",
@@ -90,7 +90,7 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$(btn).empty();
-					$(btn).append("<button value='"+username+"' name='"+id+"' id='cancelRequestPopup-btn'>Cancel Request</button>");
+					$(btn).append("<button value='"+username+"' name='"+id+"' id='cancelRequestPopup-btn'>Delete Request</button>");
 				}
 			}
 		});
@@ -109,7 +109,7 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$(btn).empty();
-					$(btn).append("<button value='"+username+"' name='"+id+"' id='sendRequestPopup-btn'>Send Request</button>");
+					$(btn).append("<button value='"+username+"' name='"+id+"' id='sendRequestPopup-btn'>Follow</button>");
 				}
 			}
 		});
@@ -140,15 +140,24 @@ $(document).ready(function() {
 	//EVENTO DEL BOTTONE "UNFOLLOW"
 	$(document).on('click', '#unfollowProfile-btn', function() {
 		var username = $('#username_hidden').val();
-		var popupFail = document.getElementById("popupFAIL");
+		var id = $(this).attr('name');
+//		var popupFail = document.getElementById("popupFAIL");
 		
+		var privateProfile = $('#private'+id).val();
+
 		$.ajax({
 			url : "unfollowUser",
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();
-					$("#follow_ul").append("<li><button id='followProfile-btn'>Follow</button></li>");
+					
+					if (privateProfile == "false")
+						$("#follow_ul").append("<li><button value="+username+" name='"+id+"' id='followProfile-btn'>Follow</button></li>");
+					else {
+						//$("#follow_ul").append("<li><button value="+username+" name='"+id+"' id='sendRequestPopup-btn'>Send Request</button></li>")
+						location.reload();
+					}
 					$("#count_follower").text(parseInt($("#count_follower").html(), 10) - 1);
 				}
 			}
@@ -166,7 +175,7 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();
-					$("#follow_ul").append("<button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Cancel Request</button>");
+					$("#follow_ul").append("<button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Delete Request</button>");
 				}
 			}
 		});

@@ -46,6 +46,7 @@
 	</ul>
 </div>
 <c:if test="${userPublic.username != user.username }">
+	<input type="hidden" id="private${userPublic.id }" value="false"/>
 	<div class="row item-user-info">
 		<ul id="follow_ul">
 			<c:choose>
@@ -59,7 +60,7 @@
 							<li><button id="followProfile-btn">Follow</button></li>
 						</c:when>
 						<c:otherwise>
-							<li><button id="unfollowProfile-btn">Unfollow</button></li>
+							<li><button name="${userPublic.id }" value="${userPublic.username }" id="unfollowProfile-btn">Unfollow</button></li>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

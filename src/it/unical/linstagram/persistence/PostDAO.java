@@ -70,6 +70,28 @@ public class PostDAO implements IPostDAO {
 
 		return posts;
 	}
+	
+	public List<Post> getPopularPosts(String username, Calendar calendar, int last){
+		Session session = HibernateUtil.getHibernateSession();
+		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
+				.setParameter("username", username).list();
+		
+		List<Post> posts = new ArrayList<>();
+		Query query = null;
+		if(!followedUsers.isEmpty())
+			query = session.createQuery("SELECT p FROM Post p  WHERE p.user in (:fUsers) or p.user.username=:username order by p.likes.size desc, p.postDate desc")
+			.setParameter("fUsers",followedUsers).setParameter("username", username);
+		else
+			query = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.likes.size desc, p.postDate desc")
+			.setParameter("username", username);
+
+		query.setFirstResult(last);
+		query.setMaxResults(MAX_RESULTS_POST);
+		posts = query.list();
+		session.close();
+
+		return posts;	
+	}
 
 	public List<Post> getFollowedPosts(String username) {
 		Session session = HibernateUtil.getHibernateSession();

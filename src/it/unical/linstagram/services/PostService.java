@@ -56,7 +56,18 @@ public class PostService {
 		
 		return postsDTO;
 	}
-	
+	public List<PostDTO> getPopularPosts(User user, Calendar date, int last){
+		
+		List<Post> posts = postDAO.getPopularPosts(user.getUsername(), date, last);
+		List<PostDTO> postsDTO = new ArrayList<>();
+		
+		for (Post post : posts) {	
+			postsDTO.add(new PostDTO
+					(post, postDAO.doesTheUserLikeThePost(post.getId(), user), user.getBookmarks().contains(post)));		
+		}
+		
+		return postsDTO;
+	}
 	public List<PostDTO> getLatestPost(User user, Calendar date,int last){
 		List<Post> posts = postDAO.getLastPosts(user.getUsername(), date, last);
 		

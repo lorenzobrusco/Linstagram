@@ -62,6 +62,7 @@ public class OtherUserController {
 			return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
 					.getMessage();
 
+		notificationService.generateFollowNotification(user, username);
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 
@@ -117,12 +118,12 @@ public class OtherUserController {
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
 
-		notificationService.generateFollowNotification(user, usernameToFollow);
 		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user)) {
 			return new MessageResponse(MessageCode.FOLLOW_FAILED, user,
 					"Non e' stato possibile inserire l'utente come following.").getMessage();
 		}
 
+		notificationService.generateFollowNotification(user, usernameToFollow);
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 
