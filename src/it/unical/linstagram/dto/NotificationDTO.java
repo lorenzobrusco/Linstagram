@@ -1,5 +1,9 @@
 package it.unical.linstagram.dto;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.NotificationType;
 
@@ -9,23 +13,62 @@ public class NotificationDTO {
 	private String userName;
 	private String context;
 	private String urlPost;
-	private String data;
+	private String date;
+	private boolean isPrivate;
+	private boolean alreadyFollow;
 
-	public NotificationDTO(Notification notification) {
+	public NotificationDTO(Notification notification, boolean alreadyFollow) {
 		this.userPhoto = notification.getUserFrom().getPhotoProfile();
 		this.userName = notification.getUserFrom().getUsername();
-		this.data = notification.getDate().toString();
+		this.date = calculateElapsedTime(notification.getDate());
+		// TODO change it
+		this.alreadyFollow = alreadyFollow;
+		this.isPrivate = notification.getUserTo().isPrivateProfile();
 		if (notification.getType().equals(NotificationType.COMMENT)) {
-			this.context = String.format("commented your post: %s",notification.getComment().getContent());
+			this.context = String.format("commented your post: %s", notification.getComment().getContent());
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 		} else if (notification.getType().equals(NotificationType.LIKE)) {
-			this.context ="liked your post";
+			this.context = "liked your post";
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 		} else {
-			this.context ="started following you";
+			if (this.alreadyFollow) {
+				this.context = "Asks to follow you";
+			} else {
+				this.context = "started following you";
+			}
+
 			this.urlPost = null;
 		}
 
+	}
+
+	private String calculateElapsedTime(Calendar date) {
+		Date currentTime = Calendar.getInstance().getTime();
+		Date timePost = date.getTime();
+		long diffInMillies = currentTime.getTime() - timePost.getTime();
+
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillies);
+		long hours = TimeUnit.MINUTES.toHours(minutes);
+		long days = TimeUnit.HOURS.toDays(hours);
+
+		if (days != 0) {
+			if (days > 30) {
+				long month = days % 30;
+				if (month > 12) {
+					long years = month % 12;
+					return years + " Y";
+				}
+				return month + " M";
+			}
+			return days + " D";
+		}
+
+		else if (hours != 0)
+			return hours + " h";
+		else if (minutes != 0)
+			return minutes + " m";
+
+		return "";
 	}
 
 	public String getUserPhoto() {
@@ -60,12 +103,28 @@ public class NotificationDTO {
 		this.urlPost = urlPost;
 	}
 
-	public String getData() {
-		return data;
+	public String getDate() {
+		return date;
 	}
 
-	public void setData(String data) {
-		this.data = data;
+	public void setDate(String data) {
+		this.date = data;
+	}
+
+	public boolean isPrivate() {
+		return isPrivate;
+	}
+
+	public void setPrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+
+	public boolean isAlreadyFollow() {
+		return alreadyFollow;
+	}
+
+	public void setAlreadyFollow(boolean alreadyFollow) {
+		this.alreadyFollow = alreadyFollow;
 	}
 
 }

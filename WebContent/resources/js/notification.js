@@ -26,12 +26,28 @@ $('#notification')
 					content_notification_popover += "<img src="+ result[i].userPhoto+">"
 					content_notification_popover += "</div>"
 					content_notification_popover += "<div class='context_notification'>"
-					content_notification_popover += "<span><b>" + result[i].userName +"</b> " + result[i].context +"</span>"
+					content_notification_popover += "<span><b>" + result[i].userName +"</b> " + result[i].context +". <p> "+ result[i].date+"</p></span>" 
 					content_notification_popover += "</div>"
 					if(result[i].urlPost == null){
-						content_notification_popover += "<div class='follow_btn_notification'>"
-						content_notification_popover += "<button id='followProfile-btn'>Follow</button>"
-						content_notification_popover += "</div>"
+						if(result[i].isPrivate){
+							content_notification_popover += "<div class='follow_btn_notification'>"
+								if(result[i].alreadyFollow){
+									content_notification_popover += "<button class='unfollowProfile_btn'>Unfollow</button>"
+								}else{
+									content_notification_popover += "<button class='followProfile_btn'>Accept</button>"
+									content_notification_popover += "<button class='declineProfile_btn'>Decline</button>"
+									content_notification_popover += "</div>"
+								}
+						} else {
+							content_notification_popover += "<div class='follow_btn_notification'>"
+								if(result[i].alreadyFollow){
+									content_notification_popover += "<button class='unfollowProfile_btn'>Unfollow</button>"
+								}else {
+									content_notification_popover += "<button class='followProfile_btn'>Follow</button>"
+								}
+							
+							content_notification_popover += "</div>"
+						}
 					} else {
 						content_notification_popover += "<div class='post_notification'>"
 						content_notification_popover += "<img src=" + result[i].urlPost + ">"

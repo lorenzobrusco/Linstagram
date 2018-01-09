@@ -3,6 +3,7 @@ package it.unical.linstagram.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CORBA.ARG_OUT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +77,8 @@ public class NotificationService {
 		final List<Notification> notifications = notificationDAO.getAllNotification(user);
 		final List<NotificationDTO> notificationsDTO = new ArrayList<>();
 		for (Notification notification : notifications) {
-			notificationsDTO.add(new NotificationDTO(notification));
+			boolean alreadyFollow = notification.getUserTo().getFollowings().contains(notification.getUserFrom());
+			notificationsDTO.add(new NotificationDTO(notification, alreadyFollow));
 			if (notification.isToSee()) {
 				notification.setToSee(false);
 				modelDAO.update(notification);

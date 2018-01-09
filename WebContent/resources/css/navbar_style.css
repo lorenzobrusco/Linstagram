@@ -139,13 +139,14 @@ header {
 	/*  cursor: default;*/
 }
 
-.badge{
-    position: absolute;
-    top: 1%;
-    left: 77%;
-    background-color: #ed4040 !important;
-    padding: 4px 6px !important;
+.badge {
+	position: absolute;
+	top: 1%;
+	left: 77%;
+	background-color: #ed4040 !important;
+	padding: 4px 6px !important;
 }
+
 .right-icon-nav {
 	background-image: url(../images/icons.png);
 	background-repeat: no-repeat;
@@ -200,6 +201,8 @@ background-position
 
 
 
+
+
 :
 
 
@@ -209,7 +212,9 @@ background-position
 
 
 
+
  
+
 
 
 
@@ -240,6 +245,8 @@ background-position
 
 
 
+
+
 :
 
 
@@ -249,7 +256,9 @@ background-position
 
 
 
+
  
+
 
 
 
@@ -376,6 +385,10 @@ background-position
 	margin-top: 10px;
 }
 
+#notification_list .notification_item p{
+	display: inline;
+}
+
 #notification_list .notification_item .user_from_notification {
 	display: inline;
 	margin: 0 20px;
@@ -393,6 +406,7 @@ background-position
 	display: inline;
 	float: right;
 	margin-right: 20px;
+	margin: 2% 3%;
 }
 
 #notification_list .notification_item .post_notification {
@@ -410,6 +424,37 @@ background-position
 	height: 40px;
 	width: 40px;
 }
+
+
+#notification_list .notification_item .follow_btn_notification .followProfile_btn{
+   border: 1px solid #cccccc;
+   background: #3897f0;
+   border-color: #3897f0;
+   color: #fff;
+   transition: all .5s;
+   padding: 4px 8px;
+   border-radius: 4px;
+}
+
+#notification_list .notification_item .follow_btn_notification .unfollowProfile_btn{
+   border: 1px solid #cccccc;
+   background-color: transparent;
+   color: inherit;
+   transition: all .5s;
+   padding: 4px 8px;
+   border-radius: 4px;
+}
+
+#notification_list .notification_item .follow_btn_notification .declineProfile_btn{
+    border: 1px solid #cccccc;
+    margin-left: 10px;
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+		padding: 4px 8px;
+		border-radius: 4px;
+}
+
 
 #notification_list .hr_notification {
 	margin: 12px 12px 12px 32px !important;
@@ -456,11 +501,15 @@ transform
 
 
 
+
+
 :
 
 
 
+
  
+
 
 
 
@@ -471,8 +520,12 @@ rotate
 
 
 
+
+
 (360
 deg
+
+
 
 
 
