@@ -111,14 +111,14 @@
 
 						//TODO not work	
 
-						$('#search-input-desktop').focusin(function() {
+						/*$('#search-input-desktop').focusin(function() {
 							$("#search-div").css("width", "70%");
 							console.log("ok");
 						});
 
 						$('#search-input-desktop').focusout(function() {
 							$("#search-div").css("width", "50%");
-						});
+						});*/
 
 						//TODO DA FINIRE						
 						$('#search-input-desktop').keyup(function() {

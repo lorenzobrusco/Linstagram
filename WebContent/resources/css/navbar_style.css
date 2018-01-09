@@ -87,15 +87,18 @@ header {
 }
 
 #search-form>div>input {
-	border-radius: 50px;
+	border-radius: 3px;
 	max-height: 25px;
 	position: relative;
 	top: 10px;
+	outline: none;
 }
 
 #search-form>div>input:focus {
-	box-shadow: 0 0 5px rgba(81, 23, 238, 1);
-	/*background: radial-gradient(ellipse at 70% 70%,#ee583f 8%,#d92d77 42%,#bd3381 58%);*/
+    border-color: #ccc !important;
+    outline: 0 !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0) !important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0) !important;
 }
 
 #logo-text {
@@ -283,6 +286,21 @@ background-position
 	}
 	.navbar {
 		margin-bottom: 0px !important;
+	}
+	
+	 #notification_list {
+    height: 100% !important;
+    width: 100% !important;
+    top: 0 !important;
+    right: 0 !important;
+    max-height: none !important;
+    min-height: 0 !important; 
+	}
+	
+	#notification_list .notification_item .follow_btn_notification {
+    text-align: center !important;
+    display: block !important;
+    float: none !important;
 	}
 }
 
