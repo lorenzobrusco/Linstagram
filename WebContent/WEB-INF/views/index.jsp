@@ -69,9 +69,9 @@
 				</a>
 			</div>
 
-			<div id="cng-order" class="nd3 nds transparent" data-toggle="tooltip"
+			<div id="cng-order" class="nd3 nds" data-toggle="tooltip"
 				data-placement="left" data-original-title="Popular" data-type="popular">
-				<a><i class="fa fa-exchange black-icon"
+				<a><i class="fa fa-exchange center-icon"
 					aria-hidden="true"></i></a>
 			</div>
 			

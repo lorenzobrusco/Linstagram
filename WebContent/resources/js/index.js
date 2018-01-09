@@ -48,6 +48,8 @@ $(document).ready(function () {
 	$("#cng-order").click(function(){
 		$("#posts").empty();
 		$("#loading").removeClass("hide");
+		var floating_btn = $("#container-floating");
+		floating_btn.addClass("hide");
 		
 		var nTypeReq="";
 		var text="";
@@ -68,6 +70,7 @@ $(document).ready(function () {
 			url:"getPosts", 
 			data:{time:currentTime.getTime(),type:typeReq,lastIndex:0},
 			success: function(result) {
+				floating_btn.removeClass("hide");
 				
 				var html = $.parseHTML(result)
 				if(html.length != 1){
