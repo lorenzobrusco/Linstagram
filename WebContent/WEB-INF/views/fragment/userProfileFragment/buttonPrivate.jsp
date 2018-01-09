@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script src="./resources/js/follow_event/event_get_follow.js"></script>
+<!-- <script src="./resources/js/follow_event/reload_user_follow_popup.js"></script> -->
 
 <c:choose>
 	<c:when test="${userPublic.request_send == false && userPublic.request_received == false && userPublic.followed == false}">

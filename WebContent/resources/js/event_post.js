@@ -37,7 +37,7 @@ $(document).ready(function() {
 					$(count_like).html(parseInt($(count_like).html(), 10)+1)
 					$(love_id).empty();
 					$(love_id).append("<a name="+postID+" id=loveFull"+postID+
-					" class=loveFull><span class=loveFull></span></a>");
+					" class=loveFull><span class=loveFull><i class='fa fa-heart fa-2x' aria-hidden='true'></i></span></a>");
 				}
 			}
 		});
@@ -57,7 +57,7 @@ $(document).ready(function() {
 					$(count_like).html(parseInt($(count_like).html(), 10)-1)
 					$(love_id).empty();
 					$(love_id).append("<a name="+postID+" id=love"+postID+
-					" class=love><span class=love></span></a>");
+					" class=love><span class='love'><i class='fa fa-heart-o fa-2x' aria-hidden='true'></i></span></a>");
 				}
 			}
 		});
@@ -75,7 +75,7 @@ $(document).ready(function() {
 				if(result == "OK") {
 					$(bookmark_id).empty();
 					$(bookmark_id).append("<a name="+postID+" id=bookmarkFull"+postID+
-					" class=bookmarkFull><span class=saveFull></span></a>");
+					" class=bookmarkFull><span class=save><i class='fa fa-bookmark fa-2x' aria-hidden='true'></i></span></a>");
 				}
 			}
 		});
@@ -93,7 +93,7 @@ $(document).ready(function() {
 				if(result == "OK") {
 					$(bookmark_id).empty();
 					$(bookmark_id).append("<a name="+postID+" id=bookmark"+postID+
-					" class=bookmark><span class=save></span></a>");
+					" class=bookmark><span class=save><i class='fa fa-bookmark-o fa-2x' aria-hidden='true'></i></span></a>");
 				}
 			}
 		});
