@@ -6,26 +6,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-<!-- <script type="text/javascript">
-$(document).ready(function() {
-	
-	$(document).on('click', '#unfollowerPrivate-btn', function() {
-		var username = $('#username_hidden').val();
-		
-		$.ajax({
-			url : "unfollowUser",
-			data:{username:username},
-			success : function(result) {
-				if (result == "OK") {
-					location.reload();
-				}
-			}
-		});
-	});
-});
-
-</script> -->
-
 <div class="row item-user-info">
 	<ul>
 		<li><b>@${userPublic.username}</b></li>
