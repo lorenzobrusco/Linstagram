@@ -28,11 +28,11 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers("/index").access("hasRole('ROLE_USER')")
+		.antMatchers("index/**").access("hasRole('ROLE_USER')")
 		.and()
-		.formLogin().loginPage("/Listagram/").loginProcessingUrl("/Listagram/login").permitAll()
+		.formLogin().loginPage("/").loginProcessingUrl("/signInAttempt").permitAll()
 		.usernameParameter("username").passwordParameter("password")
-		.defaultSuccessUrl("/Listagram/index")
+		.defaultSuccessUrl("/index")
 		.failureUrl("/")				
 		.and()
 		.logout().logoutUrl("/logout").permitAll(); 

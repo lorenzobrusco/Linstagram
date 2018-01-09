@@ -65,6 +65,7 @@ public class SignInUpController {
 				User user= (User) signInAttemptResp.getObj();
 				session.setAttribute("user", user);
 				mediaService.createImageDefault();
+				System.out.println("compa marcu");
 				return "redirect:/index";
 			}
 		}
