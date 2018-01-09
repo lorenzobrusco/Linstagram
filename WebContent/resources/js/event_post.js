@@ -28,10 +28,12 @@ $(document).ready(function() {
 		var postID = $(this).attr('name');
 		var count_like = $("#count_like"+postID)
 		var love_id = $("#love_div"+postID)
-
+		
 		$.ajax({
 			url : "addLike",
-			data:{postID:postID},
+			data:{
+				postID:postID
+			},
 			success : function(result) {
 				if(result == "OK") {
 					$(count_like).html(parseInt($(count_like).html(), 10)+1)

@@ -55,12 +55,12 @@ $(document).ready(function () {
 		typeReq= $(this).attr("data-type");
 		if($(this).attr("data-type")== "popular"){
 			nTypeReq = "latest";
-			text="Latest posts"
+			text="Latest"
 		
 		}else if($(this).attr("data-type")== "latest"){
 			
 			nTypeReq = "popular";
-			text="Popular posts"
+			text="Popular"
 		}
 		
 

@@ -89,7 +89,7 @@
 .btn-submit {
   margin: 15px 0px;
   width: 100%;
-  background-color: #e8b71d;
+  background-color: #3897f0;
   color: white;
 }
 
@@ -153,10 +153,9 @@
 #loader {
   margin-right: auto;
   margin-left: auto;
-  border: 16px solid #f3f3f3;
   /* Light grey */
-  border-top: 16px solid #e8b71d;
-  /* Orange */
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3897f0;
   border-radius: 50%;
   width: 120px;
   height: 120px;

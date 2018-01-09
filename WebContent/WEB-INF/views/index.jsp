@@ -70,7 +70,7 @@
 			</div>
 
 			<div id="cng-order" class="nd3 nds transparent" data-toggle="tooltip"
-				data-placement="left" data-original-title="Popular posts" data-type="popular">
+				data-placement="left" data-original-title="Popular" data-type="popular">
 				<a><i class="fa fa-exchange black-icon"
 					aria-hidden="true"></i></a>
 			</div>
