@@ -21,7 +21,7 @@ public class NotificationDTO {
 		this.userPhoto = notification.getUserFrom().getPhotoProfile();
 		this.userName = notification.getUserFrom().getUsername();
 		this.date = calculateElapsedTime(notification.getDate());
-		// TODO change it
+
 		this.alreadyFollow = alreadyFollow;
 		this.isPrivate = notification.getUserTo().isPrivateProfile();
 		if (notification.getType().equals(NotificationType.COMMENT)) {
