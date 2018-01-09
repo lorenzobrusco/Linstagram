@@ -167,14 +167,14 @@ $(document).ready(function () {
 
 					function endFilter(canvas){
 						loader.addClass('hide');
-						$('#create-post-modal #apply-filter-section .btn').removeClass('hide');
+						$('#create-post-modal #filter-btn-group').removeClass('hide');
 						canvas.removeClass('hide');
 						submit_filter.removeClass('hide');
 					}
 
 					function startFilter(canvas){
 						canvas.addClass("hide");
-						$('#create-post-modal #apply-filter-section .btn').addClass('hide');
+						$('#create-post-modal #filter-btn-group').addClass('hide');
 						submit_filter.addClass('hide');
 						loader.removeClass("hide");
 					}

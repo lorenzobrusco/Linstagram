@@ -6,7 +6,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/lib/animate.min.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/story_modal_style.css">
+	href="${pageContext.request.contextPath}/resources/css/create_post_modal_style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/lib/dropzone.css">
 	
