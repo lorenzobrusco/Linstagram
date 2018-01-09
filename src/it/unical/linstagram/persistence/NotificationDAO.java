@@ -14,7 +14,7 @@ public class NotificationDAO implements INotificationDAO {
 	public List<Notification> getAllNotification(User user) {
 		final Session session = HibernateUtil.getHibernateSession();
 		final List<Notification> notifications = session
-				.createQuery("FROM Notification n WHERE n.userTo=:user", Notification.class).setParameter("user", user)
+				.createQuery("FROM Notification n WHERE n.userTo=:user order by n.date desc", Notification.class).setParameter("user", user)
 				.list();
 		session.close();
 		return notifications;
