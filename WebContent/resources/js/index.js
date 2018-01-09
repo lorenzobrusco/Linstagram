@@ -40,6 +40,47 @@ $(document).ready(function () {
 		console.log("Create Story");
 	});
 
+	//change order post
+
+	var typeReq="latest";
+	$("#cng-order").click(function(){
+		$("#posts").empty();
+		$("#loading").removeClass("hide");
+		
+		var nTypeReq="";
+		var text="";
+
+		typeReq= $(this).attr("data-type");
+		if($(this).attr("data-type")== "popular"){
+			nTypeReq = "latest";
+			text="Latest posts"
+		
+		}else if($(this).attr("data-type")== "latest"){
+			
+			nTypeReq = "popular";
+			text="Popular posts"
+		}
+		
+
+		$.ajax({
+			url:"getPosts", 
+			data:{time:currentTime.getTime(),type:typeReq,lastIndex:0},
+			success: function(result) {
+				
+				var html = $.parseHTML(result)
+				if(html.length != 1){
+					$("#posts").append(html);
+					
+				}
+				$("#loading").addClass("hide");
+				$("#cng-order").attr("data-type",nTypeReq);
+				$("#cng-order").attr("data-original-title",text);
+				
+			}	
+		}) 		 	
+	});
+
+	//Inifinity scroll
 	var postsrequest=1;
 	var entered=false;
 	var currentTime = new Date();
@@ -54,12 +95,11 @@ $(document).ready(function () {
 				var listSize = $("#posts").children("section").length;
 				entered=true;
 				$("#loading").removeClass("hide");
-
 				setTimeout(function(){
 
 					$.ajax({
-						url:"otherPosts", 
-						data:{time:currentTime.getTime(),last:listSize},
+						url:"getPosts", 
+						data:{type:typeReq,time:currentTime.getTime(),lastIndex:listSize},
 						success: function(result) {
 							var html = $.parseHTML(result)
 							if(html.length != 1){

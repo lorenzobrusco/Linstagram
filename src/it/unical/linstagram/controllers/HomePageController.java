@@ -57,15 +57,14 @@ public class HomePageController {
 	@Autowired 
 	private ResearchService researchService;
 
-	@Autowired
-	private HashtagService hashtagService;
 	
 	@RequestMapping("/index")
 	public String homePageController(HttpSession session, Model model) {
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
-			session.removeAttribute("hashtagPost");
+			
 			List<PostDTO> posts = postService.getLatestPost(loggedUser,null, 0);
+			
 			model.addAttribute("posts", posts);
 			model.addAttribute("followedUsersStories", storiesService.getFollowedStories(loggedUser));
 			return "index";
@@ -122,17 +121,37 @@ public class HomePageController {
 		return mediaInfo;
 	}
 
-	@RequestMapping("/otherPosts")
-	public String otherPosts(@RequestParam int last,@RequestParam long time,HttpSession session,Model model) {
-		User loggedUser = (User) session.getAttribute("user");
+	@RequestMapping("/getPosts")
+	public String popularPosts(@RequestParam long time, @RequestParam int lastIndex,@RequestParam("type") String typeRequest,  HttpSession session, Model model) {
 	
-		List<PostDTO> posts =  null;
-		posts = postService.getLatestPost(loggedUser,null, last);
+		User loggedUser = (User) session.getAttribute("user");
+		List<PostDTO> posts = new ArrayList<>();
+		if(typeRequest.equals("latest"))
+			posts = postService.getLatestPost(loggedUser,null, lastIndex);
+		else if(typeRequest.equals("popular"))
+			posts = postService.getPopularPosts(loggedUser,null, lastIndex);
 		
-		model.addAttribute("posts", posts);
+		session.setAttribute("postRequest",typeRequest);
+		model.addAttribute("posts",posts);
+		
 		return "fragment/post";
 	}
 	
+//	
+//	@RequestMapping("/otherPosts")
+//	public String otherPosts(@RequestParam int last,@RequestParam long time,HttpSession session,Model model) {
+//		User loggedUser = (User) session.getAttribute("user");
+//	
+//		List<PostDTO> posts =  null;
+//		if(session.getAttribute("postRequest").equals("latest"))
+//			posts = postService.getLatestPost(loggedUser,null, last);
+//		else if(session.getAttribute("postRequest").equals("popular"))
+//			posts = postService.getPopularPosts(loggedUser, null, last);
+//
+//		model.addAttribute("posts", posts);
+//		return "fragment/post";
+//	}
+//	
 	@ResponseBody
 	@RequestMapping(value = "/addStory", method = RequestMethod.POST)
 	public StoryDTO addStory(@RequestParam MultipartFile file, HttpSession session) throws IOException {
