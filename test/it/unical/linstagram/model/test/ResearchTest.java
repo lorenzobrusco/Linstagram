@@ -79,7 +79,7 @@ public class ResearchTest extends AbstractModelTest {
 		}
 
 		hibernateTestSession.close();
-		Assert.assertEquals(4, suggestions.size());
+		Assert.assertEquals(3, suggestions.size());
 	}
 	
 	@Test

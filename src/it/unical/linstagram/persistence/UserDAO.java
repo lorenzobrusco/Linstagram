@@ -17,9 +17,6 @@ import it.unical.linstagram.model.User;
 @SuppressWarnings("unchecked")
 public class UserDAO implements IUserDAO {
 
-	private static final String USERNAME_EDGE_NGRAM_INDEX = "edgeNGramUsername";
-	private static final String NAME_EDGE_NGRAM_INDEX = "edgeNGramName";
-	private static final String SURNAME_EDGE_NGRAM_INDEX = "edgeNGramSurname";
 
 	@Override
 	public List<User> getAllUser() {
@@ -210,8 +207,8 @@ public class UserDAO implements IUserDAO {
 
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder()
 				.forEntity(User.class).get();
-		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword()
-				.onFields(USERNAME_EDGE_NGRAM_INDEX).matching(queryString).createQuery();
+		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().wildcard()
+				.onFields("username").matching(queryString+"*").createQuery();
 
 
 		// wrap Lucene query in a javax.persistence.Query
@@ -234,8 +231,8 @@ public class UserDAO implements IUserDAO {
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
 				.buildQueryBuilder().forEntity(User.class).get();
 		org.apache.lucene.search.Query luceneQuery = queryBuilder.bool()
-				.should(queryBuilder.keyword().onField(NAME_EDGE_NGRAM_INDEX).matching(queryString).createQuery())
-				.should(queryBuilder.keyword().onField(SURNAME_EDGE_NGRAM_INDEX).matching(queryString).createQuery())
+				.should(queryBuilder.keyword().wildcard().onField("name").matching(queryString+"*").createQuery())
+				.should(queryBuilder.keyword().wildcard().onField("surname").matching(queryString+"*").createQuery())
 				.createQuery();
 
 
