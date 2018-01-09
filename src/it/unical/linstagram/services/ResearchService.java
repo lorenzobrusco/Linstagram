@@ -28,7 +28,7 @@ public class ResearchService {
 	private HashtagDAO hashtagDAO;
 
 
-	public JsonArray generalQuery(String queryString)
+	public List<ResearchDTO> generalQuery(String queryString)
 	{
 		List<User> users = userDAO.getSuggestions(queryString);
 		users.addAll(userDAO.getSuggestionsName(queryString));
@@ -71,8 +71,7 @@ public class ResearchService {
 			researchDTOs.add(new ResearchDTO(iterator.next()));
 		}
 		
-		//FIX RETURN AND HOME CONTROLLER DOPO CHE MANUEL COMMITTA
-		return new JsonArray();
+		return researchDTOs;
 	
 	}
 

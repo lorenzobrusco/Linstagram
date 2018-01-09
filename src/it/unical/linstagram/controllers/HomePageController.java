@@ -21,6 +21,7 @@ import com.google.gson.JsonArray;
 
 import it.unical.linstagram.dto.NotificationDTO;
 import it.unical.linstagram.dto.PostDTO;
+import it.unical.linstagram.dto.ResearchDTO;
 import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
 import it.unical.linstagram.helper.MessageResponse;
@@ -160,9 +161,9 @@ public class HomePageController {
 	}
 
 
-	@RequestMapping(value="/research",method=RequestMethod.POST)
 	@ResponseBody
-	public JsonArray research(@RequestParam String text, HttpSession session) {
+	@RequestMapping(value="/research",method=RequestMethod.POST)
+	public List<ResearchDTO> research(@RequestParam String text, HttpSession session) {
 //		Set<Hashtag> suggestionsHashtag = researchService.getSuggestionsHashtag(text);
 //		Set<UserViewerDTO> suggestionsUsers = researchService.getSuggestionsUsername(text);
 //		suggestionsUsers.addAll(researchService.getSuggestionsName(text));
@@ -178,7 +179,7 @@ public class HomePageController {
 //		return "SUCCESS";
 		//TODO DA SISTEMARE
 		System.out.println(text);
-		JsonArray generalQuery = researchService.generalQuery(text);
+		List<ResearchDTO> generalQuery = researchService.generalQuery(text);
 		System.out.println(generalQuery);
 		return generalQuery;
 		}
