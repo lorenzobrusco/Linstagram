@@ -398,7 +398,6 @@ background-position
 #notification_list .notification_item .context_notification {
 	display: inline;
 	position: relative;
-	margin-left: 20px;
 	line-height: 3.5;
 }
 

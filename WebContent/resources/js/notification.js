@@ -71,3 +71,25 @@ $('body').click(function (e) {
 	notification.addClass("hide");
 	arrow.addClass("hide");
 });
+
+$('button.followProfile_btn').click(function(e) {
+	console.log("vado")
+	var username = $(this).find('.username').text();
+	console.log(username);
+	var div = e.target().parent();
+	console.log(div);
+	div.empty();
+	$.ajax({
+		url : "followUser",
+		data:{username:username},
+		success : function(result) {
+			if (result == "OK") {
+				div.empty();
+				div.append("<button class='unfollowProfile_btn'>Unfollow</button>");
+			}
+			else {
+				showResultMessage("FAILED");
+			}
+		}
+	});
+});

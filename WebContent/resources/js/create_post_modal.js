@@ -151,8 +151,8 @@ $(document).ready(function () {
 					$("#create-post-modal #apply-filter-section #filter-btn-group button").click(function () {
 						var filterType = $(this).attr("id");
 //						console.log(filterType);
-						$("#create-post-modal #filter-btn-group button").removeClass("btn-active");
-						$(this).addClass("btn-active");
+						$("#create-post-modal #filter-btn-group button .img-small").removeClass("filter-active");
+						$(this).find('.img-small').addClass("filter-active");
 						Caman(canvas[0], function () {
 							startFilter(canvas);
 							this.revert(); //revert previous filter
@@ -222,7 +222,7 @@ $(document).ready(function () {
 				$("#create-post-modal #img-to-modify").remove();
 				$("#create-post-modal #submit-filter").remove();
 				$("#create-post-modal #apply-filter-section").addClass("hide");
-				$("#create-post-modal #filter-btn-group button").removeClass("btn-active");
+				$("#create-post-modal #filter-btn-group button .img-small").removeClass("filter-active");
 				$("#create-post-modal #post-description").addClass("hide");
 				$("#create-post-modal #post-description-input").val("")//
 				//clean dropzone uploads

@@ -67,7 +67,11 @@
 }
 
 #filter-btn-group{
-	margin-bottom:15px;
+    width: auto;
+    padding-bottom: 10px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
 }
 
 #filter-btn-group button{

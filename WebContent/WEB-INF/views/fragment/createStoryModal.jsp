@@ -46,27 +46,27 @@
 					<i class="fa fa-paper-plane" aria-hidden="true"></i> Upload Media
 				</button>
 			</form>
-			<div id="apply-filter-section" class="hide">
+					<div id="apply-filter-section" class="hide">
 				<div id="filter-btn-group">
-					<button type="button" class="btn btn-default" id="normal">Normal</button>
-					<button type="button" class="btn btn-default" id="vintage">Vintage</button>
-					<button type="button" class="btn btn-default" id="lomo">Lomo</button>
-					<button type="button" class="btn btn-default" id="clarity">Clarity</button>
-					<button type="button" class="btn btn-default" id="jarques">Jarques</button>
-					<button type="button" class="btn btn-default" id="sinCity">Sin City</button>
-					<button type="button" class="btn btn-default" id="sunrise">Sunrise</button>
-					<button type="button" class="btn btn-default" id="crossProcess">Cross Process</button>
-					<button type="button" class="btn btn-default" id="orangePeel">Orange Peel</button>
-					<button type="button" class="btn btn-default" id="love">Love</button>
-					<button type="button" class="btn btn-default" id="grungy">Grungy</button>
-					<button type="button" class="btn btn-default" id="pinhole">Pinhole</button>
-					<button type="button" class="btn btn-default" id="oldBoot">Old Boot</button>
-					<button type="button" class="btn btn-default" id="glowingSun">Glowing Sun</button>
-					<button type="button" class="btn btn-default" id="hazyDays">Hazy Days</button>
-					<button type="button" class="btn btn-default" id="herMajesty">Her Majesty</button>
-					<button type="button" class="btn btn-default" id="nostalgia">Nostalgia</button>
-					<button type="button" class="btn btn-default" id="hemingway">Hemingway</button>
-					<button type="button" class="btn btn-default" id="concentrate">Concentrate</button>
+					<button type="button" class="btn-transparent" id="normal"><img class="img-circle img-small filter-active" src="${pageContext.request.contextPath}/resources/images/filters/37.jpg"/></button>
+					<button type="button" class="btn-transparent" id="vintage"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/19.jpg"/></button>
+					<button type="button" class="btn-transparent" id="lomo"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/20.jpg"/></button>
+					<button type="button" class="btn-transparent" id="clarity"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/21.jpg"/></button>
+					<button type="button" class="btn-transparent" id="jarques"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/22.jpg"/></button>
+					<button type="button" class="btn-transparent" id="sinCity"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/23.jpg"/></button>
+					<button type="button" class="btn-transparent" id="sunrise"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/24.jpg"/></button>
+					<button type="button" class="btn-transparent" id="crossProcess"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/25.jpg"/></button>
+					<button type="button" class="btn-transparent" id="orangePeel"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/26.jpg"/></button>
+					<button type="button" class="btn-transparent" id="love"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/27.jpg"/></button>
+					<button type="button" class="btn-transparent" id="grungy"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/28.jpg"/></button>
+					<button type="button" class="btn-transparent" id="pinhole"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/29.jpg"/></button>
+					<button type="button" class="btn-transparent" id="oldBoot"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/30.jpg"/></button>
+					<button type="button" class="btn-transparent" id="glowingSun"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/31.jpg"/></button>
+					<button type="button" class="btn-transparent" id="hazyDays"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/32.jpg"/></button>
+					<button type="button" class="btn-transparent" id="herMajesty"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/33.jpg"/></button>
+					<button type="button" class="btn-transparent" id="nostalgia"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/34.jpg"/></button>
+					<button type="button" class="btn-transparent" id="hemingway"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/35.jpg"/></button>
+					<button type="button" class="btn-transparent" id="concentrate"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/36.jpg"/></button>
 				</div>
 				
 				<div id="loader" class="hide"></div>

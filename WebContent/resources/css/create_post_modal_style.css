@@ -1,119 +1,155 @@
-.close-create-post-modal, .close-upload-photoprofile-modal{
-  float: right;
-  margin-right: 15px;
-  background-image: url(../images/icons.png);
-  background-position: -432px -46px;
-  height: 24px;
-  width: 27px;
-  display: inline-block;
+.close-create-post-modal, .close-upload-photoprofile-modal {
+	float: right;
+	margin-right: 15px;
+	background-image: url(../images/icons.png);
+	background-position: -432px -46px;
+	height: 24px;
+	width: 27px;
+	display: inline-block;
 }
 
-.close-create-post-modal:hover, .close-upload-photoprofile-modal:hover{
-  transform: scale(1.1);
+.close-create-post-modal:hover, .close-upload-photoprofile-modal:hover {
+	transform: scale(1.1);
 }
 
-.modal-body{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin:2%;
+.modal-body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 2%;
 }
 
-#modal-card{
-  margin: 10% 20%;
-  background: #fafafa;
-  border:1px solid lightgray;
-  border-radius: 3px;
-  box-shadow: 4px 4px 10px 0px #7777778f; 
+#modal-card {
+	margin: 10% 20%;
+	background: #fafafa;
+	border: 1px solid lightgray;
+	border-radius: 3px;
+	box-shadow: 4px 4px 10px 0px #7777778f;
 }
 
-#post-dropzone{
-  text-align: center;
-  background: #fafafa;
-  border: none;
+#post-dropzone {
+	text-align: center;
+	background: #fafafa;
+	border: none;
 }
-.modal-title{
-  margin-left: 15px;
-  font-size: 1.1em;
-  text-transform: uppercase;
-  font-weight: bold;
+
+.modal-title {
+	margin-left: 15px;
+	font-size: 1.1em;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 #post-description-input::-webkit-scrollbar {
-  height: 0px;
+	height: 0px;
 }
 
 #post-description-input:hover::-webkit-scrollbar-track,
-#post-description-input:hover::-webkit-scrollbar-thumb {
-  visibility: visible;
+	#post-description-input:hover::-webkit-scrollbar-thumb {
+	visibility: visible;
 }
 
 /* Track */
 #post-description-input::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px #d5d5d5; 
-  border-radius: 10px;
-  visibility: hidden;
+	box-shadow: inset 0 0 5px #d5d5d5;
+	border-radius: 10px;
+	visibility: hidden;
 }
 
 /* Handle */
 #post-description-input::-webkit-scrollbar-thumb {
-  background: #a2a2a2a3;
-  box-shadow: inset 0 0 5px #d5d5d5; 
-  border-radius: 10px;
-  visibility: hidden;
+	background: #a2a2a2a3;
+	box-shadow: inset 0 0 5px #d5d5d5;
+	border-radius: 10px;
+	visibility: hidden;
 }
 
 .btn-submit {
-	margin:15px 0px;
-  width:100%;
-  background-color:#e8b71d;
-  color:white;
+	margin: 15px 0px;
+	width: 100%;
+	background-color: #e8b71d;
+	color: white;
 }
 
-.btn-submit:hover{
-	color:white;
+.btn-submit:hover {
+	color: white;
 }
 
-#post-dropzone > div > div.dz-default.dz-message{
-  margin: 15px 5px;
+#post-dropzone>div>div.dz-default.dz-message {
+	margin: 15px 5px;
 }
 
-
-#post-dropzone > .dropzone-previews{
-  border:2px dashed #89ABE3;
-  border-radius: 5px;
-  width: 100%;
-  margin: 16px 0px;
+#post-dropzone>.dropzone-previews {
+	border: 2px dashed #89ABE3;
+	border-radius: 5px;
+	width: 100%;
+	margin: 16px 0px;
 }
 
-.hide{
-  display:none;
+.hide {
+	display: none;
 }
 
-#filter-btn-group{
-	margin-bottom:15px;
+#filter-btn-group {
+	margin-bottom: 15px;
 }
 
-#filter-btn-group button{
+#filter-btn-group button {
 	margin-bottom: 5px;
 }
 
-.btn-active{
-	background-color: #e8b71d;
+#filter-btn-group button:focus {outline:0;}
+
+.btn-transparent {
+	border: none;
+	background: #ffffff00;
+	height: 50px;
+	width: 50px;
+	margin-right: 10px;
+}
+
+.filter-active {
+	padding: 3px;
+	background: linear-gradient(to left bottom, #4c68d7, #8a3ab9, #cd486b, #fb8750,  #FF9800);
+}
+
+.img-small {
+	height: 50px;
+	width: 50px;
 }
 
 #loader {
-	margin-right:auto;
-	margin-left:auto;
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #e8b71d; /* Orange */
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
+	margin-right: auto;
+	margin-left: auto;
+	border: 16px solid #f3f3f3; /* Light grey */
+	border-top: 16px solid #e8b71d; /* Orange */
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	animation: spin 2s linear infinite;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+@
+keyframes spin { 0% {
+	transform: rotate(0deg);
+}
+100%
+{
+transform
+
+
+:
+
+ 
+
+rotate
+
+
+(360
+deg
+);
+
+ 
+
+}
 }
