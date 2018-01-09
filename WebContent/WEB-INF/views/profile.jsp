@@ -54,9 +54,8 @@
 						<div class="row item-user-info">
 							<ul>
 								<li><b>@${user.username}</b></li>
-								<li><a class="btn btn-default" href="modifyProfile"
-									id="modify-profile-btn">modifica profilo</a></li>
-								<li></li>
+								<li><a class="btn btn-default" href="modifyProfile" id="modify-profile-btn">Modify Profile</a></li>
+								<li><a class="btn btn-danger" href="logout" id="logout-mobile-btn">Logout</a></li>
 							</ul>
 							<input id="username_hidden" type="hidden" name="username_hidden"
 								value="${user.username}" />
