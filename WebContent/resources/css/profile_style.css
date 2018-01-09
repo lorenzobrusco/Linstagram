@@ -404,8 +404,19 @@ footer {
 	cursor: pointer;
 }
 
+#logout-mobile-btn{
+		display:none;
+		color:white !important;
+}
+
 @media ( max-width : 800px) {
 	.user-img-container {
 		margin-bottom: 20px;
 	}
+	#logout-mobile-btn{
+		display:block;
+		position: relative;
+		bottom: 6px;
+	}
+	
 }

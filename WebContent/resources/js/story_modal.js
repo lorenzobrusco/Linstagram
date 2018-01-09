@@ -149,8 +149,8 @@ $(document).ready(function () {
 					$("#story-modal #apply-filter-section #filter-btn-group button").click(function () {
 						var filterType = $(this).attr("id");
 //						console.log(filterType);
-						$("#story-modal #filter-btn-group button").removeClass("btn-active");
-						$(this).addClass("btn-active");
+						$("#story-modal #filter-btn-group button .img-small").removeClass("filter-active");
+						$(this).find('.img-small').addClass("filter-active");
 						Caman(canvas[0], function () {
 							startFilter(canvas);
 							this.revert(); //revert previous filter
@@ -165,14 +165,14 @@ $(document).ready(function () {
 
 					function endFilter(canvas){
 						loader.addClass('hide');
-						$('#story-modal #apply-filter-section .btn').removeClass('hide');
+						$('#story-modal #filter-btn-group').removeClass('hide');
 						canvas.removeClass('hide');
 						submit_filter.removeClass('hide');
 					}
 
 					function startFilter(canvas){
 						canvas.addClass("hide");
-						$('#story-modal #apply-filter-section .btn').addClass('hide');
+						$('#story-modal #filter-btn-group').addClass('hide');
 						submit_filter.addClass('hide');
 						loader.removeClass("hide");
 					}

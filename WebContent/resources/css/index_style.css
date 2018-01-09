@@ -199,20 +199,20 @@ progress {
   margin-right: 0
 }
 
+.react i{
+	margin:0px 7px 5px 0px;
+}
+
 .react .love {
-  background-image: url(../images/icons.png);
-  background-position: -407px -156px;
-  height: 24px;
-  width: 27px;
   display: inline-block;
 }
 
 .react .loveFull {
-  background-image: url(../images/icons.png);
-  background-position: -407px -129px;
-  height: 24px;
-  width: 27px;
   display: inline-block;
+}
+
+.react .loveFull i{
+	color:red;
 }
 
 .react .comment {
@@ -224,20 +224,6 @@ progress {
 }
 
 .react .save {
-  background-image: url(../images/icons.png);
-  background-repeat: no-repeat;
-  background-position: -104px -389px;
-  height: 24px;
-  width: 24px;
-  display: inline-block;
-}
-
-.react .saveFull {
-  background-image: url(../images/icons.png);
-  background-repeat: no-repeat;
-  background-position: -183px -389px;
-  height: 24px;
-  width: 24px;
   display: inline-block;
 }
 
@@ -405,9 +391,18 @@ progress {
 }
 
 .nd3 {
-  background: #fff;
+  background: #ffc66f;
   right: 68px;
   bottom: 230px;
+  animation-delay: 0.2s;
+  animation: bounce-out-nds 0.3s linear;
+  animation-fill-mode: forwards;
+}
+
+.nd4 {
+  background: #fff;
+  right: 68px;
+  bottom: 290px;
   animation-delay: 0.2s;
   animation: bounce-out-nds 0.3s linear;
   animation-fill-mode: forwards;
@@ -495,3 +490,9 @@ progress {
 	height:12px;
 	margin-left:5px;
 }
+
+.hide{
+	display:hide;
+}
+
+

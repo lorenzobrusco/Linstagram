@@ -150,7 +150,6 @@
 														});
 
 												/*
-												TODO: 
 													1.send data to server 
 													2.search user with this user and mail
 														2.1. notify error if not exist
