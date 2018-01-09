@@ -18,7 +18,9 @@ function getElapsedTime(postedTime){
 		return round+" DAYS AGO";
 	}	
 };
+
 $(document).ready(function () {
+	
 	window.scrollTo(0,0);
 	//show comment event
 //	$('.show-all-comments')
@@ -64,6 +66,12 @@ $(document).ready(function () {
 							var html = $.parseHTML(result)
 							if(html.length != 1){
 								$("#posts").append(html);
+								//allow to send comment with Enter button
+								$(".comment-section").on("keypress", function(e) {
+									if ( e.which == 13 ) { //enter press
+										$(this).find("button").click();
+									}
+								});
 							}
 							$("#loading").addClass("hide");
 							entered=false;
