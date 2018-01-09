@@ -13,24 +13,23 @@
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
 	type="image/x-icon">
 <script src="${pageContext.request.contextPath}/resources/js/navbar.js"></script>
+
 <header>
 	<div id="rainbow-progress-bar"></div>
 	<div id="navbar-mobile">
 		<span id="logo-container"><a href="index" id="logo"></a></span>
 		<div class="search-bar">
-			<input type="text" class="form-control transparent"
-				placeholder="Search" id="search-input">
+			<input type="text" class="form-control transparent" placeholder="Search" id="search-input">
 		</div>
 		<div class="bottom-nav-menu">
 			<ul id="horizontal-list">
-				<li class="active-menu-item"><a href="index" id="home-mobile"
-					class="item-mobile"></a></li>
-				<li><a href="profile" role="button" id="profile-mobile"
-					class="item-mobile"></a></li>
-				<li><a href="#create-post-modal" id="add-mobile"
-					class="item-mobile"></a></li>
-				<li><a href="" id="notification-mobile" class="item-mobile"></a>
-				</li>
+				<li class="active-menu-item"><a href="index" id="home-mobile" class="item-mobile"></a></li>
+					
+				<li><a href="profile" role="button" id="profile-mobile" class="item-mobile"></a></li>
+					
+				<li><a href="#create-post-modal" id="add-mobile" class="item-mobile"></a></li>
+					
+				<li><a href="#" id="notification-mobile" class="item-mobile"></a></li>
 			</ul>
 		</div>
 	</div>
@@ -40,19 +39,21 @@
 		</a>
 		</span> <span id="search-form" class="form-inline">
 			<div class="input-group" id="search-div">
-				<input type="text" class="form-control transparent"
-					placeholder="Search" id="search-input-desktop">
+				<input type="text" class="form-control transparent" placeholder="Search" id="search-input-desktop">
 			</div>
-		</span> <span class="nav-right"> <a href="" id="explore"
-			class="right-icon-nav disabled" data-toggle="tooltip"
-			data-placement="left" data-original-title="Coming Soon"></a> <a
-			href="#"" id="notification" class="right-icon-nav"><span class="arrow hide"></span></a>
+		</span> 
+		<span class="nav-right"> 
+			<a href="" id="explore" class="right-icon-nav disabled" data-toggle="tooltip"
+			data-placement="left" data-original-title="Coming Soon"></a>
+			 
+			<a href="#" id="notification" class="right-icon-nav"><span class="arrow hide"></span></a>
 			<a href="#" role="button" id="profile" class="right-icon-nav"></a>
 		</span>
 	</nav>
 </header>
 
 <div id="notification_list" class="hide"></div>
+<div id="notification_list_mobile" class="hide"></div>
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
@@ -91,36 +92,35 @@
 							placement : "bottom",
 							trigger : "manual",
 							container : "header"
-						}).on("mouseenter", function() {
-							var _this = this;
-							$(this).popover("show");
-							$(".popover").on("mouseleave", function() {
-								$(_this).popover('hide');
-							});
-						}).on("mouseleave", function() {
-							var _this = this;
-							setTimeout(function() {
-								if (!$(".popover:hover").length) {
-									$(_this).popover("hide");
-								}
-							}, 300);
+						}).click(function(e){
+							e.preventDefault();
+							$('#profile').popover('show');
+							e.stopPropagation();
 						});
-
+						
+						function closeProfilePopover(){
+							$('#profile').popover('hide');
+						}
+						
+						$('body').click(function (e) {
+							closeProfilePopover();
+						});
+						
+						window.addEventListener("scroll", closeProfilePopover);
 						
 						$('[data-toggle="tooltip"]').tooltip();
 
-						//TODO not work	
-
-						$('#search-input-desktop').focusin(function() {
+						/*$('#search-input-desktop').focusin(function() {
 							$("#search-div").css("width", "70%");
-							console.log("ok");
 						});
 
 						$('#search-input-desktop').focusout(function() {
 							$("#search-div").css("width", "50%");
-						});
+						});*/
 
-						//TODO DA FINIRE						
+						//TODO search on mobile	
+						
+						
 						$('#search-input-desktop').keyup(function() {
 							var text = $("#search-input-desktop").val();
 							console.log(text);
@@ -133,6 +133,26 @@
 								},
 								success : function(result) {
 									console.log(result);
+									var hint= {
+											data: [],
+											getValue: "name",
+											template: {
+												type: "iconLeft",
+												fields: {
+													iconSrc: "icon"
+												}
+											}
+										};
+									$.each(result,function( key, value ){
+										//console.log(key);
+										var title = value.title;
+										var subtitle = value.subtitle;
+										var iconUrl = value.iconUrl;
+										var item_body="<b>"+title+"<b><br>"+ subtitle;
+										//console.log("<b>"+title+"<b><br>"+ subtitle+"-"+ iconUrl);
+										hint.data.push("{name: "+item_body+", icon:"+ iconUrl +"}");
+									});
+									console.log(hint);
 
 								}
 							});
@@ -140,6 +160,7 @@
 						});
 
 					});
+	
+	
+	
 </script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/follow_event/follow_event_profile_public.js"></script>

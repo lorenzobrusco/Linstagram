@@ -29,40 +29,38 @@
 								<c:choose>
 									<c:when test="${fn:length(post.likes) == 0 }">
 										<a name="${post.id }" id="love${post.id }" class="love"><span
-											class='love'></span></a>
+											class='love'><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></span></a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${post.likeUser == true}">
 												<a name="${post.id }" id="loveFull${post.id }"
-													class="loveFull"><span class='loveFull'></span></a>
+													class="loveFull"><span class='loveFull'><i class="fa fa-heart fa-2x" aria-hidden="true"></i></span></a>
 											</c:when>
 											<c:otherwise>
-												<a name="${post.id }" id="love${post.id }" class="love"><span
-													class='love'></span></a>
+												<a name="${post.id }" id="love${post.id }" class="love">
+												<span class='love'><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></span></a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
 								</c:choose>
 							</div>
-							<div id="comment_div">
-								<a href='#' role='button'><span class='comment'></span></a>
-							</div>
 							<div id="bookmark_div${post.id }">
 								<c:choose>
 									<c:when test="${fn:length(user.bookmarks) == 0 }">
 										<a name="${post.id }" id="bookmark${post.id }"
-											class="bookmark"><span class='save'></span></a>
+											class="bookmark">
+											<span class='save'><i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i></span></a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${post.bookmarkUser }">
-												<a name="${post.id }" id="bookmark${post.id }"
-													class="bookmarkFull"><span class='saveFull'></span></a>
+												<a name="${post.id }" id="bookmark${post.id }" class="bookmarkFull">
+												<span class='save'> <i class="fa fa-bookmark fa-2x" aria-hidden="true"></i> </span></a>
 											</c:when>
 											<c:otherwise>
 												<a name="${post.id }" id="bookmark${post.id }"
-													class="bookmark"><span class='save'></span></a>
+													class="bookmark"><span class='save'> <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i> </span></a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>

@@ -5,8 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script src="./resources/js/follow_event/follow_event_profile_public.js"></script>
-
 <div class="row item-user-info">
 	<ul>
 		<li><b>@${userPublic.username}</b></li>
