@@ -13,6 +13,7 @@ public class NotificationDTO {
 	private String userName;
 	private String context;
 	private String urlPost;
+	private int idPost;
 	private String date;
 	private boolean isPrivate;
 	private boolean alreadyFollowing;
@@ -31,9 +32,11 @@ public class NotificationDTO {
 		if (notification.getType().equals(NotificationType.COMMENT)) {
 			this.context = String.format("commented your post: %s", notification.getComment().getContent());
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
+			this.idPost = notification.getPost().getId();
 		} else if (notification.getType().equals(NotificationType.LIKE)) {
 			this.context = "liked your post";
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
+			this.idPost = notification.getPost().getId();
 		} else {
 			if (!this.alreadyFollowed) {
 				this.context = "Asks to follow you";
@@ -146,5 +149,15 @@ public class NotificationDTO {
 	public void setRequest(boolean isRequest) {
 		this.isRequest = isRequest;
 	}
+
+	public int getIdPost() {
+		return idPost;
+	}
+
+	public void setIdPost(int idPost) {
+		this.idPost = idPost;
+	}
+	
+	
 
 }
