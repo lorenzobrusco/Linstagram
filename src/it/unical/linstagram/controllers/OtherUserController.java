@@ -53,13 +53,13 @@ public class OtherUserController {
 		return "otherUserProfile";
 	}
 
-	@RequestMapping("sendRequest")
-	@ResponseBody
-	public String sendRequest(HttpSession session, Model model, @RequestParam("username") String username) {
-		User user = (User) session.getAttribute("user");
-
-		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
-	}
+//	@RequestMapping("sendRequest")
+//	@ResponseBody
+//	public String sendRequest(HttpSession session, Model model, @RequestParam("username") String username) {
+//		User user = (User) session.getAttribute("user");
+//
+//		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+//	}
 
 	@RequestMapping("acceptRequest")
 	@ResponseBody
@@ -112,7 +112,6 @@ public class OtherUserController {
 	@ResponseBody
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 		if (userService.isPrivate(usernameToFollow)) {
 			if (!userService.sendRequest(user.getUsername(), usernameToFollow))
 				return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
