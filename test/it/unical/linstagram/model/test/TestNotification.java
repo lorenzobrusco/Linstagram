@@ -11,7 +11,7 @@ import it.unical.linstagram.model.NotificationType;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
 
-public class TestNotification {
+public class TestNotification extends AbstractModelTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
@@ -22,7 +22,7 @@ public class TestNotification {
 		Notification notification = new Notification(user1, user, null, null, NotificationType.FOLLOW);
 		Notification notification1 = new Notification(user, user1, null, null, NotificationType.FOLLOW);
 
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
