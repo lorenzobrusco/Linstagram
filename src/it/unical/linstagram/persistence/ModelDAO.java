@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public class ModelDAO {
 
 	public boolean save(Object model) {
-		final Session session = HibernateUtil.getHibernateSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -27,7 +27,7 @@ public class ModelDAO {
 	}
 
 	public List<?> getAll(Class<?> object) {
-		final Session session = HibernateUtil.getHibernateSession();
+		final Session session = HibernateUtil.getSession();
 		List<?> list = session
 				.createNativeQuery(String.format("SELECT * FROM %s", object.getSimpleName().toLowerCase()), object)
 				.list();
@@ -36,7 +36,7 @@ public class ModelDAO {
 	}
 
 	public boolean update(Object model) {
-		final Session session = HibernateUtil.getHibernateSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -52,7 +52,7 @@ public class ModelDAO {
 	}
 
 	public boolean merge(Object model) {
-		final Session session = HibernateUtil.getHibernateSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -69,7 +69,7 @@ public class ModelDAO {
 		}
 	}
 	public boolean delete(Class<?> type, Serializable id) {
-		final Session session = HibernateUtil.getHibernateSession();
+		final Session session = HibernateUtil.getSession();
 	    Object persistentInstance = session.load(type, id);
 	    Transaction transaction = null;
 		

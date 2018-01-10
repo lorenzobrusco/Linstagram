@@ -28,11 +28,13 @@ public class TestHashtag extends AbstractModelTest{
 		Post post = new Post(eliana,media,Calendar.getInstance(),"Sono scema");
 		post.getHashtags().add(new Hashtag("bellofigo"));
 		post.getHashtags().add(new Hashtag("cicciociccio"));
+		
 		md.save(post);
 
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 
-		List<Hashtag> hashtags =  session.createQuery("SELECT post.hashtags FROM Post post WHERE post.id =:idPost")
+		List<Hashtag> hashtags =  session.createQuery("SELECT post.hashtags FROM Post post"
+				+ " WHERE post.id =:idPost")
 				.setParameter("idPost",post.getId()).list();
 
 		for(Hashtag h : hashtags) {

@@ -22,7 +22,7 @@ public class TestPost extends AbstractModelTest {
 		Post post1 = new Post(eliana,null,Calendar.getInstance(),"Sono Stupida");
 		Post post3 = new Post(eliana,null,Calendar.getInstance(),"Sono brava");
 		
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -64,7 +64,7 @@ public class TestPost extends AbstractModelTest {
 		post.getLikes().add(manuel);
 		post.getLikes().add(paola);
 		
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -100,7 +100,7 @@ public class TestPost extends AbstractModelTest {
 		post.getTags().add(manuel);
 		post.getTags().add(paola);
 		
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -135,7 +135,7 @@ public class TestPost extends AbstractModelTest {
 		post.getTags().add(manuel);
 		post.getTags().add(paola);
 		
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -188,7 +188,7 @@ public class TestPost extends AbstractModelTest {
 		manuel.getBookmarks().add(post2);
 		manuel.getBookmarks().add(post1);
 		
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();

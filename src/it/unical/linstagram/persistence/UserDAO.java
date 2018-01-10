@@ -20,7 +20,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<User> getAllUser() {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<User> users = session.createQuery("FROM  User").list();
 		session.close();
 		return users;
@@ -28,7 +28,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public User getUserByUsername(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		User user = (User) session.createQuery("FROM  User u where u.username=:username")
 				.setParameter("username", username).uniqueResult();
 		//		Hibernate.initialize(user.getPosts());
@@ -39,7 +39,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public User getUserByEmail(String email) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		User user = (User) session.createQuery("FROM  User u where u.email=:email")
 				.setParameter("email", email).uniqueResult();
 		session.close();
@@ -48,7 +48,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public User getUserByUsernameAndPass(String username, String password) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		User user = (User) session.createQuery("FROM  User u where u.username=:username and u.password=:password")
 				.setParameter("username", username).setParameter("password", password).uniqueResult();
 		session.close();
@@ -57,7 +57,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public User getUserByEmailAndPass(String email, String password) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		User user = (User) session.createQuery("FROM  User u where u.email=:email and u.password=:password")
 				.setParameter("email", email).setParameter("password", password).uniqueResult();
 		session.close();
@@ -66,7 +66,7 @@ public class UserDAO implements IUserDAO {
 	
 	@Override
 	public User getUserByUsernameAndEmail(String username, String email) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		User user = (User) session.createQuery("FROM  User u where u.email=:email and u.username=:username")
 				.setParameter("username", username).setParameter("email", email).uniqueResult();
 		session.close();
@@ -76,7 +76,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public String getPasswordByUsername(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		String pass = session.createQuery("SELECT u.password FROM  User u where u.username=:username", String.class)
 				.setParameter("username", username).uniqueResult();
 
@@ -87,7 +87,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public String getPasswordByEmail(String email) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		String pass = session.createQuery("SELECT u.password FROM  User u where u.email=:email", String.class)
 				.setParameter("email", email).uniqueResult();
 
@@ -97,7 +97,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<Post> getPostByUsername(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<Post> posts = session.createQuery("SELECT user.posts FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
 
@@ -107,7 +107,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<Post> getBookmarksByUsername(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<Post> posts = session.createQuery("SELECT user.bookmarks FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
 
@@ -117,7 +117,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<Post> getTaggedPostByUsername(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<Post> posts = session.createQuery("SELECT user.tagged FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
 
@@ -127,7 +127,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<User> getFollowingByUsername(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<User> users = session.createQuery("SELECT user.followings FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
 
@@ -137,7 +137,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<User> getFollowerByUsername(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<User> users = session.createQuery("SELECT user.followers FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
 
@@ -147,7 +147,7 @@ public class UserDAO implements IUserDAO {
 	
 	@Override
 	public int searchRequestFollow(String usernameFrom, String usernameTo) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		
 		int id = -1;		
 		if (existRequestFollow(usernameFrom, usernameTo)) {
@@ -163,7 +163,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public boolean existRequestFollow(String usernameFrom, String usernameTo) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		
 		boolean exist = (Long) session.createQuery("SELECT count(*) FROM RequestFollow r where r.userFrom.username=:usernameFrom "
 				+ "AND r.userTo.username=:usernameTo")
@@ -176,7 +176,7 @@ public class UserDAO implements IUserDAO {
 		
 	@Override
 	public User inizializeLists(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		User user = (User) session.createQuery("FROM  User u where u.username=:username")
 				.setParameter("username", username).uniqueResult();
 
@@ -192,7 +192,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void inizializeListUser(Set<?> set) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 
 		Hibernate.initialize(set);
 
@@ -202,7 +202,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<User> getSuggestions(String queryString) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
 
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder()
@@ -225,7 +225,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<User> getSuggestionsName(String queryString) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
 
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
@@ -248,7 +248,7 @@ public class UserDAO implements IUserDAO {
 	}
 	
 	public boolean isPrivateByUsername(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		boolean privateProfile = session.createQuery("SELECT u.privateProfile FROM  User u where u.username=:username", Boolean.class)
 				.setParameter("username", username).uniqueResult();
 
