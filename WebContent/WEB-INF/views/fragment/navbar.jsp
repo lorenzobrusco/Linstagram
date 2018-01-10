@@ -13,13 +13,14 @@
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
 	type="image/x-icon">
 <script src="${pageContext.request.contextPath}/resources/js/navbar.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search_event.js"></script>
 
 <header>
 	<div id="rainbow-progress-bar"></div>
 	<div id="navbar-mobile">
 		<span id="logo-container"><a href="index" id="logo"></a></span>
 		<div class="search-bar">
-			<input type="text" class="form-control transparent" placeholder="Search" id="search-input">
+			<input type="text" class="form-control transparent search-input" placeholder="Search">
 		</div>
 		<div class="bottom-nav-menu">
 			<ul id="horizontal-list">
@@ -39,7 +40,7 @@
 		</a>
 		</span> <span id="search-form" class="form-inline">
 			<div class="input-group" id="search-div">
-				<input type="text" class="form-control transparent" placeholder="Search" id="search-input-desktop">
+				<input type="text" class="form-control transparent search-input" placeholder="Search">
 			</div>
 		</span> 
 		<span class="nav-right"> 
@@ -119,33 +120,6 @@
 							$("#search-div").css("width", "50%");
 						});*/
 
-						//TODO search on mobile	
-						
-						
-						$('#search-input-desktop').keyup(function() {
-							var text = $("#search-input-desktop").val();
-							console.log(text);
-
-							$.ajax({
-								url : "research",
-								type : "POST",
-								data : {
-									text : text
-								},
-								success : function(result) {
-									console.log(result);
-									$.each(result,function( key, value ){
-										//console.log(key);
-										var title = value.title;
-										var subtitle = value.subtitle;
-										var iconUrl = value.iconUrl;
-										var item_body="<b>"+title+"<b><br>"+ subtitle;
-										console.log("<b>"+title+"<b><br>"+ subtitle+"-"+ iconUrl);
-									});
-								}
-							});
-
-						});
 
 					});
 	

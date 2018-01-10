@@ -32,9 +32,7 @@ public class ResearchDTO {
 	public ResearchDTO(Hashtag hashtag) {
 		this.title = "#"+ hashtag.getHashtag();
 		this.subtitle = hashtag.getCount()+ " posts";
-		
-		//TODO
-		this.iconUrl = "undefined";
+		this.iconUrl = "resources/images/Hashtag.png";
 	}
 	
 	public String getTitle() {

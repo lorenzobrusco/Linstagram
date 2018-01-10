@@ -47,7 +47,6 @@ public class HashtagController {
 		Hashtag ht = hashtagService.getHashtag(hashtag);
 		model.addAttribute("hashtag",ht);
 		
-		//TODO SISTEMARE IL METODO
 		return "hashtags";
 
 
