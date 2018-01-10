@@ -12,13 +12,11 @@ $(document).ready(function(){
 				var content_notification_popover = "";
 					for (var i = 0; i < result.length; i++) {
 						content_notification_popover += "<div class='notification_item'>";
-						if(result[i].urlPost != null)
-							content_notification_popover += "<a href=post/" + result[i].idPost +" style='width:100%'>";
 						content_notification_popover += "<div class='user_from_notification'>";
-						content_notification_popover += "<img src="+ result[i].userPhoto+">";
+						content_notification_popover += "<a href='userPage?username="+result[i].userName+"'><img src="+ result[i].userPhoto+"></a>";
 						content_notification_popover += "</div>";
 						content_notification_popover += "<div class='context_notification'>";
-						content_notification_popover += "<span><b>" + result[i].userName +"</b>  " + result[i].context +". <p> "+ result[i].date+"</p></span>"; 
+						content_notification_popover += "<span><b><a href='userPage?username="+result[i].userName+"'>" + result[i].userName +"</b></a>  " + result[i].context +". <p> "+ result[i].date+"</p></span>"; 
 						content_notification_popover += "</div>";
 						if(result[i].urlPost == null){
 							if(result[i].isRequestFrom){
@@ -44,7 +42,6 @@ $(document).ready(function(){
 								content_notification_popover += "<input type='hidden' value='" + JSON.stringify(result[i]) +"'>";
 								content_notification_popover += "</div>";
 								} else {
-									//alert("here")
 									content_notification_popover += "<div class='follow_btn_notification'>";
 									if(result[i].alreadyFollowing){
 										content_notification_popover += "<button class='unfollowProfile_btn'>Unfollow</button>";
@@ -57,13 +54,10 @@ $(document).ready(function(){
 							}
 						} else {
 							content_notification_popover += "<div class='post_notification'>";
-							content_notification_popover += "<img src=" + result[i].urlPost + ">";
+							content_notification_popover += "<a href='post?id="+result[i].idPost+"'><img src=" + result[i].urlPost + "></a>";
 							content_notification_popover += "</div>";	
 						}
-						if(result[i].urlPost != null)
-							content_notification_popover += "</a>";
-						
-							if(i < (result.length -1))
+						if(i < (result.length -1))
 								content_notification_popover += "<hr class='hr_notification'>";
 						content_notification_popover += "</div>";
 					}

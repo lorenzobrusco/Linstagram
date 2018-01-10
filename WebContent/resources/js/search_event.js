@@ -8,9 +8,15 @@ $(document).ready(function(){
 //		$("#hint-list").addClass("hide");
 //	});
 	
-	function createHintElement(imgURL,title,subtitle){
+	function createHintElement(imgURL,title,subtitle,type){
 		var elem="";
-		elem += "<a class='hint-item'>";
+		if(type=="hashtag"){
+			hashtag = title.replace("#", "");
+			elem += "<a href='hashtags?hashtag="+hashtag+"' class='hint-item'>";
+		}
+		if(type=="user"){
+			elem += "<a href='userPage?username="+title+"' class='hint-item'>";
+		}
 		elem += "<div class='hint-icon'>";
 		elem += "<img src='"+ imgURL +"'>";
 		elem += "</div>";
@@ -38,11 +44,11 @@ $(document).ready(function(){
 					var title = value.title;
 					var subtitle = value.subtitle;
 					var iconUrl = value.iconUrl;
-					var item = createHintElement(iconUrl,title,subtitle);
+					var type = value.type;
+					var item = createHintElement(iconUrl,title,subtitle,type);
 //					console.log(item);
 					$("#hint-list").append(item);
 					
-//					hashtags?hashtag=flower
 
 				});
 				$("#hint-list").removeClass("hide");
