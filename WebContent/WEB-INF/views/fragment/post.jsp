@@ -75,7 +75,7 @@
 							</b></a>
 						</div>
 						<div class='caption-section'>
-							<a href='userPage?usernameOther=${post.user.username}'>${post.user.username }</a>
+							<a href='userPage?username=${post.user.username}'>${post.user.username }</a>
 							<span>${post.content}</span>
 						</div>
 
@@ -89,7 +89,7 @@
 									varStatus="loop">
 									<c:if test="${loop.index <4}">
 										<div class="comment">
-											<a href='userPage?usernameOther=${comment.user.username}'><b>${comment.user.username}</b></a>
+											<a href='userPage?username=${comment.user.username}'><b>${comment.user.username}</b></a>
 											<span> ${comment.content}</span>
 										</div>
 									</c:if>
