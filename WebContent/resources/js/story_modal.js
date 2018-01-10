@@ -230,5 +230,5 @@ $(document).ready(function () {
 	}
 
 	$("#open-story-modal").animatedModal(modalConfiguration);
-	$("#story-modal #add-mobile").animatedModal(modalConfiguration);
+	$("#add-story").animatedModal(modalConfiguration);
 });

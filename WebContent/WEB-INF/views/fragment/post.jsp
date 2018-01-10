@@ -10,8 +10,10 @@
 			<div class="col-md-8">
 				<div class='card'>
 					<div class='top-section'>
-						<a href=''> <img class="user-img"
-							src=${post.user.photoProfile }></a> <a
+						<a href='userPage?username=${post.user.username }'> 
+						<img class="user-img"
+							src=${post.user.photoProfile }></a> 
+							<a
 							href='userPage?username=${post.user.username }'
 							class='user-name'>${post.user.username }</a>
 					</div>

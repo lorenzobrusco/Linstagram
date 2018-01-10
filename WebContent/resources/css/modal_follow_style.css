@@ -58,8 +58,8 @@
 #sendRequest-btn {
 	position: absolute;
 	right: 10%;
-	padding-top: 1%;
-
+	padding: 6px 12px;
+	border-radius:4px;
 	border: 1px solid #cccccc;
 	margin: 1% 0% 5% 0%;
 	background-color: transparent;
@@ -70,7 +70,7 @@
 /* #unfollow-btn:hover,
 #follow-btn:hover,
 #unfollowModal-btn:hover,
-#followModal-btn:hover, */
+#followModal-btn:hover,
 #unfollower-btn:hover,
 #follower-btn:hover,
 #unfollowerPrivate-btn:hover,
@@ -82,7 +82,7 @@
 	background-color: #89ABE3;
 	border-color: #bbbbbb;
 	color: black;
-}
+} */
 
 #rejectRequest-btn,
 #waiting-btn {

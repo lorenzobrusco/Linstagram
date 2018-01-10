@@ -29,6 +29,8 @@
 				<li><a href="profile" role="button" id="profile-mobile" class="item-mobile"></a></li>
 					
 				<li><a href="#create-post-modal" id="add-mobile" class="item-mobile"></a></li>
+				
+				<li><a href="#story-modal" id="add-story" class="item-mobile"></a></li>
 					
 				<li><a href="#" id="notification-mobile" class="item-mobile"></a></li>
 			</ul>

@@ -2,13 +2,21 @@ $(document).ready(function(){
 	var notification =  $("#notification_list");
 	var notification_mobile_list = $("#notification_list_mobile");
 	var arrow = $(".arrow");
+	var img_empty='<div id="empty-notification-container"> <span class="empty-notification-img"></span><br><span id="empty-notification-text">No Notifications</span></div>';
 	
 	//pass the element that have to contain the notification items
-	function createNotificationList(notification){
+	function createNotificationList(notification,mobile){
 		$.ajax({
 			url : "openNotification",
 			type : "POST",
 			success : function(result) {
+				if(result.length==0){
+					notification.append(img_empty);
+					if(mobile == false)
+						notification.css("height",150);
+					return;
+				}
+				
 				var content_notification_popover = "";
 					for (var i = 0; i < result.length; i++) {
 						content_notification_popover += "<div class='notification_item'>";
@@ -87,7 +95,7 @@ $(document).ready(function(){
 		}
 		e.stopPropagation();
 		$(".badge").remove();
-		createNotificationList(notification);
+		createNotificationList(notification,false);
 	});
 	
 	$('#notification-mobile').click(function (e) {
@@ -102,7 +110,7 @@ $(document).ready(function(){
 		}
 		e.stopPropagation();
 		$(".badge").remove();
-		createNotificationList(notification_mobile_list);
+		createNotificationList(notification_mobile_list,true);
 	});
 
 	$(document).on('click', '.followProfile_btn', function(e) {
