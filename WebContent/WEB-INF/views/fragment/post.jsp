@@ -69,9 +69,9 @@
 						</div>
 						<div class="likes-section" style="cursor: pointer;">
 							<a id="likes" data-toggle="modal" data-target="#modalLike"
-								name="${post.id }"><b>Piace a <span
-									id="count_like${post.id }"> ${fn:length(post.likes)}</span>
-									persone
+								name="${post.id }"><b>Likes to  
+								<span id="count_like${post.id }"> ${fn:length(post.likes)}</span>
+									people
 							</b></a>
 						</div>
 						<div class='caption-section'>
@@ -82,14 +82,14 @@
 						<div class='list-comments-section'>
 							<a class="show-all-comments" href="#postcibo"
 								data-toggle="collapse"><span class="show-comments"></span>
-								Carica altri commenti<img class="hide" id="loader-comments"
+								Load other comments<img class="hide" id="loader-comments"
 								src="${pageContext.request.contextPath}/resources/images/loaderComm.gif"></a><br>
 							<div class='list-comments${post.id }'>
 								<c:forEach items="${post.comments}" var="comment"
 									varStatus="loop">
 									<c:if test="${loop.index <4}">
 										<div class="comment">
-											<a href='userPage?usernameOther=${comment.user.username}'><b>${comment.user.username}</b></a>
+											<a href='userPage?username=${comment.user.username}'><b>${comment.user.username}</b></a>
 											<span> ${comment.content}</span>
 										</div>
 									</c:if>
@@ -97,7 +97,7 @@
 							</div>
 							<a class="hide hide-all-comments" href="#postcibo"
 								data-toggle="collapse"><span class="hide-comments"></span>
-								Nascondi altri commenti</a><br>
+								Hide comments</a><br>
 						</div>
 
 						<div class='time-section'>

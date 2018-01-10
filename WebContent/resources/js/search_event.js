@@ -1,7 +1,16 @@
 $(document).ready(function(){	
 
-	//TODO search on mobile	
 	var search_input = $(".search-input");
+	var search_list = $("#hint-list");
+	var hr= "<hr class='hr-hint'>"
+	
+	$(document).mouseup(function(e) {
+		if (!search_input.is(e.target) && !search_list.is(e.target) && search_input.has(e.target).length === 0 
+					&& search_list.has(e.target).length === 0) {
+							search_list.addClass("hide");
+							search_input.val("");
+	    }
+	});
 	
 	//if click on list close list
 //	search_input.focusout(function() {
@@ -22,13 +31,20 @@ $(document).ready(function(){
 		elem += "</div>";
 		elem += "<div class='context-hint'>";
 		elem += "<span><b>"+title+"</b> "+ subtitle+"</p></span>"; 
-		elem += "</div></a><hr class='hr_notification'/>";
+		elem += "</div></a>";
 		return elem;
 	}
 	
-	search_input.keyup(function() {
-		var text = search_input.val();
-		
+	search_input.keyup(function(e) {
+		var text = "";
+		if(e.target.id == "search-input-desktop")
+			var text = $("#search-input-desktop").val();
+		if(e.target.id == "search-input-mobile")
+			var text = $("#search-input-mobile").val();
+		if(text==""){
+			search_list.addClass("hide");
+			return;
+		}
 
 		$.ajax({
 			url : "research",
@@ -38,9 +54,18 @@ $(document).ready(function(){
 			},
 			success : function(result) {
 				$("#hint-list").empty();
-				console.log(result);
+				
+				if(result.length==0){
+					search_list.addClass("hide");
+					return;
+				}
+				
+				$("#hint-list").css("height",(result.length*65)+1);
+				var count=result.length;
+				
 				$.each(result,function( key, value ){
 					//console.log(key);
+					count--;
 					var title = value.title;
 					var subtitle = value.subtitle;
 					var iconUrl = value.iconUrl;
@@ -48,10 +73,12 @@ $(document).ready(function(){
 					var item = createHintElement(iconUrl,title,subtitle,type);
 //					console.log(item);
 					$("#hint-list").append(item);
+					if(count!=0)
+						$("#hint-list").append(hr);
 					
 
 				});
-				$("#hint-list").removeClass("hide");
+				search_list.removeClass("hide");
 			}
 		});
 

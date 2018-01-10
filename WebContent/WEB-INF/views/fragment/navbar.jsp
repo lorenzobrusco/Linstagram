@@ -20,7 +20,7 @@
 	<div id="navbar-mobile">
 		<span id="logo-container"><a href="index" id="logo"></a></span>
 		<div class="search-bar">
-			<input type="text" class="form-control transparent search-input" placeholder="Search">
+			<input type="text" class="form-control transparent search-input" placeholder="Search" id="search-input-mobile">
 		</div>
 		<div class="bottom-nav-menu">
 			<ul id="horizontal-list">
@@ -40,7 +40,7 @@
 		</a>
 		</span> <span id="search-form" class="form-inline">
 			<div class="input-group" id="search-div">
-				<input type="text" class="form-control transparent search-input" placeholder="Search">
+				<input type="text" class="form-control transparent search-input" placeholder="Search" id="search-input-desktop">
 			</div>
 		</span> 
 		<span class="nav-right"> 
@@ -55,7 +55,9 @@
 
 <div id="notification_list" class="hide"></div>
 <div id="notification_list_mobile" class="hide"></div>
-<span id="hint-list" class="hide"></span>
+<div id="hint-list-container">
+	<span id="hint-list" class="hide"></span>
+</div>
 
 
 <script

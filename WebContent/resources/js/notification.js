@@ -62,6 +62,11 @@ $(document).ready(function(){
 						content_notification_popover += "</div>";
 					}
 					notification.empty();
+					if(result.length == 1)
+						notification.css("height",(result.length*63)+2);
+					else
+						notification.css("height",(result.length*72)+2);
+						
 					notification.html(content_notification_popover);
 			}
 		})

@@ -1,3 +1,7 @@
 /build/
 /target/
 /bin/
+
+it\.unical\.linstagram\.model\.User/
+
+it\.unical\.linstagram\.model\.Hashtag/

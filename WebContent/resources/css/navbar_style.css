@@ -209,20 +209,6 @@ header {
 		margin-bottom: 0px !important;
 	}
 	
-	 #notification_list {
-    height: 100% !important;
-    width: 100% !important;
-    top: 0 !important;
-    right: 0 !important;
-    max-height: none !important;
-    min-height: 0 !important; 
-	}
-	
-	#notification_list .notification_item .follow_btn_notification {
-    text-align: center !important;
-    display: block !important;
-    float: none !important;
-	}
 }
 
 #navbar-mobile .search-bar {
@@ -304,19 +290,23 @@ header {
   border-bottom: 3px solid #cb567e;
 }
 
+#hint-list-container{
+	display:flex;
+	justify-content: center;
+	flex-direction:row;
+	width: 100%;
+}
+
 #hint-list{
 	position: fixed;
-  height: 350px;
-  width: 500px;
+	top: 51px;
+  width: 355px;
   background: #ffffff;
   z-index: 999;
-  top: 6%;
-  right: 10%;
   border-radius: 5px;
   border: 0.5px solid #ccc;
   box-shadow: -6px 6px 10px 0px rgba(0, 0, 0, .1);
-  max-height: 362px;
-  min-height: 100px;
+  max-height: 365px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -324,7 +314,6 @@ header {
 
 #notification_list {
   position: fixed;
-  height: 350px;
   width: 500px;
   background: #ffffff;
   z-index: 999;
@@ -334,7 +323,6 @@ header {
   border: 0.5px solid #ccc;
   box-shadow: -6px 6px 10px 0px rgba(0, 0, 0, .1);
   max-height: 362px;
-  min-height: 100px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -355,11 +343,12 @@ header {
 }
 
 .notification_item{
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .hint-item{
-  margin-top: 15px;
+  margin-top: 10px;
+  height:49px;
 	display:inline-block;
 	width: 100%;	
 }
@@ -471,9 +460,12 @@ header {
   border-radius: 4px;
 }
 
-#notification_list .hr_notification,
-#notification_list_mobile .hr_notification {
+.hr_notification {
   margin: 12px 12px 12px 32px !important;
+}
+
+.hr-hint{
+	margin: 5px 32px !important;
 }
 
 #notification_list_mobile .notification_item .follow_btn_notification {
