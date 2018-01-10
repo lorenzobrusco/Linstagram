@@ -15,14 +15,18 @@ public class NotificationDTO {
 	private String urlPost;
 	private String date;
 	private boolean isPrivate;
-	private boolean alreadyFollow;
+	private boolean alreadyFollowing;
+	private boolean alreadyFollowed;
+	private boolean isRequest;
 
-	public NotificationDTO(Notification notification, boolean alreadyFollow) {
+	public NotificationDTO(Notification notification, boolean alreadyFollowing, boolean alreadyFollowed,
+			boolean isRequest) {
 		this.userPhoto = notification.getUserFrom().getPhotoProfile();
 		this.userName = notification.getUserFrom().getUsername();
 		this.date = calculateElapsedTime(notification.getDate());
-
-		this.alreadyFollow = alreadyFollow;
+		this.alreadyFollowing = alreadyFollowing;
+		this.alreadyFollowed = alreadyFollowed;
+		this.isRequest = isRequest;
 		this.isPrivate = notification.getUserTo().isPrivateProfile();
 		if (notification.getType().equals(NotificationType.COMMENT)) {
 			this.context = String.format("commented your post: %s", notification.getComment().getContent());
@@ -31,7 +35,7 @@ public class NotificationDTO {
 			this.context = "liked your post";
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 		} else {
-			if (this.alreadyFollow) {
+			if (!this.alreadyFollowed) {
 				this.context = "Asks to follow you";
 			} else {
 				this.context = "started following you";
@@ -119,12 +123,28 @@ public class NotificationDTO {
 		this.isPrivate = isPrivate;
 	}
 
-	public boolean isAlreadyFollow() {
-		return alreadyFollow;
+	public boolean isAlreadyFollowing() {
+		return alreadyFollowing;
 	}
 
-	public void setAlreadyFollow(boolean alreadyFollow) {
-		this.alreadyFollow = alreadyFollow;
+	public void setAlreadyFollowing(boolean alreadyFollowing) {
+		this.alreadyFollowing = alreadyFollowing;
+	}
+
+	public boolean isAlreadyFollowed() {
+		return alreadyFollowed;
+	}
+
+	public void setAlreadyFollowed(boolean alreadyFollowed) {
+		this.alreadyFollowed = alreadyFollowed;
+	}
+
+	public boolean isRequest() {
+		return isRequest;
+	}
+
+	public void setRequest(boolean isRequest) {
+		this.isRequest = isRequest;
 	}
 
 }
