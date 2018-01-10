@@ -54,6 +54,7 @@
 
 <div id="notification_list" class="hide"></div>
 <div id="notification_list_mobile" class="hide"></div>
+<div id="hint-list" class="hide"></div>
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
@@ -133,27 +134,14 @@
 								},
 								success : function(result) {
 									console.log(result);
-									var hint= {
-											data: [],
-											getValue: "name",
-											template: {
-												type: "iconLeft",
-												fields: {
-													iconSrc: "icon"
-												}
-											}
-										};
 									$.each(result,function( key, value ){
 										//console.log(key);
 										var title = value.title;
 										var subtitle = value.subtitle;
 										var iconUrl = value.iconUrl;
 										var item_body="<b>"+title+"<b><br>"+ subtitle;
-										//console.log("<b>"+title+"<b><br>"+ subtitle+"-"+ iconUrl);
-										hint.data.push("{name: "+item_body+", icon:"+ iconUrl +"}");
+										console.log("<b>"+title+"<b><br>"+ subtitle+"-"+ iconUrl);
 									});
-									console.log(hint);
-
 								}
 							});
 

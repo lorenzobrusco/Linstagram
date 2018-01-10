@@ -135,7 +135,7 @@ $(document).ready(function () {
 					var filter_section = $("#story-modal #apply-filter-section");
 
 					filter_section.append("<canvas class='filter-img' id='img-to-modify'></canvas>");
-					filter_section.append('<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter </button>');
+					filter_section.append('<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Create Story </button>');
 
 					var canvas=$('#story-modal #apply-filter-section > canvas');
 
