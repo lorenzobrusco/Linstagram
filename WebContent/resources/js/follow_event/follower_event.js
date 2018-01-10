@@ -85,7 +85,7 @@ $(document).ready(function() {
 		var btn = "#fol-div"+id+" div";
 
 		$.ajax({
-			url : "sendRequest",
+			url : "followUser",
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
@@ -170,7 +170,7 @@ $(document).ready(function() {
 		var username = $(this).attr('value');
 
 		$.ajax({
-			url : "sendRequest",
+			url : "followUser",
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {

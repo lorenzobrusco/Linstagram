@@ -246,6 +246,15 @@ public class UserDAO implements IUserDAO {
 
 		return users;
 	}
+	
+	public boolean isPrivateByUsername(String username) {
+		Session session = HibernateUtil.getHibernateSession();
+		boolean privateProfile = session.createQuery("SELECT u.privateProfile FROM  User u where u.username=:username", Boolean.class)
+				.setParameter("username", username).uniqueResult();
+
+		session.close();
+		return privateProfile;
+	}
 
 }
 

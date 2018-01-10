@@ -58,11 +58,6 @@ public class OtherUserController {
 	public String sendRequest(HttpSession session, Model model, @RequestParam("username") String username) {
 		User user = (User) session.getAttribute("user");
 
-		if (!userService.sendRequest(user.getUsername(), username))
-			return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
-					.getMessage();
-
-		notificationService.generateFollowNotification(user, username);
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 
@@ -117,12 +112,19 @@ public class OtherUserController {
 	@ResponseBody
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
-
-		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user)) {
-			return new MessageResponse(MessageCode.FOLLOW_FAILED, user,
-					"Non e' stato possibile inserire l'utente come following.").getMessage();
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		if (userService.isPrivate(usernameToFollow)) {
+			if (!userService.sendRequest(user.getUsername(), usernameToFollow))
+				return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
+						.getMessage();
 		}
-
+		else {
+			if (!userService.addFollowing(user.getUsername(), usernameToFollow, user)) {
+				return new MessageResponse(MessageCode.FOLLOW_FAILED, user,
+						"Non e' stato possibile inserire l'utente come following.").getMessage();
+			}
+		}
+		
 		notificationService.generateFollowNotification(user, usernameToFollow);
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
