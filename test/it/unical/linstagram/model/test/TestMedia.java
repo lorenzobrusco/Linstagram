@@ -31,7 +31,7 @@ public class TestMedia extends AbstractModelTest{
 		
 		md.save(post);
 		
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 	
 		Post p =  session.createQuery("SELECT post FROM Post post WHERE post.id =:idPost",Post.class)
 				.setParameter("idPost",post.getId()).uniqueResult();

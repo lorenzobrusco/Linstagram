@@ -19,7 +19,7 @@ public class StoryDAO implements IStoryDAO{
 		Calendar dayLimit = Calendar.getInstance();
 		dayLimit.setTimeInMillis(now.getTimeInMillis()-86400*1000);
 		
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		
 		List<Story> stories = session.createQuery("FROM Story s "
 				+ "WHERE s.user.id =:idUser and s.creationDate >= :dayLimit "
@@ -36,7 +36,7 @@ public class StoryDAO implements IStoryDAO{
 		Calendar dayLimit = Calendar.getInstance();
 		dayLimit.setTimeInMillis(now.getTimeInMillis()-86400*1000);
 		
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 
 		List<Story> stories = session.createQuery("FROM Story s "
 				+ "WHERE s.user.username=:username and s.creationDate >= :dayLimit "
@@ -50,7 +50,7 @@ public class StoryDAO implements IStoryDAO{
 
 	@Override
 	public List<User> getViewersOfStory(int idStory) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 
 		List<User> users = session.createQuery("SELECT s.viewers FROM Story s WHERE s.id=:idStory")
 				.setParameter("idStory",idStory).list();
@@ -64,7 +64,7 @@ public class StoryDAO implements IStoryDAO{
 		Calendar dayLimit = Calendar.getInstance();
 		dayLimit.setTimeInMillis(now.getTimeInMillis()-86400*1000);
 		
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
 				.setParameter("username", username).list();
 		List<Story> stories = null;
@@ -86,7 +86,7 @@ public class StoryDAO implements IStoryDAO{
 
 	@Override
 	public Story getStoryById(int idStory) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		Story story = session.createQuery("SELECT s FROM Story s WHERE s.id=:idStory",Story.class).
 				setParameter("idStory", idStory).uniqueResult();
 		session.close();

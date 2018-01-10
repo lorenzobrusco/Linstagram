@@ -152,7 +152,7 @@ public class TestPostDAO extends AbstractModelTest{
 	
 //	@Test
 	public void testHashtag() {
-		HibernateUtil.CreateSessionFactory(true);
+		HibernateUtil.initSessionFactory(true);
 		
 		User eliana = new User("Eliana","email","pass");
 		
@@ -176,7 +176,7 @@ public class TestPostDAO extends AbstractModelTest{
 	
 //	@Test
 	public void testComment() {
-		HibernateUtil.CreateSessionFactory(true);
+		HibernateUtil.initSessionFactory(true);
 		
 		User eliana = new User("Eliana","email","pass");
 		
@@ -203,7 +203,7 @@ public class TestPostDAO extends AbstractModelTest{
 	
 	@Test
 	public void testGetPostComment() {
-		HibernateUtil.CreateSessionFactory(true);
+		HibernateUtil.initSessionFactory(true);
 		
 		User eliana = new User("Eliana","email","pass");
 		

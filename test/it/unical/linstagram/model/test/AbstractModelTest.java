@@ -13,7 +13,7 @@ public class AbstractModelTest {
 	@After
 	public void cleanDB()
 	{	
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
@@ -31,6 +31,6 @@ public class AbstractModelTest {
 	@BeforeClass
 	public static void setSessionFactory ()
 	{
-		HibernateUtil.CreateSessionFactory(true);
+		HibernateUtil.initSessionFactory(true);
 	}
 }

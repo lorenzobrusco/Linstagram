@@ -30,7 +30,6 @@ public class ResearchDTO {
 		
 	}
 	
-	
 	public ResearchDTO(Hashtag hashtag) {
 		this.title = "#"+ hashtag.getHashtag();
 		this.subtitle = hashtag.getCount()+ " posts";

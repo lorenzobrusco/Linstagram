@@ -15,7 +15,7 @@ public class HashtagDAO implements IHashtagDAO {
 	
 	@Override
 	public Hashtag getHashtagByValue(String value) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		Hashtag hashtag = (Hashtag) session.createQuery("FROM  Hashtag h where h.hashtag=:_hashtag")
 				.setParameter("_hashtag", value.toLowerCase()).uniqueResult();
 		session.close();
@@ -24,7 +24,7 @@ public class HashtagDAO implements IHashtagDAO {
 
 	@Override
 	public List getSuggestions(String queryString) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
 		
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory()

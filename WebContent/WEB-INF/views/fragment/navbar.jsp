@@ -55,7 +55,8 @@
 
 <div id="notification_list" class="hide"></div>
 <div id="notification_list_mobile" class="hide"></div>
-<div id="hint-list" class="hide"></div>
+<span id="hint-list" class="hide"></span>
+
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
