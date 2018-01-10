@@ -188,7 +188,6 @@ public class UserService {
 	}
 	
 	public boolean isPrivate(String username) {
-		System.out.println("PRIVATE "+userDAO.isPrivateByUsername(username));
 		return userDAO.isPrivateByUsername(username);
 	}
 	
