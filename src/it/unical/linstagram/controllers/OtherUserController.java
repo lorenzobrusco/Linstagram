@@ -39,7 +39,7 @@ public class OtherUserController {
 	}
 
 	@RequestMapping("userPage")
-	public String getUserPage(HttpSession session, Model model, @RequestParam("usernameOther") String usernameOther) {
+	public String getUserPage(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
 
 		User user = (User) session.getAttribute("user");
 		if (usernameOther.equals(user.getUsername()))
@@ -81,7 +81,7 @@ public class OtherUserController {
 		if (!userService.rejectRequest(user.getUsername(), username))
 			return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
 					.getMessage();
-
+		
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 

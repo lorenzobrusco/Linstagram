@@ -304,6 +304,24 @@ header {
   border-bottom: 3px solid #cb567e;
 }
 
+#hint-list{
+	position: fixed;
+  height: 350px;
+  width: 500px;
+  background: #ffffff;
+  z-index: 999;
+  top: 6%;
+  right: 10%;
+  border-radius: 5px;
+  border: 0.5px solid #ccc;
+  box-shadow: -6px 6px 10px 0px rgba(0, 0, 0, .1);
+  max-height: 362px;
+  min-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
 #notification_list {
   position: fixed;
   height: 350px;
@@ -336,16 +354,24 @@ header {
   overflow-x: hidden;
 }
 
-.notification_item {
+.notification_item{
   margin-top: 15px;
 }
 
+.hint-item{
+  margin-top: 15px;
+	display:inline-block;
+	width: 100%;	
+}
+
 #notification_list .notification_item p,
-#notification_list_mobile .notification_item p {
+#notification_list_mobile .notification_item p,
+#hint-list .hint-item p {
   display: inline;
 }
 
-#notification_list .notification_item .user_from_notification {
+#notification_list .notification_item .user_from_notification, 
+#hint-list .hint-item .hint-icon {
   display: inline;
   margin: 0 20px;
   float: left;
@@ -357,13 +383,15 @@ header {
   float: left;
 }
 
-#notification_list .notification_item .context_notification {
+#notification_list .notification_item .context_notification,
+#hint-list .hint-item .context-hint {
 	display: inline;
 	position: relative;
 	line-height: 3.5;
 }
 
-#notification_list_mobile .notification_item .context_notification {
+#notification_list_mobile .notification_item .context_notification,
+#hint-list .hint-icon .context-hint {
   display: inline;
   position: relative;
   margin-left: 10px;
@@ -371,7 +399,7 @@ header {
 }
 
 #notification_list .notification_item .follow_btn_notification,
-#notification_list_mobile .notification_item .follow_btn_notification {
+#notification_list_mobile .notification_item .follow_btn_notification { 
   display: inline;
   float: right;
   margin-right: 20px;
@@ -385,7 +413,8 @@ header {
 }
 
 #notification_list .notification_item .user_from_notification img,
-#notification_list_mobile .notification_item .user_from_notification img {
+#notification_list_mobile .notification_item .user_from_notification img,
+#hint-list .hint-item .hint-icon img {
   height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -423,6 +452,17 @@ header {
 #notification_list .notification_item .follow_btn_notification .declineProfile_btn,
 #notification_list_mobile .notification_item .follow_btn_notification .declineProfile_btn {
   border: 1px solid #cccccc;
+  margin-left: 10px;
+  background-color: transparent;
+  color: inherit;
+  transition: all .5s;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+#notification_list .notification_item .follow_btn_notification .deleteRequestfollowProfile_btn,
+#notification_list_mobile .notification_item .follow_btn_notification .deleteRequestfollowProfile_btn{
+	border: 1px solid #cccccc;
   margin-left: 10px;
   background-color: transparent;
   color: inherit;

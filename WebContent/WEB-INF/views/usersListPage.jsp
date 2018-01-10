@@ -43,7 +43,7 @@
 			<c:forEach items="${users}" var="user">
 				
 				<form role="form" action="userPage">
-					<button name="usernameOther" value="${user.username }">${user.username }</button>
+					<button name="username" value="${user.username }">${user.username }</button>
 				</form>
 			</c:forEach>
 			

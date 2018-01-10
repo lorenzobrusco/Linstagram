@@ -8,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import it.unical.linstagram.dto.NotificationDTO;
+import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.NotificationService;
 
 @Controller
 public class NotificationController {
-
+	
 	@Autowired
 	private NotificationService notificationService;
 
@@ -33,5 +36,15 @@ public class NotificationController {
 	@ResponseBody
 	public Long notificationNumber(HttpSession session) {
 		return notificationService.getAllNumberOfNotificationToSee((User) session.getAttribute("user"));
+	}
+	
+	@RequestMapping(value = "deleteNotification")
+	@ResponseBody
+	public String deleteNotification(HttpSession session, @RequestParam int id) {
+		User user = (User) session.getAttribute("user");
+		if (notificationService.deleteNotification(id)) {
+			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+		}
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 }

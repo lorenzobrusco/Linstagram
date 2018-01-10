@@ -12,7 +12,7 @@
 					<div class='top-section'>
 						<a href=''> <img class="user-img"
 							src=${post.user.photoProfile }></a> <a
-							href='userPage?usernameOther=${post.user.username }'
+							href='userPage?username=${post.user.username }'
 							class='user-name'>${post.user.username }</a>
 					</div>
 					<div class='body-section'>

@@ -39,6 +39,15 @@ public class NotificationService {
 	public void saveNotification(Notification notification) {
 		modelDAO.save(notification);
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteNotification(int id) {
+		return modelDAO.delete(Notification.class, id);
+	}
 
 	/**
 	 * Generate notification when user likes a post
@@ -76,11 +85,13 @@ public class NotificationService {
 		final List<Notification> notifications = notificationDAO.getAllNotification(user);
 		final List<NotificationDTO> notificationsDTO = new ArrayList<>();
 		for (Notification notification : notifications) {
-			boolean existRequest = userDAO.existRequestFollow(notification.getUserFrom().getUsername(),
+			boolean existRequestTo = userDAO.existRequestFollow(notification.getUserFrom().getUsername(),
 					notification.getUserTo().getUsername());
+			boolean existRequestFrom = userDAO.existRequestFollow(notification.getUserTo().getUsername(),
+					notification.getUserFrom().getUsername());
 			boolean alreadyFollowing = notification.getUserTo().getFollowings().contains(notification.getUserFrom());
 			boolean alreadyFollowed = notification.getUserTo().getFollowers().contains(notification.getUserFrom());
-			notificationsDTO.add(new NotificationDTO(notification, alreadyFollowing, alreadyFollowed, existRequest));
+			notificationsDTO.add(new NotificationDTO(notification, alreadyFollowing, alreadyFollowed, existRequestTo, existRequestFrom));
 			if (notification.isToSee()) {
 				notification.setToSee(false);
 				modelDAO.update(notification);
@@ -91,6 +102,11 @@ public class NotificationService {
 		return notificationsDTO;
 	}
 
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public Long getAllNumberOfNotificationToSee(User user) {
 		return notificationDAO.getAllNotificationToSee(user);
 	}

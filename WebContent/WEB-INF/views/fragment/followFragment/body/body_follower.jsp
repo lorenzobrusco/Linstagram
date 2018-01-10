@@ -11,7 +11,7 @@
 		<li id="users">
 			<div id="user_enter">
 				<form role="form" action="userPage">
-					<button id="button_form" name="usernameOther" value="${follow.username }">
+					<button id="button_form" name="username" value="${follow.username }">
 						<div id="button_user">
 	 						<div id="img_div">
 	 							<c:choose>
