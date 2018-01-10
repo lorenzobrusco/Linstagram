@@ -21,40 +21,39 @@ $(document).ready(function(){
 						content_notification_popover += "<span><b>" + result[i].userName +"</b>  " + result[i].context +". <p> "+ result[i].date+"</p></span>"; 
 						content_notification_popover += "</div>";
 						if(result[i].urlPost == null){
-							if(result[i].isPrivate){
-							content_notification_popover += "<div class='follow_btn_notification'>";
-							console.log(result[i].isRequest)
-							if(result[i].isRequest){
-								
-								content_notification_popover += "<button class='acceptfollowProfile_btn'>Accept</button>";
-								content_notification_popover += "<button class='declineProfile_btn'>Decline</button>";
-							}else{
-								 if(result[i].alreadyFollowed){
-										if(!result[i].alreadyFollowing){
-											content_notification_popover += "<button class='followProfile_btn'>Follow</button>";
-										}else{
-											content_notification_popover += "<button class='unfollowProfile_btn'>Unfollow</button>";
-										}
-									}else{
-										content_notification_popover += "<button class='acceptfollowProfile_btn'>Accept</button>";
-										content_notification_popover += "<button class='declineProfile_btn'>Decline</button>";
-									}
-								}
-							content_notification_popover += "<input type='hidden' name='user' value=" + result[i].userName +">";
-							content_notification_popover += "</div>";
-							} else {
-								content_notification_popover += "<div class='follow_btn_notification'>";
-								if(result[i].alreadyFollow){
-									if(!result[i].alreadyFollowing){
-										content_notification_popover += "<button class='followProfile_btn'>Follow</button>";
-									}else{
-										content_notification_popover += "<button class='unfollowProfile_btn'>Unfollow</button>";
-									}
-								}else {
-									content_notification_popover += "<button class='followProfile_btn' >Follow</button>";
-								}
-								content_notification_popover += "<input type='hidden' name='user' value=" + result[i].userName +">";
+							if(result[i].isRequestFrom){
+								content_notification_popover += "<div class='follow_btn_notification'>";					
+								content_notification_popover +="<button class='deleteRequestfollowProfile_btn' disabled>Waiting</button>";
+								content_notification_popover += "<input type='hidden' value='" + JSON.stringify(result[i]) +"'>";
 								content_notification_popover += "</div>";
+							} else {
+								if(result[i].isRequestTo){
+								content_notification_popover += "<div class='follow_btn_notification'>";
+								if(result[i].isPrivateTo){
+									
+									content_notification_popover += "<button class='acceptfollowProfile_btn'>Accept</button>";
+									content_notification_popover += "<button class='declineProfile_btn'>Decline</button>";
+								}else{
+									
+									 if(result[i].alreadyFollowing){
+										content_notification_popover += "<button class='unfollowProfile_btn'>Unfollow</button>";
+									 }else{
+										 content_notification_popover += "<button class='followProfile_btn'>Follow</button>"; 
+									 }
+								}
+								content_notification_popover += "<input type='hidden' value='" + JSON.stringify(result[i]) +"'>";
+								content_notification_popover += "</div>";
+								} else {
+									//alert("here")
+									content_notification_popover += "<div class='follow_btn_notification'>";
+									if(result[i].alreadyFollowing){
+										content_notification_popover += "<button class='unfollowProfile_btn'>Unfollow</button>";
+									}else{
+										content_notification_popover += "<button class='followProfile_btn'>Follow</button>"; 
+									}
+									content_notification_popover += "<input type='hidden' value='" + JSON.stringify(result[i]) +"'>";
+									content_notification_popover += "</div>";
+								}
 							}
 						} else {
 							content_notification_popover += "<div class='post_notification'>";
@@ -63,9 +62,10 @@ $(document).ready(function(){
 						}
 						if(result[i].urlPost != null)
 							content_notification_popover += "</a>";
-						content_notification_popover += "</div>";
+						
 							if(i < (result.length -1))
 								content_notification_popover += "<hr class='hr_notification'>";
+						content_notification_popover += "</div>";
 					}
 					notification.empty();
 					notification.html(content_notification_popover);
@@ -107,19 +107,24 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click', '.followProfile_btn', function(e) {
-		var username = $(this).parent().find('input').attr('value');
-		alert(username);
+		var json = $(this).parent().find('input').attr('value');
+		var notification = JSON.parse(json);
 		var div = $(this).parent();
-		console.log(div);
 		div.empty();
 		$.ajax({
 			url : "followUser",
-			data:{username:username},
+			data:{
+				username:notification.userName
+			},
 			success : function(result) {
 				if (result == "OK") {
 					div.empty();
-					div.append("<button class='unfollowProfile_btn'>Unfollow</button>");
-					div.append("<input type='hidden' name='user' value=" + username +">");
+					if(notification.isPrivateFrom)
+						div.append("<button class='deleteRequestfollowProfile_btn' disabled>Waiting</button>");
+					else
+						div.append("<button class='unfollowProfile_btn'>Unfollow</button>");
+					div.append("<input class='" + notification.isPrivate +"' type='hidden' name='user' value='" + json +"'>");
+					
 				}
 				else {
 					showResultMessage("FAILED");
@@ -129,19 +134,21 @@ $(document).ready(function(){
 	});
 	
 	$(document).on('click', '.unfollowProfile_btn', function(e) {
-		var username = $(this).parent().find('input').attr('value');
-		alert(username);
+		var json = $(this).parent().find('input').attr('value');
+		var notification = JSON.parse(json);
 		var div = $(this).parent();
-		console.log(div);
 		div.empty();
 		$.ajax({
 			url : "unfollowUser",
-			data:{username:username},
+			data:{
+				username: notification.userName
+			},
 			success : function(result) {
 				if (result == "OK") {
 					div.empty();
 					div.append("<button class='followProfile_btn'>follow</button>");
-					div.append("<input type='hidden' name='user' value=" + username +">");
+					div.append("<input class='" + notification.isPrivate +"' type='hidden' name='user' value='" + json +"'>");
+					
 				}
 				else {
 					showResultMessage("FAILED");
@@ -151,24 +158,53 @@ $(document).ready(function(){
 	});
 	
 	$(document).on('click', '.acceptfollowProfile_btn', function(e) {
-		var username = $(this).parent().find('input').attr('value');
-		alert(username);
+		var json = $(this).parent().find('input').attr('value');
+		var notification = JSON.parse(json);;
 		var div = $(this).parent();
-		console.log(div);
 		div.empty();
 		$.ajax({
 			url : "acceptRequest",
-			data:{username:username},
+			data:{
+				username: notification.userName
+			},
 			success : function(result) {
 				if (result == "OK") {
 					div.empty();
-					div.append("accetto");
+					if(notification.alreadyFollowing)
+						div.append("<button class='unfollowProfile_btn'>Unfollow</button>");					
+					else
+						div.append("<button class='followProfile_btn'>Follow</button>");
+					div.append("<input class='" + notification.isPrivate +"' type='hidden' name='user' value='" + json +"'>");
+				} else {
+					showResultMessage("FAILED");
+				}
+			}
+		});
+	});
+	
+	$(document).on('click', '.deleteRequestfollowProfile_btn', function(e) {
+		var json = $(this).parent().find('input').attr('value');
+		var notification = JSON.parse(json);
+		var div = $(this).parent();
+		div.empty();
+		$.ajax({
+			url : "deleteRequest",
+			data:{
+				username:notification.userName
+			},
+			success : function(result) {
+				if (result == "OK") {
+					div.empty();
+					div.append("<button class='followProfile_btn'>follow</button>");
+					div.append("<input class='" + notification.isPrivate +"' type='hidden' name='user' value='" + json +"'>");
 				}
 				else {
 					showResultMessage("FAILED");
 				}
 			}
 		});
+		deleteNotification(notification, div.parent());
+		
 	});
 	
 	$(document).mouseup(function(e) {
@@ -177,6 +213,23 @@ $(document).ready(function(){
 			arrow.addClass("hide");
 	    }
 	});
+	
+	function deleteNotification(notification, div){
+		$.ajax({
+			url : "deleteNotification",
+			data:{
+				id:notification.idNotification
+			},
+			success : function(result) {
+				if (result == "OK") {
+					div.empty();
+				}
+				else {
+					showResultMessage("FAILED");
+				}
+			}
+		});
+	}
 	
 });
 

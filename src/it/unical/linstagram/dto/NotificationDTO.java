@@ -9,26 +9,32 @@ import it.unical.linstagram.model.NotificationType;
 
 public class NotificationDTO {
 
+	private int idNotification;
 	private String userPhoto;
 	private String userName;
 	private String context;
 	private String urlPost;
 	private int idPost;
 	private String date;
-	private boolean isPrivate;
+	private boolean isPrivateFrom;
+	private boolean isPrivateTo;
 	private boolean alreadyFollowing;
 	private boolean alreadyFollowed;
-	private boolean isRequest;
+	private boolean isRequestFrom;
+	private boolean isRequestTo;
 
 	public NotificationDTO(Notification notification, boolean alreadyFollowing, boolean alreadyFollowed,
-			boolean isRequest) {
+			boolean isRequestTo, boolean isRequestFrom) {
+		this.idNotification = notification.getId();
 		this.userPhoto = notification.getUserFrom().getPhotoProfile();
 		this.userName = notification.getUserFrom().getUsername();
 		this.date = calculateElapsedTime(notification.getDate());
 		this.alreadyFollowing = alreadyFollowing;
 		this.alreadyFollowed = alreadyFollowed;
-		this.isRequest = isRequest;
-		this.isPrivate = notification.getUserTo().isPrivateProfile();
+		this.isRequestTo = isRequestTo;
+		this.isRequestFrom = isRequestFrom;
+		this.isPrivateTo = notification.getUserTo().isPrivateProfile();
+		this.isPrivateFrom = notification.getUserFrom().isPrivateProfile();
 		if (notification.getType().equals(NotificationType.COMMENT)) {
 			this.context = String.format("commented your post: %s", notification.getComment().getContent());
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
@@ -78,6 +84,14 @@ public class NotificationDTO {
 		return "";
 	}
 
+	public int getIdNotification() {
+		return idNotification;
+	}
+
+	public void setIdNotification(int idNotification) {
+		this.idNotification = idNotification;
+	}
+
 	public String getUserPhoto() {
 		return userPhoto;
 	}
@@ -118,12 +132,20 @@ public class NotificationDTO {
 		this.date = data;
 	}
 
-	public boolean isPrivate() {
-		return isPrivate;
+	public boolean isPrivateFrom() {
+		return isPrivateFrom;
 	}
 
-	public void setPrivate(boolean isPrivate) {
-		this.isPrivate = isPrivate;
+	public void setPrivateFrom(boolean isPrivateFrom) {
+		this.isPrivateFrom = isPrivateFrom;
+	}
+
+	public boolean isPrivateTo() {
+		return isPrivateTo;
+	}
+
+	public void setPrivateTo(boolean isPrivateTo) {
+		this.isPrivateTo = isPrivateTo;
 	}
 
 	public boolean isAlreadyFollowing() {
@@ -142,12 +164,20 @@ public class NotificationDTO {
 		this.alreadyFollowed = alreadyFollowed;
 	}
 
-	public boolean isRequest() {
-		return isRequest;
+	public boolean isRequestFrom() {
+		return isRequestFrom;
 	}
 
-	public void setRequest(boolean isRequest) {
-		this.isRequest = isRequest;
+	public void setRequestFrom(boolean isRequestFrom) {
+		this.isRequestFrom = isRequestFrom;
+	}
+
+	public boolean isRequestTo() {
+		return isRequestTo;
+	}
+
+	public void setRequestTo(boolean isRequestTo) {
+		this.isRequestTo = isRequestTo;
 	}
 
 	public int getIdPost() {
@@ -157,7 +187,5 @@ public class NotificationDTO {
 	public void setIdPost(int idPost) {
 		this.idPost = idPost;
 	}
-	
-	
 
 }

@@ -52,7 +52,7 @@ public class PostController {
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		}
 		
-		return new MessageResponse(MessageCode.FAILED, user, "Non e' stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	@RequestMapping("removeLike")
@@ -62,7 +62,7 @@ public class PostController {
 		if (postService.removeLike(user.getUsername(), idPost))
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
-		return new MessageResponse(MessageCode.FAILED, user, "Non e' stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	@RequestMapping("addBookmark")
@@ -74,7 +74,7 @@ public class PostController {
 			session.setAttribute("user", userDB);
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		}
-		return new MessageResponse(MessageCode.FAILED, user, "Non e' stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	@RequestMapping("removeBookmark")
@@ -86,7 +86,7 @@ public class PostController {
 			session.setAttribute("user", userDB);
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		}
-		return new MessageResponse(MessageCode.FAILED, user, "Non e' stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	
@@ -98,7 +98,7 @@ public class PostController {
 			if (postService.insertComment(idPost, user.getUsername() ,comment, Calendar.getInstance()))
 				return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
-		return new MessageResponse(MessageCode.FAILED, user, "Non e' stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	

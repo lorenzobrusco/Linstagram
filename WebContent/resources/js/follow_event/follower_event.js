@@ -171,7 +171,9 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : "followUser",
-			data:{username:username},
+			data:{
+				username:username
+				},
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();

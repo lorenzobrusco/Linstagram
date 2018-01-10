@@ -431,6 +431,17 @@ header {
   border-radius: 4px;
 }
 
+#notification_list .notification_item .follow_btn_notification .deleteRequestfollowProfile_btn,
+#notification_list_mobile .notification_item .follow_btn_notification .deleteRequestfollowProfile_btn{
+	border: 1px solid #cccccc;
+  margin-left: 10px;
+  background-color: transparent;
+  color: inherit;
+  transition: all .5s;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
 #notification_list .hr_notification,
 #notification_list_mobile .hr_notification {
   margin: 12px 12px 12px 32px !important;
