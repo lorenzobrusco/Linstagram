@@ -48,6 +48,8 @@ $(document).ready(function () {
 	$("#cng-order").click(function(){
 		$("#posts").empty();
 		$("#loading").removeClass("hide");
+		var floating_btn = $("#container-floating");
+		floating_btn.addClass("hide");
 		
 		var nTypeReq="";
 		var text="";
@@ -55,12 +57,12 @@ $(document).ready(function () {
 		typeReq= $(this).attr("data-type");
 		if($(this).attr("data-type")== "popular"){
 			nTypeReq = "latest";
-			text="Latest posts"
+			text="Latest"
 		
 		}else if($(this).attr("data-type")== "latest"){
 			
 			nTypeReq = "popular";
-			text="Popular posts"
+			text="Popular"
 		}
 		
 
@@ -68,6 +70,7 @@ $(document).ready(function () {
 			url:"getPosts", 
 			data:{time:currentTime.getTime(),type:typeReq,lastIndex:0},
 			success: function(result) {
+				floating_btn.removeClass("hide");
 				
 				var html = $.parseHTML(result)
 				if(html.length != 1){
@@ -107,11 +110,11 @@ $(document).ready(function () {
 							if(html.length != 1){
 								$("#posts").append(html);
 								//allow to send comment with Enter button
-								$(".comment-section").on("keypress", function(e) {
-									if ( e.which == 13 ) { //enter press
-										$(this).find("button").click();
-									}
-								});
+//								$(".comment-section").on("keypress", function(e) {
+//									if ( e.which == 13 ) { //enter press
+//										$(this).find("button").click();
+//									}
+//								});
 							}
 							$("#loading").addClass("hide");
 							entered=false;

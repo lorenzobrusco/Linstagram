@@ -63,6 +63,7 @@ public class ResearchTest extends AbstractModelTest {
 		modelDAO.save(new Hashtag("COMEVA"));
 		modelDAO.save(new Hashtag("tag"));
 		modelDAO.save(new Hashtag("CIA"));
+//		modelDAO.save(new Hashtag("CIO"));
 		
 		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
 //		List<Hashtag> hashtags = hibernateTestSession.createQuery("FROM Hashtag").list();
@@ -78,7 +79,7 @@ public class ResearchTest extends AbstractModelTest {
 		}
 
 		hibernateTestSession.close();
-		Assert.assertEquals(4, suggestions.size());
+		Assert.assertEquals(3, suggestions.size());
 	}
 	
 	@Test

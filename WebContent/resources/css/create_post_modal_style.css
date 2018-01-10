@@ -33,6 +33,19 @@
   box-shadow: 4px 4px 10px 0px #7777778f;
 }
 
+
+@media (max-width: 800px) {
+	#modal-card {
+  	margin: 15% 10%;
+  	background: #fafafa;
+  	border: 1px solid lightgray;
+  	border-radius: 3px;
+  	box-shadow: 4px 4px 10px 0px #7777778f;
+		width: 80%;
+  	height: 50%;
+	}
+}
+
 #post-dropzone,
 #story-dropzone {
   text-align: center;
@@ -76,7 +89,7 @@
 .btn-submit {
   margin: 15px 0px;
   width: 100%;
-  background-color: #e8b71d;
+  background-color: #3897f0;
   color: white;
 }
 
@@ -140,10 +153,9 @@
 #loader {
   margin-right: auto;
   margin-left: auto;
-  border: 16px solid #f3f3f3;
   /* Light grey */
-  border-top: 16px solid #e8b71d;
-  /* Orange */
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3897f0;
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -154,3 +166,5 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+

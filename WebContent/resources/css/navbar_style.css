@@ -182,11 +182,10 @@ header {
   animation: rainbow 9s ease infinite;
 }
 
-@ keyframes rainbow {
+@keyframes rainbow {
   0% {
     background-position: 0% 100%;
   }
-
   50% {
     background-position: 100% 200%;
   }
@@ -195,22 +194,8 @@ header {
   }
 }
 
-@media ( max-width: 800px) {
-  #navbar {
-    display: none;
-  }
-  #navbar-mobile {
-    display: flex;
-  }
-  header {
-    margin-bottom: 0px;
-  }
-  .navbar {
-    margin-bottom: 0px !important;
-  }
-}
-}
 @media ( max-width : 800px) {
+	
 	#navbar {
 		display: none;
 	}
@@ -368,7 +353,7 @@ header {
 
 #notification_list_mobile .notification_item .user_from_notification {
   display: inline;
-  margin: 0 7px 0 10px;
+  margin: 0 10px;
   float: left;
 }
 
@@ -381,7 +366,7 @@ header {
 #notification_list_mobile .notification_item .context_notification {
   display: inline;
   position: relative;
-  margin-left: 7px;
+  margin-left: 10px;
   line-height: 3.5;
 }
 
@@ -450,6 +435,13 @@ header {
 #notification_list_mobile .hr_notification {
   margin: 12px 12px 12px 32px !important;
 }
+
+#notification_list_mobile .notification_item .follow_btn_notification {
+    text-align: center !important;
+    display: block !important;
+    float: none !important;
+}
+ 
 
 #notification .arrow {
   display: inline;

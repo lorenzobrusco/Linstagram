@@ -11,16 +11,20 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.apache.lucene.analysis.core.KeywordTokenizerFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.core.StopFilterFactory;
-import org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory;
 import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
-import org.apache.lucene.analysis.pattern.PatternReplaceFilterFactory;
 import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 
 
@@ -29,62 +33,19 @@ import org.hibernate.search.annotations.*;
 @Indexed
 @Table(name="hashtag")
 
-@AnalyzerDefs({
 
-	@AnalyzerDef(name = "autocompleteEdgeAnalyzer",
-
-			// Split input into tokens according to tokenizer
-			tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
-
-			filters = {
-					// Normalize token text to lowercase, as the user is unlikely to
-					// care about casing when searching for matches
-					@TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
-							@Parameter(name = "pattern",value = "([^a-zA-Z0-9\\.])"),
-							@Parameter(name = "replacement", value = " "),
-							@Parameter(name = "replace", value = "all") }),
-					@TokenFilterDef(factory = LowerCaseFilterFactory.class),
-					@TokenFilterDef(factory = StopFilterFactory.class),
-					// Index partial words starting at the front, so we can provide
-					// Autocomplete functionality
-					@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
-							@Parameter(name = "minGramSize", value = "3"),
-							@Parameter(name = "maxGramSize", value = "50") }) }),
-	@AnalyzerDef(name = "standardAnalyzer",
-
-	//Split input into tokens according to tokenizer
-	tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
-
-	filters = {
-			// Normalize token text to lowercase, as the user is unlikely to
-			// care about casing when searching for matches
-			@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
-			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
-			@TokenFilterDef(factory = PatternReplaceFilterFactory.class, params = {
-					@Parameter(name = "pattern", value = "([^a-zA-Z0-9\\.])"),
-					@Parameter(name = "replacement", value = " "),
-					@Parameter(name = "replace", value = "all") }),
-			
-	}), // Def
-	@AnalyzerDef(name = "autocompleteAnalyzer",
-
-	// Split input into tokens according to tokenizer
-	tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
-
-	filters = {
-			// Normalize token text to lowercase, as the user is unlikely to
-			// care about casing when searching for matches
-			@TokenFilterDef(factory = WordDelimiterFilterFactory.class),
-			@TokenFilterDef(factory = LowerCaseFilterFactory.class),
-			@TokenFilterDef(factory = StopFilterFactory.class),
-			// Index partial words starting at the front, so we can provide
-			// Autocomplete functionality
-			@TokenFilterDef(factory = EdgeNGramFilterFactory.class, params = {
-					@Parameter(name = "minGramSize", value = "1"),
-					@Parameter(name = "maxGramSize", value = "50") }) })
+@AnalyzerDef(name = "edgeNgram",
+tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+filters = {
+        @TokenFilterDef(factory = LowerCaseFilterFactory.class), // Lowercase all characters
+        @TokenFilterDef(
+                factory = EdgeNGramFilterFactory.class, // Generate prefix tokens
+                params = {
+                        @Parameter(name = "minGramSize", value = "1"),
+                        @Parameter(name = "maxGramSize", value = "10")
+                }
+        )
 })
-
-
 
 public class Hashtag {
 
@@ -94,17 +55,9 @@ public class Hashtag {
 	private int id;
 
 	@Column(name = "hashtag", unique = true, nullable = false)
-//	@Fields({
-//		  @Field(name = "hashtag", index = Index.YES, store = Store.YES,
-//		analyze = Analyze.YES, analyzer = @Analyzer(definition = "standardAnalyzer")),
-//		  @Field(name = "edgeNGramHashtag", index = Index.YES, store = Store.NO,
-//		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzer")),
-//		})
-	
+
 	@Fields({
 		  @Field(name = "hashtag", index = Index.YES, store = Store.YES),
-		  @Field(name = "edgeNGramHashtag", index = Index.YES, store = Store.NO,
-		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
 		})
 	private String hashtag;
 

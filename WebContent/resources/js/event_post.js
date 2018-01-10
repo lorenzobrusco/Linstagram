@@ -2,36 +2,38 @@
 
 //CALCOLO DEL TEMPO PASSATO DAL CARICAMENTO DEL POST
 //function getElapsedTime(postedTime){
-//	var now = (new Date()).getTime();
-//	var diff=now-postedTime;
-//	var second = diff/1000;
-//	var min = second/60;
-//	var round=Math.round(min);
-//	if(	round<=60)
-//		return round+" MIN AGO";
-//	else if(round > 60 && round < 24*60){
-//		round = round/60;
-//		round = Math.round(round);
-//		return round+" HOURS AGO";
-//	}
-//	else{
-//		round = round/60;
-//		round = round/24;
-//		round = Math.round(round);
-//		return round+" DAYS AGO";
-//	}	
+//var now = (new Date()).getTime();
+//var diff=now-postedTime;
+//var second = diff/1000;
+//var min = second/60;
+//var round=Math.round(min);
+//if(	round<=60)
+//return round+" MIN AGO";
+//else if(round > 60 && round < 24*60){
+//round = round/60;
+//round = Math.round(round);
+//return round+" HOURS AGO";
+//}
+//else{
+//round = round/60;
+//round = round/24;
+//round = Math.round(round);
+//return round+" DAYS AGO";
+//}	
 //};
 
 $(document).ready(function() {
 	//EVENTO "INSERIMENTO LIKE"
-	$(document).on('click', '.love', function() {
+	$(document).on('click', 'a.love', function() {
 		var postID = $(this).attr('name');
 		var count_like = $("#count_like"+postID)
 		var love_id = $("#love_div"+postID)
-
+		
 		$.ajax({
 			url : "addLike",
-			data:{postID:postID},
+			data:{
+				postID:postID
+			},
 			success : function(result) {
 				if(result == "OK") {
 					$(count_like).html(parseInt($(count_like).html(), 10)+1)
@@ -44,7 +46,7 @@ $(document).ready(function() {
 	});
 
 	//EVENTO "RIMOZIONE LIKE"
-	$(document).on('click', '.loveFull', function() {
+	$(document).on('click', 'a.loveFull', function() {
 		var postID = $(this).attr('name');
 		var count_like = $("#count_like"+postID)
 		var love_id = $("#love_div"+postID)
@@ -99,8 +101,8 @@ $(document).ready(function() {
 		});
 	});
 
-	
-	
+
+
 	//EVENTO "INSERIMENTO COMMENTO"
 	$(document).on('click', '.submit_comment', function() {
 		var postID = $(this).attr('id');
@@ -122,7 +124,7 @@ $(document).ready(function() {
 		});
 
 	});
-	
+
 	//EVENTO PER APRIRE IL POPUP DEI LIKE E VEDERE GLI UTENTI CHE HANNO MESSO LIKE AD UN POST
 	$(document).on('click', '#likes', function() {
 		var post = $(this).attr("name");
@@ -181,9 +183,12 @@ $(document).ready(function() {
 
 	});
 
+	$(document).on("keypress", ".comment-section",function(e) {
+		if ( e.which == 13 ) { //enter press
+			$(this).find("button").click();
+		}
+	});
 });
-
-
 function getPostsByHashtags(h) {
 
 	//TODO
@@ -204,39 +209,39 @@ function getPostsByHashtags(h) {
 }
 
 //function getContentPost(content, tags, hashtags) {
-//
-//	if (tags.length !=0)
-//	{
-//		tags= tags.sort(function(a,b){return a.username.length<b.username.length});
-//		console.log (tags);
-//		for (i = 0; i < tags.length; i++)
-//		{
-//			var startingIndex = content.indexOf(tags[i]["username"]);
-//			if (startingIndex >=1 && content[startingIndex-1] == "@")
-//			{
-//				content = content.replace("@"+tags[i]["username"], "<a href='userPage?usernameOther="+tags[i]["username"]+"'>"+"@"+tags[i]["username"]+"</a>");
-//
-//			}
-//		}
-//
-//	}
-//	if (hashtags.length !=0)
-//	{
-//		hashtags= hashtags.sort(function(a,b){return a.hashtag.length < b.hashtag.length});
-//		console.log (hashtags);
-//
-//		for (i = 0; i < hashtags.length; i++)
-//		{
-//			var startingIndex = content.indexOf(hashtags[i]["hashtag"]);
-//			if (startingIndex >=1 && content[startingIndex-1] == "#")
-//			{
-//				content = content.replace("#"+hashtags[i]["hashtag"], "<a href='javascript:getPostsByHashtags(\""+hashtags[i]["hashtag"]+"\")'>"+"#"+hashtags[i]["hashtag"]+"</a>");
-//
-//			}
-//		}
-//	}
-//
-//	console.log("content "+ content);
-//	return content;
-//
+
+//if (tags.length !=0)
+//{
+//tags= tags.sort(function(a,b){return a.username.length<b.username.length});
+//console.log (tags);
+//for (i = 0; i < tags.length; i++)
+//{
+//var startingIndex = content.indexOf(tags[i]["username"]);
+//if (startingIndex >=1 && content[startingIndex-1] == "@")
+//{
+//content = content.replace("@"+tags[i]["username"], "<a href='userPage?usernameOther="+tags[i]["username"]+"'>"+"@"+tags[i]["username"]+"</a>");
+
+//}
+//}
+
+//}
+//if (hashtags.length !=0)
+//{
+//hashtags= hashtags.sort(function(a,b){return a.hashtag.length < b.hashtag.length});
+//console.log (hashtags);
+
+//for (i = 0; i < hashtags.length; i++)
+//{
+//var startingIndex = content.indexOf(hashtags[i]["hashtag"]);
+//if (startingIndex >=1 && content[startingIndex-1] == "#")
+//{
+//content = content.replace("#"+hashtags[i]["hashtag"], "<a href='javascript:getPostsByHashtags(\""+hashtags[i]["hashtag"]+"\")'>"+"#"+hashtags[i]["hashtag"]+"</a>");
+
+//}
+//}
+//}
+
+//console.log("content "+ content);
+//return content;
+
 //};

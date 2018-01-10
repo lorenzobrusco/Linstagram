@@ -35,7 +35,6 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
-	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
@@ -70,9 +69,9 @@
 				</a>
 			</div>
 
-			<div id="cng-order" class="nd3 nds transparent" data-toggle="tooltip"
-				data-placement="left" data-original-title="Popular posts" data-type="popular">
-				<a><i class="fa fa-exchange black-icon"
+			<div id="cng-order" class="nd3 nds" data-toggle="tooltip"
+				data-placement="left" data-original-title="Popular" data-type="popular">
+				<a><i class="fa fa-exchange center-icon"
 					aria-hidden="true"></i></a>
 			</div>
 			
@@ -94,6 +93,7 @@
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
 	<script src="${pageContext.request.contextPath}/resources/js/event_post.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
 	
 </body>
 
