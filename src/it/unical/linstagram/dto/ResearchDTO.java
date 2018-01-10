@@ -8,6 +8,7 @@ public class ResearchDTO {
 	private String title;
 	private String subtitle;
 	private String iconUrl;
+	private String type;
 	
 	public ResearchDTO(User user) {
 		this.title = user.getUsername();
@@ -25,6 +26,7 @@ public class ResearchDTO {
 		this.subtitle = subtitle;
 		
 		this.iconUrl = user.getPhotoProfile();
+		this.setType("user");
 		
 	}
 	
@@ -32,9 +34,8 @@ public class ResearchDTO {
 	public ResearchDTO(Hashtag hashtag) {
 		this.title = "#"+ hashtag.getHashtag();
 		this.subtitle = hashtag.getCount()+ " posts";
-		
-		//TODO
-		this.iconUrl = "undefined";
+		this.iconUrl = "resources/images/Hashtag.png";
+		this.setType("hashtag");
 	}
 	
 	public String getTitle() {
@@ -55,6 +56,10 @@ public class ResearchDTO {
 	public void setIconUrl(String iconUrl) {
 		this.iconUrl = iconUrl;
 	}
-	
-	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 }

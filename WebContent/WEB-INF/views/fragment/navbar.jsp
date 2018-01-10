@@ -13,13 +13,14 @@
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
 	type="image/x-icon">
 <script src="${pageContext.request.contextPath}/resources/js/navbar.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/search_event.js"></script>
 
 <header>
 	<div id="rainbow-progress-bar"></div>
 	<div id="navbar-mobile">
 		<span id="logo-container"><a href="index" id="logo"></a></span>
 		<div class="search-bar">
-			<input type="text" class="form-control transparent" placeholder="Search" id="search-input">
+			<input type="text" class="form-control transparent search-input" placeholder="Search">
 		</div>
 		<div class="bottom-nav-menu">
 			<ul id="horizontal-list">
@@ -39,7 +40,7 @@
 		</a>
 		</span> <span id="search-form" class="form-inline">
 			<div class="input-group" id="search-div">
-				<input type="text" class="form-control transparent" placeholder="Search" id="search-input-desktop">
+				<input type="text" class="form-control transparent search-input" placeholder="Search">
 			</div>
 		</span> 
 		<span class="nav-right"> 
@@ -54,6 +55,7 @@
 
 <div id="notification_list" class="hide"></div>
 <div id="notification_list_mobile" class="hide"></div>
+<div id="hint-list" class="hide"></div>
 
 <script
 	src="${pageContext.request.contextPath}/resources/js/notification.js"></script>
@@ -118,46 +120,6 @@
 							$("#search-div").css("width", "50%");
 						});*/
 
-						//TODO search on mobile	
-						
-						
-						$('#search-input-desktop').keyup(function() {
-							var text = $("#search-input-desktop").val();
-							console.log(text);
-
-							$.ajax({
-								url : "research",
-								type : "POST",
-								data : {
-									text : text
-								},
-								success : function(result) {
-									console.log(result);
-									var hint= {
-											data: [],
-											getValue: "name",
-											template: {
-												type: "iconLeft",
-												fields: {
-													iconSrc: "icon"
-												}
-											}
-										};
-									$.each(result,function( key, value ){
-										//console.log(key);
-										var title = value.title;
-										var subtitle = value.subtitle;
-										var iconUrl = value.iconUrl;
-										var item_body="<b>"+title+"<b><br>"+ subtitle;
-										//console.log("<b>"+title+"<b><br>"+ subtitle+"-"+ iconUrl);
-										hint.data.push("{name: "+item_body+", icon:"+ iconUrl +"}");
-									});
-									console.log(hint);
-
-								}
-							});
-
-						});
 
 					});
 	
