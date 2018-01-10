@@ -75,7 +75,7 @@
 							</b></a>
 						</div>
 						<div class='caption-section'>
-							<a href='userPage?usernameOther=${post.user.username}'>${post.user.username }</a>
+							<a href='userPage?username=${post.user.username}'>${post.user.username }</a>
 							<span>${post.content}</span>
 						</div>
 

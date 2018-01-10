@@ -20,15 +20,22 @@ $(document).ready(function() {
 	
 //EVENTI DEI TASTI DEL POPUP DEL FOLLOWER/FOLLOWING
 	
-	//EVENTO DEL TASTO "FOLLOW" [PER SEGUIRE UN UTENTE CON IL PROFILO PUBBLICO]
+	//EVENTO DEL TASTO "FOLLOW" [PER SEGUIRE UN UTENTE CON IL PROFILO PUBBLICO/PRIVATE]
 	$(document).on('click', '#follower-btn', function() {
 		var id = $(this).attr('name');
 		var username = $(this).attr('value');
+		var privateProfile = $('#private'+id).val();
 		
 		var btn = "#fol-div"+id+" div";
 
 		$(btn).empty();
-		$(btn).append("<button id='unfollower-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
+//		$(btn).append("<button id='unfollower-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
+		
+		if (privateProfile == "false")
+			$(btn).append("<button value="+username+" name='"+id+"' id='unfollower-btn'>Unfollow</button>");
+		else 
+			$(btn).append("<button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Delete Request</button>");
+		
 		$.ajax({
 			url : "followUser",
 			data:{username:username},
@@ -55,10 +62,7 @@ $(document).ready(function() {
 		var btn = "#fol-div"+id+" div";
 		
 		$(btn).empty();
-		if (privateProfile == "false")
-			$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
-		else
-			$(btn).append("<button value="+username+" name='"+id+"' id='sendRequestPopup-btn'>Follow</button>")
+		$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
 		
 		$.ajax({
 			url : "unfollowUser",
@@ -96,7 +100,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	//EVENTO DEL TASTO "SEND_REQUEST" NEL POPUP DEI FOLLOWER/FOLLOWING
+	//EVENTO DEL TASTO "CANCEL_REQUEST" NEL POPUP DEI FOLLOWER/FOLLOWING
 	$(document).on('click', '#cancelRequestPopup-btn', function() {
 		var username = $(this).attr('value');var id = $(this).attr('name');
 		var username = $(this).attr('value');
@@ -122,15 +126,21 @@ $(document).ready(function() {
 	//EVENTO DEL BOTTONE "FOLLOW"
 	$(document).on('click', '#followProfile-btn', function() {
 		var username = $('#username_hidden').val();
-		var popupFail = document.getElementById("popupFAIL");
+		var id = $(this).attr('name');
 		
+		var privateProfile = $('#private'+id).val();
 		$.ajax({
 			url : "followUser",
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();
-					$("#follow_ul").append("<li><button id='unfollowProfile-btn'>Unfollow</button></li>");
+					
+					if (privateProfile == "false")
+						$("#follow_ul").append("<li><button value="+username+" name='"+id+"' id='unfollowProfile-btn'>Unfollow</button></li>");
+					else 
+						$("#follow_ul").append("<li><button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Delete Request</button></li>");
+					
 					$("#count_follower").html(parseInt($("#count_follower").html(), 10)+1)
 				}
 			}
@@ -141,10 +151,8 @@ $(document).ready(function() {
 	$(document).on('click', '#unfollowProfile-btn', function() {
 		var username = $('#username_hidden').val();
 		var id = $(this).attr('name');
-//		var popupFail = document.getElementById("popupFAIL");
 		
 		var privateProfile = $('#private'+id).val();
-
 		$.ajax({
 			url : "unfollowUser",
 			data:{username:username},
@@ -164,24 +172,6 @@ $(document).ready(function() {
 		});
 	});
 	
-	//EVENTO DEL TASTO "SEND_REQUEST" NEL PROFILO UTENTE [PER INVIARE LA RICHIESTA DI FOLLOW AD UN UTENTE PRIVATO]
-	$(document).on('click', '#sendRequest-btn', function() {
-		var id = $(this).attr('name');
-		var username = $(this).attr('value');
-
-		$.ajax({
-			url : "followUser",
-			data:{
-				username:username
-				},
-			success : function(result) {
-				if (result == "OK") {
-					$("#follow_ul").empty();
-					$("#follow_ul").append("<button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Delete Request</button>");
-				}
-			}
-		});
-	});
 	
 	//EVENTO DEL TASTO "CANCEL_REQUEST" NEL PROFILO UTENTE [PER CANCELLARE LA RICHIESTA DI FOLLOW FATTA AD UN UTENTE PRIVATO]
 	$(document).on('click', '#cancelRequest-btn', function() {

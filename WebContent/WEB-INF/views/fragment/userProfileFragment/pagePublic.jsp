@@ -50,20 +50,20 @@
 	<div class="row item-user-info">
 		<ul id="follow_ul">
 			<c:choose>
-				<c:when test="${userPublic.request_send == true }">
+				<%-- <c:when test="${userPublic.request_send == true }">
 					<li><button value="${userPublic.username }" id="acceptRequest-btn" class="btn btn-info">Accept</button></li>
 					<li><button value="${userPublic.username }" id="rejectRequest-btn" class="btn btn-secondary">Reject</button></li>
 				</c:when>
 				<c:otherwise>
-					<c:choose>
-						<c:when test="${userPublic.followed == false }">
-							<li><button id="followProfile-btn">Follow</button></li>
-						</c:when>
-						<c:otherwise>
-							<li><button name="${userPublic.id }" value="${userPublic.username }" id="unfollowProfile-btn">Unfollow</button></li>
-						</c:otherwise>
-					</c:choose>
+					<c:choose> --%>
+				<c:when test="${userPublic.followed == false }">
+					<li><button name="${userPublic.id }" value="${userPublic.username }" id="followProfile-btn">Follow</button></li>
+				</c:when>
+				<c:otherwise>
+					<li><button name="${userPublic.id }" value="${userPublic.username }" id="unfollowProfile-btn">Unfollow</button></li>
 				</c:otherwise>
+<%-- 					</c:choose>
+				</c:otherwise> --%>
 			</c:choose>
 		</ul>
 	</div>
