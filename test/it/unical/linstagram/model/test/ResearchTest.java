@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import it.unical.linstagram.helper.Indexer;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HashtagDAO;
@@ -36,12 +37,16 @@ public class ResearchTest extends AbstractModelTest {
 		userDAO = new UserDAO();
 	}
 	
-
-	
+	@Before
+	public void before ()
+	{
+		Indexer.init();
+	}
+		
 	@Test
 	public void researchHashtagStandard() {
 		
-		HibernateUtil.init();
+//		HibernateUtil.init();
 		modelDAO.save(new Hashtag("ciao".toLowerCase()));
 		modelDAO.save(new Hashtag("ciaoCOMEVA".toLowerCase()));
 		modelDAO.save(new Hashtag("COMEVA".toLowerCase()));
@@ -57,14 +62,14 @@ public class ResearchTest extends AbstractModelTest {
 	@Test
 	public void researchHashtagAutocomplete() {
 		
-		HibernateUtil.init();
 		modelDAO.save(new Hashtag("ciao"));
 		modelDAO.save(new Hashtag("ciaoCOMEVA"));
 		modelDAO.save(new Hashtag("COMEVA"));
 		modelDAO.save(new Hashtag("tag"));
 		modelDAO.save(new Hashtag("CIA"));
+//		modelDAO.save(new Hashtag("CIO"));
 		
-		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
+		Session hibernateTestSession = HibernateUtil.getSession();
 //		List<Hashtag> hashtags = hibernateTestSession.createQuery("FROM Hashtag").list();
 //
 //		for (Hashtag h : hashtags) {
@@ -78,20 +83,20 @@ public class ResearchTest extends AbstractModelTest {
 		}
 
 		hibernateTestSession.close();
-		Assert.assertEquals(4, suggestions.size());
+		Assert.assertEquals(3, suggestions.size());
 	}
 	
 	@Test
 	public void researchUserAutocomplete() {
 		
-		HibernateUtil.init();
+//		HibernateUtil.init();
 		modelDAO.save(new User("Eliana","email","pass"));
 		modelDAO.save(new User("Elia","emaill","pass"));
 		modelDAO.save(new User("lana","email2","pass"));
 		modelDAO.save(new User("paola","email1","pass"));
 		
 
-		Session hibernateTestSession = HibernateUtil.getHibernateTestSession();
+		Session hibernateTestSession = HibernateUtil.getSession();
 //		List<User> users = hibernateTestSession.createQuery("FROM User").list();
 
 //		for (User u : users) {
@@ -117,7 +122,7 @@ public class ResearchTest extends AbstractModelTest {
 	@Test
 	public void researchUserAutocompleteName() {
 		
-		HibernateUtil.init();
+//		HibernateUtil.init();
 		
 		modelDAO.save(new User("Eliana","email","pass", "Eliana", "Cannella"));
 		modelDAO.save(new User("cicciociccio","emaill","pass", "","ell"));

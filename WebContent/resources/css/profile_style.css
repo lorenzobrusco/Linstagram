@@ -60,7 +60,7 @@ footer {
 
 .user-img img {
 	border: 0;
-	cursor: pointer;
+	cursor: default;
 	height: 100%;
 	padding: 0;
 	width: 100%;
@@ -404,8 +404,19 @@ footer {
 	cursor: pointer;
 }
 
+#logout-mobile-btn{
+		display:none;
+		color:white !important;
+}
+
 @media ( max-width : 800px) {
 	.user-img-container {
 		margin-bottom: 20px;
 	}
+	#logout-mobile-btn{
+		display:block;
+		position: relative;
+		bottom: 6px;
+	}
+	
 }

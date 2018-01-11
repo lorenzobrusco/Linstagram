@@ -5,7 +5,7 @@ $(document).ready(function() {
 			theme: 'nest',
 			type: 'success',
 			layout: 'bottomLeft',
-			timeout: 2000,
+			timeout: 1000,
 			progressBar: true
 	}
 
@@ -45,10 +45,14 @@ $(document).ready(function() {
 			progressBar: true
 	}
 	
+	function redirectToProfile(){
+		window.location.replace("profile");
+	}
+	
 	function showResultMessage(result){
 		if (result == "OK"){
-			new Noty(notysuccess).show();
-			setTimeout(location.reload.bind(location), notysuccess.timeout); //wait 2 second and then reload
+			new Noty(notysuccess).on('onClose',function() {
+				redirectToProfile()}).show();
 		}
 		else if (result == "USERNAME_FAILED") {
 			new Noty(usernameError).show();

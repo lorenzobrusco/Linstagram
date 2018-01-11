@@ -1,5 +1,4 @@
-// Events for handle follow/unfollow (public) request on user's page
-
+//EVENTI DEI BOTTONI DELLE RICHIESTE FOLLOW PRIVATE E PUBBLICHE
 
 $(document).ready(function() {
 	
@@ -19,15 +18,24 @@ $(document).ready(function() {
 	}
 	
 	
-	//EVENTO DEL TASTO "FOLLOW" [PER SEGUIRE UN UTENTE CON IL PROFILO PUBBLICO]
+//EVENTI DEI TASTI DEL POPUP DEL FOLLOWER/FOLLOWING
+	
+	//EVENTO DEL TASTO "FOLLOW" [PER SEGUIRE UN UTENTE CON IL PROFILO PUBBLICO/PRIVATE]
 	$(document).on('click', '#follower-btn', function() {
 		var id = $(this).attr('name');
 		var username = $(this).attr('value');
+		var privateProfile = $('#private'+id).val();
 		
 		var btn = "#fol-div"+id+" div";
 
 		$(btn).empty();
-		$(btn).append("<button id='unfollower-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
+//		$(btn).append("<button id='unfollower-btn' name='"+id+"' value='"+username+"'>Unfollow</button>");
+		
+		if (privateProfile == "false")
+			$(btn).append("<button value="+username+" name='"+id+"' id='unfollower-btn'>Unfollow</button>");
+		else 
+			$(btn).append("<button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Delete Request</button>");
+		
 		$.ajax({
 			url : "followUser",
 			data:{username:username},
@@ -54,10 +62,7 @@ $(document).ready(function() {
 		var btn = "#fol-div"+id+" div";
 		
 		$(btn).empty();
-		if (privateProfile == "false")
-			$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
-		else
-			$(btn).append("<button value="+username+" name='"+id+"' id='sendRequestPopup-btn'>Send Request</button>")
+		$(btn).append("<button id='follower-btn' name='"+id+"' value='"+username+"'>Follow</button>");
 		
 		$.ajax({
 			url : "unfollowUser",
@@ -84,18 +89,18 @@ $(document).ready(function() {
 		var btn = "#fol-div"+id+" div";
 
 		$.ajax({
-			url : "sendRequest",
+			url : "followUser",
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
 					$(btn).empty();
-					$(btn).append("<button value='"+username+"' name='"+id+"' id='cancelRequestPopup-btn'>Cancel Request</button>");
+					$(btn).append("<button value='"+username+"' name='"+id+"' id='cancelRequestPopup-btn'>Delete Request</button>");
 				}
 			}
 		});
 	});
 	
-	//EVENTO DEL TASTO "SEND_REQUEST" NEL POPUP DEI FOLLOWER/FOLLOWING
+	//EVENTO DEL TASTO "CANCEL_REQUEST" NEL POPUP DEI FOLLOWER/FOLLOWING
 	$(document).on('click', '#cancelRequestPopup-btn', function() {
 		var username = $(this).attr('value');var id = $(this).attr('name');
 		var username = $(this).attr('value');
@@ -108,31 +113,65 @@ $(document).ready(function() {
 			success : function(result) {
 				if (result == "OK") {
 					$(btn).empty();
-					$(btn).append("<button value='"+username+"' name='"+id+"' id='sendRequestPopup-btn'>Send Request</button>");
+					$(btn).append("<button value='"+username+"' name='"+id+"' id='sendRequestPopup-btn'>Follow</button>");
 				}
 			}
 		});
 	});
 	
 	
-	
-	
-	//EVENTO DEL TASTO "SEND_REQUEST" NEL PROFILO UTENTE [PER INVIARE LA RICHIESTA DI FOLLOW AD UN UTENTE PRIVATO]
-	$(document).on('click', '#sendRequest-btn', function() {
-		var id = $(this).attr('name');
-		var username = $(this).attr('value');
 
+//EVENTI BOTTONI DEL PROFILO UTENTE
+	
+	//EVENTO DEL BOTTONE "FOLLOW"
+	$(document).on('click', '#followProfile-btn', function() {
+		var username = $('#username_hidden').val();
+		var id = $(this).attr('name');
+		
+		var privateProfile = $('#private'+id).val();
 		$.ajax({
-			url : "sendRequest",
+			url : "followUser",
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
 					$("#follow_ul").empty();
-					$("#follow_ul").append("<button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Cancel Request</button>");
+					
+					if (privateProfile == "false")
+						$("#follow_ul").append("<li><button value="+username+" name='"+id+"' id='unfollowProfile-btn'>Unfollow</button></li>");
+					else 
+						$("#follow_ul").append("<li><button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Delete Request</button></li>");
+					
+					$("#count_follower").html(parseInt($("#count_follower").html(), 10)+1)
 				}
 			}
 		});
 	});
+	
+	//EVENTO DEL BOTTONE "UNFOLLOW"
+	$(document).on('click', '#unfollowProfile-btn', function() {
+		var username = $('#username_hidden').val();
+		var id = $(this).attr('name');
+		
+		var privateProfile = $('#private'+id).val();
+		$.ajax({
+			url : "unfollowUser",
+			data:{username:username},
+			success : function(result) {
+				if (result == "OK") {
+					$("#follow_ul").empty();
+					
+					if (privateProfile == "false")
+						$("#follow_ul").append("<li><button value="+username+" name='"+id+"' id='followProfile-btn'>Follow</button></li>");
+					else {
+						//$("#follow_ul").append("<li><button value="+username+" name='"+id+"' id='sendRequestPopup-btn'>Send Request</button></li>")
+						location.reload();
+					}
+					$("#count_follower").text(parseInt($("#count_follower").html(), 10) - 1);
+				}
+			}
+		});
+	});
+	
 	
 	//EVENTO DEL TASTO "CANCEL_REQUEST" NEL PROFILO UTENTE [PER CANCELLARE LA RICHIESTA DI FOLLOW FATTA AD UN UTENTE PRIVATO]
 	$(document).on('click', '#cancelRequest-btn', function() {
@@ -147,7 +186,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
 	
 	//EVENTO DEL TASTO "ACCEPT_REQUEST" [PER ACCETTARE LA RICHIESTA]
 	$(document).on('click', '#acceptRequest-btn', function() {
@@ -178,4 +216,6 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	
 });

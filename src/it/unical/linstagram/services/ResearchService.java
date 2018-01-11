@@ -1,5 +1,6 @@
 package it.unical.linstagram.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import it.unical.linstagram.dto.ResearchDTO;
 import it.unical.linstagram.dto.UserViewerDTO;
 import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.User;
@@ -26,7 +28,7 @@ public class ResearchService {
 	private HashtagDAO hashtagDAO;
 
 
-	public JsonArray generalQuery(String queryString)
+	public List<ResearchDTO> generalQuery(String queryString)
 	{
 		List<User> users = userDAO.getSuggestions(queryString);
 		users.addAll(userDAO.getSuggestionsName(queryString));
@@ -56,11 +58,21 @@ public class ResearchService {
 			maxUsers = uniqueValues.size();
 		}
 
-		JsonArray jsonArray = new JsonArray();
-		jsonArray.addAll(jsonForUser(uniqueValues, maxUsers));
-		jsonArray.addAll(jsonForHashtag(hashtags, maxHashtags));
-
-		return jsonArray;
+		List<ResearchDTO> researchDTOs = new ArrayList<>();
+		int count =0;
+		for (Iterator<User> iterator = uniqueValues.iterator(); iterator.hasNext() && count<maxUsers;count++)
+		{
+			researchDTOs.add(new ResearchDTO(iterator.next()));
+			
+		}
+		count =0;
+		for (Iterator<Hashtag> iterator = hashtags.iterator(); iterator.hasNext() && count<maxHashtags;count++) 
+		{
+			researchDTOs.add(new ResearchDTO(iterator.next()));
+		}
+		
+		return researchDTOs;
+	
 	}
 
 

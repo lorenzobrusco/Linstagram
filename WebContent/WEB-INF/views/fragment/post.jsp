@@ -10,9 +10,11 @@
 			<div class="col-md-8">
 				<div class='card'>
 					<div class='top-section'>
-						<a href=''> <img class="user-img"
-							src=${post.user.photoProfile }></a> <a
-							href='userPage?usernameOther=${post.user.username }'
+						<a href='userPage?username=${post.user.username }'> 
+						<img class="user-img"
+							src=${post.user.photoProfile }></a> 
+							<a
+							href='userPage?username=${post.user.username }'
 							class='user-name'>${post.user.username }</a>
 					</div>
 					<div class='body-section'>
@@ -29,40 +31,38 @@
 								<c:choose>
 									<c:when test="${fn:length(post.likes) == 0 }">
 										<a name="${post.id }" id="love${post.id }" class="love"><span
-											class='love'></span></a>
+											class='love'><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></span></a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${post.likeUser == true}">
 												<a name="${post.id }" id="loveFull${post.id }"
-													class="loveFull"><span class='loveFull'></span></a>
+													class="loveFull"><span class='loveFull'><i class="fa fa-heart fa-2x" aria-hidden="true"></i></span></a>
 											</c:when>
 											<c:otherwise>
-												<a name="${post.id }" id="love${post.id }" class="love"><span
-													class='love'></span></a>
+												<a name="${post.id }" id="love${post.id }" class="love">
+												<span class='love'><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></span></a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
 								</c:choose>
 							</div>
-							<div id="comment_div">
-								<a href='#' role='button'><span class='comment'></span></a>
-							</div>
 							<div id="bookmark_div${post.id }">
 								<c:choose>
 									<c:when test="${fn:length(user.bookmarks) == 0 }">
 										<a name="${post.id }" id="bookmark${post.id }"
-											class="bookmark"><span class='save'></span></a>
+											class="bookmark">
+											<span class='save'><i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i></span></a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${post.bookmarkUser }">
-												<a name="${post.id }" id="bookmark${post.id }"
-													class="bookmarkFull"><span class='saveFull'></span></a>
+												<a name="${post.id }" id="bookmark${post.id }" class="bookmarkFull">
+												<span class='save'> <i class="fa fa-bookmark fa-2x" aria-hidden="true"></i> </span></a>
 											</c:when>
 											<c:otherwise>
 												<a name="${post.id }" id="bookmark${post.id }"
-													class="bookmark"><span class='save'></span></a>
+													class="bookmark"><span class='save'> <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i> </span></a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -71,27 +71,27 @@
 						</div>
 						<div class="likes-section" style="cursor: pointer;">
 							<a id="likes" data-toggle="modal" data-target="#modalLike"
-								name="${post.id }"><b>Piace a <span
-									id="count_like${post.id }"> ${fn:length(post.likes)}</span>
-									persone
+								name="${post.id }"><b>Likes to  
+								<span id="count_like${post.id }"> ${fn:length(post.likes)}</span>
+									people
 							</b></a>
 						</div>
 						<div class='caption-section'>
-							<a href='userPage?usernameOther=${post.user.username}'>${post.user.username }</a>
+							<a href='userPage?username=${post.user.username}'>${post.user.username }</a>
 							<span>${post.content}</span>
 						</div>
 
 						<div class='list-comments-section'>
 							<a class="show-all-comments" href="#postcibo"
 								data-toggle="collapse"><span class="show-comments"></span>
-								Carica altri commenti<img class="hide" id="loader-comments"
+								Load other comments<img class="hide" id="loader-comments"
 								src="${pageContext.request.contextPath}/resources/images/loaderComm.gif"></a><br>
 							<div class='list-comments${post.id }'>
 								<c:forEach items="${post.comments}" var="comment"
 									varStatus="loop">
 									<c:if test="${loop.index <4}">
 										<div class="comment">
-											<a href='userPage?usernameOther=${comment.user.username}'><b>${comment.user.username}</b></a>
+											<a href='userPage?username=${comment.user.username}'><b>${comment.user.username}</b></a>
 											<span> ${comment.content}</span>
 										</div>
 									</c:if>
@@ -99,7 +99,7 @@
 							</div>
 							<a class="hide hide-all-comments" href="#postcibo"
 								data-toggle="collapse"><span class="hide-comments"></span>
-								Nascondi altri commenti</a><br>
+								Hide comments</a><br>
 						</div>
 
 						<div class='time-section'>

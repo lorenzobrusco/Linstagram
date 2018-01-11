@@ -43,20 +43,31 @@ public class PostService {
 		return postDAO.getPostById(idPost);
 	}
 	
-	public List<PostDTO> getPostsbyHashtag(User user, String hashtag)
+	public List<PostDTO> getPostsbyHashtag(User user, String hashtag, int last)
 	{
-		List<Post> posts = postDAO.getPostsByHashtag(hashtag);
+		List<Post> posts = postDAO.getPostsByHashtag(hashtag,null,last);
 		List<PostDTO> postsDTO = new ArrayList<>();
 		
 		for (Post post : posts) {	
-			System.out.println("creo il post "+post.getContent());
+//			System.out.println("creo il post "+post.getContent());
 			postsDTO.add(new PostDTO
 					(post, postDAO.doesTheUserLikeThePost(post.getId(), user), user.getBookmarks().contains(post)));		
 		}
 		
 		return postsDTO;
 	}
-	
+	public List<PostDTO> getPopularPosts(User user, Calendar date, int last){
+		
+		List<Post> posts = postDAO.getPopularPosts(user.getUsername(), date, last);
+		List<PostDTO> postsDTO = new ArrayList<>();
+		
+		for (Post post : posts) {	
+			postsDTO.add(new PostDTO
+					(post, postDAO.doesTheUserLikeThePost(post.getId(), user), user.getBookmarks().contains(post)));		
+		}
+		
+		return postsDTO;
+	}
 	public List<PostDTO> getLatestPost(User user, Calendar date,int last){
 		List<Post> posts = postDAO.getLastPosts(user.getUsername(), date, last);
 		
@@ -94,7 +105,7 @@ public class PostService {
 		User u = userDAO.getUserByUsername(username);
 		post.getLikes().remove(u);
 		
-		if(modelDao.update(post))
+		if(modelDao.merge(post))
 			return true;
 		return false;
 	}

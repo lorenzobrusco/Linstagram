@@ -32,7 +32,7 @@ public class PostDAO implements IPostDAO {
 	private static final int MAX_RESULTS_COMMENTS = 2;
 
 	public List<Post> getPosts() {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 
 		List<Post> posts = session.createQuery("FROM Post p LEFT OUTER join fetch p.hashtags h order by p.postDate desc").list();
 
@@ -41,7 +41,7 @@ public class PostDAO implements IPostDAO {
 	}
 
 	public Post getPostById(int idPost) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 
 		Post post = session.createQuery("FROM Post p WHERE p.id=:idPost", Post.class)
 				.setParameter("idPost", idPost).uniqueResult();
@@ -50,7 +50,7 @@ public class PostDAO implements IPostDAO {
 		return post;
 	}
 	public List<Post> getLastPosts(String username,Calendar calendar, int last){
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 
 		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
 				.setParameter("username", username).list();
@@ -63,16 +63,38 @@ public class PostDAO implements IPostDAO {
 			query = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.postDate desc")
 			.setParameter("username", username);
 
-		query.setFirstResult(last*MAX_RESULTS_POST);
+		query.setFirstResult(last);
 		query.setMaxResults(MAX_RESULTS_POST);
 		posts = query.list();
 		session.close();
 
 		return posts;
 	}
+	
+	public List<Post> getPopularPosts(String username, Calendar calendar, int last){
+		Session session = HibernateUtil.getSession();
+		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
+				.setParameter("username", username).list();
+		
+		List<Post> posts = new ArrayList<>();
+		Query query = null;
+		if(!followedUsers.isEmpty())
+			query = session.createQuery("SELECT p FROM Post p  WHERE p.user in (:fUsers) or p.user.username=:username order by p.likes.size desc, p.postDate desc")
+			.setParameter("fUsers",followedUsers).setParameter("username", username);
+		else
+			query = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.likes.size desc, p.postDate desc")
+			.setParameter("username", username);
+
+		query.setFirstResult(last);
+		query.setMaxResults(MAX_RESULTS_POST);
+		posts = query.list();
+		session.close();
+
+		return posts;	
+	}
 
 	public List<Post> getFollowedPosts(String username) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 
 		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
 				.setParameter("username", username).list();
@@ -90,7 +112,7 @@ public class PostDAO implements IPostDAO {
 
 	@Override
 	public List<User> getLikesByPostId(int idPost) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 
 		List<User> users = session.createQuery("SELECT post.likes FROM Post post WHERE post.id =:idPost")
 				.setParameter("idPost", idPost).list();
@@ -100,7 +122,7 @@ public class PostDAO implements IPostDAO {
 	}
 	
 	public boolean doesTheUserLikeThePost(int idPost, User user) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 
 		List<User> users = session.createQuery("SELECT post.likes FROM Post post WHERE post.id =:idPost")
 				.setParameter("idPost", idPost).list();
@@ -111,7 +133,7 @@ public class PostDAO implements IPostDAO {
 
 	@Override
 	public List<User> getUserTaggedByPostId(int idPost) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<User> users =session.createQuery("SELECT post.tags FROM Post post WHERE post.id =:idPost")
 				.setParameter("idPost", idPost).list();
 
@@ -121,7 +143,7 @@ public class PostDAO implements IPostDAO {
 
 	@Override
 	public List<Hashtag> getHashtagByPostId(int idPost) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<Hashtag> hashtags = session.createQuery("SELECT post.hashtags FROM Post post WHERE post.id=:idPost")
 				.setParameter("idPost", idPost).list();
 		session.close();
@@ -130,7 +152,7 @@ public class PostDAO implements IPostDAO {
 
 	@Override
 	public List<Comment> getCommentByPostId(int idPost) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		List<Comment> comments = session.createQuery("SELECT post.comments FROM Post post WHERE post.id=:idPost")
 				.setParameter("idPost", idPost).list();
 		session.close();
@@ -138,7 +160,7 @@ public class PostDAO implements IPostDAO {
 	}
 
 	public List<Comment> getCommentByPostId(int idPost, int index) {
-		Session session = HibernateUtil.getHibernateSession();
+		Session session = HibernateUtil.getSession();
 		Query query = session.createQuery("FROM Comment c WHERE c.post.id=:idPost order by c.date")
 				.setParameter("idPost", idPost);
 		query.setFirstResult(index);
@@ -150,12 +172,16 @@ public class PostDAO implements IPostDAO {
 
 
 	//TODO MIGLIORARE
-	public List<Post> getPostsByHashtag(String hashtag) {
-		Session session = HibernateUtil.getHibernateSession();
+	public List<Post> getPostsByHashtag(String hashtag,Calendar calendar, int last) {
+		Session session = HibernateUtil.getSession();
 
-		List<Post> posts = session.createQuery("FROM Post p join fetch p.hashtags h WHERE p.id = "
-				+ "(SELECT p1.id FROM Post p1 join p1.hashtags h1 WHERE h1.hashtag = :_hashtag)")
-				.setParameter("_hashtag", hashtag).list();
+		Query query= session.createQuery("FROM Post p join fetch p.hashtags h WHERE p.id in "
+				+ "(SELECT p1.id FROM Post p1 join p1.hashtags h1 WHERE h1.hashtag = :_hashtag) order by p.postDate desc")
+				.setParameter("_hashtag", hashtag);
+
+		query.setFirstResult(last);
+		query.setMaxResults(MAX_RESULTS_POST);
+		List<Post> posts = query.list();
 
 		session.close();
 		return posts;

@@ -11,7 +11,7 @@
 		<li id="users">
 			<div id="user_enter">
 				<form role="form" action="userPage">
-					<button id="button_form" name="usernameOther" value="${follow.username }">
+					<button id="button_form" name="username" value="${follow.username }">
 						<div id="button_user">
 	 						<div id="img_div">
 	 							<c:choose>
@@ -51,7 +51,7 @@
 								<div id="buttonFollow${follow.id }" class="pull-right">
 									<c:choose>
 										<c:when test="${follow.request_send == false && follow.request_received == false && follow.followed == false}">
-												<button name="${follow.id }" value="${follow.username }" id="sendRequestPopup-btn">Send Request</button>
+												<button name="${follow.id }" value="${follow.username }" id="sendRequestPopup-btn">Follow</button>
 										</c:when>
 										<c:when test="${follow.request_send == false && follow.request_received == false && follow.followed == true}">
 											<button name="${follow.id }" value="${follow.username }" id="unfollower-btn">Unfollow</button>
@@ -60,7 +60,7 @@
 											<button disabled id="waiting-btn">Waiting...</button>
 										</c:when> 
 										<c:when test="${follow.request_received == true }">
-											<button name="${follow.id }" value="${follow.username }" id="cancelRequestPopup-btn">Cancel Request</button>
+											<button name="${follow.id }" value="${follow.username }" id="cancelRequestPopup-btn">Delete Request</button>
 										</c:when>
 									</c:choose>
 								</div>

@@ -12,6 +12,7 @@ import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
 import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.RequestFollow;
 import it.unical.linstagram.model.Story;
@@ -185,6 +186,10 @@ public class UserService {
 		int id = -1;
 		id = userDAO.searchRequestFollow(username, usernameSession);
 		return id;
+	}
+	
+	public boolean isPrivate(String username) {
+		return userDAO.isPrivateByUsername(username);
 	}
 	
 }

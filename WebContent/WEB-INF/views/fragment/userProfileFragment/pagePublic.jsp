@@ -5,8 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<script src="./resources/js/follow_event/follow_event_profile_public.js"></script>
-
 <div class="row item-user-info">
 	<ul>
 		<li><b>@${userPublic.username}</b></li>
@@ -48,23 +46,24 @@
 	</ul>
 </div>
 <c:if test="${userPublic.username != user.username }">
+	<input type="hidden" id="private${userPublic.id }" value="false"/>
 	<div class="row item-user-info">
 		<ul id="follow_ul">
 			<c:choose>
-				<c:when test="${userPublic.request_send == true }">
+				<%-- <c:when test="${userPublic.request_send == true }">
 					<li><button value="${userPublic.username }" id="acceptRequest-btn" class="btn btn-info">Accept</button></li>
 					<li><button value="${userPublic.username }" id="rejectRequest-btn" class="btn btn-secondary">Reject</button></li>
 				</c:when>
 				<c:otherwise>
-					<c:choose>
-						<c:when test="${userPublic.followed == false }">
-							<li><button id="followProfile-btn">Follow</button></li>
-						</c:when>
-						<c:otherwise>
-							<li><button id="unfollowProfile-btn">Unfollow</button></li>
-						</c:otherwise>
-					</c:choose>
+					<c:choose> --%>
+				<c:when test="${userPublic.followed == false }">
+					<li><button name="${userPublic.id }" value="${userPublic.username }" id="followProfile-btn">Follow</button></li>
+				</c:when>
+				<c:otherwise>
+					<li><button name="${userPublic.id }" value="${userPublic.username }" id="unfollowProfile-btn">Unfollow</button></li>
 				</c:otherwise>
+<%-- 					</c:choose>
+				</c:otherwise> --%>
 			</c:choose>
 		</ul>
 	</div>

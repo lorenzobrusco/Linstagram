@@ -15,15 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import it.unical.linstagram.dto.CommentDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.helper.MessageResponse;
-import it.unical.linstagram.helper.UserManager;
-import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
-import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.NotificationService;
 import it.unical.linstagram.services.PostService;
-import it.unical.linstagram.services.UserService;
 
 @Controller
 public class PostController {
@@ -34,6 +30,18 @@ public class PostController {
 	@Autowired
 	private NotificationService notificationService;
 	
+	@RequestMapping("post")
+	public String postPage(@RequestParam int id, Model model) {
+		final Post post = this.postService.getPost(id);
+		if(post != null) {
+			model.addAttribute("post", post);
+			return "postPage";
+		}
+		//TODO creare pagina 404
+		return "";
+	}
+	
+	
 	@RequestMapping("addLike")
 	@ResponseBody
 	public String insertLike(HttpSession session, Model model, @RequestParam("postID") int idPost) {
@@ -43,7 +51,7 @@ public class PostController {
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		}
 		
-		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	@RequestMapping("removeLike")
@@ -53,7 +61,7 @@ public class PostController {
 		if (postService.removeLike(user.getUsername(), idPost))
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
-		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	@RequestMapping("addBookmark")
@@ -65,7 +73,7 @@ public class PostController {
 			session.setAttribute("user", userDB);
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		}
-		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	@RequestMapping("removeBookmark")
@@ -77,7 +85,7 @@ public class PostController {
 			session.setAttribute("user", userDB);
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		}
-		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	
@@ -89,7 +97,7 @@ public class PostController {
 			if (postService.insertComment(idPost, user.getUsername() ,comment, Calendar.getInstance()))
 				return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 		
-		return new MessageResponse(MessageCode.FAILED, user, "Non è stato potuto inserire il like.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 	
 	

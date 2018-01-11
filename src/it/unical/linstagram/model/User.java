@@ -15,11 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.apache.lucene.analysis.core.*;
-import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.apache.lucene.analysis.pattern.PatternReplaceFilterFactory;
 import org.hibernate.search.annotations.*;
 
 @Entity
@@ -35,8 +32,6 @@ public class User{
 	@Column(name="username", nullable = false, unique = true)
 	@Fields({
 		@Field(name = "username", index = Index.YES, store = Store.YES),
-		@Field(name = "edgeNGramUsername", index = Index.YES, store = Store.NO,
-		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
 	})
 	private String username;
 
@@ -49,16 +44,12 @@ public class User{
 	@Column(name="name")
 	@Fields({
 		@Field(name = "name", index = Index.YES, store = Store.YES),
-		@Field(name = "edgeNGramName", index = Index.YES, store = Store.NO,
-		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
 	})
 	private String name;
 
 	@Column (name="surname")
 	@Fields({
 		@Field(name = "surname", index = Index.YES, store = Store.YES),
-		@Field(name = "edgeNGramSurname", index = Index.YES, store = Store.NO,
-		analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteAnalyzer")),
 	})
 	private String surname;
 

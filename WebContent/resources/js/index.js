@@ -18,19 +18,21 @@ function getElapsedTime(postedTime){
 		return round+" DAYS AGO";
 	}	
 };
+
 $(document).ready(function () {
+	
 	window.scrollTo(0,0);
 	//show comment event
 //	$('.show-all-comments')
 //	.click(
-//			function (e) {
-//				var target = $(e.target).find('span');
-//				if (target.hasClass('show-comments')) {
-//					$(e.target).html('<span class="hidden-comments"></span> Nascondi altri commenti');
-//				} else {
-//					$(e.target).html('<span class="show-comments"></span> Carica altri commenti');
-//				}
-//			});
+//	function (e) {
+//	var target = $(e.target).find('span');
+//	if (target.hasClass('show-comments')) {
+//	$(e.target).html('<span class="hidden-comments"></span> Nascondi altri commenti');
+//	} else {
+//	$(e.target).html('<span class="show-comments"></span> Carica altri commenti');
+//	}
+//	});
 
 	//Active tooltip
 	$('[data-toggle="tooltip"]').tooltip();
@@ -40,31 +42,87 @@ $(document).ready(function () {
 		console.log("Create Story");
 	});
 
+	//change order post
+
+	var typeReq="latest";
+	$("#cng-order").click(function(){
+		$("#posts").empty();
+		$("#loading").removeClass("hide");
+		var floating_btn = $("#container-floating");
+		floating_btn.addClass("hide");
+		
+		var nTypeReq="";
+		var text="";
+
+		typeReq= $(this).attr("data-type");
+		if($(this).attr("data-type")== "popular"){
+			nTypeReq = "latest";
+			text="Latest"
+		
+		}else if($(this).attr("data-type")== "latest"){
+			
+			nTypeReq = "popular";
+			text="Popular"
+		}
+		
+
+		$.ajax({
+			url:"getPosts", 
+			data:{time:currentTime.getTime(),type:typeReq,lastIndex:0},
+			success: function(result) {
+				floating_btn.removeClass("hide");
+				
+				var html = $.parseHTML(result)
+				if(html.length != 1){
+					$("#posts").append(html);
+					
+				}
+				$("#loading").addClass("hide");
+				$("#cng-order").attr("data-type",nTypeReq);
+				$("#cng-order").attr("data-original-title",text);
+				
+			}	
+		}) 		 	
+	});
+
+	//Inifinity scroll
 	var postsrequest=1;
 	var entered=false;
 	var currentTime = new Date();
-	
+	var lastScrollTop = 0;
 	$(window).scroll(function(){
-//		console.log(($(document).height() -  $(window).height())+" minore di "+$(window).scrollTop());
-		if (($(document).height() -  $(window).height()) <=  $(window).scrollTop()+10 && !entered) {
-			entered=true;
-			$("#loading").removeClass("hide");
-			setTimeout(function(){
 
-				$.ajax({
-					url:"latestPost", 
-					data:{time:currentTime.getTime(),last:postsrequest},
-					success: function(result) {
-						var html = $.parseHTML(result)
-						if(html.length != 1){
-							$("#posts").append(html);
-							postsrequest++;
-						}
-						$("#loading").addClass("hide");
-						entered=false;
-					}	
-				}) 		 
-			},1000);
+		var st = $(this).scrollTop();
+
+		if (st > lastScrollTop){
+
+			if (($(document).height() -  $(window).height()) <=  $(window).scrollTop()+10 && !entered) {
+				var listSize = $("#posts").children("section").length;
+				entered=true;
+				$("#loading").removeClass("hide");
+				setTimeout(function(){
+
+					$.ajax({
+						url:"getPosts", 
+						data:{type:typeReq,time:currentTime.getTime(),lastIndex:listSize},
+						success: function(result) {
+							var html = $.parseHTML(result)
+							if(html.length != 1){
+								$("#posts").append(html);
+								//allow to send comment with Enter button
+//								$(".comment-section").on("keypress", function(e) {
+//									if ( e.which == 13 ) { //enter press
+//										$(this).find("button").click();
+//									}
+//								});
+							}
+							$("#loading").addClass("hide");
+							entered=false;
+						}	
+					}) 		 
+				},1000);
+			}
 		}
+		lastScrollTop = st;
 	});
 });

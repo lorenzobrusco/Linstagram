@@ -135,7 +135,7 @@ $(document).ready(function () {
 					var filter_section = $("#story-modal #apply-filter-section");
 
 					filter_section.append("<canvas class='filter-img' id='img-to-modify'></canvas>");
-					filter_section.append('<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter </button>');
+					filter_section.append('<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Create Story </button>');
 
 					var canvas=$('#story-modal #apply-filter-section > canvas');
 
@@ -149,25 +149,30 @@ $(document).ready(function () {
 					$("#story-modal #apply-filter-section #filter-btn-group button").click(function () {
 						var filterType = $(this).attr("id");
 //						console.log(filterType);
-						$("#story-modal #filter-btn-group button").removeClass("btn-active");
-						$(this).addClass("btn-active");
+						$("#story-modal #filter-btn-group button .img-small").removeClass("filter-active");
+						$(this).find('.img-small').addClass("filter-active");
 						Caman(canvas[0], function () {
 							startFilter(canvas);
 							this.revert(); //revert previous filter
-							eval("this." + filterType + "().render(function () {resize_canvas(canvas);endFilter(canvas);} );");
+							if(filterType!="normal"){
+								eval("this." + filterType + "().render(function () {resize_canvas(canvas);endFilter(canvas);} );");
+							} else if(filterType=="normal"){
+								resize_canvas(canvas);
+								endFilter(canvas);
+							}
 						});
 					});
 
 					function endFilter(canvas){
 						loader.addClass('hide');
-						$('#story-modal #apply-filter-section .btn').removeClass('hide');
+						$('#story-modal #filter-btn-group').removeClass('hide');
 						canvas.removeClass('hide');
 						submit_filter.removeClass('hide');
 					}
 
 					function startFilter(canvas){
 						canvas.addClass("hide");
-						$('#story-modal #apply-filter-section .btn').addClass('hide');
+						$('#story-modal #filter-btn-group').addClass('hide');
 						submit_filter.addClass('hide');
 						loader.removeClass("hide");
 					}
@@ -225,5 +230,5 @@ $(document).ready(function () {
 	}
 
 	$("#open-story-modal").animatedModal(modalConfiguration);
-	$("#story-modal #add-mobile").animatedModal(modalConfiguration);
+	$("#add-story").animatedModal(modalConfiguration);
 });

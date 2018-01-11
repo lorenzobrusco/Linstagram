@@ -17,6 +17,7 @@ import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
+import it.unical.linstagram.services.NotificationService;
 import it.unical.linstagram.services.UserService;
 
 @Controller
@@ -24,6 +25,8 @@ public class OtherUserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private NotificationService notificationService;
 
 	@RequestMapping("/usersList")
 	public String usersListPage(HttpSession session, Model model) {
@@ -36,7 +39,7 @@ public class OtherUserController {
 	}
 
 	@RequestMapping("userPage")
-	public String getUserPage(HttpSession session, Model model, @RequestParam("usernameOther") String usernameOther) {
+	public String getUserPage(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
 
 		User user = (User) session.getAttribute("user");
 		if (usernameOther.equals(user.getUsername()))
@@ -50,17 +53,13 @@ public class OtherUserController {
 		return "otherUserProfile";
 	}
 
-	@RequestMapping("sendRequest")
-	@ResponseBody
-	public String sendRequest(HttpSession session, Model model, @RequestParam("username") String username) {
-		User user = (User) session.getAttribute("user");
-
-		if (!userService.sendRequest(user.getUsername(), username))
-			return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
-					.getMessage();
-
-		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
-	}
+//	@RequestMapping("sendRequest")
+//	@ResponseBody
+//	public String sendRequest(HttpSession session, Model model, @RequestParam("username") String username) {
+//		User user = (User) session.getAttribute("user");
+//
+//		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+//	}
 
 	@RequestMapping("acceptRequest")
 	@ResponseBody
@@ -82,7 +81,7 @@ public class OtherUserController {
 		if (!userService.rejectRequest(user.getUsername(), username))
 			return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
 					.getMessage();
-
+		
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 
@@ -113,11 +112,19 @@ public class OtherUserController {
 	@ResponseBody
 	public String followUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 		User user = (User) session.getAttribute("user");
-
-		if (!userService.addFollowing(user.getUsername(), usernameToFollow, user))
-			return new MessageResponse(MessageCode.FOLLOW_FAILED, user,
-					"Non e' stato possibile inserire l'utente come following.").getMessage();
-
+		if (userService.isPrivate(usernameToFollow)) {
+			if (!userService.sendRequest(user.getUsername(), usernameToFollow))
+				return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
+						.getMessage();
+		}
+		else {
+			if (!userService.addFollowing(user.getUsername(), usernameToFollow, user)) {
+				return new MessageResponse(MessageCode.FOLLOW_FAILED, user,
+						"Non e' stato possibile inserire l'utente come following.").getMessage();
+			}
+		}
+		
+		notificationService.generateFollowNotification(user, usernameToFollow);
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 

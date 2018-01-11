@@ -6,6 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon-32x32.png" />
+<link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.icon" type="image/x-icon" />
+
 <title>Listagram</title>
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
@@ -20,9 +23,8 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script src="./resources/js/eventLoadPost.js"></script>
-<!-- <script src="./resources/js/follow_event/modal_follow_event.js"></script> -->
 <script src="./resources/js/follow_event/follower_event.js"></script>
-<script src="./resources/js/follow_event/event_get_follow.js"></script>
+<script src="./resources/js/follow_event/reload_user_follow_popup.js"></script>
 <script src="./resources/js/event_modal_post_profile.js"></script>
 
 <link rel="stylesheet"
@@ -51,9 +53,8 @@
 						<div class="row item-user-info">
 							<ul>
 								<li><b>@${user.username}</b></li>
-								<li><a class="btn btn-default" href="modifyProfile"
-									id="modify-profile-btn">modifica profilo</a></li>
-								<li></li>
+								<li><a class="btn btn-default" href="modifyProfile" id="modify-profile-btn">Modify Profile</a></li>
+								<li><a class="btn btn-danger" href="logout" id="logout-mobile-btn">Logout</a></li>
 							</ul>
 							<input id="username_hidden" type="hidden" name="username_hidden"
 								value="${user.username}" />

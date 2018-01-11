@@ -1,6 +1,6 @@
 package it.unical.linstagram.helper;
 
-import java.awt.Graphics2D;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -13,6 +13,8 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Method;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileModel {
@@ -98,6 +100,7 @@ public class FileModel {
 		
 		BufferedImage resizedImg=resize(originalImage);
 		
+
 		// Get image dimensions
 		int height = resizedImg.getHeight();
 		int width = resizedImg.getWidth();
@@ -123,38 +126,45 @@ public class FileModel {
 		);
 
 		return BufferedImageToByteArray(croppedImage);
+//		return BufferedImageToByteArray(resizedImg);
+
 	}
 
 	private static BufferedImage resize(BufferedImage orImage) {
 		final int MAX_WIDTH = 1366;
 		final int MAX_HEIGHT = 768;
-
-		int height = orImage.getHeight();
-		int width = orImage.getWidth();
-
-		if (height < MAX_HEIGHT && width < MAX_WIDTH) {
-			return orImage;
-		}
-
-		if (width > height) {
-			if (width > MAX_WIDTH) {
-				height *= MAX_WIDTH / width;
-				width = MAX_WIDTH;
-			}
-		} else {
-			if (height > MAX_HEIGHT) {
-				width *= MAX_HEIGHT / height;
-				height = MAX_HEIGHT;
-			}
-		}
-
-		BufferedImage outputImage = new BufferedImage(MAX_WIDTH, MAX_HEIGHT, orImage.getType());
 		
-		Graphics2D g2d = outputImage.createGraphics();
-        g2d.drawImage(orImage, 0, 0, MAX_WIDTH, MAX_HEIGHT, null);
-        g2d.dispose();
- 
-        return outputImage;
+		Dimension newMaxSize = new Dimension(MAX_WIDTH, MAX_HEIGHT);
+		BufferedImage resizedImg = Scalr.resize(orImage, Method.QUALITY, newMaxSize.width, newMaxSize.height);
+		
+		return resizedImg;
+
+//		int height = orImage.getHeight();
+//		int width = orImage.getWidth();
+//
+//		if (height < MAX_HEIGHT && width < MAX_WIDTH) {
+//			return orImage;
+//		}
+//
+//		if (width > height) {
+//			if (width > MAX_WIDTH) {
+//				height *= MAX_WIDTH / width;
+//				width = MAX_WIDTH;
+//			}
+//		} else {
+//			if (height > MAX_HEIGHT) {
+//				width *= MAX_HEIGHT / height;
+//				height = MAX_HEIGHT;
+//			}
+//		}
+//
+//		BufferedImage outputImage = new BufferedImage(MAX_WIDTH, MAX_HEIGHT, orImage.getType());
+//		
+//		Graphics2D g2d = outputImage.createGraphics();
+//        g2d.drawImage(orImage, 0, 0, MAX_WIDTH, MAX_HEIGHT, null);
+//        g2d.dispose();
+// 
+//        return outputImage;
 	}
 
 	private static byte[] BufferedImageToByteArray(BufferedImage orImage) {

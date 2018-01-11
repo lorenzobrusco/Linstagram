@@ -39,6 +39,15 @@ public class NotificationService {
 	public void saveNotification(Notification notification) {
 		modelDAO.save(notification);
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteNotification(int id) {
+		return modelDAO.delete(Notification.class, id);
+	}
 
 	/**
 	 * Generate notification when user likes a post
@@ -50,6 +59,7 @@ public class NotificationService {
 		final Post post = postDAO.getPostById(idPost);
 		final Notification notification = new Notification(user, post.getUser(), post, null, NotificationType.LIKE);
 		modelDAO.save(notification);
+		System.out.println("notification");
 	}
 
 	/**
@@ -65,21 +75,39 @@ public class NotificationService {
 	}
 
 	/**
-	 * Used to get all notification to see from db
+	 * Used to get all notification from db
 	 * 
 	 * @param user
 	 * @param maxNumberOfNotification
 	 * @return
 	 */
-	public List<NotificationDTO> getAllNotificationToSee(User user, int maxNumberOfNotification) {
+	public List<NotificationDTO> getAllNotification(User user, int maxNumberOfNotification) {
 		final List<Notification> notifications = notificationDAO.getAllNotification(user);
-		System.out.println(notifications.size());
-		final List<NotificationDTO> notificationDTO = new ArrayList<>();
+		final List<NotificationDTO> notificationsDTO = new ArrayList<>();
 		for (Notification notification : notifications) {
-			notificationDTO.add(new NotificationDTO(notification));
-			if (notificationDTO.size() > maxNumberOfNotification)
+			boolean existRequestTo = userDAO.existRequestFollow(notification.getUserFrom().getUsername(),
+					notification.getUserTo().getUsername());
+			boolean existRequestFrom = userDAO.existRequestFollow(notification.getUserTo().getUsername(),
+					notification.getUserFrom().getUsername());
+			boolean alreadyFollowing = notification.getUserTo().getFollowings().contains(notification.getUserFrom());
+			boolean alreadyFollowed = notification.getUserTo().getFollowers().contains(notification.getUserFrom());
+			notificationsDTO.add(new NotificationDTO(notification, alreadyFollowing, alreadyFollowed, existRequestTo, existRequestFrom));
+			if (notification.isToSee()) {
+				notification.setToSee(false);
+				modelDAO.update(notification);
+			}
+			if (notificationsDTO.size() > maxNumberOfNotification)
 				break;
 		}
-		return notificationDTO;
+		return notificationsDTO;
+	}
+
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public Long getAllNumberOfNotificationToSee(User user) {
+		return notificationDAO.getAllNotificationToSee(user);
 	}
 }

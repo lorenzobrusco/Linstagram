@@ -185,8 +185,8 @@ public class PostDTO {
 			Collections.sort(hashtags, (o1, o2) -> o2.getHashtag().length()-o1.getHashtag().length());
 			for (Hashtag h : hashtags) {
 				
-//				content = content.replaceAll("#"+h.getHashtag(), "<a href='hashtagPosts?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>");				
-				content = content.replaceAll("#"+h.getHashtag(), "<a href='javascript:getPostsByHashtags(\""+h.getHashtag()+"\")'>"+"#"+h.getHashtag()+"</a>");
+				content = content.replaceAll("#"+h.getHashtag(), "<a href='hashtags?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>");				
+//				content = content.replaceAll("#"+h.getHashtag(), "<a href='javascript:getPostsByHashtags(\""+h.getHashtag()+"\")'>"+"#"+h.getHashtag()+"</a>");
 			}
 			
 		}

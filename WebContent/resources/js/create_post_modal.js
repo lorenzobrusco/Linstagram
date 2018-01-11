@@ -26,7 +26,7 @@ function UploadPic(canvas,filename) {
 			success: function(msg) {
 				$(".close-create-post-modal").click(); //close modal
 //				location.reload(true);
-				
+
 				new Noty({
 					text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your post is created!',
 					theme: 'nest',
@@ -34,8 +34,8 @@ function UploadPic(canvas,filename) {
 					layout: 'bottomLeft',
 					timeout:2000,
 					progressBar: true
-				}).show();
-				
+				}).on("onClose",function(){location.reload()}).show();
+
 			}
 		});
 	});
@@ -151,25 +151,30 @@ $(document).ready(function () {
 					$("#create-post-modal #apply-filter-section #filter-btn-group button").click(function () {
 						var filterType = $(this).attr("id");
 //						console.log(filterType);
-						$("#create-post-modal #filter-btn-group button").removeClass("btn-active");
-						$(this).addClass("btn-active");
+						$("#create-post-modal #filter-btn-group button .img-small").removeClass("filter-active");
+						$(this).find('.img-small').addClass("filter-active");
 						Caman(canvas[0], function () {
 							startFilter(canvas);
 							this.revert(); //revert previous filter
-							eval("this." + filterType + "().render(function () {resize_canvas(canvas);endFilter(canvas);} );");
+							if(filterType!="normal"){
+								eval("this." + filterType + "().render(function () {resize_canvas(canvas);endFilter(canvas);} );");
+							} else if(filterType=="normal"){
+								resize_canvas(canvas);
+								endFilter(canvas);
+							}
 						});
 					});
 
 					function endFilter(canvas){
 						loader.addClass('hide');
-						$('#create-post-modal #apply-filter-section .btn').removeClass('hide');
+						$('#create-post-modal #filter-btn-group').removeClass('hide');
 						canvas.removeClass('hide');
 						submit_filter.removeClass('hide');
 					}
 
 					function startFilter(canvas){
 						canvas.addClass("hide");
-						$('#create-post-modal #apply-filter-section .btn').addClass('hide');
+						$('#create-post-modal #filter-btn-group').addClass('hide');
 						submit_filter.addClass('hide');
 						loader.removeClass("hide");
 					}
@@ -217,7 +222,7 @@ $(document).ready(function () {
 				$("#create-post-modal #img-to-modify").remove();
 				$("#create-post-modal #submit-filter").remove();
 				$("#create-post-modal #apply-filter-section").addClass("hide");
-				$("#create-post-modal #filter-btn-group button").removeClass("btn-active");
+				$("#create-post-modal #filter-btn-group button .img-small").removeClass("filter-active");
 				$("#create-post-modal #post-description").addClass("hide");
 				$("#create-post-modal #post-description-input").val("")//
 				//clean dropzone uploads
@@ -226,5 +231,5 @@ $(document).ready(function () {
 	}
 
 	$("#open-create-post-modal").animatedModal(modalConfiguration);
-	$("#create-post-modal #add-mobile").animatedModal(modalConfiguration);
+	$("#add-mobile").animatedModal(modalConfiguration);
 });
