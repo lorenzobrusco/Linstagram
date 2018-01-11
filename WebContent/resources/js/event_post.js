@@ -116,7 +116,6 @@ $(document).ready(function() {
 			data: {postID:postID, comment:comm},
 			success : function(result) {		
 				if(result != "Failed") {
-					console.log(result);
 					$("#comment"+postID).val('');
 					$(listComment).append("<div class='comment'><a href='userPage?usernameOther="+username+"'><b>"+username+"</b></a>"+
 							"<span class='comment_body'></span></div>");
