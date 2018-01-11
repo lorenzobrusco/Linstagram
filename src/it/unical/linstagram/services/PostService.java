@@ -29,12 +29,12 @@ public class PostService {
 	@Autowired
 	private PostDAO postDAO;
 	@Autowired
-	private ModelDAO modelDao;	
+	private ModelDAO modelDao;
 	@Autowired
 	private HashtagDAO hashtagDAO;
 	@Autowired
 	private UserDAO userDAO;
-	
+
 	public List<Post> getPosts() {
 		return postDAO.getPosts();
 	}
@@ -42,35 +42,53 @@ public class PostService {
 	public Post getPost(int idPost) {
 		return postDAO.getPostById(idPost);
 	}
-	
-	public List<PostDTO> getPostsbyHashtag(User user, String hashtag, int last)
-	{
-		List<Post> posts = postDAO.getPostsByHashtag(hashtag,null,last);
-		List<PostDTO> postsDTO = new ArrayList<>();
-		
-		for (Post post : posts) {	
-//			System.out.println("creo il post "+post.getContent());
-			postsDTO.add(new PostDTO
-					(post, postDAO.doesTheUserLikeThePost(post.getId(), user), user.getBookmarks().contains(post)));		
+
+	public PostDTO getPostDTO(int idPost, User user) {
+		final Post post = this.getPost(idPost);
+		if (post != null) {
+			final Set<Post> bookmarks = user.getBookmarks();
+			List<User> likes = null;
+			boolean hasLike = false;
+			boolean hasBookmark = false;
+			likes = postDAO.getLikesByPostId(post.getId());
+			if (likes.contains(user))
+				hasLike = true;
+			if (bookmarks.contains(post))
+				hasBookmark = true;
+			return new PostDTO(post, hasLike, hasBookmark);
 		}
-		
+		return null;
+	}
+
+	public List<PostDTO> getPostsbyHashtag(User user, String hashtag, int last) {
+		List<Post> posts = postDAO.getPostsByHashtag(hashtag, null, last);
+		List<PostDTO> postsDTO = new ArrayList<>();
+
+		for (Post post : posts) {
+			// System.out.println("creo il post "+post.getContent());
+			postsDTO.add(new PostDTO(post, postDAO.doesTheUserLikeThePost(post.getId(), user),
+					user.getBookmarks().contains(post)));
+		}
+
 		return postsDTO;
 	}
-	public List<PostDTO> getPopularPosts(User user, Calendar date, int last){
-		
+
+	public List<PostDTO> getPopularPosts(User user, Calendar date, int last) {
+
 		List<Post> posts = postDAO.getPopularPosts(user.getUsername(), date, last);
 		List<PostDTO> postsDTO = new ArrayList<>();
-		
-		for (Post post : posts) {	
-			postsDTO.add(new PostDTO
-					(post, postDAO.doesTheUserLikeThePost(post.getId(), user), user.getBookmarks().contains(post)));		
+
+		for (Post post : posts) {
+			postsDTO.add(new PostDTO(post, postDAO.doesTheUserLikeThePost(post.getId(), user),
+					user.getBookmarks().contains(post)));
 		}
-		
+
 		return postsDTO;
 	}
-	public List<PostDTO> getLatestPost(User user, Calendar date,int last){
+
+	public List<PostDTO> getLatestPost(User user, Calendar date, int last) {
 		List<Post> posts = postDAO.getLastPosts(user.getUsername(), date, last);
-		
+
 		List<PostDTO> postsDTO = new ArrayList<>();
 		Set<Post> bookmarks = user.getBookmarks();
 		List<User> likes = null;
@@ -78,7 +96,7 @@ public class PostService {
 			boolean hasLike = false;
 			boolean hasBookmark = false;
 			likes = postDAO.getLikesByPostId(post.getId());
-			
+
 			if (likes.contains(user))
 				hasLike = true;
 			if (bookmarks.contains(post))
@@ -86,121 +104,114 @@ public class PostService {
 
 			postsDTO.add(new PostDTO(post, hasLike, hasBookmark));
 		}
-		
+
 		return postsDTO;
 	}
-	
+
 	public boolean insertLike(int idPost, String username) {
 		Post post = postDAO.getPostById(idPost);
 		User u = userDAO.getUserByUsername(username);
-		if(post.getLikes().add(u)) {
+		if (post.getLikes().add(u)) {
 			if (modelDao.merge(post))
 				return true;
 		}
 		return false;
 	}
-	
+
 	public boolean removeLike(String username, int idPost) {
 		Post post = postDAO.getPostById(idPost);
 		User u = userDAO.getUserByUsername(username);
 		post.getLikes().remove(u);
-		
-		if(modelDao.merge(post))
+
+		if (modelDao.merge(post))
 			return true;
 		return false;
 	}
-	
+
 	public boolean insertComment(int idPost, String username, String contentComment, Calendar date) {
 		Post post = postDAO.getPostById(idPost);
 		User user = userDAO.getUserByUsername(username);
 
 		Comment comment = new Comment(contentComment, user, post, date);
 		post.getComments().add(comment);
-		
-		if(modelDao.merge(comment))
+
+		if (modelDao.merge(comment))
 			return true;
 		return false;
 	}
-	
+
 	public User insertBookmark(String username, int idPost) {
 		User u = userDAO.getUserByUsername(username);
 		Post post = postDAO.getPostById(idPost);
 		u.getBookmarks().add(post);
-		
-		if(modelDao.merge(u))
+
+		if (modelDao.merge(u))
 			return u;
 		return null;
 	}
-	
+
 	public User removeBookmark(String username, int idPost) {
 		Post post = postDAO.getPostById(idPost);
 		User u = userDAO.getUserByUsername(username);
 		u.getBookmarks().remove(post);
-		
-		if(modelDao.merge(u))
+
+		if (modelDao.merge(u))
 			return u;
 		return null;
 	}
-	
+
 	public void savePost(Post post) {
-		
+
 		List<String> findHashtags = HashtagFinder.findHashtags(post.getContent());
 		List<String> findTags = TagFinder.findTags(post.getContent());
-		
+
 		for (String fh : findHashtags) {
 			Hashtag hashtagByValue = hashtagDAO.getHashtagByValue(fh);
-			if (hashtagByValue != null)
-			{
-				hashtagByValue.setCount(hashtagByValue.getCount()+1);
+			if (hashtagByValue != null) {
+				hashtagByValue.setCount(hashtagByValue.getCount() + 1);
 				modelDao.update(hashtagByValue);
-				
-			}
-			else
-			{
+
+			} else {
 				hashtagByValue = new Hashtag(fh.toLowerCase(), 1);
 			}
 			post.getHashtags().add(hashtagByValue);
 		}
-		
+
 		for (String tag : findTags) {
 			User userByUsername = userDAO.getUserByUsername(tag);
-			if (userByUsername != null)
-			{
+			if (userByUsername != null) {
 				post.getTags().add(userByUsername);
 			}
 		}
-		
-		
+
 		modelDao.merge(post);
 	}
-	
+
 	public List<Post> getFollowedPosts(String username) {
 		return postDAO.getFollowedPosts(username);
 	}
 
 	public List<UserDTO> getLikesOfPost(int idPost) {
-		
+
 		List<User> likes = postDAO.getLikesByPostId(idPost);
-		
+
 		List<UserDTO> likesDTO = new ArrayList<>();
 		for (User user : likes) {
 			System.out.println(user.getUsername());
 			likesDTO.add(new UserPrivateDTO(user, false, false, false));
 		}
-		
+
 		return likesDTO;
 	}
-	
-	public List<CommentDTO> getPostComment(int idPost, int index){
-		List<Comment> comments =  postDAO.getCommentByPostId(idPost, index);
+
+	public List<CommentDTO> getPostComment(int idPost, int index) {
+		List<Comment> comments = postDAO.getCommentByPostId(idPost, index);
 		List<CommentDTO> commentDTOs = new ArrayList<>();
-		
+
 		for (Comment comment : comments) {
 			commentDTOs.add(new CommentDTO(comment));
 		}
 		return commentDTOs;
 	}
-	
-	
-	
+
 }
