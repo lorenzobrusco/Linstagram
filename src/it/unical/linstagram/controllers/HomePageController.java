@@ -1,6 +1,7 @@
 package it.unical.linstagram.controllers;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -57,8 +58,9 @@ public class HomePageController {
 	@Autowired
 	UserDAO userDAO;
 
-	@RequestMapping("/index")
+	@RequestMapping("/")
 	public String homePageController(HttpSession session, Model model) {
+		
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
 			//List<Post> posts = postService.getFollowedPosts(loggedUser.getUsername());
@@ -70,7 +72,7 @@ public class HomePageController {
 			model.addAttribute("followedUsersStories", storiesService.getFollowedStories(loggedUser));
 			return "index";
 		}
-		return "redirect:/";
+		return "index";
 
 	}
 
