@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -101,9 +100,8 @@ public class ProfileController {
 		if (!date.equals("")) {
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-				Date dateNew = sdf.parse(date);
 				Calendar cal = Calendar.getInstance();
-				cal.setTime(dateNew);
+				cal.setTime(sdf.parse(date));
 				if (!cal.before(Calendar.getInstance()))
 					return new MessageResponse(MessageCode.FAILED, user, "Mi stai dicendo che vieni dal futuro?").getMessage();
 

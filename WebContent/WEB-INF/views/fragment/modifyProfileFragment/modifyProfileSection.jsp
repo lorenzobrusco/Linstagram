@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script>
 function verify_check(cb) {
@@ -51,10 +51,10 @@ function verify_check(cb) {
 				<label for="selection">Gender</label>
 				<div class="input-inline">
 					<select id="selection" class="form-control">
-						<option value="-1"></option>
-						<option value="1">Uomo</option>
-						<option value="2">Donna</option>
-						<option value="3">Non specificato</option>
+						<option value="-1" style="display:none;">${user.gender }</option>
+						<option value="1">Male</option>
+						<option value="2">Female</option>
+						<option value="3">Unknown</option>
 					</select>
 				</div>
 			</div>
@@ -63,14 +63,14 @@ function verify_check(cb) {
 				<label for="datepicker">Birthdate</label>
 				<div class="input-inline">
 					<input type="text" name="selDate" id="datepicker"
-						class="form-control">
+						class="form-control" placeholder=<fmt:formatDate value="${user.birthdate.time }" pattern="MM/dd/YYYY"/>>
 				</div>
 			</div>
 
 			<div class="form-inline-profile">
 				<label for="bio">Biografia</label>
 				<div class="input-inline">
-					<textarea class="form-control" id="bio"></textarea>
+					<textarea class="form-control" id="bio">${user.biography }</textarea>
 				</div>
 			</div>
 
