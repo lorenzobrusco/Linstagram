@@ -202,16 +202,37 @@ $(document).ready(function(){
 			success : function(result) {
 				if (result == "OK") {
 					div.empty();
-					div.append("<button class='followProfile_btn'>follow</button>");
+					if(notification.alreadyFollowing)
+						div.append("<button class='unfollowProfile_btn'>Unfollow</button>");					
+					else
+						div.append("<button class='followProfile_btn'>Follow</button>");
 					div.append("<input class='" + notification.isPrivate +"' type='hidden' name='user' value='" + json +"'>");
-				}
-				else {
+				} else {
 					showResultMessage("FAILED");
 				}
 			}
 		});
 		deleteNotification(notification, div.parent());
 		
+	});
+	
+	//EVENTO DEL TASTO "REJECT_REQUEST" [PER RIFIUTARE LA RICHIESTA]
+	$(document).on('click', '.declineProfile_btn', function() {
+		var json = $(this).parent().find('input').attr('value');
+		var notification = JSON.parse(json);
+		var div = $(this).parent();
+		div.empty();
+		$.ajax({
+			url : "rejectRequest",
+			data:{
+				username: notification.userName
+			},
+			success : function(result) {
+				if (result == "OK") {
+					location.reload();
+				}
+			}
+		});
 	});
 	
 	$(document).mouseup(function(e) {

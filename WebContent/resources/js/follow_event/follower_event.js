@@ -129,6 +129,7 @@ $(document).ready(function() {
 		var id = $(this).attr('name');
 		
 		var privateProfile = $('#private'+id).val();
+		
 		$.ajax({
 			url : "followUser",
 			data:{username:username},
