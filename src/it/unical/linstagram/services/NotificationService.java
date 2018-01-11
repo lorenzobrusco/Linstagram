@@ -89,8 +89,10 @@ public class NotificationService {
 					notification.getUserTo().getUsername());
 			boolean existRequestFrom = userDAO.existRequestFollow(notification.getUserTo().getUsername(),
 					notification.getUserFrom().getUsername());
-			boolean alreadyFollowing = notification.getUserTo().getFollowings().contains(notification.getUserFrom());
-			boolean alreadyFollowed = notification.getUserTo().getFollowers().contains(notification.getUserFrom());
+//			boolean alreadyFollowing = notification.getUserTo().getFollowings().contains(notification.getUserFrom());
+			boolean alreadyFollowing = notificationDAO.isAlreadyFollowing(notification.getUserTo(), notification.getUserFrom());
+			boolean alreadyFollowed = notificationDAO.isAlreadyFollower(notification.getUserTo(), notification.getUserFrom());
+//			boolean alreadyFollowed = notification.getUserTo().getFollowers().contains(notification.getUserFrom());
 			notificationsDTO.add(new NotificationDTO(notification, alreadyFollowing, alreadyFollowed, existRequestTo, existRequestFrom));
 			if (notification.isToSee()) {
 				notification.setToSee(false);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+
 import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.User;
 
@@ -27,6 +28,19 @@ public class NotificationDAO implements INotificationDAO {
 				.setParameter("user", user).uniqueResult();
 		session.close();
 		return notifications;
+	}
+	
+	public boolean isAlreadyFollower(User userTo,User userFrom) {
+		final Session session = HibernateUtil.getSession();
+		final boolean notifications = 
+			 (boolean) session.createQuery("SELECT EXISTS (FROM following f WHERE f.followed=:userFrom and f.following=:userTo)")
+			 	.setParameter("userTo", userTo).setParameter("userFrom", userFrom).getSingleResult();
+		session.close();
+		return notifications;
+	}
+	
+	public boolean isAlreadyFollowing(User userTo,User userFrom) {
+		return isAlreadyFollower(userFrom,userFrom);
 	}
 
 }
