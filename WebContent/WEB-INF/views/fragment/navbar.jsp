@@ -84,6 +84,7 @@
 										var badge_notification="<span class='badge'>"+ result + "</span>"
 										$(".badge").remove();
 										$("#notification").append(badge_notification);
+										$("#notification-mobile").append(badge_notification);
 									}
 								}
 							});
