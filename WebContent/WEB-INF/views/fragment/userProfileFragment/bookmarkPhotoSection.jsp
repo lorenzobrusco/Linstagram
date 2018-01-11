@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:if test="${fn:length(user.bookmarks) == 0}">
+<c:if test="${fn:length(posts) == 0}">
 	<div class="bookmark">
 		<span></span>
 		<div>Bookmark</div>
@@ -17,7 +17,7 @@
 	</div>
 </c:if>
 
-<c:forEach items="${user.bookmarks}" var="post">
+<c:forEach items="${posts}" var="post">
 	<!--  Il numero dei like e comment e post-->
 	<div class="col-md-4 col-sm-6 post-section">
 		<div id="${post.id }" class="post" data-toggle="modal" data-target="#modalPost">

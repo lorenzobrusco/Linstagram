@@ -72,12 +72,14 @@ public class UserService {
 //		userOther = (User) modelDAO.initialize(userOther, "tagged");
 
 		System.out.println(userOther);
-		//TODO differenziare gli initializze se è public o private
+		//TODO differenziare gli initializze se ï¿½ public o private
+		
+		user = (User) modelDAO.initialize(user, "followings");
 		
 		boolean request_send = userDAO.existRequestFollow(usernameOther, user.getUsername());
 		boolean request_received = userDAO.existRequestFollow(user.getUsername(), usernameOther);
-		System.out.println("QUANTI MINCHIA SONO:"+userOther.getFollowings());
-		for (User u : userOther.getFollowings()) {
+		System.out.println("QUANTI MINCHIA SONO:"+user.getFollowings());
+		for (User u : user.getFollowings()) {
 			if (u.getId() == userOther.getId()) {
 				return new UserPublicDTO(userOther, true, request_send, request_received);
 			}
