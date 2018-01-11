@@ -27,7 +27,7 @@ public class UserService {
 	
 	UserManager userManager;
 	
-	public boolean addFollowing(String usernameSession, String usernameToFollow, User user) {
+	public boolean addFollowing(String usernameSession, String usernameToFollow) {
 		
 		User userSession = userDAO.getUserByUsername(usernameSession);
 		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
@@ -36,13 +36,12 @@ public class UserService {
 		userToFollow.getFollowers().add(userSession);
 		
 		if (modelDAO.merge(userSession)) {
-			user.getFollowings().add(userToFollow);
 			return true;
 		}
 		return false;
 	}
 	
-	public boolean removeFollowing(String usernameSession, String usernameToFollow, User user) {
+	public boolean removeFollowing(String usernameSession, String usernameToFollow) {
 		User userSession = userDAO.getUserByUsername(usernameSession);
 		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
 		
@@ -50,7 +49,7 @@ public class UserService {
 		userToFollow.getFollowers().remove(userSession);
 		
 		if (modelDAO.merge(userSession)) {
-			user.getFollowings().remove(userToFollow);
+//			user.getFollowings().remove(userToFollow);
 			return true;
 		}
 		return false;
@@ -174,9 +173,8 @@ public class UserService {
 	
 	public boolean acceptRequest(String usernameSession, String username) {
 		int id = userDAO.searchRequestFollow(username, usernameSession);
-		User user = userDAO.getUserByUsername(usernameSession);
 		if (id != -1)
-			if(addFollowing(username, usernameSession, user) && modelDAO.delete(RequestFollow.class, id))
+			if(addFollowing(username, usernameSession) && modelDAO.delete(RequestFollow.class, id))
 				return true;
 		return false;
 	}

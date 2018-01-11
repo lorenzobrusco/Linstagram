@@ -21,22 +21,18 @@ public class Notification {
 	private int id;
 
 	@ManyToOne
-//	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "userfrom")
 	private User userFrom;
 
 	@ManyToOne
-//	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "userto")
 	private User userTo;
 
 	@ManyToOne
-//	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "post")
 	private Post post;
 
 	@ManyToOne
-//	@Cascade(value = CascadeType.ALL)
 	@JoinColumn(name = "comment")
 	private Comment comment;
 
@@ -124,6 +120,28 @@ public class Notification {
 
 	public void setComment(Comment comment) {
 		this.comment = comment;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		final Notification notification = (Notification) obj;
+		if (!(notification.userTo == this.userTo))
+			return false;
+		if (!(notification.userFrom == this.userFrom))
+			return false;
+		if (!(notification.toSee == this.toSee))
+			return false;
+		if (!(notification.post == this.post))
+			return false;
+		if (!(notification.comment== this.comment))
+			return false;
+		if (!(notification.type== this.type))
+			return false;
+		return true;
 	}
 
 }

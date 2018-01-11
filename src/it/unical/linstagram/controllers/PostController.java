@@ -103,8 +103,10 @@ public class PostController {
 		}
 		
 		if (!comment.equals(""))
-			if (postService.insertComment(idPost, user.getUsername(), comment, Calendar.getInstance()))
-				return new MessageResponse(MessageCode.OK, user, comment).getMessage();
+			if (postService.insertComment(idPost, user.getUsername(), comment, Calendar.getInstance())) {
+				notificationService.generateCommentNotification(user, idPost);
+				return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+			}
 
 		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}

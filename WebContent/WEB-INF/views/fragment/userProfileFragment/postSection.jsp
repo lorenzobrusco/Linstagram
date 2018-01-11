@@ -22,9 +22,11 @@
 	<div class="col-md-4 col-sm-6 post-section">
 		<div id="${post.id }" class="post">
 			<c:forEach items="${post.media}" var="media">
-				<a href="post?id=${post.id }"> <img
-					class="picture img-responsive" src="${media.url }">
-				</a>
+				<div class="crop-img">
+					<a href="post?id=${post.id }"> <img
+						class="picture img-responsive" src="${media.url }">
+					</a>
+				</div>
 			</c:forEach>
 			<div class="links">
 				<a><span class="fa fa-heart"> ${fn:length(post.likes)}</span></a> <a><span

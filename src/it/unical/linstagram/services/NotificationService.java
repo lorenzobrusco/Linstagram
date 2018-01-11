@@ -37,7 +37,8 @@ public class NotificationService {
 	 * @param notification
 	 */
 	public void saveNotification(Notification notification) {
-		modelDAO.save(notification);
+//		if(!notificationDAO.existsNotification(notification))
+			modelDAO.save(notification);
 	}
 	
 	/**
@@ -58,8 +59,18 @@ public class NotificationService {
 	public void generateLikeNotification(User user, int idPost) {
 		final Post post = postDAO.getPostById(idPost);
 		final Notification notification = new Notification(user, post.getUser(), post, null, NotificationType.LIKE);
-		modelDAO.save(notification);
-		System.out.println("notification");
+		this.saveNotification(notification);
+	}
+	
+	/**
+	 * Generate comment when user comments a post
+	 * @param user
+	 * @param idPost
+	 */
+	public void generateCommentNotification(User user, int idPost) {
+		final Post post = postDAO.getPostById(idPost);
+		final Notification notification = new Notification(user, post.getUser(), post, null, NotificationType.COMMENT);
+		this.saveNotification(notification);
 	}
 
 	/**
@@ -71,7 +82,7 @@ public class NotificationService {
 	public void generateFollowNotification(User user, String follow) {
 		final User userToFollow = userDAO.getUserByUsername(follow);
 		final Notification notification = new Notification(user, userToFollow, null, null, NotificationType.FOLLOW);
-		modelDAO.save(notification);
+		this.saveNotification(notification);
 	}
 
 	/**
