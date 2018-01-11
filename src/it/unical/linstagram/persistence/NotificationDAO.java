@@ -1,5 +1,6 @@
 package it.unical.linstagram.persistence;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -15,7 +16,7 @@ public class NotificationDAO implements INotificationDAO {
 	public List<Notification> getAllNotification(User user) {
 		final Session session = HibernateUtil.getSession();
 		final List<Notification> notifications = session
-				.createQuery("FROM Notification n WHERE n.userTo=:user order by n.date desc", Notification.class).setParameter("user", user)
+				.createQuery("FROM Notification n join fetch n.post.media m WHERE n.userTo=:user order by n.date desc", Notification.class).setParameter("user", user)
 				.list();
 		session.close();
 		return notifications;
@@ -32,11 +33,12 @@ public class NotificationDAO implements INotificationDAO {
 	
 	public boolean isAlreadyFollower(User userTo,User userFrom) {
 		final Session session = HibernateUtil.getSession();
-		final boolean notifications = 
-			 (boolean) session.createQuery("SELECT EXISTS (FROM following f WHERE f.followed=:userFrom and f.following=:userTo)")
-			 	.setParameter("userTo", userTo).setParameter("userFrom", userFrom).getSingleResult();
+		final BigInteger notifications = 
+			 (BigInteger) session.createNativeQuery("Select count(*) FROM following as f "
+			 		+ "WHERE f.followed=:userFrom and f.following=:userTo")
+			 	.setParameter("userTo", userTo.getId()).setParameter("userFrom", userFrom.getId()).getSingleResult();
 		session.close();
-		return notifications;
+		return notifications !=BigInteger.ZERO;
 	}
 	
 	public boolean isAlreadyFollowing(User userTo,User userFrom) {
