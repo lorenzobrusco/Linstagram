@@ -28,14 +28,16 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers("index/**").access("hasRole('ROLE_USER')")
-		.and()
-		.formLogin().loginPage("/").loginProcessingUrl("/signInAttempt").permitAll()
-		.usernameParameter("username").passwordParameter("password")
-		.defaultSuccessUrl("/index")
-		.failureUrl("/")				
-		.and()
-		.logout().logoutUrl("/logout").permitAll(); 
-
+		.antMatchers("/login","/resources/**").permitAll()
+		.antMatchers("/**").access("hasRole('ROLE_USER')")
+        .and()
+        .formLogin()//enable form based authentication
+        .loginPage("/login")//use a custom login URI
+        .permitAll(true)
+		.defaultSuccessUrl("/setUserSession",true)
+        .and()
+        .logout()//default logout handling
+        .logoutSuccessUrl("/login?logout")//our new logout success url, we are not replacing other defaults.
+        .permitAll();//allow all as it will be accessed when user is not logged in anymore
 	}
 }
