@@ -15,7 +15,11 @@ function UploadPic(canvas,filename) {
 //		console.log(blob);
 		var formData = new FormData();
 		formData.append('file', blob,filename);
-		formData.append('postDescription', $("#create-post-modal #post-description-input").val());
+		var postDescription=$("#create-post-modal #post-description-input").val();
+		//preventing injection
+		var safetext = $( $.parseHTML(postDescription) ).text();
+
+		formData.append('postDescription', safetext);
 		$.ajax({
 			type: 'POST',
 			url: 'createPost',

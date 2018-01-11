@@ -12,7 +12,6 @@
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
 	type="image/x-icon">
-<script src="${pageContext.request.contextPath}/resources/js/navbar.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/search_event.js"></script>
 
 <header>
@@ -74,6 +73,28 @@
 	$(document)
 			.ready(
 					function() {
+						
+						// NOTIFICATION BADGE
+						function updateNotificationBadge(){
+							$.ajax({
+								url : "notificationToSee",
+								type : "POST",
+								success : function(result) {
+									if(result > 0){
+										var badge_notification="<span class='badge'>"+ result + "</span>"
+										$(".badge").remove();
+										$("#notification").append(badge_notification);
+									}
+								}
+							});
+						}
+						
+						updateNotificationBadge();
+						window.setInterval(function() {
+							updateNotificationBadge();
+						},60000);
+						
+					// =========================================
 
 						//mobile navbar event
 						if ($("#navbar-mobile").css('display') != "none") {

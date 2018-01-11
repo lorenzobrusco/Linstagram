@@ -84,6 +84,8 @@ $(document).ready(function(){
 	$('#notification').click(function (e) {
 		e.preventDefault();
 		notification.html("");
+		$('#profile').popover('hide');
+		
 		if(!notification.hasClass("hide")){
 			notification.addClass("hide");
 			arrow.addClass("hide");
