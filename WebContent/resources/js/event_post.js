@@ -113,12 +113,15 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : "addComment",
-			data:{postID:postID, comment:comm},
+			data: {postID:postID, comment:comm},
 			success : function(result) {		
-				if(result == "OK") {
+				if(result != "Failed") {
+					console.log(result);
 					$("#comment"+postID).val('');
 					$(listComment).append("<div class='comment'><a href='userPage?usernameOther="+username+"'><b>"+username+"</b></a>"+
-							"<span>"+comm+"</span></div>");
+							"<span class='comment_body'></span></div>");
+					//block injection in comment
+					$(".comment_body").text(result);
 				}
 			}
 		});
