@@ -140,8 +140,8 @@ public class PostService {
 		return false;
 	}
 
-	public User insertBookmark(String username, int idPost) {
-		User u = userDAO.getUserByUsername(username);
+	public User insertBookmark(User u, int idPost) {
+//		User u = userDAO.getUserByUsername(username);
 		Post post = postDAO.getPostById(idPost);
 		u.getBookmarks().add(post);
 

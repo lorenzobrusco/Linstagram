@@ -37,6 +37,7 @@ public class UserDAO implements IUserDAO {
 		user.getFollowings().size();
 		user.getPosts().size();
 		user.getTagged().size();
+		user.getBookmarks().size();
 
 		session.close();
 		return user;
