@@ -77,24 +77,27 @@ Signed in</label>
 						<form method="post" class="sign-up-htm">
 							<div class="group">
 								<label for="user" class="label">Username</label> <input
-									id="user" name="username" type="text" class="input" required>
+									id="user" name="username" type="text" class="input" value="manuel"required>
 							</div>
 							<div class="group">
 								<label for="email" class="label">Email Address</label> <input
-									id="email" type="email" name="email" class="input" required>
+									id="email" type="email" name="email" class="input" value="cacs@cg.com" required>
 							</div>
 							<div class="group">
 								<label for="password-field" class="label">Password</label> <input
-									name="password" type="password" class="input"
+									name="password" type="password" class="input" value="ciccio"
 									data-type="password" id="password-field" required>
 							</div>
 							<div class="group">
 								<label for="password-repeat" class="label">Repeat
-									Password</label> <input type="password" class="input"
+									Password</label> <input type="password" class="input" value="ciccio"
 									data-type="password" id="password-repeat" required>
 							</div>
 							<div class="hr"></div>
 							<div class="group">
+							
+							<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" /> 
 								<button class="button" id="signup-btn">Sign Up</button>
 							</div>
 						</form>
@@ -113,8 +116,8 @@ Signed in</label>
 						const SUCCESS_SING_UP = "SUCCESS_SIGN_UP";
 						const EMAIL_ALREADY_USED = "ERROR_EMAIL_ALREADY_USED";
 						const USERNAME_ALREADY_USED = "ERROR_USERNAME_ALREADY_USED";
-
-						function validationMail(mail) {
+						
+						 function validationMail(mail) {
 							console.log(mail);
 							var mail_pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 							if (mail == '')
@@ -168,7 +171,6 @@ Signed in</label>
 							$("#loader").addClass("hide");
 							$(".login-wrap").removeClass("hide");
 						}
-
 						$("#signup-btn")
 								.click(
 										function(e) {
@@ -203,8 +205,7 @@ Signed in</label>
 
 														if (validationMail(email)) {
 															showLoading();
-															$
-																	.ajax({
+															$.ajax({
 																		url : "signUpAttempt",
 																		method : 'post',
 																		data : {
@@ -214,7 +215,6 @@ Signed in</label>
 																		},
 																		success : function(
 																				result) {
-
 																			if (result == EMAIL_ALREADY_USED) {
 																				hideLoading();
 																				buildNoty("Sorry, but the entered EMAIL is ALREADY USED");

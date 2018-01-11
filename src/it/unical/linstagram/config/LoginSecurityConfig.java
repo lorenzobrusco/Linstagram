@@ -28,6 +28,7 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
+		.antMatchers("/login/signUpAttempt").permitAll()
 		.antMatchers("/login","/resources/**").permitAll()
 		.antMatchers("/**").access("hasRole('ROLE_USER')")
         .and()

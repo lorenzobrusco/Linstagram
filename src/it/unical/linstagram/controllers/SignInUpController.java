@@ -36,7 +36,7 @@ public class SignInUpController {
 
 	@RequestMapping(value = "/forgotPasswordPage", method=RequestMethod.POST)
 	public String getForgotPasswordPage() {
-		return "fragment/forgotPassword";
+		return "fragment/forgotyPassword";
 	}
 
 	@ResponseBody
@@ -53,9 +53,10 @@ public class SignInUpController {
 
 	}
 
-	@RequestMapping(value = "/signUpAttempt", method = RequestMethod.POST)
+	@RequestMapping(value = "/login/signUpAttempt", method = RequestMethod.POST)
 	@ResponseBody
 	public String signUp(@RequestParam String email, @RequestParam String username, @RequestParam String password) {
+		System.out.println("CIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 		MessageCode signUpAttempt = signInService.signUpAttempt(email, username, password);
 		mediaService.createImageDefault();
 		return signUpAttempt.toString();
@@ -76,10 +77,9 @@ public class SignInUpController {
 	//		}
 	//		return "redirect:/";
 	//	}
-	@RequestMapping(value="/setUserSession")
+	@RequestMapping(value="login/setUserSession")
 	public String signIn(HttpSession session, Principal principal) {
 		User user = userService.getUser(principal.getName());
-		System.out.println("CIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 		session.setAttribute("user", user);
 		return "redirect:/";
 	}
