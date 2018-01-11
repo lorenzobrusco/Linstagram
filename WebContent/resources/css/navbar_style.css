@@ -85,15 +85,18 @@ header {
 
 #search-div {
   width: 50%;
+  margin-left: 6%;
   transition: width 0.5s ease-in-out;
 }
 
-#search-form>div>input {
+#search-form>div>input[type=text] {
+	background-color: #eee !important;
 	border-radius: 3px;
 	max-height: 25px;
 	position: relative;
 	top: 10px;
 	outline: none;
+	text-align:center;
 }
 
 #search-form>div>input:focus {
