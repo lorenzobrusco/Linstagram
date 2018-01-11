@@ -196,6 +196,7 @@ footer {
 .picture {
 	width: 100%;
 	height: 300px;
+	object-fit: cover;	
 }
 
 .post-section {
@@ -294,7 +295,6 @@ footer {
 	background-color: #fff;
 	border: 0.5px solid #ddd;
 	border-radius: 3px;
-	width: 100%;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -404,19 +404,49 @@ footer {
 	cursor: pointer;
 }
 
-#logout-mobile-btn{
-		display:none;
-		color:white !important;
+#logout-mobile-btn {
+	display: none;
+	color: white !important;
+}
+
+.private-switch {
+			display:inline ! important;
+	margin-left: -43%;
 }
 
 @media ( max-width : 800px) {
 	.user-img-container {
 		margin-bottom: 20px;
 	}
-	#logout-mobile-btn{
-		display:block;
+	#logout-mobile-btn {
+		display: block;
 		position: relative;
 		bottom: 6px;
 	}
-	
+	.content-modify-profile .modify-profile .photo {
+		margin: 0 64px 0 30px !important;
+		width: 82% !important;
+	}
+	.content-modify-profile .modify-profile .info {
+		margin: 0 0 !important;
+	}
+	.content-modify-profile .modify-profile .info label {
+		display: block !important;
+	}
+	.content-modify-profile .modify-profile .info .input-inline {
+		width: 100% !important; 
+	}
+	.private-switch {
+		margin-left: 0 ! important;
+	}
+	.confirm-btn {
+    margin: 11% 0 5% 0% ! important;
+	}
+	.container {
+    padding-right: 0 !important;
+    padding-left: 0 !important; 
+	}
+	.content-modify-profile {
+    margin-top: 0 !important;
+	}
 }

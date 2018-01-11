@@ -1,23 +1,23 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+@import
+	url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 
 @font-face {
-  font-family: 'Billabong';
-  font-style: normal;
-  font-weight: normal;
-  src: local('font/Billabong'), url('font/Billabong.woff') format('woff');
+	font-family: 'Billabong';
+	font-style: normal;
+	font-weight: normal;
+	src: local('font/Billabong'), url('font/Billabong.woff') format('woff');
 }
 
-body,
-html {
-  background: #fafafa;
-  margin: 0;
-  padding: 0;
+body, html {
+	background: #fafafa;
+	margin: 0;
+	padding: 0;
 }
 
 * {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  font-family: "Open Sans", sans-serif;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: "Open Sans", sans-serif;
 }
 
 .content-post {
@@ -33,17 +33,19 @@ html {
 .content-post .posts .img-post-page {
 	width: 100%;
 	height: 600px;
+	object-fit: cover;
 }
 
-.content-post .details{
+.content-post .details {
 	height: 600px;
 	display: flex;
-  flex-direction: column;
+	flex-direction: column;
 }
 
-.content-post .details .details-post{
+.content-post .details .details-post {
 	padding: 20px 0;
 }
+
 .content-post .details .details-post .user-img-post {
 	background: rgba(0, 0, 0, .25);
 	padding: 1px;
@@ -56,117 +58,112 @@ html {
 	margin: 0 16px 0 32px;
 }
 
-.content-post .comments{
+.content-post .comments {
 	margin: 0 16px;
 	flex-grow: 10;
-} 
-
-.content-post .comments .list-comments-section{
-	 max-height: 333px;
-   overflow-y: scroll;
 }
 
-.content-post .action-section{
+.content-post .comments .list-comments-section {
+	max-height: 333px;
+	overflow-y: scroll;
+}
+
+.content-post .action-section {
 	flex-grow: 0;
 }
 
-
 .action-section {
-  padding: 0 16px;
+	padding: 0 16px;
 }
 
-.react div{
-  margin-top: 4px;
-  position: relative;
-  display: inline-block;
+.react div {
+	margin-top: 4px;
+	position: relative;
+	display: inline-block;
 }
 
 .react a {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  margin-right: 10px;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	margin-right: 10px;
 }
 
 .react a:last-child {
-  margin-right: 0
+	margin-right: 0
 }
 
-.react i{
-	margin:0px 7px 5px 0px;
+.react i {
+	margin: 0px 7px 5px 0px;
 }
 
 .react .love {
-  display: inline-block;
+	display: inline-block;
 }
 
 .react .loveFull {
-  display: inline-block;
+	display: inline-block;
 }
 
-.react .loveFull i{
-	color:red;
+.react .loveFull i {
+	color: red;
 }
 
 .react .comment {
-  background-image: url(../images/icons.png);
-  background-position: -407px -26px;
-  height: 24px;
-  width: 27px;
-  display: inline-block;
+	background-image: url(../images/icons.png);
+	background-position: -407px -26px;
+	height: 24px;
+	width: 27px;
+	display: inline-block;
 }
 
 .react .save {
-  display: inline-block;
+	display: inline-block;
 }
 
-.caption-section,
-.list-comments-section {
-  color: #585858;
-  font-size: 13px;
-  max-height: 332px;
-}
-
-.show-all-comments, .hide-all-comments  {
-  font-size: 0.9em;
-  color: #999999ba !important;
-
-}
-
-.caption-section a,
-.list-comments-section a {
-  margin-right: .3em;
-  font-weight: 600;
+.caption-section, .list-comments-section {
+	color: #585858;
+	font-size: 13px;
+	max-height: 332px;
 }
 
 .show-all-comments, .hide-all-comments {
-  margin-right: .3em;
-  font-weight: 600;
-  color: #999999ba;
-  margin-top: 5px;
+	font-size: 0.9em;
+	color: #999999ba !important;
+}
+
+.caption-section a, .list-comments-section a {
+	margin-right: .3em;
+	font-weight: 600;
+}
+
+.show-all-comments, .hide-all-comments {
+	margin-right: .3em;
+	font-weight: 600;
+	color: #999999ba;
+	margin-top: 5px;
 }
 
 .comment-section {
-  position: relative;
-  border-top: 1px solid #efefef;
-  padding: 10px;
-  margin-top: 4px;
-  overflow: hidden;
-  width: 100%;
-  display: inline-block;
+	position: relative;
+	border-top: 1px solid #efefef;
+	padding: 10px;
+	margin-top: 4px;
+	overflow: hidden;
+	width: 100%;
+	display: inline-block;
 }
 
 .comment-text {
-  outline: none;
-  overflow-x: scroll;
-  padding: 0;
-  background: none;
-  border: none;
-  width: 90%;
-  height: 18px;
-  max-height: 80px;
-  resize: none;
-  
+	outline: none;
+	overflow-x: scroll;
+	padding: 0;
+	background: none;
+	border: none;
+	width: 85%;
+	height: 18px;
+	max-height: 80px;
+	resize: none;
 }
 
 .submit_comment {
@@ -175,22 +172,27 @@ html {
 	height: 24px;
 	width: 27px;
 	float: right;
-	
 	background-color: #ffffff;
 	color: inherit;
-    border: none;
-    padding: 0! important;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit !important;
+	border: none;
+	padding: 0 ! important;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit !important;
 }
 
-@media (max-width: 800px) {
-	.content-post{
+@media ( max-width : 1000px) {
+	.content-post {
 		height: 100% ! important;
 	}
-	
 }
 
-
-
+@media ( max-width : 800px) {
+	.content-post {
+		height: 100% ! important;
+	}
+	.row {
+		margin-right: -15px;
+		margin-left: -15px;
+	}
+}

@@ -96,9 +96,11 @@ public class PostController {
 			@RequestParam("comment") String comment) {
 		User user = (User) session.getAttribute("user");
 		if (!comment.equals(""))
-			if (postService.insertComment(idPost, user.getUsername(), comment, Calendar.getInstance()))
+			if (postService.insertComment(idPost, user.getUsername(), comment, Calendar.getInstance())) {
+				notificationService.generateCommentNotification(user, idPost);
 				return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
-
+			}
+		
 		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
 	}
 

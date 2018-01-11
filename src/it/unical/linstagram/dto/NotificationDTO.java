@@ -36,7 +36,7 @@ public class NotificationDTO {
 		this.isPrivateTo = notification.getUserTo().isPrivateProfile();
 		this.isPrivateFrom = notification.getUserFrom().isPrivateProfile();
 		if (notification.getType().equals(NotificationType.COMMENT)) {
-			this.context = String.format("commented your post: %s", notification.getComment().getContent());
+			this.context = "commented your post";
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 			this.idPost = notification.getPost().getId();
 		} else if (notification.getType().equals(NotificationType.LIKE)) {

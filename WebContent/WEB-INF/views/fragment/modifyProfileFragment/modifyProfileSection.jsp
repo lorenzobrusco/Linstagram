@@ -79,7 +79,7 @@ function verify_check(cb) {
 				<div class="input-inline">
 					<c:choose>
 						<c:when test="${user.privateProfile == true}">
-							<label for="private" style="margin-left: -41%">Private</label>
+							<label class="private-switch" for="private" >Private</label>
 							<label class="switch pull-right"> <input
 								onClick="verify_check(this)" type="checkbox" id="checkbox"
 								checked> <span class="slider round"></span> <input
@@ -87,7 +87,7 @@ function verify_check(cb) {
 							</label>
 						</c:when>
 						<c:otherwise>
-							<label for="private" style="margin-left: -41%">Private</label>
+							<label class="private-switch" for="private" >Private</label>
 							<label class="switch pull-right"> <input
 								onClick="verify_check(this)" type="checkbox" id="checkbox">
 								<span class="slider round"></span> <input type="hidden"
