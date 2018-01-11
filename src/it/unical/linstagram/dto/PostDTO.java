@@ -173,7 +173,7 @@ public class PostDTO {
 			Collections.sort(tagsSorted, (o1, o2) -> o2.getUsername().length()-o1.getUsername().length());
 			
 			for (User u : tags) {
-				content = content.replaceAll("@"+u.getUsername(), "<a href='userPage?usernameOther="+u.getUsername()+"'>"+"@"+u.getUsername()+"</a>");
+				content = content.replaceAll("@"+u.getUsername(), "<a href='userPage?username="+u.getUsername()+"'>"+"@"+u.getUsername()+"</a>");
 			}
 		}
 		if (hashtags.size() != 0)

@@ -42,7 +42,7 @@ public class NotificationDAO implements INotificationDAO {
 	}
 	
 	public boolean isAlreadyFollowing(User userTo,User userFrom) {
-		return isAlreadyFollower(userFrom,userFrom);
+		return isAlreadyFollower(userFrom,userTo);
 	}
 
 }
