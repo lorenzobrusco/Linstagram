@@ -78,9 +78,9 @@
 						</div>
 						<div class='caption-section'>
 							<a href='userPage?username=${post.user.username}'>${post.user.username }</a>
-							<span>${post.content}</span>
+							<span class="post_cont_${post.id}">${post.content}</span>
 						</div>
-
+						
 						<div class='list-comments-section'>
 							<a class="show-all-comments" href="#postcibo"
 								data-toggle="collapse"><span class="show-comments"></span>
