@@ -53,7 +53,7 @@ public class SignInUpController {
 
 	}
 
-	@RequestMapping(value = "/login/signUpAttempt", method = RequestMethod.POST)
+	@RequestMapping(value = "signUpAttempt", method = RequestMethod.POST)
 	@ResponseBody
 	public String signUp(@RequestParam String email, @RequestParam String username, @RequestParam String password) {
 		System.out.println("CIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
@@ -77,7 +77,7 @@ public class SignInUpController {
 	//		}
 	//		return "redirect:/";
 	//	}
-	@RequestMapping(value="login/setUserSession")
+	@RequestMapping(value="setUserSession")
 	public String signIn(HttpSession session, Principal principal) {
 		User user = userService.getUser(principal.getName());
 		session.setAttribute("user", user);

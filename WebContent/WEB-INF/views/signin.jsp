@@ -10,6 +10,9 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+ <meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -26,6 +29,7 @@
 	href="${pageContext.request.contextPath}/resources/css/lib/noty/themes/nest.css">
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
+
 </head>
 
 <body>
@@ -77,11 +81,13 @@ Signed in</label>
 						<form method="post" class="sign-up-htm">
 							<div class="group">
 								<label for="user" class="label">Username</label> <input
-									id="user" name="username" type="text" class="input" value="manuel"required>
+									id="user" name="username" type="text" class="input"
+									value="mael" required>
 							</div>
 							<div class="group">
 								<label for="email" class="label">Email Address</label> <input
-									id="email" type="email" name="email" class="input" value="cacs@cg.com" required>
+									id="email" type="email" name="email" class="input"
+									value="cas@cg.com" required>
 							</div>
 							<div class="group">
 								<label for="password-field" class="label">Password</label> <input
@@ -95,9 +101,9 @@ Signed in</label>
 							</div>
 							<div class="hr"></div>
 							<div class="group">
-							
-							<input type="hidden" name="${_csrf.parameterName}"
-									value="${_csrf.token}" /> 
+
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
 								<button class="button" id="signup-btn">Sign Up</button>
 							</div>
 						</form>
@@ -113,11 +119,18 @@ Signed in</label>
 	$(document)
 			.ready(
 					function() {
+						$(function () {
+						    var token = $("meta[name='_csrf']").attr("content");
+						    var header = $("meta[name='_csrf_header']").attr("content");
+						    $(document).ajaxSend(function(e, xhr, options) {
+						        xhr.setRequestHeader(header, token);
+						    });
+						});
 						const SUCCESS_SING_UP = "SUCCESS_SIGN_UP";
 						const EMAIL_ALREADY_USED = "ERROR_EMAIL_ALREADY_USED";
 						const USERNAME_ALREADY_USED = "ERROR_USERNAME_ALREADY_USED";
-						
-						 function validationMail(mail) {
+
+						function validationMail(mail) {
 							console.log(mail);
 							var mail_pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 							if (mail == '')
@@ -205,7 +218,8 @@ Signed in</label>
 
 														if (validationMail(email)) {
 															showLoading();
-															$.ajax({
+															$
+																	.ajax({
 																		url : "signUpAttempt",
 																		method : 'post',
 																		data : {
