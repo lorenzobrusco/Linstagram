@@ -43,12 +43,17 @@ public class ProfileController {
 	
 	
 	@RequestMapping("profile")
-	public String getSignInPage(HttpSession session, Model model) {
+	public String getProfilePage(HttpSession session, Model model) {
 		if(UserManager.checkLogged(session)) {
 			User user = (User) session.getAttribute("user");
 			
 			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
 			model.addAttribute("posts", postOfUser);
+			System.out.println(">>>:"+user);
+			User initializeFollowersAndFollowings = userService.initializeFollowersAndFollowings(user);
+			System.out.println("AaX:"+initializeFollowersAndFollowings.getFollowers().size());
+			session.setAttribute("user", initializeFollowersAndFollowings);
+			
 			return "profile";
 		}
 		return "redirect:/";

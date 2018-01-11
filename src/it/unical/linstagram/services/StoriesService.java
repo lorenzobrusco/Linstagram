@@ -9,11 +9,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.unical.linstagram.dto.UsersStoriesDTO;
-import it.unical.linstagram.dto.UserViewerDTO;
 import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
-import it.unical.linstagram.dto.UserDTO;
+import it.unical.linstagram.dto.UserViewerDTO;
+import it.unical.linstagram.dto.UsersStoriesDTO;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
@@ -54,7 +53,6 @@ public class StoriesService {
 		usersStories.put(user.getId(),userStoriesDTO);
 		
 		for (Story story : userStories) {
-			
 			StoryDTO storyDTO = new StoryDTO(story,story.isAViewer(user));
 			userStoriesDTO.addStoryDTO(storyDTO);
 		}

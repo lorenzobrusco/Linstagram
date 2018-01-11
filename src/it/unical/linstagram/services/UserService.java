@@ -10,12 +10,9 @@ import org.springframework.stereotype.Service;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
-import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
-import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.RequestFollow;
-import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -68,11 +65,19 @@ public class UserService {
 		
 		User userOther = userDAO.getUserByUsername(usernameOther);
 		
-		List<User> userFollowing = userDAO.getFollowingByUsername(user.getUsername());
+//		List<User> userFollowing = userDAO.getFollowingByUsername(user.getUsername());
+//		userOther = (User) modelDAO.initialize(userOther, "followings");
+//		userOther = (User) modelDAO.initialize(userOther, "followers");
+//		userOther = (User) modelDAO.initialize(userOther, "posts");
+//		userOther = (User) modelDAO.initialize(userOther, "tagged");
+
+		System.out.println(userOther);
+		//TODO differenziare gli initializze se è public o private
+		
 		boolean request_send = userDAO.existRequestFollow(usernameOther, user.getUsername());
 		boolean request_received = userDAO.existRequestFollow(user.getUsername(), usernameOther);
-		
-		for (User u : userFollowing) {
+		System.out.println("QUANTI MINCHIA SONO:"+userOther.getFollowings());
+		for (User u : userOther.getFollowings()) {
 			if (u.getId() == userOther.getId()) {
 				return new UserPublicDTO(userOther, true, request_send, request_received);
 			}
@@ -190,6 +195,11 @@ public class UserService {
 	
 	public boolean isPrivate(String username) {
 		return userDAO.isPrivateByUsername(username);
+	}
+	
+	public User initializeFollowersAndFollowings(User u) {
+		User user1=(User) modelDAO.initialize(u,"followings");
+		return (User) modelDAO.initialize(user1,"followers");
 	}
 	
 }

@@ -59,7 +59,6 @@ public class SignInUpController {
 	@RequestMapping(value="/signInAttempt",method=RequestMethod.POST)
 	public String signIn(@RequestParam String username, @RequestParam String password, HttpSession session) {
 		MessageResponse signInAttemptResp = signInService.signInAttempt(username, password);
-		//		System.out.println(signInAttempt);
 		if (signInAttemptResp.getMessageCode() == MessageCode.SUCCESS_SIGN_IN) {
 			if(signInAttemptResp.getObj() instanceof User) {
 				User user= (User) signInAttemptResp.getObj();

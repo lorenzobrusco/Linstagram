@@ -61,7 +61,7 @@
 						</div>
 						<div class="row item-user-info">
 							<ul>
-								<li><span><b>${fn:length(user.posts)}</b></span> post</li>
+								<li><span><b>${fn:length(posts)}</b></span> post</li>
 								<li id="follower" data-toggle="modal"
 									data-target="#modalFollower"><span><b>${fn:length(user.followers)}</b></span>
 									follower</li>
@@ -136,7 +136,7 @@
 	<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
 	<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
 	
-	<jsp:include page="./fragment/userProfileFragment/modalPost.jsp"></jsp:include>
+	<!-- <jsp:include page="./fragment/userProfileFragment/modalPost.jsp"></jsp:include> -->
 </body>
 
 

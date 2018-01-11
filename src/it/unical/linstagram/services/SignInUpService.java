@@ -34,19 +34,22 @@ public class SignInUpService {
 		EmailValidator ev = EmailValidator.getInstance();
 		User user = null;
 		if (ev.isValid(access)) {
+			//TODO: prova a loggare con email
 			String savedPassword = userDao.getPasswordByEmail(access);
 			String passEncrypted = EncryptPassword.checkPassword(password, savedPassword);
 			
-			if (passEncrypted != null)
+			if (passEncrypted != null) {
 				user = userDao.getUserByEmailAndPass(access, passEncrypted);
+			}
 			else
 				user = null;
 		} else {
 			String savedPassword = userDao.getPasswordByUsername(access);
 			String passEncrypted = EncryptPassword.checkPassword(password, savedPassword);
 //			System.out.println("saved:"+savedPassword);
-			if (passEncrypted != null)
+			if (passEncrypted != null) {
 				user = userDao.getUserByUsernameAndPass(access, passEncrypted);
+			}
 			else
 				user = null;
 		}

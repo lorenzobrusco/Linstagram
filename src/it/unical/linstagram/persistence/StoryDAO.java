@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import it.unical.linstagram.model.Story;
@@ -80,6 +79,8 @@ public class StoryDAO implements IStoryDAO{
 				.setParameter("fUsers",followedUsers)
 				.setParameter("dayLimit", dayLimit)
 				.list();
+		
+		
 		session.close();
 		return stories;
 	}

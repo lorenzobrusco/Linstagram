@@ -1,8 +1,10 @@
 package it.unical.linstagram.persistence;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
@@ -89,5 +91,28 @@ public class ModelDAO {
 			session.close();
 		}
 	}
+	
+	
+	public Object initialize(Object detachedParent,String fieldName) {
+	    Session session = HibernateUtil.getSession();
+		Object reattachedParent = session.merge(detachedParent); 
+
+	    // get the field from the entity and initialize it
+	    Field fieldToInitialize;
+		try {
+			fieldToInitialize = detachedParent.getClass().getDeclaredField(fieldName);
+			fieldToInitialize.setAccessible(true);
+			Object objectToInitialize = fieldToInitialize.get(reattachedParent);
+			Hibernate.initialize(objectToInitialize);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+			
+		}
+		return reattachedParent;
+
+	}
+
 
 }

@@ -35,7 +35,14 @@ public class PostDAO implements IPostDAO {
 		Session session = HibernateUtil.getSession();
 
 		List<Post> posts = session.createQuery("FROM Post p LEFT OUTER join fetch p.hashtags h order by p.postDate desc").list();
-
+		
+		for (Post post : posts) {
+			post.getTags().size();
+			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
+		
 		session.close();
 		return posts;
 	}
@@ -45,10 +52,15 @@ public class PostDAO implements IPostDAO {
 
 		Post post = session.createQuery("FROM Post p WHERE p.id=:idPost", Post.class)
 				.setParameter("idPost", idPost).uniqueResult();
-
+		post.getTags().size();
+		post.getHashtags().size();
+		post.getMedia().size();
+		post.getLikes().size();
+		
 		session.close();
 		return post;
 	}
+	
 	public List<Post> getLastPosts(String username,Calendar calendar, int last){
 		Session session = HibernateUtil.getSession();
 
@@ -57,15 +69,25 @@ public class PostDAO implements IPostDAO {
 		List<Post> posts = new ArrayList<>();
 		Query query = null;
 		if(!followedUsers.isEmpty())
-			query = session.createQuery("SELECT p FROM Post p  WHERE p.user in (:fUsers) or p.user.username=:username order by p.postDate desc")
+			query = session.createQuery("SELECT p FROM Post p "
+					+ "WHERE p.user in (:fUsers) or p.user.username=:username order by p.postDate desc")
 			.setParameter("fUsers",followedUsers).setParameter("username", username);
 		else
-			query = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.postDate desc")
+			query = session.createQuery("SELECT p FROM Post p "
+					+ "WHERE p.user.username=:username order by p.postDate desc")
 			.setParameter("username", username);
-
+		
 		query.setFirstResult(last);
 		query.setMaxResults(MAX_RESULTS_POST);
 		posts = query.list();
+		
+		for (Post post : posts) {
+			post.getTags().size();
+			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
+		
 		session.close();
 
 		return posts;
@@ -88,6 +110,13 @@ public class PostDAO implements IPostDAO {
 		query.setFirstResult(last);
 		query.setMaxResults(MAX_RESULTS_POST);
 		posts = query.list();
+		
+		for (Post post : posts) {
+			post.getTags().size();
+			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
 		session.close();
 
 		return posts;	
@@ -105,6 +134,14 @@ public class PostDAO implements IPostDAO {
 		else
 			posts = session.createQuery("SELECT p FROM Post p  WHERE p.user.username=:username order by p.postDate desc")
 			.setParameter("username", username).list();
+		
+		for (Post post : posts) {
+			post.getTags().size();
+			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
+		
 		session.close();
 		return posts;
 	}
@@ -182,7 +219,12 @@ public class PostDAO implements IPostDAO {
 		query.setFirstResult(last);
 		query.setMaxResults(MAX_RESULTS_POST);
 		List<Post> posts = query.list();
-
+		for (Post post : posts) {
+			post.getTags().size();
+			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
 		session.close();
 		return posts;
 	}

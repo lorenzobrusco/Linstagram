@@ -28,6 +28,7 @@ public class OtherUserController {
 	@Autowired
 	private NotificationService notificationService;
 
+	//TODO:to remove
 	@RequestMapping("/usersList")
 	public String usersListPage(HttpSession session, Model model) {
 		if (UserManager.checkLogged(session)) {
@@ -40,7 +41,8 @@ public class OtherUserController {
 
 	@RequestMapping("userPage")
 	public String getUserPage(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
-
+		if(!UserManager.checkLogged(session)) return "redirect:/"; 
+		
 		User user = (User) session.getAttribute("user");
 		if (usernameOther.equals(user.getUsername()))
 			return "redirect:/profile";
@@ -48,6 +50,7 @@ public class OtherUserController {
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
 		List<Post> postOfUser = userService.getPostOfUser(usernameOther);
 		model.addAttribute("userPublic", userDTO);
+		//TODO sostituisci con userDTO.getPost()
 		model.addAttribute("posts", postOfUser);
 
 		return "otherUserProfile";

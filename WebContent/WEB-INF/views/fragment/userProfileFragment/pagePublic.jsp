@@ -17,7 +17,7 @@
 <div class="row item-user-info">
 	<input id="username_hidden" type="hidden" name="username_hidden" value="${userPublic.username}"/>
 	<ul>
-		<li><span><b>${fn:length(userPublic.posts)}</b></span> post</li>
+		<li><span><b>${fn:length(posts)}</b></span> post</li>
 		<li id="follower" data-toggle="modal" data-target="#modalFollower">
 		<span><b id="count_follower">${fn:length(userPublic.followers)}</b></span> follower</li>
 		<li id="following" data-toggle="modal" data-target="#modalFollowing">
