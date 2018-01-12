@@ -32,13 +32,13 @@ public class UserDAO implements IUserDAO {
 		User user = (User) session.createQuery("FROM  User u where u.username=:username")
 				.setParameter("username", username).uniqueResult();
 		//		Hibernate.initialize(user.getPosts());
-		
-		user.getFollowers().size();
-		user.getFollowings().size();
-		user.getPosts().size();
-		user.getTagged().size();
-		user.getBookmarks().size();
-
+		if(user != null) {
+			user.getFollowers().size();
+			user.getFollowings().size();
+			user.getPosts().size();
+			user.getTagged().size();
+			user.getBookmarks().size();
+		}
 		session.close();
 		return user;
 	}

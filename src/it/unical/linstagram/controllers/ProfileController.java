@@ -48,9 +48,7 @@ public class ProfileController {
 			
 			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
 			model.addAttribute("posts", postOfUser);
-			System.out.println(">>>:"+user);
 			User initializeFollowersAndFollowings = userService.initializeFollowersAndFollowings(user);
-			System.out.println("AaX:"+initializeFollowersAndFollowings.getFollowers().size());
 			session.setAttribute("user", initializeFollowersAndFollowings);
 			
 			return "profile";

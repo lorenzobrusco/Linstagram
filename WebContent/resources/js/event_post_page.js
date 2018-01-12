@@ -104,7 +104,7 @@ $(document).ready(function() {
 
 
 	//EVENTO "INSERIMENTO COMMENTO"
-	$(document).on('click', '.submit_comment', function() {
+	$(document).on('click', '.submit_comment', function() {		
 		var postID = $(this).attr('id');
 		var comm = $("#comment"+postID).val();
 		var username = $("#username").val();
@@ -113,12 +113,13 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : "addComment",
-			data:{postID:postID, comment:comm},
+			data: {postID:postID, comment:comm},
 			success : function(result) {		
-				if(result == "OK") {
+				if(result != "Failed") {
+					var res = $( $.parseHTML(result) ).text();
 					$("#comment"+postID).val('');
-					$(listComment).append("<div class='comment'><a href='userPage?usernameOther="+username+"'><b>"+username+"</b></a>"+
-							"<span>"+comm+"</span></div>");
+					$(listComment).append("<div class='comment'><a href='userPage?username="+username+"'><b>"+username+"</b></a>"+
+							"<span class='comment_body'>"+res+"</span></div>");
 				}
 			}
 		});

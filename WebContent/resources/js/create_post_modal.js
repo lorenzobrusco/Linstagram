@@ -47,16 +47,16 @@ function UploadPic(canvas,filename) {
 }
 
 
-function UploadVideo(video,filename) {
+function UploadFile(file,filename, type) {
 
 		var formData = new FormData();
-		formData.append('file', video, filename);
+		formData.append('file', file, filename);
 		var postDescription=$("#create-post-modal #post-description-input").val();
 		//preventing injection
 		var safetext = $( $.parseHTML(postDescription) ).text();
 
 		formData.append('postDescription', safetext);
-		formData.append('type', 'video');
+		formData.append('type', type);
 		$.ajax({
 			type: 'POST',
 			url: 'createPost',
@@ -180,7 +180,7 @@ $(document).ready(function () {
 					$("#create-post-modal #post-dropzone").addClass("hide");
 					file = myDropzone.getAcceptedFiles();
 					filename = file[0].name;
-					if(~file[0].type.indexOf("image")){
+					if(~file[0].type.indexOf("image") && !(~file[0].type.indexOf("gif"))){
 						var filter_section = $("#create-post-modal #apply-filter-section");
 	
 						filter_section.append("<canvas class='filter-img' id='img-to-modify'></canvas>");
@@ -195,7 +195,7 @@ $(document).ready(function () {
 					var post_description_section = $("#create-post-modal #post-description");
 					var loader=$('#create-post-modal #loader');
 					var submit_filter=$('#create-post-modal #submit-filter');
-					if(~file[0].type.indexOf("video")){
+					if(~file[0].type.indexOf("video") || ~file[0].type.indexOf("gif")){
 						post_description_section.removeClass("hide");
 					}
 					$("#create-post-modal #apply-filter-section #filter-btn-group button").click(function () {
@@ -243,7 +243,9 @@ $(document).ready(function () {
 				$("#create-post-modal #submit-description").click(e => {
 //					myDropzone.processQueue(); 
 					if(~file[0].type.indexOf("video")){
-						UploadVideo(file[0],filename);
+						UploadFile(file[0],filename, "video");
+					} else if(~file[0].type.indexOf("image")) {
+						UploadFile(file[0],filename, "image");
 					} else {
 						var canvas = $('#create-post-modal #apply-filter-section > canvas').get(0);
 						UploadPic(canvas,filename);

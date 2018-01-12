@@ -54,23 +54,7 @@ public class FileModel {
 	}
 
 	public static int incrementNumber(String dir) {
-		// int num = 0;
-		// File file = new File(dir, num +".");
-		//
-		// for (num = 1; file.exists(); num++) {
-		// file = new File(dir, num + ".");
-		// }
-//		boolean find = true;
 		File directory = new File(dir);
-
-//		if (directory.list().length > 0) {
-//			for (int num = 0; find; num++) {
-//				File file_jpg = new File(dir, num + ".jpg");
-//				File file_png = new File(dir, num + ".png");
-//				if (!file_jpg.exists() && !file_png.exists())
-//					return num;
-//			}
-//		}
 		return directory.list().length +1;
 
 	}

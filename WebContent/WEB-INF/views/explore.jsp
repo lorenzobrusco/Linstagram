@@ -30,13 +30,6 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/profile_style.css">
 <script src="${pageContext.request.contextPath}/resources/js/explore.js"></script>
-<style type="text/css">
-
-	.empty_post{
-		display: none;
-	}
-
-</style>
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
@@ -47,8 +40,7 @@
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
 						<div id="posts">
-							<jsp:include
-								page="./fragment/userProfileFragment/postSection.jsp"></jsp:include>
+						<jsp:include page="./fragment/userProfileFragment/previewPost.jsp"></jsp:include>
 						</div>
 					</div>
 				</div>

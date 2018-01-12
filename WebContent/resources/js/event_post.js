@@ -116,11 +116,10 @@ $(document).ready(function() {
 			data: {postID:postID, comment:comm},
 			success : function(result) {		
 				if(result != "Failed") {
+					var res = $( $.parseHTML(result) ).text();
 					$("#comment"+postID).val('');
-					$(listComment).append("<div class='comment'><a href='userPage?usernameOther="+username+"'><b>"+username+"</b></a>"+
-							"<span class='comment_body'></span></div>");
-					//block injection in comment
-					$(".comment_body").text(result);
+					$(listComment).append("<div class='comment'><a href='userPage?username="+username+"'><b>"+username+"</b></a>"+
+					"<span class='comment_body'>"+res+"</span></div>");
 				}
 			}
 		});

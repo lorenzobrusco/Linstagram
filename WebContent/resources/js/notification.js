@@ -12,8 +12,10 @@ $(document).ready(function(){
 			success : function(result) {
 				if(result.length==0){
 					notification.append(img_empty);
-					if(mobile == false)
+					if(mobile == false){
 						notification.css("height",150);
+						$("#loader_notification").addClass("hide");
+					}
 					return;
 				}
 				
@@ -84,7 +86,7 @@ $(document).ready(function(){
 	$('#notification').click(function (e) {
 		notification.css("height",100);
 		e.preventDefault();
-		notification.html("<div style='display:flex;justify-content:center;align-items:center;height:100%'><img height='50' width='50' src='resources/images/loader_notification.gif'></img></div>");
+		notification.html("<div id='loader_notification' style='display:flex;justify-content:center;align-items:center;height:100%'><img height='50' width='50' src='resources/images/loader_notification.gif'></img></div>");
 		
 		$('#profile').popover('hide');
 		
