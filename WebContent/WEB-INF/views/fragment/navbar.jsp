@@ -31,14 +31,19 @@
 				<li><a href="profile" role="button" id="profile-mobile"
 					class="item-mobile"></a></li>
 
-				<li><a href="#create-post-modal" id="add-mobile"
-					class="item-mobile"></a></li>
+				<li><a href="#" id="add-mobile" class="item-mobile"></a></li>
 
-				<li><a href="#story-modal" id="add-story" class="item-mobile"></a></li>
+				<li><a href="explore" id="explore-mobile" class="item-mobile"></a></li>
 
 				<li><a href="#" id="notification-mobile" class="item-mobile"></a></li>
 			</ul>
 		</div>
+		
+		<div id="snackbar">
+			<a href="#story-modal" class="btn btn-default" id="create-story-btn">Story</a>
+			<a href="#create-post-modal" class="btn btn-default" id="create-post-btn">Post</a>
+		</div>
+		
 	</div>
 	<nav id="navbar" class="transparent">
 		<span class="nav-left"> <a href="index"> <span id="logo"></span>
@@ -110,14 +115,21 @@
 						if ($("#navbar-mobile").css('display') != "none") {
 							var localpathname = window.location.pathname;
 							var res = localpathname.split("/");
-							if (res[2] == "profile") {
+							if (res[2] == "explore") {
+								$("#horizontal-list li").removeClass(
+									"active-menu-item");
+								$("#explore-mobile").parent().addClass(
+									"active-menu-item");
+								$("#add-mobile").parent().css("display", "none");
+							}
+							else if (res[2] == "profile") {
 								$("#horizontal-list li").removeClass(
 										"active-menu-item");
 								$("#profile-mobile").parent().addClass(
 										"active-menu-item");
-								$("#add-mobile").parent()
-										.css("display", "none");
+								$("#add-mobile").parent().css("display", "none");
 							}
+							
 						}
 
 						var title_popover = "<img class='user-img' src='${user.photoProfile}'/><b><span id='username-popover'>${user.username}</span></b>";
