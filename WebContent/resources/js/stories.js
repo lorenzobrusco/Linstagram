@@ -226,7 +226,7 @@ function Stories(){
 
 	var addViewer = function(idStory){
 		$("#viewerModal .modal-body ul").empty();
-		var template ='<li class="viewer"><div id="user_enter"><form role="form" action="userPage"><button id="button_form" name="usernameOther" value=""><div id="button_user"><div id="img_div"><img id="img" src=""></img></div><div id="info_div"><div id="username"><b></b></div><div id="name"></div></div></div></button></form></li>';
+		var template ='<li class="viewer"><div id="user_enter"><form role="form" action="userPage"><button id="button_form" name="username" value=""><div id="button_user"><div id="img_div"><img id="img" src=""></img></div><div id="info_div"><div id="username"><b></b></div><div id="name"></div></div></div></button></form></li>';
 		for(var i=0; i < viewers[idStory].length; i++) {
 			var el = $(template);
 			$(el).find("#img").attr("src",viewers[idStory][i].photo);

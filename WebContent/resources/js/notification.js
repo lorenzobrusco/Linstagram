@@ -82,8 +82,10 @@ $(document).ready(function(){
 	}
 	
 	$('#notification').click(function (e) {
+		notification.css("height",100);
 		e.preventDefault();
-		notification.html("");
+		notification.html("<div style='display:flex;justify-content:center;align-items:center;height:100%'><img height='50' width='50' src='resources/images/loader_notification.gif'></img></div>");
+		
 		$('#profile').popover('hide');
 		
 		if(!notification.hasClass("hide")){
@@ -102,7 +104,7 @@ $(document).ready(function(){
 	
 	$('#notification-mobile').click(function (e) {
 		e.preventDefault();
-		notification_mobile_list.html("");
+		notification_mobile_list.html("<div style='display:flex;justify-content:center;align-items:center;height:100%'><img height='50' width='50' src='resources/images/loader_notification.gif'></img></div>");
 		if(!notification_mobile_list.hasClass("hide")){
 			notification_mobile_list.addClass("hide");
 			$("#top").removeClass("hide");

@@ -78,6 +78,7 @@
 					function() {
 
 						// NOTIFICATION BADGE
+
 						function updateNotificationBadge() {
 							$
 									.ajax({
@@ -90,6 +91,9 @@
 												$(".badge").remove();
 												$("#notification").append(
 														badge_notification);
+												$("#notification-mobile")
+														.append(
+																badge_notification);
 											}
 										}
 									});
