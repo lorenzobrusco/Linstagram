@@ -30,6 +30,13 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/profile_style.css">
 <script src="${pageContext.request.contextPath}/resources/js/explore.js"></script>
+<style type="text/css">
+
+	.empty_post{
+		display: none;
+	}
+
+</style>
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
