@@ -1,9 +1,10 @@
-package it.unical.linstagram.helper;
+package it.unical.linstagram.config;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import it.unical.linstagram.helper.Indexer;
 import it.unical.linstagram.persistence.HibernateUtil;
 
 @Component

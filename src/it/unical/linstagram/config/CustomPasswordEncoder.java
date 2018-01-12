@@ -1,6 +1,8 @@
-package it.unical.linstagram.helper;
+package it.unical.linstagram.config;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import it.unical.linstagram.helper.EncryptPassword;
 
 public class CustomPasswordEncoder implements PasswordEncoder {
 	@Override

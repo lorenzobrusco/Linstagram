@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 public class ApplicationStopListener
 implements ApplicationListener<ContextClosedEvent> {
 
+	
+	//TODO VEDERE SE CLEAR CONTEXT È GIUSTO DA CHIAMARE
 	@Override
 	public void onApplicationEvent(final ContextClosedEvent event) {
 
