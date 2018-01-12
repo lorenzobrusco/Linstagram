@@ -35,7 +35,6 @@
 </div>
 
 
-
 <div id="upload-photoprofile-modal">
 	<!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID  class="close-animatedModal" -->
 	<div id="modal-card">
@@ -115,7 +114,7 @@ $(document).ready(function(){
 					}
 				});
 				
-				$("#submit-photo").click(e => {
+				$("#submit-photo").click(function(e){
 					e.preventDefault();
 					e.stopPropagation();
 					var rejected_files = myDropzone.getRejectedFiles();
@@ -126,7 +125,9 @@ $(document).ready(function(){
 				})
 				
 				this.on("success", function (files, response) {
+					myDropzone.removeAllFiles(true);
 					$(".close-upload-photoprofile-modal").click(); //close modal
+					location.reload(true);
 				});
 			} //close init
 	};	//close option
@@ -134,8 +135,6 @@ $(document).ready(function(){
 	var uploader = document.querySelector('#post-dropzone');
 	//	CREATE DROPZONE
 	var myDropzone = new Dropzone(uploader,dropzoneOptions);
-	
-	
 	
 });
 </script>

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -23,13 +24,14 @@ import it.unical.linstagram.persistence.UserDAO;
 public class TestPostDAO extends AbstractModelTest{
 	
 	private static ModelDAO md;
-	
+	private static PostDAO pd;
 	@BeforeClass
 	public static void init() {
 		md = new ModelDAO();
+		pd = new PostDAO();
 	}
 
-	@Test
+//	@Test
 	public void testBookmarksUser() {
 		
 		
@@ -73,7 +75,7 @@ public class TestPostDAO extends AbstractModelTest{
 
 	
 	//TODO da sistemare
-	@Test
+//	@Test
 	public void testUserTagged() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -99,7 +101,7 @@ public class TestPostDAO extends AbstractModelTest{
 	}
 	
 	
-	@Test
+//	@Test
 	public void testLikes() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -124,7 +126,7 @@ public class TestPostDAO extends AbstractModelTest{
 		
 	}
 		
-	@Test
+//	@Test
 	public void testTag() {
 		
 		User eliana = new User("Eliana","email","pass");
@@ -148,9 +150,9 @@ public class TestPostDAO extends AbstractModelTest{
 		Assert.assertEquals(2,tags.size());	
 	}
 	
-	@Test
+//	@Test
 	public void testHashtag() {
-		HibernateUtil.CreateSessionFactory(true);
+		HibernateUtil.initSessionFactory(true);
 		
 		User eliana = new User("Eliana","email","pass");
 		
@@ -172,9 +174,9 @@ public class TestPostDAO extends AbstractModelTest{
 	}
 	
 	
-	@Test
+//	@Test
 	public void testComment() {
-		HibernateUtil.CreateSessionFactory(true);
+		HibernateUtil.initSessionFactory(true);
 		
 		User eliana = new User("Eliana","email","pass");
 		
@@ -199,5 +201,30 @@ public class TestPostDAO extends AbstractModelTest{
 		Assert.assertEquals(2,comments.size());		
 	}
 	
+	@Test
+	public void testGetPostComment() {
+		HibernateUtil.initSessionFactory(true);
+		
+		User eliana = new User("Eliana","email","pass");
+		
+		List<Media> media = new ArrayList<>();
+		Post post = new Post(eliana,media,Calendar.getInstance(),"Sono scema");
+		md.save(post);
+		int nC = 20;
+		for(int i = 0 ; i < nC; i++) {
+			Comment c = new Comment("bla bla", eliana, post, Calendar.getInstance());
+			post.getComments().add(c);
+			
+		}
+		
+		md.update(post);
+		List<Comment> comments = pd.getCommentByPostId(post.getId(),0);
+		
+		for(Comment c : comments) {
+			System.out.println(c.getContent());
+		}
+		
+		Assert.assertEquals(nC,comments.size());	
+	}
 	
 }

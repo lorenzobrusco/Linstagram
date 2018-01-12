@@ -40,6 +40,15 @@
 			<version>5.0.0.RELEASE</version>
 		</dependency>
 
+		<!-- USEFULL FOR THE EMAIL -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>5.0.0.RELEASE</version>
+		</dependency>
+
+
 		<!-- https://mvnrepository.com/artifact/jstl/jstl -->
 		<dependency>
 			<groupId>jstl</groupId>
@@ -81,7 +90,7 @@
 			<version>1.6</version>
 		</dependency>
 
-<!-- Upload Image -->
+		<!--Upload Image -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
@@ -89,13 +98,16 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>commons-io</groupId>
-		    <artifactId>commons-io</artifactId>
-		    <version>2.5</version>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
 		</dependency>
 
-
-
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -103,11 +115,28 @@
 			<version>2.5</version>
 		</dependency>
 
-		<dependency>  
-		    <groupId>javax</groupId>    
-		    <artifactId>javaee-web-api</artifactId>    
-		    <version>7.0</version> <!-- Put here the version of your Java EE app, in my case 7.0 -->
-		    <scope>provided</scope>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<version>7.0</version> <!-- Put here the version of your Java EE app, in my case 7.0 -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-search-orm -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search-orm</artifactId>
+			<version>5.8.2.Final</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>com.github.livesense</groupId> <artifactId>org.liveSense.scripting.jsp.taglib.jsonatg</artifactId> 
+			<version>1.0.5</version> </dependency> -->
+
+		<!-- https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib -->
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>4.2</version>
 		</dependency>
 
 

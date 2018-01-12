@@ -1,36 +1,107 @@
 #users {
 	border-bottom: solid 1px #efefef;
 	display: flex;
-	-webkit-box-orient: horizontal;
-	-webkit-box-direction: normal;
 	
 	flex-direction: column;
 	padding: 8px 16px;
-
 }
 
 #user_enter {
+	display: flex;
+    height: 42px !important;
+	
+}
+#button_user {
  	display: flex;
+ 	
+ 	height: 42px !important;
+	width: 440px;
+}
+
+#button_form {
+	background: none !important;
+    color: inherit;
+    border: none;
+    padding: 0! important;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit !important;
 }
 
 #img_div {
 	height: 100%;
 	width: 10%;
-	
 }
 
 #img {
 	height: 100%;
 	width: 100%;
+	border-radius: 50%;
 }
 
 #info_div {
 	padding-left: 2%;
+	text-align: left;
 }
 
-#unfollow-btn,
-#follow-btn {
+/* #unfollow-btn,
+#follow-btn, */
+#unfollower-btn,
+#follower-btn,
+#unfollowerPrivate-btn,
+#followPrivate-btn,
+#unfollowProfile-btn,
+#followProfile-btn,
+#cancelRequest-btn,
+#cancelRequestPopup-btn,
+#sendRequestPopup-btn,
+#sendRequest-btn {
+	position: absolute;
+	right: 10%;
+	padding: 6px 12px;
+	border-radius:4px;
+	border: 1px solid #cccccc;
+	margin: 1% 0% 5% 0%;
+	background-color: transparent;
+	color: inherit;
+	transition: all .5s;
+}
+
+/* #unfollow-btn:hover,
+#follow-btn:hover,
+#unfollowModal-btn:hover,
+#followModal-btn:hover,
+#unfollower-btn:hover,
+#follower-btn:hover,
+#unfollowerPrivate-btn:hover,
+#followPrivate-btn:hover,
+#cancelRequest-btn:hover,
+#cancelRequestPopup-btn:hover,
+#sendRequestPopup-btn:hover,
+#sendRequestPopup-btn:hover {
+	background-color: #89ABE3;
+	border-color: #bbbbbb;
+	color: black;
+} */
+
+#rejectRequest-btn,
+#waiting-btn {
 	position: absolute;
 	right: 10%;
 	padding-top: 1%;
+	
+	margin: 1% 0% 5% 0%;
+}
+
+#rejectRequest-btn {
+	border: 1px solid #cccccc;
+}
+
+#acceptRequest-btn {
+	position: absolute;
+	right: 23%;
+	padding-top: 1%;
+	
+	border: 1px solid #cccccc;
+	margin: 1% 0% 5% 0%;
 }

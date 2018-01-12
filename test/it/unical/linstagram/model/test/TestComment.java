@@ -25,7 +25,7 @@ public class TestComment extends AbstractModelTest {
 		post.getComments().add(new Comment("Si � vero",manuel,post,Calendar.getInstance()));
 		post.getComments().add(new Comment("Che stupido",eliana,post,Calendar.getInstance()));
 		
-		final Session session = HibernateUtil.getHibernateTestSession();
+		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();

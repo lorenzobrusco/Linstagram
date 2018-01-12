@@ -9,6 +9,7 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -47,11 +46,10 @@ public class Story {
 	            @AttributeOverride(name = "url", column = @Column(name = "media_url"))})
 	private Media media;
 	
-	@ManyToMany
+	@ManyToMany (fetch=FetchType.EAGER)
 	@JoinTable(name="viewed_story",
 			joinColumns=@JoinColumn(name="story_id"),
 			inverseJoinColumns=@JoinColumn(name="user_id"))
-	@Cascade(value=CascadeType.ALL)
 	private Set<User> viewers = new HashSet<User>();
 	
 	public Story() {
@@ -101,6 +99,28 @@ public class Story {
 	}
 	public void setViewers(Set<User> viewers) {
 		this.viewers = viewers;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Story other = (Story) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 	
 }

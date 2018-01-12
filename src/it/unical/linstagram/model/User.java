@@ -17,9 +17,15 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 @Entity
 @Table(name="user")
+@Indexed
 public class User{
 
 	@Id
@@ -27,7 +33,10 @@ public class User{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(nullable = false, unique = true)
+	@Column(name="username", nullable = false, unique = true)
+	@Fields({
+		@Field(name = "username", index = Index.YES, store = Store.YES),
+	})
 	private String username;
 
 	@Column(unique = true, nullable = false)
@@ -36,10 +45,16 @@ public class User{
 	@Column(nullable = false)
 	private String password;
 
-	@Column
+	@Column(name="name")
+	@Fields({
+		@Field(name = "name", index = Index.YES, store = Store.YES),
+	})
 	private String name;
 
-	@Column
+	@Column (name="surname")
+	@Fields({
+		@Field(name = "surname", index = Index.YES, store = Store.YES),
+	})
 	private String surname;
 
 	@Column
@@ -55,11 +70,11 @@ public class User{
 	private boolean privateProfile = false; //default the profile is public
 
 	@Column
-	private String photoProfile;
+	private String photoProfile = "images/default.png"; //default image profile
 
 
 	@ManyToMany
-	@Cascade(value= {CascadeType.SAVE_UPDATE, CascadeType.MERGE })
+	@Cascade(value= CascadeType.ALL)
 	@JoinTable(name="following",
 	joinColumns={@JoinColumn(name="followed")},
 	inverseJoinColumns={@JoinColumn(name="following")})
@@ -69,7 +84,7 @@ public class User{
 	@ManyToMany(mappedBy="followings")
 	private Set<User> followers = new HashSet<User>();
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", orphanRemoval=true)
 	@Cascade(value=CascadeType.ALL)
 	private Set<Post> posts = new HashSet<Post>();
 
@@ -89,6 +104,14 @@ public class User{
 		this.username = username;
 		this.email = email;
 		this.password = password;
+	}
+	
+	public User(String username, String email, String password, String name, String surname) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
 	}
 
 	public int getId() {
@@ -238,5 +261,5 @@ public class User{
 			return false;
 		return true;
 	}
-	
+
 }

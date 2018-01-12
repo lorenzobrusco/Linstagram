@@ -6,6 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon-32x32.png" />
+<link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.icon" type="image/x-icon" />
+
 <title>Listagram</title>
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
@@ -20,7 +23,17 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index_style.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
+
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
+
+<!-- NOTY -->	
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/lib/noty/noty.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/lib/noty/themes/nest.css">
+<script
+	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
 </head>
 <body>
@@ -30,7 +43,7 @@
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
 				<div id="story-nav" style="margin-top: 20px;">
-					<div id="stories"></div>
+					<jsp:include page="./fragment/stories.jsp"></jsp:include>
 				</div>
 			</div>
 		</div>
@@ -39,11 +52,14 @@
 			<jsp:include page="./fragment/post.jsp"></jsp:include>
 
 		</div>
+		<div id="loading" class="fixed-bottom hide text-center"><img class="img-fluid" alt="" src="${pageContext.request.contextPath}/resources/images/loader.gif"></div>
 		<div id="container-floating">
 
 			<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
 				data-original-title="Story">
-				<i class="fa fa-clock-o center-icon" aria-hidden="true"></i>
+				<a id="open-story-modal" href="#story-modal"> <i
+					class="fa fa-clock-o center-icon" aria-hidden="true"></i>
+				</a>			
 			</div>
 
 			<div class="nd2 nds" data-toggle="tooltip" data-placement="left"
@@ -53,12 +69,17 @@
 				</a>
 			</div>
 
-			<div class="nd3 nds transparent" data-toggle="tooltip"
-				data-placement="left" data-original-title="Top">
-				<a href="#top"><i class="fa fa-arrow-up black-icon"
+			<div id="cng-order" class="nd3 nds" data-toggle="tooltip"
+				data-placement="left" data-original-title="Popular" data-type="popular">
+				<a><i class="fa fa-exchange center-icon"
 					aria-hidden="true"></i></a>
 			</div>
-
+			
+			<div class="nd4 nds transparent" data-toggle="tooltip"
+				data-placement="left" data-original-title="Top">
+				<a href="#top"><i class="fa fa-arrow-up black-icon"	aria-hidden="true"></i></a>
+			</div>
+			
 			<div id="floating-button" data-toggle="tooltip" data-placement="left"
 				data-original-title="Create">
 				<p class="plus">+</p>
@@ -66,19 +87,14 @@
 		</div>
 
 	<jsp:include page="./fragment/createPostModal.jsp"></jsp:include>
+	<jsp:include page="./fragment/createStoryModal.jsp"></jsp:include>
+	<jsp:include page="./fragment/indexFragment/modalLike.jsp"></jsp:include>
 	
 	</div>
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
-	
+	<script src="${pageContext.request.contextPath}/resources/js/event_post.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/index.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/js/lib/stories.js"></script>
-<!-- 	<script -->
-<%-- 		src="${pageContext.request.contextPath}/resources/js/create_stories.js"></script> --%>
-	<script>
-	<%@ include file="../../resources/js/lib/load_stories.js" %>
-	</script>
-
+	
 </body>
 
 </html>
