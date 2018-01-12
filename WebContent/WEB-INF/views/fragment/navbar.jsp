@@ -18,14 +18,14 @@
 <header>
 	<div id="rainbow-progress-bar"></div>
 	<div id="navbar-mobile">
-		<span id="logo-container"><a href="index" id="logo"></a></span>
+		<span id="logo-container"><a href="${pageContext.request.contextPath}/" id="logo"></a></span>
 		<div class="search-bar">
 			<input type="text" class="form-control transparent search-input"
 				placeholder="Search" id="search-input-mobile">
 		</div>
 		<div class="bottom-nav-menu">
 			<ul id="horizontal-list">
-				<li class="active-menu-item"><a href="index" id="home-mobile"
+				<li class="active-menu-item"><a href="${pageContext.request.contextPath}/" id="home-mobile"
 					class="item-mobile"></a></li>
 
 				<li><a href="profile" role="button" id="profile-mobile"
@@ -41,7 +41,7 @@
 		</div>
 	</div>
 	<nav id="navbar" class="transparent">
-		<span class="nav-left"> <a href="index"> <span id="logo"></span>
+		<span class="nav-left"> <a href="${pageContext.request.contextPath}/"> <span id="logo"></span>
 				<span id="logo-text">linstagram</span>
 		</a>
 		</span> <span id="search-form" class="form-inline">
