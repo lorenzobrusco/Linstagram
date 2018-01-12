@@ -18,11 +18,19 @@
 							class='user-name'>${post.user.username }</a>
 					</div>
 					<div class='body-section'>
-						<div class="overlay">
-							<span></span>
-						</div>
+						
 						<c:forEach items="${post.media}" var="media">
-							<img src="${media.url}" />
+							<c:if test="${media.type.value == 0}">
+								<video width="100%" controls>
+    							<source src="${media.url}" type="video/mp4">
+  							</video>
+							</c:if>
+							<c:if test="${media.type.value == 1}">
+								<div class="overlay">
+									<span></span>
+								</div>
+								<img src="${media.url}" />
+							</c:if>
 						</c:forEach>
 					</div>
 					<div class='action-section'>
