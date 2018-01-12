@@ -165,7 +165,7 @@ Signed in</label>
 						$("#forgot-pass-btn").click(function() {
 							$.ajax({
 								url : "forgotPasswordPage",
-								method : 'post',
+								method : 'POST',
 								success : function(resp) {
 									$(".login-html").empty();
 									$(".login-html").append(resp);
