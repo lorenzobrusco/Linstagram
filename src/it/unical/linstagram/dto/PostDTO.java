@@ -48,7 +48,6 @@ public class PostDTO {
 		
 		this.likeUser = likeUser;
 		this.bookmarkUser = bookmarkUser;
-
 	}
 
 	public int getId() {
