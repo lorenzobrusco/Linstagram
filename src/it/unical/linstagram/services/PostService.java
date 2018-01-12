@@ -108,6 +108,19 @@ public class PostService {
 		return postsDTO;
 	}
 
+	public List<PostDTO> getPopularPostsExplorePage(User user, Calendar date, int last) {
+
+		List<Post> posts = postDAO.getPostsExplorePage(date, last);
+		List<PostDTO> postsDTO = new ArrayList<>();
+
+		for (Post post : posts) {
+			postsDTO.add(new PostDTO(post, postDAO.doesTheUserLikeThePost(post.getId(), user),
+					user.getBookmarks().contains(post)));
+		}
+
+		return postsDTO;
+	}
+	
 	public boolean insertLike(int idPost, String username) {
 		Post post = postDAO.getPostById(idPost);
 		User u = userDAO.getUserByUsername(username);

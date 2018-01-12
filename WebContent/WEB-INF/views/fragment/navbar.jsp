@@ -12,25 +12,30 @@
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
 	type="image/x-icon">
-<script src="${pageContext.request.contextPath}/resources/js/search_event.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/search_event.js"></script>
 
 <header>
 	<div id="rainbow-progress-bar"></div>
 	<div id="navbar-mobile">
 		<span id="logo-container"><a href="index" id="logo"></a></span>
 		<div class="search-bar">
-			<input type="text" class="form-control transparent search-input" placeholder="Search" id="search-input-mobile">
+			<input type="text" class="form-control transparent search-input"
+				placeholder="Search" id="search-input-mobile">
 		</div>
 		<div class="bottom-nav-menu">
 			<ul id="horizontal-list">
-				<li class="active-menu-item"><a href="index" id="home-mobile" class="item-mobile"></a></li>
-					
-				<li><a href="profile" role="button" id="profile-mobile" class="item-mobile"></a></li>
-					
-				<li><a href="#create-post-modal" id="add-mobile" class="item-mobile"></a></li>
-				
+				<li class="active-menu-item"><a href="index" id="home-mobile"
+					class="item-mobile"></a></li>
+
+				<li><a href="profile" role="button" id="profile-mobile"
+					class="item-mobile"></a></li>
+
+				<li><a href="#create-post-modal" id="add-mobile"
+					class="item-mobile"></a></li>
+
 				<li><a href="#story-modal" id="add-story" class="item-mobile"></a></li>
-					
+
 				<li><a href="#" id="notification-mobile" class="item-mobile"></a></li>
 			</ul>
 		</div>
@@ -41,15 +46,13 @@
 		</a>
 		</span> <span id="search-form" class="form-inline">
 			<div class="input-group" id="search-div">
-				<input type="text" class="form-control transparent search-input" placeholder="Search" id="search-input-desktop">
+				<input type="text" class="form-control transparent search-input"
+					placeholder="Search" id="search-input-desktop">
 			</div>
-		</span> 
-		<span class="nav-right"> 
-			<a href="" id="explore" class="right-icon-nav disabled" data-toggle="tooltip"
-			data-placement="left" data-original-title="Coming Soon"></a>
-			 
-			<a href="#" id="notification" class="right-icon-nav"><span class="arrow hide"></span></a>
-			<a href="#" role="button" id="profile" class="right-icon-nav"></a>
+		</span> <span class="nav-right"> <a href="explore" id="explore"
+			class="right-icon-nav"></a> <a href="#" id="notification"
+			class="right-icon-nav"><span class="arrow hide"></span></a> <a
+			href="#" role="button" id="profile" class="right-icon-nav"></a>
 		</span>
 	</nav>
 </header>
@@ -73,28 +76,31 @@
 	$(document)
 			.ready(
 					function() {
-						
+
 						// NOTIFICATION BADGE
-						function updateNotificationBadge(){
-							$.ajax({
-								url : "notificationToSee",
-								type : "POST",
-								success : function(result) {
-									if(result > 0){
-										var badge_notification="<span class='badge'>"+ result + "</span>"
-										$(".badge").remove();
-										$("#notification").append(badge_notification);
-									}
-								}
-							});
+						function updateNotificationBadge() {
+							$
+									.ajax({
+										url : "notificationToSee",
+										type : "POST",
+										success : function(result) {
+											if (result > 0) {
+												var badge_notification = "<span class='badge'>"
+														+ result + "</span>"
+												$(".badge").remove();
+												$("#notification").append(
+														badge_notification);
+											}
+										}
+									});
 						}
-						
+
 						updateNotificationBadge();
 						window.setInterval(function() {
 							updateNotificationBadge();
-						},60000);
-						
-					// =========================================
+						}, 60000);
+
+						// =========================================
 
 						//mobile navbar event
 						if ($("#navbar-mobile").css('display') != "none") {
@@ -120,22 +126,22 @@
 							placement : "bottom",
 							trigger : "manual",
 							container : "header"
-						}).click(function(e){
+						}).click(function(e) {
 							e.preventDefault();
 							$('#profile').popover('show');
 							e.stopPropagation();
 						});
-						
-						function closeProfilePopover(){
+
+						function closeProfilePopover() {
 							$('#profile').popover('hide');
 						}
-						
-						$('body').click(function (e) {
+
+						$('body').click(function(e) {
 							closeProfilePopover();
 						});
-						
+
 						window.addEventListener("scroll", closeProfilePopover);
-						
+
 						$('[data-toggle="tooltip"]').tooltip();
 
 						/*$('#search-input-desktop').focusin(function() {
@@ -146,9 +152,5 @@
 							$("#search-div").css("width", "50%");
 						});*/
 
-
 					});
-	
-	
-	
 </script>

@@ -16,25 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.google.gson.JsonArray;
-
-import it.unical.linstagram.dto.NotificationDTO;
 import it.unical.linstagram.dto.PostDTO;
 import it.unical.linstagram.dto.ResearchDTO;
 import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
-import it.unical.linstagram.model.Hashtag;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
-import it.unical.linstagram.persistence.UserDAO;
-import it.unical.linstagram.services.HashtagService;
 import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
-import it.unical.linstagram.services.NotificationService;
 import it.unical.linstagram.services.PostService;
 import it.unical.linstagram.services.ResearchService;
 import it.unical.linstagram.services.StoriesService;
@@ -52,25 +44,33 @@ public class HomePageController {
 	private StoriesService storiesService;
 
 	@Autowired
-	private NotificationService notificationService;
-
-	@Autowired 
 	private ResearchService researchService;
 
-	
 	@RequestMapping("/index")
 	public String homePageController(HttpSession session, Model model) {
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
-			
-			List<PostDTO> posts = postService.getLatestPost(loggedUser,null, 0);
-			
+
+			List<PostDTO> posts = postService.getLatestPost(loggedUser, null, 0);
+
 			model.addAttribute("posts", posts);
 			model.addAttribute("followedUsersStories", storiesService.getFollowedStories(loggedUser));
 			return "index";
 		}
 		return "redirect:/";
 
+	}
+
+	@RequestMapping("/explore")
+	public String explorePage(HttpSession session, Model model) {
+		if (UserManager.checkLogged(session)) {
+			User loggedUser = (User) session.getAttribute("user");
+			List<PostDTO> posts = new ArrayList<>();
+			posts = postService.getPopularPostsExplorePage(loggedUser, null, 0);
+			model.addAttribute("posts", posts);
+			return "explore";
+		}
+		return "redirect:/";
 	}
 
 	@RequestMapping("/storyViewed")
@@ -122,36 +122,49 @@ public class HomePageController {
 	}
 
 	@RequestMapping("/getPosts")
-	public String popularPosts(@RequestParam long time, @RequestParam int lastIndex,@RequestParam("type") String typeRequest,  HttpSession session, Model model) {
-	
+	public String popularPosts(@RequestParam long time, @RequestParam int lastIndex,
+			@RequestParam("type") String typeRequest, HttpSession session, Model model) {
+
 		User loggedUser = (User) session.getAttribute("user");
 		List<PostDTO> posts = new ArrayList<>();
-		if(typeRequest.equals("latest"))
-			posts = postService.getLatestPost(loggedUser,null, lastIndex);
-		else if(typeRequest.equals("popular"))
-			posts = postService.getPopularPosts(loggedUser,null, lastIndex);
-		
-		session.setAttribute("postRequest",typeRequest);
-		model.addAttribute("posts",posts);
-		
+		if (typeRequest.equals("latest"))
+			posts = postService.getLatestPost(loggedUser, null, lastIndex);
+		else if (typeRequest.equals("popular"))
+			posts = postService.getPopularPosts(loggedUser, null, lastIndex);
+
+		session.setAttribute("postRequest", typeRequest);
+		model.addAttribute("posts", posts);
+
 		return "fragment/post";
 	}
+
+	@RequestMapping("/getPostsExplore")
+	public String popularPostsExplore(@RequestParam long time, @RequestParam int lastIndex,
+			@RequestParam("type") String typeRequest, HttpSession session, Model model) {
+
+		User loggedUser = (User) session.getAttribute("user");
+		List<PostDTO> posts = new ArrayList<>();
+		posts = postService.getPopularPostsExplorePage(loggedUser, null, lastIndex);
+		model.addAttribute("posts", posts);
+		return "fragment/userProfileFragment/postSection";
+	}
 	
-//	
-//	@RequestMapping("/otherPosts")
-//	public String otherPosts(@RequestParam int last,@RequestParam long time,HttpSession session,Model model) {
-//		User loggedUser = (User) session.getAttribute("user");
-//	
-//		List<PostDTO> posts =  null;
-//		if(session.getAttribute("postRequest").equals("latest"))
-//			posts = postService.getLatestPost(loggedUser,null, last);
-//		else if(session.getAttribute("postRequest").equals("popular"))
-//			posts = postService.getPopularPosts(loggedUser, null, last);
-//
-//		model.addAttribute("posts", posts);
-//		return "fragment/post";
-//	}
-//	
+	//
+	// @RequestMapping("/otherPosts")
+	// public String otherPosts(@RequestParam int last,@RequestParam long
+	// time,HttpSession session,Model model) {
+	// User loggedUser = (User) session.getAttribute("user");
+	//
+	// List<PostDTO> posts = null;
+	// if(session.getAttribute("postRequest").equals("latest"))
+	// posts = postService.getLatestPost(loggedUser,null, last);
+	// else if(session.getAttribute("postRequest").equals("popular"))
+	// posts = postService.getPopularPosts(loggedUser, null, last);
+	//
+	// model.addAttribute("posts", posts);
+	// return "fragment/post";
+	// }
+	//
 	@ResponseBody
 	@RequestMapping(value = "/addStory", method = RequestMethod.POST)
 	public StoryDTO addStory(@RequestParam MultipartFile file, HttpSession session) throws IOException {
@@ -169,38 +182,39 @@ public class HomePageController {
 		return storyViewerDTOs;
 	}
 
-	@RequestMapping(value = "/deleteStory",method=RequestMethod.POST)
+	@RequestMapping(value = "/deleteStory", method = RequestMethod.POST)
 	@ResponseBody
 	public String removeStory(@RequestParam int idStory, HttpSession session) {
-		if(storiesService.removeStory(idStory))
-			return new MessageResponse(MessageCode.OK,(User) session.getAttribute("user"),"OK").getMessage();
+		if (storiesService.removeStory(idStory))
+			return new MessageResponse(MessageCode.OK, (User) session.getAttribute("user"), "OK").getMessage();
 
-		return new MessageResponse(MessageCode.FAILED,
-				(User) session.getAttribute("user"),"Non e' stato possibile rimuovere la storia.").getMessage();
+		return new MessageResponse(MessageCode.FAILED, (User) session.getAttribute("user"),
+				"Non e' stato possibile rimuovere la storia.").getMessage();
 	}
 
-
 	@ResponseBody
-	@RequestMapping(value="/research",method=RequestMethod.POST)
+	@RequestMapping(value = "/research", method = RequestMethod.POST)
 	public List<ResearchDTO> research(@RequestParam String text, HttpSession session) {
-//		Set<Hashtag> suggestionsHashtag = researchService.getSuggestionsHashtag(text);
-//		Set<UserViewerDTO> suggestionsUsers = researchService.getSuggestionsUsername(text);
-//		suggestionsUsers.addAll(researchService.getSuggestionsName(text));
-//
-//		for (Hashtag hashtag : suggestionsHashtag) {
-//			System.out.println(hashtag.getHashtag());
-//		}
-//
-//		session.setAttribute("hashtagSearch", suggestionsHashtag);
-//		session.setAttribute("userSearch", suggestionsUsers);
-//
-//
-//		return "SUCCESS";
-		//TODO DA SISTEMARE
+		// Set<Hashtag> suggestionsHashtag =
+		// researchService.getSuggestionsHashtag(text);
+		// Set<UserViewerDTO> suggestionsUsers =
+		// researchService.getSuggestionsUsername(text);
+		// suggestionsUsers.addAll(researchService.getSuggestionsName(text));
+		//
+		// for (Hashtag hashtag : suggestionsHashtag) {
+		// System.out.println(hashtag.getHashtag());
+		// }
+		//
+		// session.setAttribute("hashtagSearch", suggestionsHashtag);
+		// session.setAttribute("userSearch", suggestionsUsers);
+		//
+		//
+		// return "SUCCESS";
+		// TODO DA SISTEMARE
 		System.out.println(text);
 		List<ResearchDTO> generalQuery = researchService.generalQuery(text);
 		System.out.println(generalQuery);
 		return generalQuery;
-		}
+	}
 
 }
