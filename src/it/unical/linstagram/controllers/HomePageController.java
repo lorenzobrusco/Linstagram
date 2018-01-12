@@ -47,9 +47,6 @@ public class HomePageController {
 	@Autowired
 	private ResearchService researchService;
 
-	@Autowired
-	UserDAO userDAO;
-
 	@RequestMapping("/")
 	public String homePageController(HttpSession session, Model model) {
 		
