@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.Assert;
 import org.junit.Test;
 
-import it.unical.linstagram.helper.EncryptPassword;
+import it.unical.linstagram.config.CustomPasswordEncoder;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.persistence.UserDAO;
 import it.unical.linstagram.services.MessageCode;
@@ -13,13 +13,15 @@ import it.unical.linstagram.services.SignInUpService;
 
 public class TestEncryptPassword {
 
+	private CustomPasswordEncoder passwordEncoder = new CustomPasswordEncoder();
+	
 //	@Test
 	public void testPassword() {
 //		1E4E888AC66F8DD41E00C5A7AC36A32A9950D271
 		
-		String pass1 = EncryptPassword.encrypt("ciao");
+		String pass1 = passwordEncoder.encode("ciao");
 		String pass2 = "ciao";
-		Assert.assertEquals(true, EncryptPassword.checkPassword(pass2, pass1));	
+		Assert.assertEquals(true, passwordEncoder.matches(pass2, pass1));	
 	}
 	
 //	@Test

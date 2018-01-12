@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import it.unical.linstagram.helper.EncryptPassword;
+import it.unical.linstagram.config.CustomPasswordEncoder;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Gender;
@@ -133,15 +133,17 @@ public class ProfileController {
 			 @RequestParam("new_pass") String new_password,  @RequestParam("repeat_pass") String repeat_password) {
 		
 		User user = (User) session.getAttribute("user");
+		CustomPasswordEncoder passwordEncoder = new CustomPasswordEncoder();
+		
 		String pass = profileService.getPassword(user.getUsername());
 		
-		if (!pass.equals(EncryptPassword.checkPassword(old_password, pass)))
+		if (!pass.equals(passwordEncoder.matches(old_password, pass)))
 			return  new MessageResponse(MessageCode.PASS_WRONG, user, "La password inserita non corrisponde alla password corrente.").getMessage();
 		
 		if (!new_password.equals(repeat_password))
 			return  new MessageResponse(MessageCode.PASS_DIFFERENT, user, "Le due password inserite sono diverse.").getMessage();
 		
-		String password = EncryptPassword.encrypt(new_password);
+		String password = passwordEncoder.encode(new_password);
 		profileService.changePassword(user, password);
 		
 		return "OK";
