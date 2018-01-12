@@ -235,5 +235,23 @@ $(document).ready(function () {
 	}
 
 	$("#open-create-post-modal").animatedModal(modalConfiguration);
-	$("#add-mobile").animatedModal(modalConfiguration);
+//	$("#add-mobile").animatedModal(modalConfiguration);
+	
+	var sneackbar = $("#snackbar");
+	
+	
+	$("#add-mobile").click( e =>{
+		sneackbar.addClass("show");
+	});
+	
+	$("#create-post-btn").animatedModal(modalConfiguration);
+	
+	$("#snackbar .btn").click(e=>{sneackbar.removeClass("show");})
+	
+	$(document).mouseup(function(e) {
+		if (!sneackbar.is(e.target) && sneackbar.has(e.target).length === 0) {
+			sneackbar.removeClass("show");
+	    }
+	});
+	
 });
