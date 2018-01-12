@@ -145,7 +145,6 @@
 	<c:if test="${userPublic.privateProfile == false  || (userPublic.privateProfile == true && userPublic.followed == true)}">
 		<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
 		<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
-		<jsp:include page="./fragment/userProfileFragment/modalPost.jsp"></jsp:include>
 	</c:if>
 </body>
 </html>

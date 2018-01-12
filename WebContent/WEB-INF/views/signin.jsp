@@ -13,9 +13,6 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
- <meta name="_csrf" content="${_csrf.token}"/>
-    <!-- default header name is X-CSRF-TOKEN -->
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -122,13 +119,7 @@ Signed in</label>
 	$(document)
 			.ready(
 					function() {
-						$(function () {
-						    var token = $("meta[name='_csrf']").attr("content");
-						    var header = $("meta[name='_csrf_header']").attr("content");
-						    $(document).ajaxSend(function(e, xhr, options) {
-						        xhr.setRequestHeader(header, token);
-						    });
-						});
+						
 						const SUCCESS_SING_UP = "SUCCESS_SIGN_UP";
 						const EMAIL_ALREADY_USED = "ERROR_EMAIL_ALREADY_USED";
 						const USERNAME_ALREADY_USED = "ERROR_USERNAME_ALREADY_USED";

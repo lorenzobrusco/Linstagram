@@ -24,6 +24,7 @@ import it.unical.linstagram.dto.StoryViewerDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Media;
+import it.unical.linstagram.model.Media.Media_Type;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MediaService;
@@ -49,7 +50,7 @@ public class HomePageController {
 
 	@RequestMapping("/")
 	public String homePageController(HttpSession session, Model model) {
-		
+
 		if (UserManager.checkLogged(session)) {
 			final User loggedUser = (User) session.getAttribute("user");
 
@@ -112,9 +113,13 @@ public class HomePageController {
 
 	@ResponseBody
 	@RequestMapping(value = "/createPost", method = RequestMethod.POST)
-	public Media createPost(@RequestParam String postDescription, @RequestParam MultipartFile file, HttpSession session)
-			throws IOException {
-		Media mediaInfo = uploadService.createMedia(file, session);
+	public Media createPost(@RequestParam String postDescription, @RequestParam String type,
+			@RequestParam MultipartFile file, HttpSession session) throws IOException {
+		Media mediaInfo = null;
+		if (type.equals("image"))
+			mediaInfo = uploadService.createMedia(file, Media_Type.IMAGE, session);
+		else
+			mediaInfo = uploadService.createMedia(file, Media_Type.VIDEO, session);
 		final List<Media> uploadedFiles = new ArrayList<>();
 		uploadedFiles.add(mediaInfo);
 		Post new_post = new Post((User) (session.getAttribute("user")), uploadedFiles, Calendar.getInstance(),
@@ -150,7 +155,7 @@ public class HomePageController {
 		model.addAttribute("posts", posts);
 		return "fragment/userProfileFragment/postSection";
 	}
-	
+
 	//
 	// @RequestMapping("/otherPosts")
 	// public String otherPosts(@RequestParam int last,@RequestParam long
@@ -171,7 +176,7 @@ public class HomePageController {
 	@RequestMapping(value = "/addStory", method = RequestMethod.POST)
 	public StoryDTO addStory(@RequestParam MultipartFile file, HttpSession session) throws IOException {
 
-		Media mediaStory = uploadService.createMedia(file, session);
+		Media mediaStory = uploadService.createMedia(file, Media_Type.IMAGE, session);
 		StoryDTO storyDTO = storiesService.saveStory(mediaStory, (User) session.getAttribute("user"));
 		return storyDTO;
 	}

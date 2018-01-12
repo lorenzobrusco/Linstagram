@@ -10,19 +10,31 @@
 			<div class="col-md-8">
 				<div class='card'>
 					<div class='top-section'>
-						<a href='userPage?username=${post.user.username }'> 
-						<img class="user-img"
-							src=${post.user.photoProfile }></a> 
-							<a
-							href='userPage?username=${post.user.username }'
-							class='user-name'>${post.user.username }</a>
+						<a href='userPage?username=${post.user.username }'> <img
+							class="user-img" src=${post.user.photoProfile }></a> <a
+							href='userPage?username=${post.user.username }' class='user-name'>${post.user.username }</a>
 					</div>
 					<div class='body-section'>
-						<div class="overlay">
-							<span></span>
-						</div>
+
 						<c:forEach items="${post.media}" var="media">
-							<img src="${media.url}" />
+							<c:if test="${media.type.value == 0}">
+								<video width="100%" controls>
+									<source src="${media.url}" type="video/mp4">
+								</video>
+							</c:if>
+							<c:if test="${media.type.value == 1}">
+								<div class="overlay">
+									<c:choose>
+										<c:when test="${fn:length(post.likes) == 0 }">
+											<a name="${post.id }" id="love${post.id }" class="love"><span></span></a>
+										</c:when>
+										<c:otherwise>
+											<a name="${post.id }" id="love${post.id }" class="love"><span></span></a>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<img src="${media.url}" />
+							</c:if>
 						</c:forEach>
 					</div>
 					<div class='action-section'>
@@ -31,17 +43,21 @@
 								<c:choose>
 									<c:when test="${fn:length(post.likes) == 0 }">
 										<a name="${post.id }" id="love${post.id }" class="love"><span
-											class='love'><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></span></a>
+											class='love'><i class="fa fa-heart-o fa-2x"
+												aria-hidden="true"></i></span></a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${post.likeUser == true}">
 												<a name="${post.id }" id="loveFull${post.id }"
-													class="loveFull"><span class='loveFull'><i class="fa fa-heart fa-2x" aria-hidden="true"></i></span></a>
+													class="loveFull"><span class='loveFull'><i
+														class="fa fa-heart fa-2x" aria-hidden="true"></i></span></a>
 											</c:when>
 											<c:otherwise>
 												<a name="${post.id }" id="love${post.id }" class="love">
-												<span class='love'><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></span></a>
+													<span class='love'><i class="fa fa-heart-o fa-2x"
+														aria-hidden="true"></i></span>
+												</a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -51,18 +67,22 @@
 								<c:choose>
 									<c:when test="${fn:length(user.bookmarks) == 0 }">
 										<a name="${post.id }" id="bookmark${post.id }"
-											class="bookmark">
-											<span class='save'><i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i></span></a>
+											class="bookmark"> <span class='save'><i
+												class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i></span></a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${post.bookmarkUser }">
-												<a name="${post.id }" id="bookmark${post.id }" class="bookmarkFull">
-												<span class='save'> <i class="fa fa-bookmark fa-2x" aria-hidden="true"></i> </span></a>
+												<a name="${post.id }" id="bookmark${post.id }"
+													class="bookmarkFull"> <span class='save'> <i
+														class="fa fa-bookmark fa-2x" aria-hidden="true"></i>
+												</span></a>
 											</c:when>
 											<c:otherwise>
 												<a name="${post.id }" id="bookmark${post.id }"
-													class="bookmark"><span class='save'> <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i> </span></a>
+													class="bookmark"><span class='save'> <i
+														class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>
+												</span></a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -71,8 +91,8 @@
 						</div>
 						<div class="likes-section" style="cursor: pointer;">
 							<a id="likes" data-toggle="modal" data-target="#modalLike"
-								name="${post.id }"><b>Likes to  
-								<span id="count_like${post.id }"> ${fn:length(post.likes)}</span>
+								name="${post.id }"><b>Likes to <span
+									id="count_like${post.id }"> ${fn:length(post.likes)}</span>
 									people
 							</b></a>
 						</div>
@@ -80,7 +100,7 @@
 							<a href='userPage?username=${post.user.username}'>${post.user.username }</a>
 							<span class="post_cont_${post.id}">${post.content}</span>
 						</div>
-						
+
 						<div class='list-comments-section'>
 							<a class="show-all-comments" href="#postcibo"
 								data-toggle="collapse"><span class="show-comments"></span>
@@ -103,9 +123,7 @@
 						</div>
 
 						<div class='time-section'>
-							<p>
-							${post.elapsedTime}
-							</p>
+							<p>${post.elapsedTime}</p>
 						</div>
 
 						<div class='comment-section'>

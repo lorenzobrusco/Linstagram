@@ -69,4 +69,3 @@
 	</div>
 </c:if>
 
-<jsp:include page="./modalPost.jsp"></jsp:include>

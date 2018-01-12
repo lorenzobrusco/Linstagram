@@ -40,8 +40,7 @@
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
 						<div id="posts">
-							<jsp:include
-								page="./fragment/userProfileFragment/postSection.jsp"></jsp:include>
+						<jsp:include page="./fragment/userProfileFragment/previewPost.jsp"></jsp:include>
 						</div>
 					</div>
 				</div>
