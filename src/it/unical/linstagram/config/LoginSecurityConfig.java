@@ -36,7 +36,8 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 		.defaultSuccessUrl("/setUserSession",true)
         .and()
         .logout()//default logout handling
-        .logoutSuccessUrl("/login?logout")//our new logout success url, we are not replacing other defaults.
-        .permitAll().and().csrf().disable();//allow all as it will be accessed when user is not logged in anymore
+        .logoutSuccessUrl("/login").deleteCookies("JSESSIONID").invalidateHttpSession(true)//our new logout success url, we are not replacing other defaults.
+        .permitAll()
+        .and().csrf().disable();//allow all as it will be accessed when user is not logged in anymore
 	}
 }
