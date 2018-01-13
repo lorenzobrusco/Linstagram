@@ -135,7 +135,7 @@ public class ProfileController {
 		
 		String pass = profileService.getPassword(user.getUsername());
 		
-		if (!pass.equals(passwordEncoder.matches(old_password, pass)))
+		if (!passwordEncoder.matches(old_password, pass))
 			return  new MessageResponse(MessageCode.PASS_WRONG, user, "La password inserita non corrisponde alla password corrente.").getMessage();
 		
 		if (!new_password.equals(repeat_password))
