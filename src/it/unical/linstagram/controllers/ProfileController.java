@@ -113,6 +113,8 @@ public class ProfileController {
 		if (!bio.equals(""))
 			user.setBiography(bio);
 
+		
+		//AGGIORNARE GLI HASHTAGS
 		if (!privateCheck.equals(""))
 			if (privateCheck.equals("true"))
 				user.setPrivateProfile(true);

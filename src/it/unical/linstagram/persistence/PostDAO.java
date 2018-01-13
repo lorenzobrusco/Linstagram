@@ -250,4 +250,27 @@ public class PostDAO implements IPostDAO {
 		return posts;
 	}
 
+	
+	// TODO MIGLIORARE
+		public List<Post> getPublicPostsByHashtag(User user, String hashtag, Calendar calendar, int last) {
+			Session session = HibernateUtil.getSession();
+
+			Query query = session.createQuery("FROM Post p join fetch p.hashtags h WHERE (p.user.privateProfile = false "
+					+ "or p.user = :_currentUser or :_currentUser member of p.user.followers) and  p.id  in "
+					+ "(SELECT p1.id FROM Post p1 join p1.hashtags h1 WHERE h1.hashtag = :_hashtag) order by p.postDate desc")
+					.setParameter("_hashtag", hashtag).setParameter("_currentUser", user);
+
+			query.setFirstResult(last);
+			query.setMaxResults(MAX_RESULTS_POST);
+			List<Post> posts = query.list();
+			for (Post post : posts) {
+				post.getTags().size();
+				post.getHashtags().size();
+				post.getMedia().size();
+				post.getLikes().size();
+			}
+			session.close();
+			return posts;
+		}
+
 }
