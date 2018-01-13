@@ -61,7 +61,7 @@ public class PostService {
 	}
 
 	public List<PostDTO> getPostsbyHashtag(User user, String hashtag, int last) {
-		List<Post> posts = postDAO.getPostsByHashtag(hashtag, null, last);
+		List<Post> posts = postDAO.getPublicPostsByHashtag(user, hashtag, null, last);
 		List<PostDTO> postsDTO = new ArrayList<>();
 
 		for (Post post : posts) {
@@ -120,7 +120,7 @@ public class PostService {
 
 		return postsDTO;
 	}
-	
+
 	public boolean insertLike(int idPost, String username) {
 		Post post = postDAO.getPostById(idPost);
 		User u = userDAO.getUserByUsername(username);
@@ -154,7 +154,7 @@ public class PostService {
 	}
 
 	public User insertBookmark(User u, int idPost) {
-//		User u = userDAO.getUserByUsername(username);
+		//		User u = userDAO.getUserByUsername(username);
 		Post post = postDAO.getPostById(idPost);
 		u.getBookmarks().add(post);
 
@@ -179,16 +179,20 @@ public class PostService {
 		List<String> findTags = TagFinder.findTags(post.getContent());
 
 		for (String fh : findHashtags) {
-			
+
 			post.setContent(post.getContent().replaceAll("#"+fh, "#"+fh.toLowerCase()));
-			
+
 			Hashtag hashtagByValue = hashtagDAO.getHashtagByValue(fh);
-			if (hashtagByValue != null) {
+			if (hashtagByValue != null && !post.getUser().isPrivateProfile()) {
 				hashtagByValue.setCount(hashtagByValue.getCount() + 1);
 				modelDao.update(hashtagByValue);
 
 			} else {
-				hashtagByValue = new Hashtag(fh.toLowerCase(), 1);
+				if (!post.getUser().isPrivateProfile())
+					hashtagByValue = new Hashtag(fh.toLowerCase(), 1);
+				else
+					hashtagByValue = new Hashtag(fh.toLowerCase(), 0);
+
 			}
 			post.getHashtags().add(hashtagByValue);
 		}
