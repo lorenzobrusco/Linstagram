@@ -34,6 +34,7 @@ body, html {
 	width: 100%;
 	height: 600px;
 	object-fit: cover;
+	padding-top: 1px;
 }
 
 .content-post .details {
@@ -62,6 +63,11 @@ body, html {
 	margin: 0 16px;
 	flex-grow: 10;
 }
+
+ .content-post .caption-section{
+ 	margin: 0 16px;
+ 	margin-bottom:15px;
+ }
 
 .content-post .comments .list-comments-section {
 	max-height: 333px;
