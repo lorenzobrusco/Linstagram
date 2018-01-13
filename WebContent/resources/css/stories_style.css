@@ -163,6 +163,23 @@ h1.Snapssenger {
 	.plus-badge>span {
 		font-size: 16px;
 	}
+	
+	#zuck-modal-content .story-viewer .footer .right-button {
+  	position:absolute;
+		margin-right: 32px;
+		right: 0px;
+		bottom:70px;
+		transform:scale(1.8);
+	}
+
+#zuck-modal-content .story-viewer .footer .left-button {
+    position:absolute;
+    margin-left: 32px;
+		left: 0px;
+		bottom:70px;
+		transform:scale(1.8);
+}
+	
 }
 
 #zuck-modal-content .story-viewer .footer {
@@ -189,7 +206,7 @@ h1.Snapssenger {
 }
 
 #zuck-modal-content .story-viewer .footer .right-button {
-    position:absolute;
+  position:absolute;
 	margin-right: 32px;
 	right: 0px;
 }
