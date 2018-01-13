@@ -9,6 +9,14 @@
 	href="${pageContext.request.contextPath}/resources/css/lib/stories.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/stories_style.css">
+	
+<!-- NOTY -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/lib/noty/noty.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/lib/noty/themes/nest.css">
+<script
+	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
 </head>
 <body>
@@ -35,28 +43,6 @@
 		</c:forEach>
 	</div>
 
-	<%-- 	<jsp:include page="../fragment/viewerModal.jsp"></jsp:include> --%>
-	<div class="modal fade" id="removeModal">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Modal title</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p>Sicuro di voler eliminare la storia?</p>
-				</div>
-				<div class="modal-footer">
-					<button id="remove-modal-button" type="button" class="btn btn-primary">Rimuovi</button>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Chiudi</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	<div class="modal fade" id="viewerModal" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">

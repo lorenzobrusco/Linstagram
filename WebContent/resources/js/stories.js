@@ -202,9 +202,35 @@ function Stories(){
 //		$("#zuck-modal-content .story-viewer[data-story-id='"+loggedUser+"']").append(modalViewer);
 		var viewerbutton = '<div class="left-button"><a id="viewers-button" data-toggle="modal" data-target="#viewerModal"><i class="glyphicon glyphicon-eye-open"></i><strong></strong></a></div>'
 		$("#zuck-modal-content .story-viewer[data-story-id='"+loggedUser+"'] .buttons-container").append(viewerbutton);
-		var removebutton ='<div class="right-button"><a id="remove-button" data-toggle="modal" data-target="#removeModal"><i class="glyphicon glyphicon-trash"></i></a></div>';
+		var removebutton ='<div class="right-button"><a id="remove-button"><i class="glyphicon glyphicon-trash"></i></a></div>';
 		$("#zuck-modal-content .story-viewer[data-story-id='"+loggedUser+"'] .buttons-container").append(removebutton);
-
+		
+		
+		$("#remove-button").click(e => {
+			$("#zuck-modal .viewing").addClass("paused");
+			var n = new Noty({
+			  text: 'Do you want to remove the story?',
+			  theme: 'nest',
+				layout: 'center',
+			  buttons: [
+			    Noty.button('YES', 'btn btn-success', function () {
+						deleteStory();
+						$("#removeModal").modal('toggle');
+						$("#zuck-modal .close").click();
+						n.close();
+			    }, {id: 'button1', 'data-status': 'ok'}),
+			    
+			    Noty.button('NO', 'btn btn-error', function () {
+			    		$("#zuck-modal .viewing").removeClass("paused");
+			        n.close();
+			    })
+			  ]
+			}).show();
+			
+		});
+		
+		
+		
 	}
 
 	var setNumberViewers = function(idStory){
@@ -267,7 +293,7 @@ function Stories(){
 			processData: false,
 			contentType: false,
 			success: function(data) {
-				console.log(data);
+//				console.log(data);
 				if(data != null){
 					
 					addStoryItem(data);
@@ -312,12 +338,6 @@ function Stories(){
 	
 	$("#removeModal").on('hide.bs.modal',function(e){
 		$("#zuck-modal .viewing").removeClass("paused");
-	});
-	
-	$("#removeModal #remove-modal-button").click(function(){
-		deleteStory();
-		$("#removeModal").modal('toggle');
-		$("#zuck-modal .close").click();
 	});
 	
 	setUserStories(loggedUser);
