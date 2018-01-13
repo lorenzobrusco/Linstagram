@@ -134,10 +134,12 @@ public class HomePageController {
 
 		User loggedUser = (User) session.getAttribute("user");
 		List<PostDTO> posts = new ArrayList<>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(time);
 		if (typeRequest.equals("latest"))
-			posts = postService.getLatestPost(loggedUser, null, lastIndex);
+			posts = postService.getLatestPost(loggedUser, cal, lastIndex);
 		else if (typeRequest.equals("popular"))
-			posts = postService.getPopularPosts(loggedUser, null, lastIndex);
+			posts = postService.getPopularPosts(loggedUser, cal, lastIndex);
 
 		session.setAttribute("postRequest", typeRequest);
 		model.addAttribute("posts", posts);
