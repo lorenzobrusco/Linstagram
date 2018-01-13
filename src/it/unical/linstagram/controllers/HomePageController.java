@@ -1,7 +1,6 @@
 package it.unical.linstagram.controllers;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
 import it.unical.linstagram.dto.PostDTO;
 import it.unical.linstagram.dto.ResearchDTO;
 import it.unical.linstagram.dto.StoryDTO;
@@ -81,9 +81,9 @@ public class HomePageController {
 		if (UserManager.checkLogged(session)) {
 			User loggedUser = (User) session.getAttribute("user");
 			storiesService.AddViewerToStory(loggedUser, idStory);
-			return "redirect:index";
+			return "redirect:/";
 		}
-		return "redirect:index";
+		return "redirect:/";
 	}
 
 	// TODO: hande multiple file

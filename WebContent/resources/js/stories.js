@@ -205,22 +205,23 @@ function Stories(){
 		var removebutton ='<div class="right-button"><a id="remove-button"><i class="glyphicon glyphicon-trash"></i></a></div>';
 		$("#zuck-modal-content .story-viewer[data-story-id='"+loggedUser+"'] .buttons-container").append(removebutton);
 		
-		
+		//REMOVE STORY EVENT
 		$("#remove-button").click(e => {
 			$("#zuck-modal .viewing").addClass("paused");
 			var n = new Noty({
-			  text: 'Do you want to remove the story?',
+			  text: '<h4>Do you want to remove the story?</h4>',
 			  theme: 'nest',
+			  type: 'alert',
 				layout: 'center',
 			  buttons: [
-			    Noty.button('YES', 'btn btn-success', function () {
+			    Noty.button('YES', 'btn btn-danger', function () {
 						deleteStory();
 						$("#removeModal").modal('toggle');
 						$("#zuck-modal .close").click();
 						n.close();
 			    }, {id: 'button1', 'data-status': 'ok'}),
 			    
-			    Noty.button('NO', 'btn btn-error', function () {
+			    Noty.button('NO', 'btn btn-default pull-right', function () {
 			    		$("#zuck-modal .viewing").removeClass("paused");
 			        n.close();
 			    })

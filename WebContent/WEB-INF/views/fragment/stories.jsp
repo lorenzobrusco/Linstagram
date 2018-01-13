@@ -10,13 +10,6 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/stories_style.css">
 	
-<!-- NOTY -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/lib/noty/noty.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/lib/noty/themes/nest.css">
-<script
-	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
 </head>
 <body>
