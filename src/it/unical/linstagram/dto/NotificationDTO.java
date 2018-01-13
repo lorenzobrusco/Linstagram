@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.NotificationType;
+import it.unical.linstagram.model.Media.Media_Type;
 
 public class NotificationDTO {
 
@@ -16,6 +17,7 @@ public class NotificationDTO {
 	private String urlPost;
 	private int idPost;
 	private String date;
+	private boolean isVideo;
 	private boolean isPrivateFrom;
 	private boolean isPrivateTo;
 	private boolean alreadyFollowing;
@@ -43,6 +45,7 @@ public class NotificationDTO {
 			this.context = "liked your post";
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 			this.idPost = notification.getPost().getId();
+			this.isVideo = notification.getPost().getMedia().get(0).getType() == Media_Type.VIDEO;
 		} else {
 			if (!this.alreadyFollowed) {
 				this.context = "Asks to follow you";
@@ -130,6 +133,14 @@ public class NotificationDTO {
 
 	public void setDate(String data) {
 		this.date = data;
+	}
+
+	public boolean isVideo() {
+		return isVideo;
+	}
+
+	public void setVideo(boolean isVideo) {
+		this.isVideo = isVideo;
 	}
 
 	public boolean isPrivateFrom() {

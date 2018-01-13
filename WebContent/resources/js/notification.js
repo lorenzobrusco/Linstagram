@@ -64,7 +64,10 @@ $(document).ready(function(){
 							}
 						} else {
 							content_notification_popover += "<div class='post_notification'>";
-							content_notification_popover += "<a href='post?id="+result[i].idPost+"'><img src=" + result[i].urlPost + "></a>";
+							if(result[i].isVideo)
+								content_notification_popover += "<a href='post?id="+result[i].idPost+"'><video height='40px' width='40px' style='background:black' src=" + result[i].urlPost + "></a>";
+							else
+								content_notification_popover += "<a href='post?id="+result[i].idPost+"'><img src=" + result[i].urlPost + "></a>";
 							content_notification_popover += "</div>";	
 						}
 						if(i < (result.length -1))

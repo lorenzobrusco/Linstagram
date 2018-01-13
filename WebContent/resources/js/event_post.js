@@ -184,6 +184,8 @@ $(document).ready(function() {
 
 	});
 
+
+	
 	$(document).on("keypress", ".comment-section",function(e) {
 		if ( e.which == 13 ) { //enter press
 			$(this).find("button").click();
