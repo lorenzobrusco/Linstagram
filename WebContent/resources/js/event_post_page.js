@@ -110,16 +110,19 @@ $(document).ready(function() {
 		var username = $("#username").val();
 
 		var listComment = $('.list-comments'+postID);
-
+		
+		//prevent injection
+		comm = $( $.parseHTML(comm) ).text();
+		
 		$.ajax({
 			url : "addComment",
 			data: {postID:postID, comment:comm},
 			success : function(result) {		
 				if(result != "Failed") {
-					var res = $( $.parseHTML(result) ).text();
+//					var res = $( $.parseHTML(result) ).text();
 					$("#comment"+postID).val('');
 					$(listComment).append("<div class='comment'><a href='userPage?username="+username+"'><b>"+username+"</b></a>"+
-							"<span class='comment_body'>"+res+"</span></div>");
+							"<span class='comment_body'>"+comm+"</span></div>");
 				}
 			}
 		});
