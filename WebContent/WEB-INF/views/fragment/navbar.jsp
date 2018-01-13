@@ -12,6 +12,7 @@
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
 	type="image/x-icon">
+
 <script
 	src="${pageContext.request.contextPath}/resources/js/search_event.js"></script>
 

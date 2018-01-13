@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+		<script src="${pageContext.request.contextPath}/resources/js/video.js"></script>
 <c:forEach items="${posts}" var="post">
 	<section>
 		<div class="row">
@@ -18,9 +18,18 @@
 
 						<c:forEach items="${post.media}" var="media">
 							<c:if test="${media.type.value == 0}">
-								<video width="100%" controls>
-									<source src="${media.url}" type="video/mp4">
-								</video>
+								<div class="overlay-video">
+									<video id="video${post.id }" width="100%" loop preload="auto">
+										<source src="${media.url}" type="video/mp4">
+									</video>
+									<span class="tag-play">
+										<i class="fa fa-play fa-5x" aria-hidden="true"></i>
+									</span>
+									<span class="tag-pause hide">
+										<i class="fa fa-pause fa-1x" aria-hidden="true"></i>
+									</span>
+									<span class="tag-video"></span><span class="tag-audio"><i class="fa fa-volume-up fa-1x" aria-hidden="true"></i></span>
+								</div>
 							</c:if>
 							<c:if test="${media.type.value == 1}">
 								<div class="overlay">
@@ -141,3 +150,4 @@
 		</div>
 	</section>
 </c:forEach>
+

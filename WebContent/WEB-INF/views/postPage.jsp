@@ -38,7 +38,15 @@
 				<div class="row content-post">
 					<div class="col-md-8 posts">
 						<c:forEach items="${post.media}" var="media">
-							<img class="img-post-page" src="${media.url }">
+							<c:if test="${media.type.value == 0}">
+								<video width="650px"
+							height="600px"  style="background: black;"
+									controls autoplay loop preload="auto"> <source
+									class="img-post-page" src="${media.url}" type="video/mp4"></video>
+							</c:if>
+							<c:if test="${media.type.value == 1}">
+								<img class="img-post-page" src="${media.url }">
+							</c:if>
 						</c:forEach>
 					</div>
 					<div class="col-md-4 details">
