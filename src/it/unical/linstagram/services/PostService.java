@@ -179,6 +179,9 @@ public class PostService {
 		List<String> findTags = TagFinder.findTags(post.getContent());
 
 		for (String fh : findHashtags) {
+			
+			post.setContent(post.getContent().replaceAll("#"+fh, "#"+fh.toLowerCase()));
+			
 			Hashtag hashtagByValue = hashtagDAO.getHashtagByValue(fh);
 			if (hashtagByValue != null) {
 				hashtagByValue.setCount(hashtagByValue.getCount() + 1);
@@ -191,6 +194,7 @@ public class PostService {
 		}
 
 		for (String tag : findTags) {
+			post.setContent(post.getContent().replaceAll("@"+tag, "@"+tag.toLowerCase()));
 			User userByUsername = userDAO.getUserByUsername(tag);
 			if (userByUsername != null) {
 				post.getTags().add(userByUsername);

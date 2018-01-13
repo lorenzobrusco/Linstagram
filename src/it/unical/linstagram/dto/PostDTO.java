@@ -194,13 +194,10 @@ public class PostDTO {
 			Collections.sort(hashtags, (o1, o2) -> o2.getHashtag().length()-o1.getHashtag().length());
 			for (Hashtag h : hashtags) {
 
-				System.out.println(h.getHashtag());
-
 				int index = content.indexOf("#"+h.getHashtag());
 				String toConcat = "<a href='hashtags?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>";
 				while (index != -1)
 				{
-					System.out.println("index = "+index);
 					if (index <2 || index >2 && content.charAt(index-1) !='>')
 					{
 
