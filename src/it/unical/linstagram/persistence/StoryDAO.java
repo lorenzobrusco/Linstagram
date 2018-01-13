@@ -10,6 +10,7 @@ import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class StoryDAO implements IStoryDAO{
 
 	@Override

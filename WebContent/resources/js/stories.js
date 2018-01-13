@@ -74,6 +74,7 @@ function Stories(){
 					setUserStoryModal();
 					if(storyId == loggedUser)
 					{
+						loadStoriesViewer();
 						var currStory = zuck.data[storyId]['currentItem'];
 						var id = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 						setNumberViewers(id);

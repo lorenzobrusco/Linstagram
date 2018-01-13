@@ -96,7 +96,7 @@ public class PostDAO implements IPostDAO {
 		return posts;
 	}
 
-	public List<Post> getPopularPosts(String username, Calendar calendar, int last) {
+	public List<Post> getPopularPosts(String username, Calendar timeReq, int last) {
 		Session session = HibernateUtil.getSession();
 		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
 				.setParameter("username", username).list();
@@ -105,12 +105,12 @@ public class PostDAO implements IPostDAO {
 		Query query = null;
 		if (!followedUsers.isEmpty())
 			query = session.createQuery(
-					"SELECT p FROM Post p  WHERE p.user in (:fUsers) or p.user.username=:username order by p.likes.size desc, p.postDate desc")
-					.setParameter("fUsers", followedUsers).setParameter("username", username);
+					"SELECT p FROM Post p  WHERE (p.user in (:fUsers) or p.user.username=:username) and p.postDate<=:timeR order by p.likes.size desc, p.postDate desc")
+					.setParameter("fUsers", followedUsers).setParameter("username", username).setParameter("timeR",timeReq);
 		else
 			query = session.createQuery(
-					"SELECT p FROM Post p  WHERE p.user.username=:username order by p.likes.size desc, p.postDate desc")
-					.setParameter("username", username);
+					"SELECT p FROM Post p  WHERE p.user.username=:username p.postDate<=:timeR order by p.likes.size desc, p.postDate desc")
+					.setParameter("username", username).setParameter("timeR",timeReq);
 
 		query.setFirstResult(last);
 		query.setMaxResults(MAX_RESULTS_POST);
