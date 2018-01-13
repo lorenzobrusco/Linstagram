@@ -10,6 +10,7 @@ import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.User;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class NotificationDAO implements INotificationDAO {
 
 	@Override
@@ -46,17 +47,21 @@ public class NotificationDAO implements INotificationDAO {
 		return isAlreadyFollower(userFrom, userTo);
 	}
 
-	public boolean existsNotification(Notification notification) {
+	public Notification existsNotification(Notification notification) {
 		final Session session = HibernateUtil.getSession();
-		final BigInteger notifications = (BigInteger) session.createQuery(
-				"SELECT COUNT(*) FROM Notification n WHERE n.userTo=:userTo and n.userFrom=:userFrom and n.toSee=:toSee "
-						+ "and n.post=:post and n.comment=:comment and n.type=:types")
-				.setParameter("userTo", notification.getUserTo()).setParameter("userFrom", notification.getUserFrom())
-				.setParameter("toSee", notification.isToSee()).setParameter("post", notification.getPost())
-				.setParameter("comment", notification.getComment()).setParameter("type", notification.getType())
-				.getSingleResult();
+		Notification ntf = null;
+		final List<Notification> notifications = session.createQuery(
+				"FROM Notification n WHERE n.userTo=:userTo and n.userFrom=:userFrom "
+						+ "and n.post=:post and n.type=2")
+				.setParameter("userTo", notification.getUserTo())
+				.setParameter("userFrom", notification.getUserFrom())
+				.setParameter("post", notification.getPost())
+				.list();
+		System.out.println(notifications.size());
+		if(notifications.size() > 0)
+			ntf = notifications.get(0);
 		session.close();
-		return notifications != BigInteger.ZERO;
+		return ntf;
 	}
 
 }

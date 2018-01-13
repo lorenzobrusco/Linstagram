@@ -52,7 +52,7 @@
 					<div class="col-md-4 details">
 						<div class="details-post">
 							<img class="user-img-post" src="${post.user.photoProfile }">
-							<a href="userPage?usernameOther=${post.user.username}"><b>${post.user.username}</b></a>
+							<a href="userPage?username=${post.user.username}"><b>${post.user.username}</b></a>
 							<hr>
 						</div>
 						<div class="comments">

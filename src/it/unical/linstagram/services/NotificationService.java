@@ -37,8 +37,14 @@ public class NotificationService {
 	 * @param notification
 	 */
 	public void saveNotification(Notification notification) {
-//		if(!notificationDAO.existsNotification(notification))
+		Notification oldNotification = notificationDAO.existsNotification(notification);
+		System.out.println(oldNotification);
+		if(oldNotification != null) {
+			modelDAO.update(notification);
+		}else {
 			modelDAO.save(notification);
+		}
+			
 	}
 	
 	/**
