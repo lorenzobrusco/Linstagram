@@ -16,4 +16,8 @@ public interface IHashtagDAO {
 	public List getSuggestions (String queryString);
 //	public List standardSearch (String queryString);
 
+	List<Hashtag> getAllHashtagByUser(String username);
+
+	void updateAllHashtagCountsByUser(String username, int toAdd);
+
 }

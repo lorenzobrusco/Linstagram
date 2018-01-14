@@ -2,7 +2,13 @@ package it.unical.linstagram.persistence;
 
 import java.util.List;
 
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -12,7 +18,7 @@ import it.unical.linstagram.model.Hashtag;
 
 @Repository
 public class HashtagDAO implements IHashtagDAO {
-	
+
 	@Override
 	public Hashtag getHashtagByValue(String value) {
 		Session session = HibernateUtil.getSession();
@@ -26,7 +32,7 @@ public class HashtagDAO implements IHashtagDAO {
 	public List getSuggestions(String queryString) {
 		Session session = HibernateUtil.getSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
-		
+
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory()
 				.buildQueryBuilder().forEntity(Hashtag.class).get();
 		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().wildcard()
@@ -36,34 +42,66 @@ public class HashtagDAO implements IHashtagDAO {
 		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession
 				.createFullTextQuery(luceneQuery, Hashtag.class);
 		fullTextQuery.setMaxResults(5);
-		
+
 		List<Hashtag> contactList = fullTextQuery.list();
-		
+
 		fullTextSession.close();
-		
+
 		return contactList;
 	}
 
+	@Override
+	public List<Hashtag> getAllHashtagByUser (String username)
+	{
+		Session session = HibernateUtil.getSession();
+		List<Hashtag> hashtags =  session.createQuery("select p.hashtags FROM  Post p where p.user.username = :_username")
+				.setParameter("_username", username).list();
+
+		session.close();
+		return hashtags;
+
+	}
+
+
+	//TODO NON FUNZIONA
+	public void updateAllHashtagCountsByUser (String username, int toAdd)
+	{
+		Session session = HibernateUtil.getSession();
+		Transaction tx = session.beginTransaction();
+
+		List<Hashtag> hashtags =  session.createQuery("select p.hashtags FROM  Post p where p.user.username = :_username")
+				.setParameter("_username", username).list();
+
+		for (Hashtag hashtag : hashtags) {
+			hashtag.setCount(hashtag.getCount()+toAdd);
+			session.update(hashtag);
+		}
+		tx.commit();
+		session.close();
+		
+		return;
+
+	}
+
 //	@Override
-//	public List standardSearch(String queryString) {
-//		Session session = HibernateUtil.getHibernateSession();
-//		FullTextSession fullTextSession = Search.getFullTextSession(session);
-//		
-//		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Hashtag.class).get();
-//		org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields(STANDARD_INDEX).matching(queryString).createQuery();
+//	public void updateAllHashtagCountsByUser (String username, int toAdd)
+//	{
+//		Session session = HibernateUtil.getSession();
 //
-//		// wrap Lucene query in a javax.persistence.Query
-//		org.hibernate.search.FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(luceneQuery, Hashtag.class);
-//		fullTextQuery.setMaxResults(5);
-//		
-//		List<Hashtag> contactList = fullTextQuery.list();
-//		
-//		fullTextSession.close();
-//		
-//		return contactList;
+//		Query q =session.createQuery("update Hashtag h set h.count = h.count+ :_toAdd"
+//				+ " where h in (select p.hashtags from Post p where p.user.username = :_username)")
+//				.setParameter("_username", username)
+//				.setParameter("_toAdd", toAdd);
+//		q.executeUpdate();
+//
+//		session.close();
+//		return;
+//
 //	}
-	
-	
+
+
+
+
 
 
 }

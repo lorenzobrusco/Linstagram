@@ -2,6 +2,7 @@ package it.unical.linstagram.model.test;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class TestTagFinder {
 		post.getComments().add(new Comment("Si è vero",manuel,post,Calendar.getInstance()));
 		post.getComments().add(new Comment("Che stupido",eliana,post,Calendar.getInstance()));
 		
-		List<String> findTags = TagFinder.findTags(post.getContent());
+		Set<String> findTags = TagFinder.findTags(post.getContent());
 		
 		for (String string : findTags) {
 			System.out.println(string);

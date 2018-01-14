@@ -25,6 +25,7 @@ import it.unical.linstagram.model.Gender;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
+import it.unical.linstagram.services.HashtagService;
 import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.ProfileService;
@@ -39,6 +40,8 @@ public class ProfileController {
 	private UserService userService;
 	@Autowired
 	private MediaService uploadService;
+	@Autowired
+	private HashtagService hashtagsService;
 	
 	
 	@RequestMapping("profile")
@@ -114,13 +117,23 @@ public class ProfileController {
 			user.setBiography(bio);
 
 		
-		//AGGIORNARE GLI HASHTAGS
 		if (!privateCheck.equals(""))
+		{
+			//AGGIORNAMENTO HASHTAGS
+			if (user.isPrivateProfile() && privateCheck.equals("false"))
+			{
+				hashtagsService.incrementCounterPerUser(user.getUsername());
+			}
+			else if (!user.isPrivateProfile() && privateCheck.equals("true"))
+			{
+				hashtagsService.decremetCounterPerUser(user.getUsername());
+			}
+			
 			if (privateCheck.equals("true"))
 				user.setPrivateProfile(true);
 			else 
 				user.setPrivateProfile(false);
-		
+		}
 		if (!profileService.updateUser(user))
 			return  new MessageResponse(MessageCode.FAILED, user, "FAILED").getMessage();
 		
