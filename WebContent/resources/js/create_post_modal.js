@@ -1,14 +1,12 @@
+
+/* DA CANCELLARE */
+
 Dropzone.autoDiscover = false;
 
 function resize_canvas(canvas) {
 	canvas.css("width", "100%");
 //	canvas.css("height", "100%");
 }
-
-//function getContextPath() {
-//var domanin=document.location.origin;
-//return domanin+window.location.pathname.substring(0, window.location.pathname.indexOf("/",2))+"/";
-//}
 
 function UploadPic(canvas,filename) {
 	canvas.toBlob(function(blob){
@@ -111,7 +109,6 @@ function createCanvas(canvas,imgURL){
 	img.src = imgURL;
 
 }
-
 
 
 $(document).ready(function () {

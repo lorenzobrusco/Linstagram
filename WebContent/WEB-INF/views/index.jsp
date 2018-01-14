@@ -34,6 +34,11 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
+<script src="${pageContext.request.contextPath}/resources/js/lib/dropzone.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/create_content_lib.js"></script>	
+
+
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>

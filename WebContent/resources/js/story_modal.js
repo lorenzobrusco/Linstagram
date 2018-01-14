@@ -1,3 +1,5 @@
+/* DA CANCELLARE */
+
 Dropzone.autoDiscover = false;
 
 function resize_canvas(canvas) {

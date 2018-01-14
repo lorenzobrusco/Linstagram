@@ -10,10 +10,11 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/lib/dropzone.css">
 	
-<script src="${pageContext.request.contextPath}/resources/js/lib/dropzone.js"></script>
+<!-- <script src="${pageContext.request.contextPath}/resources/js/lib/dropzone.js"></script> -->
 
-<script
-	src="${pageContext.request.contextPath}/resources/js/create_post_modal.js"></script>
+<!--  <script
+	src="${pageContext.request.contextPath}/resources/js/create_post_modal.js"></script>  GO IN INDEX -->
+	
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/animatedModal.min.js"></script>
 
@@ -68,8 +69,9 @@
 					<button type="button" class="btn-transparent" id="hemingway"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/35.jpg"/></button>
 					<button type="button" class="btn-transparent" id="concentrate"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/36.jpg"/></button>
 				</div>
-				
+				<div class="canvas-cont"></div>
 				<div id="loader" class="hide"></div>
+				<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter </button>
 			</div>
 			<!--TODO: CALL WITH AJAX FOR HIDE MODEL AND CONFIRM CREATION -->
 			<div id="post-description" class="hide">
@@ -84,4 +86,8 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	setupContentCreator("#create-post-modal","post");
+</script>
 
