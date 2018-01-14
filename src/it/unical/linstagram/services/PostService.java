@@ -175,8 +175,8 @@ public class PostService {
 
 	public void savePost(Post post) {
 
-		List<String> findHashtags = HashtagFinder.findHashtags(post.getContent());
-		List<String> findTags = TagFinder.findTags(post.getContent());
+		Set<String> findHashtags = HashtagFinder.findHashtags(post.getContent());
+		Set<String> findTags = TagFinder.findTags(post.getContent());
 
 		for (String fh : findHashtags) {
 
