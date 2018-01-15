@@ -21,7 +21,7 @@
 		<li id="follower" data-toggle="modal" data-target="#modalFollower">
 		<span><b id="count_follower">${fn:length(userPublic.followers)}</b></span> follower</li>
 		<li id="following" data-toggle="modal" data-target="#modalFollowing">
-		<span><b>${fn:length(userPublic.followings)}</b></span> profili seguiti</li>
+		<span><b>${fn:length(userPublic.followings)}</b></span> profiles followed</li>
 	</ul>
 </div>
 <div class="row item-user-info">
