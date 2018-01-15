@@ -6,7 +6,7 @@
 <c:forEach items="${posts}" var="post">
 	<section>
 		<div class="row">
-			<div class="col-md-2"></div>
+			<div class="col-md-2"><span class="pid hidden">${post.id}</span></div>
 			<div class="col-md-8">
 				<div class='card'>
 					<div class='top-section'>
