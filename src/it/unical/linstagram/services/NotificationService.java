@@ -49,7 +49,6 @@ public class NotificationService {
 		} else {
 			modelDAO.save(notification);
 		}
-
 	}
 
 	/**
