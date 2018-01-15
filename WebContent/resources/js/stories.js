@@ -27,6 +27,7 @@ function Stories(){
 			}
 			var items = $(el).children(".items").children("li");
 			for(var j=0; j < items.length;j++){
+				console.log($(items[j]).attr("data-id")+" "+$(a).attr("data-seen"));
 				var a = $(items[j]).children("a");
 				var item = buildItem(
 						$(items[j]).attr("data-id"),
@@ -46,14 +47,18 @@ function Stories(){
 	}
 
 	var checkAllViewed = function(idStory){
-		var list = $("#stories [data-id='"+idStory+"'] .items").children("li");
-		for(var i = 0; i< list.length;i++){
-			if(!$(list[i]).hasClass("seen")){
+//		var list = $("#stories [data-id='"+idStory+"'] .items").children("li");
+//		for(var i = 0; i< list.length;i++){
+////			console.log($(list[i]));
+//			if(!$(list[i]).hasClass("seen")){
+//				return;
+//			}
+//		}
+		for(var i = 0; i< zuck.data[idStory].items.length;i++){
+			if(!zuck.data[idStory].items[i]["seen"]=="true")
 				return;
-			}
 		}
 		$("#stories [data-id='"+idStory+"']").addClass("seen");
-
 	}
 
 	var zuck = new Zuck('stories', {
@@ -71,14 +76,21 @@ function Stories(){
 				if($("#stories [data-id='"+storyId+"'] .items").children("li").length != 0){
 					document.getElementById("posts").classList.add("hidden-posts");
 					callback();
+					
+					if (typeof currStory === "undefined") 
+						currStory=0;
+					
+					var id = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 					setUserStoryModal();
+					viewsStory(storyId,id);
+
 					if(storyId == loggedUser)
 					{
 						loadStoriesViewer();
 						var currStory = zuck.data[storyId]['currentItem'];
-						var id = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 						setNumberViewers(id);
 					}
+					checkAllViewed(storyId);
 				}
 				else{
 					$("#open-story-modal").click();
@@ -97,13 +109,7 @@ function Stories(){
 					}else{
 						
 					}
-					
-					$.ajax({
-						url:"storyViewed", 
-						data:{idStory:nextStoryId},
-						success: function(result) {
-						}	
-					})
+					viewsStory(storyId,nextStoryId);
 					callback();
 					checkAllViewed(storyId);
 				}
@@ -111,6 +117,8 @@ function Stories(){
 			'onView': function onView(storyId) {
 
 				var currStory = zuck.data[storyId]['currentItem'];
+				if (typeof currStory === "undefined") 
+					currStory=0;
 				var id = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 				if(id != undefined)
 				{
@@ -118,12 +126,8 @@ function Stories(){
 						setNumberViewers(id);
 					}
 					
-					$.ajax({
-						url:"storyViewed", 
-						data:{idStory:id},
-						success: function(result) {
-						}	
-					})
+					viewsStory(storyId,id);
+
 					checkAllViewed(storyId);
 				}
 			},'onEnd': function(storyId, callback) { // on end story
@@ -132,6 +136,7 @@ function Stories(){
 			},
 		}
 	});
+	this.storiesList = zuck.data;
 
 	var setUserStories = function(loggedUser){
 
@@ -164,6 +169,10 @@ function Stories(){
 	} 
 	var deleteStory =  function(){
 		var currStory = zuck.data[loggedUser]['currentItem'];
+		
+		if (typeof currStory === "undefined") 
+			currStory=0;
+		
 		var id = $("#stories [data-id='"+loggedUser+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 		$.ajax({
 			url:"deleteStory",
@@ -231,7 +240,21 @@ function Stories(){
 		});
 		
 	}
-
+	var viewsStory= function(user,story){
+		$.ajax({
+			url:"storyViewed", 
+			data:{idStory:story},
+			success: function(result) {
+			}	
+		})
+		for(var i = 0; i< zuck.data[user].items.length;i++)
+			if(zuck.data[user].items[i]["id"]==story){		
+				zuck.data[user].items[i]["seen"]="true";
+				$("#stories [data-id='"+user+"'] li[data-id='"+story+"']").addClass("seen");
+				return;
+			}
+	}
+	
 	var setNumberViewers = function(idStory){
 		$("#zuck-modal-content .story-viewer #viewers-button strong").text(viewers[idStory].length);
 	}
@@ -274,10 +297,11 @@ function Stories(){
 	}
 	
 	this.addStoryItem = function(data){
-		var item = buildItem(data.id,data.type,3,data.url,"","",false,data.viewed,timestamp(data.date));
+		var item = buildItem(data.id,data.type,data.length,data.url,"","",false,data.viewed,timestamp(data.date));
 		zuck.addItem(loggedUser,item);
 		viewers[data.id]=[];
 		$("#stories [data-id='"+loggedUser+"']").removeClass("seen");
+		$("#stories [data-id='"+loggedUser+"']").attr("data-seen","false");
 
 		setUserStories(loggedUser);
 		
@@ -325,6 +349,10 @@ function Stories(){
 	$("#viewerModal").on('show.bs.modal',function(e){
 		$("#zuck-modal .viewing").addClass("paused");
 		var currStory = zuck.data[loggedUser]['currentItem'];
+		
+		if (typeof currStory === "undefined") 
+			currStory=0;
+		
 		var id = $("#stories [data-id='"+loggedUser+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 		addViewer(id);
 	});
