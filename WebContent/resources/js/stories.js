@@ -230,8 +230,6 @@ function Stories(){
 			
 		});
 		
-		
-		
 	}
 
 	var setNumberViewers = function(idStory){
@@ -275,7 +273,7 @@ function Stories(){
 
 	}
 	
-	var addStoryItem = function(data){
+	this.addStoryItem = function(data){
 		var item = buildItem(data.id,data.type,3,data.url,"","",false,data.viewed,timestamp(data.date));
 		zuck.addItem(loggedUser,item);
 		viewers[data.id]=[];
@@ -285,43 +283,44 @@ function Stories(){
 		
 		
 	}
-	this.addStory = function(sData){
-		$.ajax({
-			type: 'POST',
-			url: 'addStory',
-			enctype: 'multipart/form-data',
-			data: sData,
-			processData: false,
-			contentType: false,
-			success: function(data) {
-//				console.log(data);
-				if(data != null){
-					
-					addStoryItem(data);
-
-					new Noty({
-						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your story has been added!',
-						theme: 'nest',
-						type: 'success',
-						layout: 'bottomLeft',
-						timeout:2000,
-						progressBar: true
-					}).show();
-				}else{
-					
-					new Noty({
-						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> You story has not been added!',
-						theme: 'nest',
-						type: 'error',
-						layout: 'bottomLeft',
-						timeout:4000,
-						progressBar: true
-				}).show();
-				}
-
-			}
-		});
-	}
+	
+//	this.addStory = function(sData){
+//		$.ajax({
+//			type: 'POST',
+//			url: 'addStory',
+//			enctype: 'multipart/form-data',
+//			data: sData,
+//			processData: false,
+//			contentType: false,
+//			success: function(data) {
+////				console.log(data);
+//				if(data != null){
+//					
+//					addStoryItem(data);
+//
+//					new Noty({
+//						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your story has been added!',
+//						theme: 'nest',
+//						type: 'success',
+//						layout: 'bottomLeft',
+//						timeout:2000,
+//						progressBar: true
+//					}).show();
+//				}else{
+//					
+//					new Noty({
+//						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> You story has not been added!',
+//						theme: 'nest',
+//						type: 'error',
+//						layout: 'bottomLeft',
+//						timeout:4000,
+//						progressBar: true
+//				}).show();
+//				}
+//
+//			}
+//		});
+//	}
 	
 	$("#viewerModal").on('show.bs.modal',function(e){
 		$("#zuck-modal .viewing").addClass("paused");
