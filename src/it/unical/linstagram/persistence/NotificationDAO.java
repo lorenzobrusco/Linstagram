@@ -52,12 +52,11 @@ public class NotificationDAO implements INotificationDAO {
 		Notification ntf = null;
 		final List<Notification> notifications = session.createQuery(
 				"FROM Notification n WHERE n.userTo=:userTo and n.userFrom=:userFrom "
-						+ "and n.post=:post and n.type=2")
+						+ "and n.post=:post and n.type=0")
 				.setParameter("userTo", notification.getUserTo())
 				.setParameter("userFrom", notification.getUserFrom())
 				.setParameter("post", notification.getPost())
 				.list();
-		System.out.println(notifications.size());
 		if(notifications.size() > 0)
 			ntf = notifications.get(0);
 		session.close();

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
 import it.unical.linstagram.dto.CommentDTO;
 import it.unical.linstagram.dto.PostDTO;
 import it.unical.linstagram.dto.UserDTO;
@@ -47,12 +49,13 @@ public class PostController {
 	@ResponseBody
 	public String insertLike(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
+		Post post = postService.getPost(idPost);
 		if (postService.insertLike(idPost, user.getUsername())) {
 			notificationService.generateLikeNotification(user, idPost);
-			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+			return new Gson().toJson(new MessageResponse(MessageCode.OK, post.getUser().getUsername(), "OK"));
 		}
 
-		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
+		return new Gson().toJson(new MessageResponse(MessageCode.FAILED, post.getUser().getUsername(), "Failed"));
 	}
 
 	@RequestMapping("removeLike")
@@ -96,6 +99,7 @@ public class PostController {
 	public String insertComment(HttpSession session, Model model, @RequestParam("postID") int idPost,
 			@RequestParam("comment") String comment) {
 		User user = (User) session.getAttribute("user");
+		Post post = postService.getPost(idPost);
 		//check comment length 
 		if(comment.length() > Comment.MAX_LENGTH_COMMENT) {
 			String comment_short = comment.substring(0, Comment.MAX_LENGTH_COMMENT - 3);
@@ -105,10 +109,10 @@ public class PostController {
 		if (!comment.equals(""))
 			if (postService.insertComment(idPost, user.getUsername(), comment, Calendar.getInstance())) {
 				notificationService.generateCommentNotification(user, idPost);
-				return new MessageResponse(MessageCode.OK, user, comment).getMessage();
+				return new Gson().toJson(new MessageResponse(MessageCode.OK, post.getUser().getUsername(), comment));
 			}
 
-		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
+		return new Gson().toJson(new MessageResponse(MessageCode.FAILED, post.getUser().getUsername(), "Failed"));
 	}
 
 	@RequestMapping("getLikes")

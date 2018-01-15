@@ -551,7 +551,7 @@ header {
     visibility: hidden;
     width: 80%;
     margin-left: 10%;
-    background-color: #bebebe;
+    background: transparent;
     color: #fff;
     text-align: center;
     border-radius: 2px;
@@ -560,7 +560,7 @@ header {
     z-index: 1;
     bottom: var(--bottom-heigth);
     border-radius: 8px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);*/
 }
 
 #snackbar .btn{

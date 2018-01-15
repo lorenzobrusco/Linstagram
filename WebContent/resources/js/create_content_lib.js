@@ -40,7 +40,7 @@ function UploadPic(canvas, filename, container) {
 		//		console.log(blob);
 		var formData = new FormData();
 		formData.append('file', blob,filename);
-		var postDescription=$(container+" #post-description-input").val();
+		var postDescription=$("#post-description-input").val();
 		//preventing injection
 		var safetext = $( $.parseHTML(postDescription) ).text();
 
@@ -65,7 +65,7 @@ function UploadPic(canvas, filename, container) {
 function UploadFile(file, filename, type, container) {
 	var formData = new FormData();
 	formData.append('file', file, filename);
-	var postDescription=$(container+" #post-description-input").val();
+	var postDescription=$("#post-description-input").val();
 	//preventing injection
 	var safetext = $( $.parseHTML(postDescription) ).text();
 
@@ -205,6 +205,7 @@ function setupContentCreator(container , type) {
 	}
 
 	$(document).ready(function () {
+		$(final_submit).prop("disabled", false);
 		//	DROPZONE 
 		dropzoneOptions = {
 				url: 'upload',
@@ -331,6 +332,7 @@ function setupContentCreator(container , type) {
 
 					$(final_submit).click(e => {
 						console.log(file[0].type);
+						$(final_submit).prop("disabled", true);
 						var canvas = $(container+' .canvas-cont canvas');
 						
 						if(type == "story") {

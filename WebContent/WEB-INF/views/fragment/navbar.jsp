@@ -12,7 +12,8 @@
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
 	type="image/x-icon">
-
+<script src="${pageContext.request.contextPath}/resources/js/lib/sockjs-0.3.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/stomp.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/search_event.js"></script>
 
@@ -32,11 +33,11 @@
 				<li><a href="profile" role="button" id="profile-mobile"
 					class="item-mobile"></a></li>
 
-				<li><a href="#" id="add-mobile" class="item-mobile"></a></li>
+				<li><div id="add-mobile" class="item-mobile"></div></li>
 
 				<li><a href="explore" id="explore-mobile" class="item-mobile"></a></li>
 
-				<li><a href="#" id="notification-mobile" class="item-mobile"></a></li>
+				<li><div id="notification-mobile" class="item-mobile"></div></li>
 			</ul>
 		</div>
 		
@@ -83,8 +84,32 @@
 			.ready(
 					function() {
 
-						// NOTIFICATION BADGE
 
+						/**
+						 * Open the web socket connection and subscribe the "/notify" channel.
+						 */
+						function connect() {
+
+							// Create and init the SockJS object
+							var socket = new SockJS(
+									'${pageContext.request.contextPath}/ws');
+							var stompClient = Stomp.over(socket);
+
+							// Subscribe the '/notify' channell
+							stompClient.connect({}, function(frame) {
+								stompClient.subscribe('/user/queue/notify',
+										function(notification) {
+											updateNotificationBadge();
+											alert(notification)
+										});
+							});
+
+							return;
+						} // function connect
+
+						/**
+						 * Display the notification message.
+						 */
 						function updateNotificationBadge() {
 							$
 									.ajax({
@@ -105,14 +130,8 @@
 									});
 						}
 
-						updateNotificationBadge();
-						window.setInterval(function() {
-							updateNotificationBadge();
-						}, 60000);
-
 						// =========================================
 
-						//mobile navbar event
 						if ($("#navbar-mobile").css('display') != "none") {
 							var localpathname = window.location.pathname;
 							var res = localpathname.split("/");
@@ -161,13 +180,7 @@
 
 						$('[data-toggle="tooltip"]').tooltip();
 
-						/*$('#search-input-desktop').focusin(function() {
-							$("#search-div").css("width", "70%");
-						});
-
-						$('#search-input-desktop').focusout(function() {
-							$("#search-div").css("width", "50%");
-						});*/
-
+						 connect();
+						 updateNotificationBadge();
 					});
 </script>

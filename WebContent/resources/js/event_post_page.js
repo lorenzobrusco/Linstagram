@@ -23,6 +23,18 @@
 //};
 
 $(document).ready(function() {
+	
+	function sendNotification(user) {
+		  $.ajax({
+		    url: "sendNotification",
+		    type: "POST",
+		    data:{
+		    	user: user
+		    }
+		  });
+		  return;
+	}
+	
 	//EVENTO "INSERIMENTO LIKE"
 	$(document).on('click', 'a.love', function() {
 		var postID = $(this).attr('name');
@@ -35,7 +47,8 @@ $(document).ready(function() {
 				postID:postID
 			},
 			success : function(result) {
-				if(result == "OK") {
+				result = JSON.parse(result);
+				if(result.messageCode == "OK") {
 					$(count_like).html(parseInt($(count_like).html(), 10)+1)
 					$(love_id).empty();
 					$(love_id).append("<a name="+postID+" id=loveFull"+postID+
@@ -117,12 +130,13 @@ $(document).ready(function() {
 		$.ajax({
 			url : "addComment",
 			data: {postID:postID, comment:comm},
-			success : function(result) {		
-				if(result != "Failed") {
-//					var res = $( $.parseHTML(result) ).text();
+			success : function(result) {					
+				result = JSON.parse(result);
+				if(result.messageCode == "OK") {
 					$("#comment"+postID).val('');
 					$(listComment).append("<div class='comment'><a href='userPage?username="+username+"'><b>"+username+"</b></a>"+
 							"<span class='comment_body'>"+comm+"</span></div>");
+					sendNotification(result.obj);
 				}
 			}
 		});
