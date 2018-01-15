@@ -205,6 +205,7 @@ function setupContentCreator(container , type) {
 	}
 
 	$(document).ready(function () {
+		$(final_submit).prop("disabled", false);
 		//	DROPZONE 
 		dropzoneOptions = {
 				url: 'upload',
@@ -331,6 +332,7 @@ function setupContentCreator(container , type) {
 
 					$(final_submit).click(e => {
 						console.log(file[0].type);
+						$(final_submit).prop("disabled", true);
 						var canvas = $(container+' .canvas-cont canvas');
 						
 						if(type == "story") {
