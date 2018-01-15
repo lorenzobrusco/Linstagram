@@ -35,7 +35,7 @@ public class User{
 
 	@Column(name="username", nullable = false, unique = true)
 	@Fields({
-		@Field(name = "username", index = Index.YES, store = Store.YES),
+		@Field(name = "username", index = Index.YES, store = Store.NO),
 	})
 	private String username;
 
@@ -47,13 +47,13 @@ public class User{
 
 	@Column(name="name")
 	@Fields({
-		@Field(name = "name", index = Index.YES, store = Store.YES),
+		@Field(name = "name", index = Index.YES, store = Store.NO),
 	})
 	private String name;
 
 	@Column (name="surname")
 	@Fields({
-		@Field(name = "surname", index = Index.YES, store = Store.YES),
+		@Field(name = "surname", index = Index.YES, store = Store.NO),
 	})
 	private String surname;
 

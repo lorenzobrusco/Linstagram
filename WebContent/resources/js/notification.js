@@ -21,6 +21,7 @@ $(document).ready(function(){
 				
 				var content_notification_popover = "";
 					for (var i = 0; i < result.length; i++) {
+						//alert(JSON.stringify(result[i]));
 						content_notification_popover += "<div class='notification_item'>";
 						content_notification_popover += "<div class='user_from_notification'>";
 						content_notification_popover += "<a href='userPage?username="+result[i].userName+"'><img src="+ result[i].userPhoto+"></a>";
@@ -29,16 +30,15 @@ $(document).ready(function(){
 						content_notification_popover += "<span><b><a href='userPage?username="+result[i].userName+"'>" + result[i].userName +"</b></a>  " + result[i].context +". <p> "+ result[i].date+"</p></span>"; 
 						content_notification_popover += "</div>";
 						if(result[i].urlPost == null){
-							if(result[i].isRequestFrom){
+							if(result[i].requestFrom){
 								content_notification_popover += "<div class='follow_btn_notification'>";					
 								content_notification_popover +="<button class='deleteRequestfollowProfile_btn' disabled>Waiting</button>";
 								content_notification_popover += "<input type='hidden' value='" + JSON.stringify(result[i]) +"'>";
 								content_notification_popover += "</div>";
 							} else {
-								if(result[i].isRequestTo){
+								if(result[i].requestTo){
 								content_notification_popover += "<div class='follow_btn_notification'>";
-								if(result[i].isPrivateTo){
-									
+								if(result[i].privateTo){
 									content_notification_popover += "<button class='acceptfollowProfile_btn'>Accept</button>";
 									content_notification_popover += "<button class='declineProfile_btn'>Decline</button>";
 								}else{
@@ -64,8 +64,7 @@ $(document).ready(function(){
 							}
 						} else {
 							content_notification_popover += "<div class='post_notification'>";
-							console.log(result[i].isVideo);
-							if(result[i].isVideo)
+							if(result[i].video)
 								content_notification_popover += "<a href='post?id="+result[i].idPost+"'><video height='40px' width='40px' style='background:black' src=" + result[i].urlPost + "></a>";
 							else
 								content_notification_popover += "<a href='post?id="+result[i].idPost+"'><img src=" + result[i].urlPost + "></a>";

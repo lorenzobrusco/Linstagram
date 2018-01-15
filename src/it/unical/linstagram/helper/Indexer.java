@@ -19,7 +19,9 @@ public class Indexer {
 		
 		System.out.println("SONO LA INIT");
 		reindex(Hashtag.class, session);
+		System.out.println("HASHTAG reindex");
 		reindex(User.class, session);
+		System.out.println("USER reindex");
 		session.close();
 	}
 

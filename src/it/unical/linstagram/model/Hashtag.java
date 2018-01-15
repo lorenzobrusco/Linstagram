@@ -57,7 +57,7 @@ public class Hashtag {
 	@Column(name = "hashtag", unique = true, nullable = false)
 
 	@Fields({
-		  @Field(name = "hashtag", index = Index.YES, store = Store.YES),
+		  @Field(name = "hashtag", index = Index.YES, store = Store.NO),
 		})
 	private String hashtag;
 

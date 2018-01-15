@@ -30,9 +30,21 @@ public class HibernateUtil {
 					configPath = URLDecoder.decode(path, "UTF-8");
 					configPath = new File(configPath).getPath();
 
+					//refresh every half hour
+					configuration.setProperty("hibernate.search.default.refresh", "1800");
+					//strategy
+					configuration.setProperty("hibernate.search.default.locking_strategy", "none");
+					//hibernate.search.default.indexBase
 					configuration.setProperty("hibernate.search.default.indexBase", configPath + "/../build/indexes");
-					//					configuration.setProperty("hihibernate.search.default.locking_strategy", "naive");
+					//source directory location where the master is copied to
+					configuration.setProperty("hibernate.search.default.sourceBase", configPath + "/../source/indexes");
+					//configuration.setProperty("hibernate.search.default.exclusive_index_use", "false");
+					//refresh every half hour
+					configuration.setProperty("hibernate.search.default.refresh", "1800");
+					//slave working directory location
+					configuration.setProperty("hibernate.search.default.indexBase", configPath + "/../build/indexes");
 
+					//					configuration.setProperty("hihibernate.search.default.locking_strategy", "naive");
 					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
 
 				} catch (UnsupportedEncodingException e) {

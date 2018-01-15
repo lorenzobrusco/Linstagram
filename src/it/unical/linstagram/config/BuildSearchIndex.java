@@ -27,8 +27,9 @@ implements ApplicationListener<ContextRefreshedEvent> {
 
 		String configPath = HibernateUtil.getConfigPath();
 		if (configPath != null && !Files.exists(Paths.get(HibernateUtil.getConfigPath() + "/../build/indexes"))) {
-			Indexer.init();
+			;
 		}
+		Indexer.init();
 		return;
 	}
 
