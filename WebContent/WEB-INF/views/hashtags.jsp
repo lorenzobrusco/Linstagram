@@ -29,7 +29,7 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
-	<script src="${pageContext.request.contextPath}/resources/js/hashtagPage.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/hashtagPage.js"></script>
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>

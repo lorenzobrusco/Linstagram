@@ -426,19 +426,24 @@ function setupContentCreator(container , type) {
 //		$("#add-story").animatedModal(modalConfiguration);
 		$("#create-story-btn").animatedModal(modalConfiguration);
 
-		var sneackbar = $("#snackbar");
+		$("#create-post-btn").animatedModal(modalConfiguration);
+		
+		//EVENT SNACKBAR FOR MOBILE
+		var snackbar = $("#snackbar");
 
 		$("#add-mobile").click( e =>{
-			sneackbar.addClass("show");
+			snackbar.addClass("show");
+			//auto close sneackbar after 5 second
+			setTimeout(function(){ snackbar.removeClass("show");}, 5000);
 		});
 
-		$("#create-post-btn").animatedModal(modalConfiguration);
+		//clsoe snackbar if click on a button
+		$("#snackbar a").click( e => { snackbar.removeClass("show");})
 
-		$("#snackbar .btn").click(e=>{sneackbar.removeClass("show");})
-
+		//close snackbar if the user click on an area different from one of the two buttons
 		$(document).mouseup(function(e) {
-			if (!sneackbar.is(e.target) && sneackbar.has(e.target).length === 0) {
-				sneackbar.removeClass("show");
+			if (!$("#snackbar a").is(e.target)) {
+				snackbar.removeClass("show");
 			}
 		});
 

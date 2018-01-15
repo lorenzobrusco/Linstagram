@@ -109,7 +109,7 @@ public class PostDAO implements IPostDAO {
 					.setParameter("fUsers", followedUsers).setParameter("username", username).setParameter("timeR",timeReq);
 		else
 			query = session.createQuery(
-					"SELECT p FROM Post p  WHERE p.user.username=:username p.postDate<=:timeR order by p.likes.size desc, p.postDate desc")
+					"SELECT p FROM Post p WHERE p.user.username=:username and p.postDate<=:timeR order by p.likes.size desc, p.postDate desc")
 					.setParameter("username", username).setParameter("timeR",timeReq);
 
 		query.setFirstResult(last);
