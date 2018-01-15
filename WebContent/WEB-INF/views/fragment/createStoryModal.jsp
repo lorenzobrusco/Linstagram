@@ -32,7 +32,7 @@
 		</div>
 
 		<div class="modal-body">
-
+			<div id="loader" class="hide"></div>
 			<form class="dropzone" id="story-dropzone">
 				<!-- this is were the previews should be shown. -->
 				<div class="fallback">
@@ -47,7 +47,7 @@
 					<i class="fa fa-paper-plane" aria-hidden="true"></i> Upload Media
 				</button>
 			</form>
-					<div id="apply-filter-section" class="hide">
+			<div id="apply-filter-section" class="hide">
 				<div id="filter-btn-group">
 					<button type="button" class="btn-transparent" id="normal"><img class="img-circle img-small filter-active" src="${pageContext.request.contextPath}/resources/images/filters/37.jpg"/></button>
 					<button type="button" class="btn-transparent" id="vintage"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/19.jpg"/></button>
@@ -70,8 +70,7 @@
 					<button type="button" class="btn-transparent" id="concentrate"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/36.jpg"/></button>
 				</div>
 				<div class="canvas-cont"></div>
-				<div id="loader" class="hide"></div>
-				<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter </button>
+				<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter and Create Story </button>
 			</div>
 		</div>
 	</div>

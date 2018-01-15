@@ -7,6 +7,8 @@ function resize_canvas(canvas) {
 	//	canvas.css("height", "100%");
 }
 
+
+
 var complete_noty = new Noty({
 	text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your post is created!',
 	theme: 'nest',
@@ -189,6 +191,20 @@ function setupContentCreator(container , type) {
 		console.err("not allowed type");
 		return;
 	}
+	
+	function resetFinalSubmit(){
+		var final_submit_btn = $(final_submit);
+//		console.log(final_submit_btn);
+		final_submit_btn.prop("disabled", false);
+		if(type=="story"){
+			final_submit_btn.text("Apply Filter and Create Story");
+		}
+		else{
+			final_submit_btn.text("Create Post");
+		}
+		final_submit_btn.siblings().removeClass("hide");
+		$(container+' #loader').addClass("hide");
+	}
 
 	function endFilter(canvas){
 		$(container+' #loader').addClass('hide');
@@ -205,7 +221,6 @@ function setupContentCreator(container , type) {
 	}
 
 	$(document).ready(function () {
-		$(final_submit).prop("disabled", false);
 		//	DROPZONE 
 		dropzoneOptions = {
 				url: 'upload',
@@ -253,6 +268,7 @@ function setupContentCreator(container , type) {
 
 
 					submit_file.on("click", function (e) {
+						
 						// Make sure that the form isn't actually being sent.
 						e.preventDefault();
 						e.stopPropagation();
@@ -288,6 +304,7 @@ function setupContentCreator(container , type) {
 								UploadFileStory(file[0], filename, "video",container);
 							else if(~file[0].type.indexOf("gif"))
 								UploadFileStory(file[0],filename, "image",container);
+							submitFileloader();
 							return;
 						}
 
@@ -329,10 +346,20 @@ function setupContentCreator(container , type) {
 
 //					console.log(final_submit);
 //					console.log($(final_submit));
-
-					$(final_submit).click(e => {
-						console.log(file[0].type);
+					function submitFileloader(){
 						$(final_submit).prop("disabled", true);
+						$(container+' #loader').removeClass("hide");
+						$(final_submit).text("Loading...");
+						console.log($(final_submit));
+//						console.log($(container+" .modal-body").not(final_submit));
+						$(final_submit).siblings().addClass("hide");
+					}
+					
+					$(final_submit).click(e => {
+						
+						console.log(file[0].type);
+						submitFileloader();
+						
 						var canvas = $(container+' .canvas-cont canvas');
 						
 						if(type == "story") {
@@ -341,7 +368,6 @@ function setupContentCreator(container , type) {
 							else if(~file[0].type.indexOf("gif"))
 								UploadFileStory(file[0],filename, "image",container);
 							else {
-								console.log("log");
 								UploadPicStory(canvas,filename); 
 							}
 						} 
@@ -355,27 +381,7 @@ function setupContentCreator(container , type) {
 								UploadPic(canvas,filename); 
 							} 
 
-//						console.log(file[0].type);
-//						var canvas = $(container+' .canvas-cont canvas');
-////					myDropzone.processQueue(); 
-//						if(~file[0].type.indexOf("video")){
-//						UploadFile(file[0], filename, "video",container);
-//						} 
-//						else if(~file[0].type.indexOf("image")) {
-//						if(type == "story"){
-//						console.log("ok");
-//						endFilter(canvas);
-//						UploadPicStory(canvas,filename); 
-//						}
-//						else if(~file[0].type.indexOf("gif"))
-//						UploadFile(file[0],filename, "image",container);
-//						else 
-//						UploadPic(canvas,filename); 
-//						} 
-
 					});
-
-//					this.on("successmultiple", function (files, response) {});
 
 				} //close init
 		}; //close option
@@ -392,7 +398,9 @@ function setupContentCreator(container , type) {
 				animatedOut: 'bounceOutDown',
 				color: '#fafafa80',
 				// Callbacks
-				beforeOpen: function () {},
+				beforeOpen: function () {
+					resetFinalSubmit();
+				},
 				afterOpen: function () {},
 				beforeClose: function () {},
 				afterClose: function () {

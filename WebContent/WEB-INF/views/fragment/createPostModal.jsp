@@ -32,7 +32,7 @@
 		</div>
 
 		<div class="modal-body">
-
+			<div id="loader" class="hide"></div>
 			<form class="dropzone" id="post-dropzone">
 				<!-- this is were the previews should be shown. -->
 				<div class="fallback">
@@ -70,7 +70,6 @@
 					<button type="button" class="btn-transparent" id="concentrate"><img class="img-circle img-small" src="${pageContext.request.contextPath}/resources/images/filters/36.jpg"/></button>
 				</div>
 				<div class="canvas-cont"></div>
-				<div id="loader" class="hide"></div>
 				<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter </button>
 			</div>
 			<!--TODO: CALL WITH AJAX FOR HIDE MODEL AND CONFIRM CREATION -->

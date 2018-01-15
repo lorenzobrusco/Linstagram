@@ -27,7 +27,6 @@ function Stories(){
 			}
 			var items = $(el).children(".items").children("li");
 			for(var j=0; j < items.length;j++){
-				console.log($(items[j]).attr("data-id")+" "+$(a).attr("data-seen"));
 				var a = $(items[j]).children("a");
 				var item = buildItem(
 						$(items[j]).attr("data-id"),
