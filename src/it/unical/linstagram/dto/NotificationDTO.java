@@ -4,9 +4,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import it.unical.linstagram.model.Media.Media_Type;
 import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.NotificationType;
-import it.unical.linstagram.model.Media.Media_Type;
 
 public class NotificationDTO {
 

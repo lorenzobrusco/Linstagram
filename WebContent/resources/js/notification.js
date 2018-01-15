@@ -14,8 +14,8 @@ $(document).ready(function(){
 					notification.append(img_empty);
 					if(mobile == false){
 						notification.css("height",150);
-						$("#loader_notification").addClass("hide");
 					}
+					$(".loader_notification").addClass("hide");
 					return;
 				}
 				
@@ -64,6 +64,7 @@ $(document).ready(function(){
 							}
 						} else {
 							content_notification_popover += "<div class='post_notification'>";
+							console.log(result[i].isVideo);
 							if(result[i].isVideo)
 								content_notification_popover += "<a href='post?id="+result[i].idPost+"'><video height='40px' width='40px' style='background:black' src=" + result[i].urlPost + "></a>";
 							else
@@ -89,7 +90,7 @@ $(document).ready(function(){
 	$('#notification').click(function (e) {
 		notification.css("height",100);
 		e.preventDefault();
-		notification.html("<div id='loader_notification' style='display:flex;justify-content:center;align-items:center;height:100%'><img height='50' width='50' src='resources/images/loader_notification.gif'></img></div>");
+		notification.html("<div class='loader_notification' style='display:flex;justify-content:center;align-items:center;height:100%'><img height='50' width='50' src='resources/images/loader_notification.gif'></img></div>");
 		
 		$('#profile').popover('hide');
 		
@@ -109,7 +110,7 @@ $(document).ready(function(){
 	
 	$('#notification-mobile').click(function (e) {
 		e.preventDefault();
-		notification_mobile_list.html("<div style='display:flex;justify-content:center;align-items:center;height:100%'><img height='50' width='50' src='resources/images/loader_notification.gif'></img></div>");
+		notification_mobile_list.html("<div class='loader_notification' style='display:flex;justify-content:center;align-items:center;height:100%'><img height='50' width='50' src='resources/images/loader_notification.gif'></img></div>");
 		if(!notification_mobile_list.hasClass("hide")){
 			notification_mobile_list.addClass("hide");
 			$("#top").css("z-index",1);

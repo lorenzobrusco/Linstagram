@@ -339,7 +339,7 @@ div::-webkit-scrollbar-thumb
 	padding: 0;
 	background: none;
 	border: none;
-	width: 94%;
+	width: 90%;
 	height: 18px;
 	max-height: 80px;
 	resize: none;
@@ -536,6 +536,11 @@ div::-webkit-scrollbar-thumb
 }
 
 @media ( max-width : 800px) {
+	
+	.overlay-video .tag-video {
+		left: 82%;
+	}
+	
 	.container {
 		width: 100% !important;
 	}

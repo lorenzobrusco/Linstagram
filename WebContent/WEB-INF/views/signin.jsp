@@ -81,22 +81,20 @@ Signed in</label>
 						<form method="post" class="sign-up-htm">
 							<div class="group">
 								<label for="user" class="label">Username</label> <input
-									id="user" name="username" type="text" class="input"
-									value="mael" required>
+									id="user" name="username" type="text" class="input" required>
 							</div>
 							<div class="group">
 								<label for="email" class="label">Email Address</label> <input
-									id="email" type="email" name="email" class="input"
-									value="cas@cg.com" required>
+									id="email" type="email" name="email" class="input" required>
 							</div>
 							<div class="group">
 								<label for="password-field" class="label">Password</label> <input
-									name="password" type="password" class="input" value="ciccio"
+									name="password" type="password" class="input" 
 									data-type="password" id="password-field" required>
 							</div>
 							<div class="group">
 								<label for="password-repeat" class="label">Repeat
-									Password</label> <input type="password" class="input" value="ciccio"
+									Password</label> <input type="password" class="input" 
 									data-type="password" id="password-repeat" required>
 							</div>
 							<div class="hr"></div>
