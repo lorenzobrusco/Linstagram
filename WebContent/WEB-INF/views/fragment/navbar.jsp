@@ -32,11 +32,11 @@
 				<li><a href="profile" role="button" id="profile-mobile"
 					class="item-mobile"></a></li>
 
-				<li><a href="#" id="add-mobile" class="item-mobile"></a></li>
+				<li><div id="add-mobile" class="item-mobile"></div></li>
 
 				<li><a href="explore" id="explore-mobile" class="item-mobile"></a></li>
 
-				<li><a href="#" id="notification-mobile" class="item-mobile"></a></li>
+				<li><div id="notification-mobile" class="item-mobile"></div></li>
 			</ul>
 		</div>
 		
@@ -112,7 +112,6 @@
 
 						// =========================================
 
-						//mobile navbar event
 						if ($("#navbar-mobile").css('display') != "none") {
 							var localpathname = window.location.pathname;
 							var res = localpathname.split("/");
