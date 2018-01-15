@@ -112,12 +112,12 @@ $(document).ready(function(){
 		notification_mobile_list.html("<div style='display:flex;justify-content:center;align-items:center;height:100%'><img height='50' width='50' src='resources/images/loader_notification.gif'></img></div>");
 		if(!notification_mobile_list.hasClass("hide")){
 			notification_mobile_list.addClass("hide");
-			$("#top").removeClass("hide");
+			$("#top").css("z-index",1);
 		}else{
 			notification_mobile_list.removeClass("hide");
-			$("#top").addClass("hide");
+			$("#top").css("z-index",-1);
 		}
-		e.stopPropagation();
+//		e.stopPropagation();
 		$(".badge").remove();
 		createNotificationList(notification_mobile_list,true);
 	});
