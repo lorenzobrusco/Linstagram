@@ -5,12 +5,15 @@ import java.util.Collection;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import it.unical.linstagram.dto.NotificationDTO;
+import it.unical.linstagram.helper.MessageNotification;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
@@ -24,6 +27,13 @@ public class NotificationController {
 
 	private int maxNumberOfNotification = 50;
 
+	@RequestMapping(value = "sendNotification", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<?> someAction(@RequestParam String user) {
+		notificationService.notify(new MessageNotification("update"), user);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "openNotification", method = RequestMethod.POST)
 	@ResponseBody
 	public Collection<NotificationDTO> openNotification(HttpSession session) {
