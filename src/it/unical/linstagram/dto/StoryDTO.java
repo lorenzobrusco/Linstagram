@@ -30,7 +30,7 @@ public class StoryDTO {
 	
 	private String duration(Media_Type type) {
 		if(type==Media_Type.IMAGE)
-			return "10";
+			return "5";
 		else
 			return "";
 	}

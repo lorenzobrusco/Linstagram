@@ -114,6 +114,7 @@ function UploadPicStory(canvas,filename) {
 	canvas.toBlob(function(blob){
 		var formData = new FormData();
 		formData.append('file', blob,filename);
+		formData.append('type', "image");
 		$.ajax({
 			type: 'POST',
 			url: 'addStory',
@@ -337,8 +338,10 @@ function setupContentCreator(container , type) {
 								UploadFileStory(file[0], filename, "video",container);
 							else if(~file[0].type.indexOf("gif"))
 								UploadFileStory(file[0],filename, "image",container);
-							else 
+							else {
+								console.log("log");
 								UploadPicStory(canvas,filename); 
+							}
 						} 
 						
 						else if(type == "post"){
