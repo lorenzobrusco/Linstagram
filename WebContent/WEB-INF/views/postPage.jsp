@@ -57,7 +57,6 @@
 							<hr>
 						</div>
 						<div class='caption-section'>
-							<a href='userPage?username=${post.user.username}'>${post.user.username }</a>
 							<span class="post_cont_${post.id}">${post.content}</span>
 						</div>
 						<div class="comments">
