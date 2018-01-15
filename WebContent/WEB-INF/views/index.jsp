@@ -81,7 +81,7 @@
 			
 			<div class="nd4 nds transparent" data-toggle="tooltip"
 				data-placement="left" data-original-title="Top">
-				<a href="#top"><i class="fa fa-arrow-up black-icon"	aria-hidden="true"></i></a>
+				<a href="#"><i class="fa fa-arrow-up black-icon"	aria-hidden="true"></i></a>
 			</div>
 			
 			<div id="floating-button" data-toggle="tooltip" data-placement="left"
