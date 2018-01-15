@@ -54,7 +54,7 @@
 						<div class="details-post">
 							<img class="user-img-post" src="${post.user.photoProfile }">
 							<a href="userPage?username=${post.user.username}"><b>${post.user.username}</b></a>
-							<hr>
+							<hr class="hr_2">
 						</div>
 						<div class='caption-section'>
 							<span class="post_cont_${post.id}">${post.content}</span>

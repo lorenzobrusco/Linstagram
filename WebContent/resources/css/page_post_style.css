@@ -38,13 +38,18 @@ body, html {
 }
 
 .content-post .details {
+	border-left: 1px solid #cccccc4d;
 	height: 600px;
 	display: flex;
 	flex-direction: column;
 }
 
 .content-post .details .details-post {
-	padding: 20px 0;
+	padding: 20px 0 15px 0;
+}
+
+.hr_2{
+	margin: 12px 15px 0px 12px !important;
 }
 
 .content-post .details .details-post .user-img-post {
@@ -66,7 +71,7 @@ body, html {
 
  .content-post .caption-section{
  	margin: 0 16px;
- 	margin-bottom:15px;
+ 	margin-bottom:20px;
  }
 
 .content-post .comments .list-comments-section {
