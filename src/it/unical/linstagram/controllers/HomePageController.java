@@ -176,9 +176,14 @@ public class HomePageController {
 	//
 	@ResponseBody
 	@RequestMapping(value = "/addStory", method = RequestMethod.POST)
-	public StoryDTO addStory(@RequestParam MultipartFile file, HttpSession session) throws IOException {
-
-		Media mediaStory = uploadService.createMedia(file, Media_Type.IMAGE, session);
+	public StoryDTO addStory(@RequestParam MultipartFile file,@RequestParam String type, HttpSession session) throws IOException {
+		Media mediaStory = null;
+		
+		if(type.equals("image"))
+			mediaStory = uploadService.createMedia(file, Media_Type.IMAGE, session);
+		else
+			mediaStory = uploadService.createMedia(file, Media_Type.VIDEO, session);
+		
 		StoryDTO storyDTO = storiesService.saveStory(mediaStory, (User) session.getAttribute("user"));
 		return storyDTO;
 	}

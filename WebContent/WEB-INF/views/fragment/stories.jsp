@@ -28,7 +28,7 @@
 						<li data-id="${story.id}" data-time="${story.date}"><a
 							href="${story.url}" data-time="${story.date}"
 							data-seen="${story.viewed}" data-type="${story.type}"
-							data-length="3" data-link="" data-linkText=""> <img src="">
+							data-length="${story.duration}" data-link="" data-linkText=""> <img src="">
 						</a></li>
 					</c:forEach>
 				</ul>
