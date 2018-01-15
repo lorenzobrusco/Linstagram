@@ -12,7 +12,8 @@
 <link rel="icon"
 	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
 	type="image/x-icon">
-
+<script src="${pageContext.request.contextPath}/resources/js/lib/sockjs-0.3.4.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/lib/stomp.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/search_event.js"></script>
 
@@ -83,8 +84,32 @@
 			.ready(
 					function() {
 
-						// NOTIFICATION BADGE
 
+						/**
+						 * Open the web socket connection and subscribe the "/notify" channel.
+						 */
+						function connect() {
+
+							// Create and init the SockJS object
+							var socket = new SockJS(
+									'${pageContext.request.contextPath}/ws');
+							var stompClient = Stomp.over(socket);
+
+							// Subscribe the '/notify' channell
+							stompClient.connect({}, function(frame) {
+								stompClient.subscribe('/user/queue/notify',
+										function(notification) {
+											updateNotificationBadge();
+											alert(notification)
+										});
+							});
+
+							return;
+						} // function connect
+
+						/**
+						 * Display the notification message.
+						 */
 						function updateNotificationBadge() {
 							$
 									.ajax({
@@ -104,11 +129,6 @@
 										}
 									});
 						}
-
-						updateNotificationBadge();
-						window.setInterval(function() {
-							updateNotificationBadge();
-						}, 60000);
 
 						// =========================================
 
@@ -161,13 +181,7 @@
 
 						$('[data-toggle="tooltip"]').tooltip();
 
-						/*$('#search-input-desktop').focusin(function() {
-							$("#search-div").css("width", "70%");
-						});
-
-						$('#search-input-desktop').focusout(function() {
-							$("#search-div").css("width", "50%");
-						});*/
-
+						 connect();
+						 updateNotificationBadge();
 					});
 </script>
