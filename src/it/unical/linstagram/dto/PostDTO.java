@@ -29,7 +29,7 @@ public class PostDTO {
 	private List<Media> media = new ArrayList<Media>();
 
 	private Set<User> likes = new HashSet<User>();
-	
+
 	private Set<Comment> comments = new HashSet<Comment>();
 
 	private boolean likeUser;
@@ -45,10 +45,9 @@ public class PostDTO {
 		this.setElapsedTime(calculateElapsedTime());
 
 		this.comments = post.getComments();
-		
+
 		this.likeUser = likeUser;
 		this.bookmarkUser = bookmarkUser;
-
 	}
 
 	public int getId() {
@@ -125,7 +124,7 @@ public class PostDTO {
 	public String getElapsedTime() {
 		return elapsedTime;
 	}
-	
+
 	public void setElapsedTime(String elapsedTime) {
 		this.elapsedTime = elapsedTime;
 	}
@@ -162,36 +161,60 @@ public class PostDTO {
 
 		return "";
 	}
-	
+
 	private String getConvertedContent (String content, Set<User> tags, List<Hashtag> hashtags)
 	{
-		
-		//TODO E SE UN TAG FOSSE UNA SOTTOSTRINGA DI UN ALTRO
 		if (tags.size() != 0)
 		{
 			List<User> tagsSorted = tags.stream().collect(Collectors.toList());
 			Collections.sort(tagsSorted, (o1, o2) -> o2.getUsername().length()-o1.getUsername().length());
-			
+
 			for (User u : tags) {
-				content = content.replaceAll("@"+u.getUsername(), "<a href='userPage?usernameOther="+u.getUsername()+"'>"+"@"+u.getUsername()+"</a>");
+
+				int index = content.indexOf("@"+u.getUsername());
+				String toConcat =  "<a href='userPage?username="+u.getUsername()+"'>"+"@"+u.getUsername()+"</a>";
+				while (index != -1)
+				{
+
+					if (index <2 || index >2 && content.charAt(index-1) !='>')
+					{
+
+						content = content.substring(0, index)+ toConcat
+								+ content.substring(index+ u.getUsername().length() +1);
+
+					}
+					index = content.indexOf("@"+u.getUsername(), index + toConcat.length());
+
+				}
+				//				content = content.replaceAll("@"+u.getUsername(), "<a href='userPage?username="+u.getUsername()+"'>"+"@"+u.getUsername()+"</a>");
 			}
 		}
 		if (hashtags.size() != 0)
 		{
-			
-			for (Hashtag hashtag : hashtags) {
-				System.out.println(hashtag.getHashtag());
-			}
 			Collections.sort(hashtags, (o1, o2) -> o2.getHashtag().length()-o1.getHashtag().length());
 			for (Hashtag h : hashtags) {
-				
-				content = content.replaceAll("#"+h.getHashtag(), "<a href='hashtags?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>");				
-//				content = content.replaceAll("#"+h.getHashtag(), "<a href='javascript:getPostsByHashtags(\""+h.getHashtag()+"\")'>"+"#"+h.getHashtag()+"</a>");
+
+				int index = content.indexOf("#"+h.getHashtag());
+				String toConcat = "<a href='hashtags?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>";
+				while (index != -1)
+				{
+					if (index <2 || index >2 && content.charAt(index-1) !='>')
+					{
+
+						content = content.substring(0, index)+ toConcat
+								+ content.substring(index+ h.getHashtag().length() +1);
+
+					}
+					index = content.indexOf("#"+h.getHashtag(), index + toConcat.length());
+				}
+
+				//				content = content.replaceAll("#"+h.getHashtag(), "<a href='hashtags?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>");				
+				//				content = content.replaceAll("#"+h.getHashtag(), "<a href='javascript:getPostsByHashtags(\""+h.getHashtag()+"\")'>"+"#"+h.getHashtag()+"</a>");
 			}
-			
+
 		}
 		return content;
 	}
-	
+
 
 }

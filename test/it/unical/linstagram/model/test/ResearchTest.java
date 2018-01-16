@@ -142,4 +142,26 @@ public class ResearchTest extends AbstractModelTest {
 		
 		Assert.assertEquals(2, suggestions.size());
 	}
+	
+	@Test
+	public void researchCiccioCiccia() {
+
+		
+		modelDAO.save(new User("ciccio","email","pass", "Eliana", "Cannella"));
+		modelDAO.save(new User("ciccia","emaill","pass", "","ell"));
+		modelDAO.save(new User("cicioBello","email2","pass","ciccio", "pasticcio"));
+		modelDAO.save(new User("alessio","email1","pass", "Paola", "AruQ"));
+				
+		
+		List<User> suggestions = userDAO.getSuggestions("cicc");
+		System.out.println("la size della lista è "+ suggestions.size());
+		
+		
+		for (User user : suggestions) {
+			System.out.println(user.getUsername());
+		}	
+		Assert.assertEquals(2, suggestions.size());
+	}
+	
+	
 }

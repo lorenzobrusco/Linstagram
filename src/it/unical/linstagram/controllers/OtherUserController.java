@@ -28,16 +28,6 @@ public class OtherUserController {
 	@Autowired
 	private NotificationService notificationService;
 
-	@RequestMapping("/usersList")
-	public String usersListPage(HttpSession session, Model model) {
-		if (UserManager.checkLogged(session)) {
-			List<User> users = userService.getUsersList();
-			model.addAttribute("users", users);
-			return "usersListPage";
-		}
-		return "redirect:/";
-	}
-
 	@RequestMapping("userPage")
 	public String getUserPage(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
 
@@ -48,25 +38,27 @@ public class OtherUserController {
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
 		List<Post> postOfUser = userService.getPostOfUser(usernameOther);
 		model.addAttribute("userPublic", userDTO);
+		// TODO sostituisci con userDTO.getPost()
 		model.addAttribute("posts", postOfUser);
 
 		return "otherUserProfile";
 	}
 
-//	@RequestMapping("sendRequest")
-//	@ResponseBody
-//	public String sendRequest(HttpSession session, Model model, @RequestParam("username") String username) {
-//		User user = (User) session.getAttribute("user");
-//
-//		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
-//	}
+	// @RequestMapping("sendRequest")
+	// @ResponseBody
+	// public String sendRequest(HttpSession session, Model model,
+	// @RequestParam("username") String username) {
+	// User user = (User) session.getAttribute("user");
+	//
+	// return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+	// }
 
 	@RequestMapping("acceptRequest")
 	@ResponseBody
 	public String acceptRequest(HttpSession session, Model model, @RequestParam("username") String username) {
 		User user = (User) session.getAttribute("user");
 
-		if (!userService.acceptRequest(user.getUsername(), username))
+		if (!userService.acceptRequest(user.getUsername(), username, user))
 			return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
 					.getMessage();
 
@@ -81,7 +73,7 @@ public class OtherUserController {
 		if (!userService.rejectRequest(user.getUsername(), username))
 			return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
 					.getMessage();
-		
+
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
 
@@ -116,14 +108,13 @@ public class OtherUserController {
 			if (!userService.sendRequest(user.getUsername(), usernameToFollow))
 				return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
 						.getMessage();
-		}
-		else {
-			if (!userService.addFollowing(user.getUsername(), usernameToFollow, user)) {
+		} else {
+			if (!userService.addFollowing(user.getUsername(), usernameToFollow)) {
 				return new MessageResponse(MessageCode.FOLLOW_FAILED, user,
 						"Non e' stato possibile inserire l'utente come following.").getMessage();
 			}
 		}
-		
+
 		notificationService.generateFollowNotification(user, usernameToFollow);
 		return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
 	}
@@ -133,7 +124,7 @@ public class OtherUserController {
 	public String unfollowUser(HttpSession session, Model model, @RequestParam("username") String usernameToFollow) {
 
 		User user = (User) session.getAttribute("user");
-		if (!userService.removeFollowing(user.getUsername(), usernameToFollow, user))
+		if (!userService.removeFollowing(user.getUsername(), usernameToFollow))
 			return new MessageResponse(MessageCode.UNFOLLOW_FAILED, user,
 					"Non e' stato possibile eliminare l'utente dai following.").getMessage();
 

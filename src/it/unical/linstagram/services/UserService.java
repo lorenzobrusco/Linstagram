@@ -10,12 +10,9 @@ import org.springframework.stereotype.Service;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
-import it.unical.linstagram.helper.ProfilePreview;
 import it.unical.linstagram.helper.UserManager;
-import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.RequestFollow;
-import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -30,7 +27,7 @@ public class UserService {
 	
 	UserManager userManager;
 	
-	public boolean addFollowing(String usernameSession, String usernameToFollow, User user) {
+	public boolean addFollowing(String usernameSession, String usernameToFollow) {
 		
 		User userSession = userDAO.getUserByUsername(usernameSession);
 		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
@@ -38,22 +35,20 @@ public class UserService {
 		userSession.getFollowings().add(userToFollow);
 		userToFollow.getFollowers().add(userSession);
 		
-		if (modelDAO.update(userSession)) {
-			user.getFollowings().add(userToFollow);
+		if (modelDAO.merge(userSession)) {
 			return true;
 		}
 		return false;
 	}
 	
-	public boolean removeFollowing(String usernameSession, String usernameToFollow, User user) {
+	public boolean removeFollowing(String usernameSession, String usernameToFollow) {
 		User userSession = userDAO.getUserByUsername(usernameSession);
 		User userToFollow = userDAO.getUserByUsername(usernameToFollow);
 		
 		userSession.getFollowings().remove(userToFollow);
 		userToFollow.getFollowers().remove(userSession);
 		
-		if (modelDAO.update(userSession)) {
-			user.getFollowings().remove(userToFollow);
+		if (modelDAO.merge(userSession)) {
 			return true;
 		}
 		return false;
@@ -65,13 +60,11 @@ public class UserService {
 	}
 	
 	public UserDTO getOtherUser(User user, String usernameOther) {
-		
 		User userOther = userDAO.getUserByUsername(usernameOther);
-		
 		List<User> userFollowing = userDAO.getFollowingByUsername(user.getUsername());
+
 		boolean request_send = userDAO.existRequestFollow(usernameOther, user.getUsername());
 		boolean request_received = userDAO.existRequestFollow(user.getUsername(), usernameOther);
-		
 		for (User u : userFollowing) {
 			if (u.getId() == userOther.getId()) {
 				return new UserPublicDTO(userOther, true, request_send, request_received);
@@ -165,11 +158,10 @@ public class UserService {
 		return false;
 	}
 	
-	public boolean acceptRequest(String usernameSession, String username) {
+	public boolean acceptRequest(String usernameSession, String username, User user) {
 		int id = userDAO.searchRequestFollow(username, usernameSession);
-		User user = userDAO.getUserByUsername(usernameSession);
 		if (id != -1)
-			if(addFollowing(username, usernameSession, user) && modelDAO.delete(RequestFollow.class, id))
+			if(addFollowing(username, usernameSession) && modelDAO.delete(RequestFollow.class, id))
 				return true;
 		return false;
 	}
@@ -190,6 +182,11 @@ public class UserService {
 	
 	public boolean isPrivate(String username) {
 		return userDAO.isPrivateByUsername(username);
+	}
+	
+	public User initializeFollowersAndFollowings(User u) {
+		User user1=(User) modelDAO.initialize(u,"followings");
+		return (User) modelDAO.initialize(user1,"followers");
 	}
 	
 }

@@ -68,19 +68,11 @@ a {
     max-width: 300px;
   }
 
-  #container {
-    transform: translate(0, 60px);
-  }
-
 }
 
 @media screen and (max-width: 300px) {
   .login-wrap {
     max-width: 300px;
-  }
-
-  #container {
-    transform: translate(0, 40px);
   }
 
   #logo {
@@ -305,6 +297,7 @@ button:focus {
 body {
   /*  background: linear-gradient(-45deg, var(--primary-color) 0%, var(--third-color) 100%);*/
   background-color: #fafafa;
+  height: 100%;
 }
 
 #logo-container {

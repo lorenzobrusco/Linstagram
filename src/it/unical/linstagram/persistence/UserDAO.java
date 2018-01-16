@@ -32,7 +32,13 @@ public class UserDAO implements IUserDAO {
 		User user = (User) session.createQuery("FROM  User u where u.username=:username")
 				.setParameter("username", username).uniqueResult();
 		//		Hibernate.initialize(user.getPosts());
-
+		if(user != null) {
+			user.getFollowers().size();
+			user.getFollowings().size();
+			user.getPosts().size();
+			user.getTagged().size();
+			user.getBookmarks().size();
+		}
 		session.close();
 		return user;
 	}
@@ -49,7 +55,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public User getUserByUsernameAndPass(String username, String password) {
 		Session session = HibernateUtil.getSession();
-		User user = (User) session.createQuery("FROM  User u where u.username=:username and u.password=:password")
+		User user = (User) session.createQuery("FROM  User u LEFT OUTER join fetch u.bookmarks b where u.username=:username and u.password=:password")
 				.setParameter("username", username).setParameter("password", password).uniqueResult();
 		session.close();
 		return user;
@@ -58,7 +64,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public User getUserByEmailAndPass(String email, String password) {
 		Session session = HibernateUtil.getSession();
-		User user = (User) session.createQuery("FROM  User u where u.email=:email and u.password=:password")
+		User user = (User) session.createQuery("FROM  User u LEFT OUTER join fetch u.bookmarks b where u.email=:email and u.password=:password")
 				.setParameter("email", email).setParameter("password", password).uniqueResult();
 		session.close();
 		return user;
@@ -100,7 +106,12 @@ public class UserDAO implements IUserDAO {
 		Session session = HibernateUtil.getSession();
 		List<Post> posts = session.createQuery("SELECT user.posts FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
-
+		for (Post post : posts) {
+			post.getTags().size();
+			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
 		session.close();
 		return posts;
 	}
@@ -110,7 +121,12 @@ public class UserDAO implements IUserDAO {
 		Session session = HibernateUtil.getSession();
 		List<Post> posts = session.createQuery("SELECT user.bookmarks FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
-
+		for (Post post : posts) {
+			post.getTags().size();
+			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
 		session.close();
 		return posts;
 	}
@@ -120,7 +136,12 @@ public class UserDAO implements IUserDAO {
 		Session session = HibernateUtil.getSession();
 		List<Post> posts = session.createQuery("SELECT user.tagged FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
-
+		for (Post post : posts) {
+			post.getTags().size();
+			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
 		session.close();
 		return posts;
 	}
@@ -130,7 +151,7 @@ public class UserDAO implements IUserDAO {
 		Session session = HibernateUtil.getSession();
 		List<User> users = session.createQuery("SELECT user.followings FROM User user WHERE user.username=:username")
 				.setParameter("username", username).list();
-
+		
 		session.close();
 		return users;
 	}

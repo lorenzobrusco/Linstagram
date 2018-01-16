@@ -23,6 +23,18 @@
 //};
 
 $(document).ready(function() {
+	
+	function sendNotification(user) {
+		  $.ajax({
+		    url: "sendNotification",
+		    type: "POST",
+		    data:{
+		    	user: user
+		    }
+		  });
+		  return;
+	}
+	
 	//EVENTO "INSERIMENTO LIKE"
 	$(document).on('click', 'a.love', function() {
 		var postID = $(this).attr('name');
@@ -35,11 +47,13 @@ $(document).ready(function() {
 				postID:postID
 			},
 			success : function(result) {
-				if(result == "OK") {
+				result = JSON.parse(result);
+				if(result.messageCode == "OK") {
 					$(count_like).html(parseInt($(count_like).html(), 10)+1)
 					$(love_id).empty();
 					$(love_id).append("<a name="+postID+" id=loveFull"+postID+
 					" class=loveFull><span class=loveFull><i class='fa fa-heart fa-2x' aria-hidden='true'></i></span></a>");
+					sendNotification(result.obj);
 				}
 			}
 		});
@@ -53,7 +67,9 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : "removeLike",
-			data:{postID:postID},
+			data:{
+				postID: postID
+			},
 			success : function(result) {
 				if(result == "OK") {
 					$(count_like).html(parseInt($(count_like).html(), 10)-1)
@@ -72,7 +88,9 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : "addBookmark",
-			data:{postID:postID},
+			data:{
+				postID: postID
+			},
 			success : function(result) {
 				if(result == "OK") {
 					$(bookmark_id).empty();
@@ -104,21 +122,29 @@ $(document).ready(function() {
 
 
 	//EVENTO "INSERIMENTO COMMENTO"
-	$(document).on('click', '.submit_comment', function() {
+	$(document).on('click', '.submit_comment', function() {		
 		var postID = $(this).attr('id');
 		var comm = $("#comment"+postID).val();
 		var username = $("#username").val();
 
 		var listComment = $('.list-comments'+postID);
-
+		
+		//prevent injection
+		comm = $( $.parseHTML(comm) ).text();
+		
 		$.ajax({
 			url : "addComment",
-			data:{postID:postID, comment:comm},
-			success : function(result) {		
-				if(result == "OK") {
+			data: {
+				postID: postID, 
+				comment: comm
+			},
+			success : function(result) {					
+				result = JSON.parse(result);
+				if(result.messageCode == "OK") {
 					$("#comment"+postID).val('');
-					$(listComment).append("<div class='comment'><a href='userPage?usernameOther="+username+"'><b>"+username+"</b></a>"+
-							"<span>"+comm+"</span></div>");
+					$(listComment).append("<div class='comment'><a href='userPage?username="+username+"'><b>"+username+"</b></a>"+
+							"<span class='comment_body'>"+comm+"</span></div>");
+					sendNotification(result.obj);
 				}
 			}
 		});

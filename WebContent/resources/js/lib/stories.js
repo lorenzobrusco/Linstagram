@@ -829,7 +829,8 @@ var ZuckJS = function () {
                     'link': a.getAttribute('data-link'),
                     'linkText': a.getAttribute('data-linkText'),
                     'preview': img.getAttribute('src'),
-                    'id': el.getAttribute('data-id')
+                    'id': el.getAttribute('data-id'),
+                    'seen':el.getAttribute("data-seen")
                 });
             });
 
@@ -1056,9 +1057,14 @@ var ZuckJS = function () {
         zuck.addItem = function (storyId, data, append) {
             var story = query('#' + id + ' > [data-id="' + storyId + '"]');
             var li = d.createElement('li');
-            li.className = get(data, 'seen') ? 'seen' : '';
-//            console.log(data.id);
+//            	li.className = get(data, 'seen') ? 'seen' : '';
+            if(data.seen == "true")
+            	li.className = "seen";
+            else
+            	li.className = "";
+            
             li.setAttribute('data-id', data.id);
+//            console.log(data);
 
             li.innerHTML = '<a href="' + get(data, 'src') + '" data-link="' + get(data, 'link') + '" data-linkText="' + get(data, 'linkText') + '" data-time="' + get(data, 'time') + '" data-type="' + get(data, 'type') + '" data-length="' + get(data, 'length') + '"><img src="' + get(data, 'preview') + '"></a>';
 

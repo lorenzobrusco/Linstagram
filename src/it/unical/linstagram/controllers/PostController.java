@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
 import it.unical.linstagram.dto.CommentDTO;
 import it.unical.linstagram.dto.PostDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.helper.MessageResponse;
+import it.unical.linstagram.model.Comment;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
@@ -46,12 +49,13 @@ public class PostController {
 	@ResponseBody
 	public String insertLike(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
+		Post post = postService.getPost(idPost);
 		if (postService.insertLike(idPost, user.getUsername())) {
 			notificationService.generateLikeNotification(user, idPost);
-			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+			return new Gson().toJson(new MessageResponse(MessageCode.OK, post.getUser().getUsername(), "OK"));
 		}
 
-		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
+		return new Gson().toJson(new MessageResponse(MessageCode.FAILED, post.getUser().getUsername(), "Failed"));
 	}
 
 	@RequestMapping("removeLike")
@@ -68,7 +72,9 @@ public class PostController {
 	@ResponseBody
 	public String insertBookmark(HttpSession session, Model model, @RequestParam("postID") int idPost) {
 		User user = (User) session.getAttribute("user");
-		User userDB = postService.insertBookmark(user.getUsername(), idPost);
+		//TODO: passare l'utente e non l'username evitando una nuova query
+		//		User userDB = postService.insertBookmark(user.getUsername(), idPost);
+		User userDB = postService.insertBookmark(user, idPost);
 		if (userDB != null) {
 			session.setAttribute("user", userDB);
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
@@ -93,11 +99,20 @@ public class PostController {
 	public String insertComment(HttpSession session, Model model, @RequestParam("postID") int idPost,
 			@RequestParam("comment") String comment) {
 		User user = (User) session.getAttribute("user");
+		Post post = postService.getPost(idPost);
+		//check comment length 
+		if(comment.length() > Comment.MAX_LENGTH_COMMENT) {
+			String comment_short = comment.substring(0, Comment.MAX_LENGTH_COMMENT - 3);
+			comment = comment_short + "...";
+		}
+		
 		if (!comment.equals(""))
-			if (postService.insertComment(idPost, user.getUsername(), comment, Calendar.getInstance()))
-				return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
+			if (postService.insertComment(idPost, user.getUsername(), comment, Calendar.getInstance())) {
+				notificationService.generateCommentNotification(user, idPost);
+				return new Gson().toJson(new MessageResponse(MessageCode.OK, post.getUser().getUsername(), comment));
+			}
 
-		return new MessageResponse(MessageCode.FAILED, user, "Failed").getMessage();
+		return new Gson().toJson(new MessageResponse(MessageCode.FAILED, post.getUser().getUsername(), "Failed"));
 	}
 
 	@RequestMapping("getLikes")

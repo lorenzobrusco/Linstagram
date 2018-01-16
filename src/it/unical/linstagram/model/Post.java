@@ -58,20 +58,20 @@ public class Post {
                inverseJoinColumns={@JoinColumn(name="user_id")})
 	private Set<User> likes = new HashSet<User>();
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@Cascade(value=CascadeType.ALL)
 	@JoinTable(name="tags",
 			joinColumns= {@JoinColumn(name="post_id")},
 			inverseJoinColumns= {@JoinColumn(name="user_id")})
 	private Set<User> tags = new HashSet<User>();
 
-
+//TODO : potrebbero essere caricati lazy
 	@OneToMany(mappedBy="post", fetch=FetchType.EAGER)
 	@Cascade(value=CascadeType.ALL)
 	@OrderBy(clause = "date asc")
 	private Set<Comment> comments = new HashSet<Comment>();
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="hashtag_post",
 		joinColumns= {@JoinColumn(name="id_post")},
 		inverseJoinColumns= {@JoinColumn(name="id_hashtag")})

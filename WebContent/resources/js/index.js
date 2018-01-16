@@ -44,7 +44,9 @@ $(document).ready(function () {
 
 	//change order post
 
+	var currentTime = new Date();
 	var typeReq="latest";
+
 	$("#cng-order").click(function(){
 		$("#posts").empty();
 		$("#loading").removeClass("hide");
@@ -65,7 +67,7 @@ $(document).ready(function () {
 			text="Popular"
 		}
 		
-
+		currentTime = new Date();
 		$.ajax({
 			url:"getPosts", 
 			data:{time:currentTime.getTime(),type:typeReq,lastIndex:0},
@@ -88,7 +90,6 @@ $(document).ready(function () {
 	//Inifinity scroll
 	var postsrequest=1;
 	var entered=false;
-	var currentTime = new Date();
 	var lastScrollTop = 0;
 	$(window).scroll(function(){
 
@@ -107,15 +108,14 @@ $(document).ready(function () {
 						data:{type:typeReq,time:currentTime.getTime(),lastIndex:listSize},
 						success: function(result) {
 							var html = $.parseHTML(result)
-							if(html.length != 1){
-								$("#posts").append(html);
-								//allow to send comment with Enter button
-//								$(".comment-section").on("keypress", function(e) {
-//									if ( e.which == 13 ) { //enter press
-//										$(this).find("button").click();
-//									}
-//								});
+							for(var i=0; i < html.length;i++){
+								if($(html[i]).is("section")){
+									var pid = $(html[i]).find(".pid").text();
+									if($(".post_cont_"+pid).length == 0)
+										$("#posts").append(html[i]);
+								}
 							}
+							
 							$("#loading").addClass("hide");
 							entered=false;
 						}	

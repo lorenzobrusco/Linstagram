@@ -46,14 +46,18 @@ function Stories(){
 	}
 
 	var checkAllViewed = function(idStory){
-		var list = $("#stories [data-id='"+idStory+"'] .items").children("li");
-		for(var i = 0; i< list.length;i++){
-			if(!$(list[i]).hasClass("seen")){
+//		var list = $("#stories [data-id='"+idStory+"'] .items").children("li");
+//		for(var i = 0; i< list.length;i++){
+////			console.log($(list[i]));
+//			if(!$(list[i]).hasClass("seen")){
+//				return;
+//			}
+//		}
+		for(var i = 0; i< zuck.data[idStory].items.length;i++){
+			if(!zuck.data[idStory].items[i]["seen"]=="true")
 				return;
-			}
 		}
 		$("#stories [data-id='"+idStory+"']").addClass("seen");
-
 	}
 
 	var zuck = new Zuck('stories', {
@@ -71,13 +75,21 @@ function Stories(){
 				if($("#stories [data-id='"+storyId+"'] .items").children("li").length != 0){
 					document.getElementById("posts").classList.add("hidden-posts");
 					callback();
+					
+					if (typeof currStory === "undefined") 
+						currStory=0;
+					
+					var id = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 					setUserStoryModal();
+					viewsStory(storyId,id);
+
 					if(storyId == loggedUser)
 					{
+						loadStoriesViewer();
 						var currStory = zuck.data[storyId]['currentItem'];
-						var id = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 						setNumberViewers(id);
 					}
+					checkAllViewed(storyId);
 				}
 				else{
 					$("#open-story-modal").click();
@@ -96,13 +108,7 @@ function Stories(){
 					}else{
 						
 					}
-					
-					$.ajax({
-						url:"storyViewed", 
-						data:{idStory:nextStoryId},
-						success: function(result) {
-						}	
-					})
+					viewsStory(storyId,nextStoryId);
 					callback();
 					checkAllViewed(storyId);
 				}
@@ -110,6 +116,8 @@ function Stories(){
 			'onView': function onView(storyId) {
 
 				var currStory = zuck.data[storyId]['currentItem'];
+				if (typeof currStory === "undefined") 
+					currStory=0;
 				var id = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 				if(id != undefined)
 				{
@@ -117,12 +125,8 @@ function Stories(){
 						setNumberViewers(id);
 					}
 					
-					$.ajax({
-						url:"storyViewed", 
-						data:{idStory:id},
-						success: function(result) {
-						}	
-					})
+					viewsStory(storyId,id);
+
 					checkAllViewed(storyId);
 				}
 			},'onEnd': function(storyId, callback) { // on end story
@@ -131,6 +135,7 @@ function Stories(){
 			},
 		}
 	});
+	this.storiesList = zuck.data;
 
 	var setUserStories = function(loggedUser){
 
@@ -163,6 +168,10 @@ function Stories(){
 	} 
 	var deleteStory =  function(){
 		var currStory = zuck.data[loggedUser]['currentItem'];
+		
+		if (typeof currStory === "undefined") 
+			currStory=0;
+		
 		var id = $("#stories [data-id='"+loggedUser+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 		$.ajax({
 			url:"deleteStory",
@@ -201,11 +210,50 @@ function Stories(){
 //		$("#zuck-modal-content .story-viewer[data-story-id='"+loggedUser+"']").append(modalViewer);
 		var viewerbutton = '<div class="left-button"><a id="viewers-button" data-toggle="modal" data-target="#viewerModal"><i class="glyphicon glyphicon-eye-open"></i><strong></strong></a></div>'
 		$("#zuck-modal-content .story-viewer[data-story-id='"+loggedUser+"'] .buttons-container").append(viewerbutton);
-		var removebutton ='<div class="right-button"><a id="remove-button" data-toggle="modal" data-target="#removeModal"><i class="glyphicon glyphicon-trash"></i></a></div>';
+		var removebutton ='<div class="right-button"><a id="remove-button"><i class="glyphicon glyphicon-trash"></i></a></div>';
 		$("#zuck-modal-content .story-viewer[data-story-id='"+loggedUser+"'] .buttons-container").append(removebutton);
-
+		
+		//REMOVE STORY EVENT
+		$("#remove-button").click(e => {
+			$("#zuck-modal .viewing").addClass("paused");
+			var n = new Noty({
+			  text: '<h4>Do you want to remove the story?</h4>',
+			  theme: 'nest',
+			  type: 'alert',
+				layout: 'center',
+			  buttons: [
+			    Noty.button('YES', 'btn btn-danger', function () {
+						deleteStory();
+						$("#removeModal").modal('toggle');
+						$("#zuck-modal .close").click();
+						n.close();
+			    }, {id: 'button1', 'data-status': 'ok'}),
+			    
+			    Noty.button('NO', 'btn btn-default pull-right', function () {
+			    		$("#zuck-modal .viewing").removeClass("paused");
+			        n.close();
+			    })
+			  ]
+			}).show();
+			
+		});
+		
 	}
-
+	var viewsStory= function(user,story){
+		$.ajax({
+			url:"storyViewed", 
+			data:{idStory:story},
+			success: function(result) {
+			}	
+		})
+		for(var i = 0; i< zuck.data[user].items.length;i++)
+			if(zuck.data[user].items[i]["id"]==story){		
+				zuck.data[user].items[i]["seen"]="true";
+				$("#stories [data-id='"+user+"'] li[data-id='"+story+"']").addClass("seen");
+				return;
+			}
+	}
+	
 	var setNumberViewers = function(idStory){
 		$("#zuck-modal-content .story-viewer #viewers-button strong").text(viewers[idStory].length);
 	}
@@ -226,7 +274,7 @@ function Stories(){
 
 	var addViewer = function(idStory){
 		$("#viewerModal .modal-body ul").empty();
-		var template ='<li class="viewer"><div id="user_enter"><form role="form" action="userPage"><button id="button_form" name="usernameOther" value=""><div id="button_user"><div id="img_div"><img id="img" src=""></img></div><div id="info_div"><div id="username"><b></b></div><div id="name"></div></div></div></button></form></li>';
+		var template ='<li class="viewer"><div id="user_enter"><form role="form" action="userPage"><button id="button_form" name="username" value=""><div id="button_user"><div id="img_div"><img id="img" src=""></img></div><div id="info_div"><div id="username"><b></b></div><div id="name"></div></div></div></button></form></li>';
 		for(var i=0; i < viewers[idStory].length; i++) {
 			var el = $(template);
 			$(el).find("#img").attr("src",viewers[idStory][i].photo);
@@ -247,57 +295,63 @@ function Stories(){
 
 	}
 	
-	var addStoryItem = function(data){
-		var item = buildItem(data.id,data.type,3,data.url,"","",false,data.viewed,timestamp(data.date));
+	this.addStoryItem = function(data){
+		var item = buildItem(data.id,data.type,data.length,data.url,"","",false,data.viewed,timestamp(data.date));
 		zuck.addItem(loggedUser,item);
 		viewers[data.id]=[];
 		$("#stories [data-id='"+loggedUser+"']").removeClass("seen");
+		$("#stories [data-id='"+loggedUser+"']").attr("data-seen","false");
 
 		setUserStories(loggedUser);
 		
 		
 	}
-	this.addStory = function(sData){
-		$.ajax({
-			type: 'POST',
-			url: 'addStory',
-			enctype: 'multipart/form-data',
-			data: sData,
-			processData: false,
-			contentType: false,
-			success: function(data) {
-				console.log(data);
-				if(data != null){
-					
-					addStoryItem(data);
-
-					new Noty({
-						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your story has been added!',
-						theme: 'nest',
-						type: 'success',
-						layout: 'bottomLeft',
-						timeout:2000,
-						progressBar: true
-					}).show();
-				}else{
-					
-					new Noty({
-						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> You story has not been added!',
-						theme: 'nest',
-						type: 'error',
-						layout: 'bottomLeft',
-						timeout:4000,
-						progressBar: true
-				}).show();
-				}
-
-			}
-		});
-	}
+	
+//	this.addStory = function(sData){
+//		$.ajax({
+//			type: 'POST',
+//			url: 'addStory',
+//			enctype: 'multipart/form-data',
+//			data: sData,
+//			processData: false,
+//			contentType: false,
+//			success: function(data) {
+////				console.log(data);
+//				if(data != null){
+//					
+//					addStoryItem(data);
+//
+//					new Noty({
+//						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your story has been added!',
+//						theme: 'nest',
+//						type: 'success',
+//						layout: 'bottomLeft',
+//						timeout:2000,
+//						progressBar: true
+//					}).show();
+//				}else{
+//					
+//					new Noty({
+//						text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Failed!</p> You story has not been added!',
+//						theme: 'nest',
+//						type: 'error',
+//						layout: 'bottomLeft',
+//						timeout:4000,
+//						progressBar: true
+//				}).show();
+//				}
+//
+//			}
+//		});
+//	}
 	
 	$("#viewerModal").on('show.bs.modal',function(e){
 		$("#zuck-modal .viewing").addClass("paused");
 		var currStory = zuck.data[loggedUser]['currentItem'];
+		
+		if (typeof currStory === "undefined") 
+			currStory=0;
+		
 		var id = $("#stories [data-id='"+loggedUser+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 		addViewer(id);
 	});
@@ -311,12 +365,6 @@ function Stories(){
 	
 	$("#removeModal").on('hide.bs.modal',function(e){
 		$("#zuck-modal .viewing").removeClass("paused");
-	});
-	
-	$("#removeModal #remove-modal-button").click(function(){
-		deleteStory();
-		$("#removeModal").modal('toggle');
-		$("#zuck-modal .close").click();
 	});
 	
 	setUserStories(loggedUser);

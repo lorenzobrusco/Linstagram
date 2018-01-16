@@ -8,7 +8,6 @@
 <head>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon-32x32.png" />
 <link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.icon" type="image/x-icon" />
-
 <title>Listagram</title>
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
@@ -34,6 +33,11 @@
 	href="${pageContext.request.contextPath}/resources/css/lib/noty/themes/nest.css">
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/resources/js/lib/dropzone.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/create_content_lib.js"></script>	
+
 
 </head>
 <body>
@@ -77,7 +81,7 @@
 			
 			<div class="nd4 nds transparent" data-toggle="tooltip"
 				data-placement="left" data-original-title="Top">
-				<a href="#top"><i class="fa fa-arrow-up black-icon"	aria-hidden="true"></i></a>
+				<a href="#"><i class="fa fa-arrow-up black-icon"	aria-hidden="true"></i></a>
 			</div>
 			
 			<div id="floating-button" data-toggle="tooltip" data-placement="left"

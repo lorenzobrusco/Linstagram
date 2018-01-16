@@ -2,6 +2,7 @@ package it.unical.linstagram.model.test;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class TestHashtagFinder {
 		post.getComments().add(new Comment("Si è vero",manuel,post,Calendar.getInstance()));
 		post.getComments().add(new Comment("Che stupido",eliana,post,Calendar.getInstance()));
 		
-		List<String> findHashtag = HashtagFinder.findHashtags(post.getContent());
+		Set<String> findHashtag = HashtagFinder.findHashtags(post.getContent());
 		
 		for (String h : findHashtag) {
 			System.out.println(h);

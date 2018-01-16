@@ -30,7 +30,8 @@ public class ResearchService {
 
 	public List<ResearchDTO> generalQuery(String queryString)
 	{
-		List<User> users = userDAO.getSuggestions(queryString);
+		List<User> users = new ArrayList<>();
+		users.addAll(userDAO.getSuggestions(queryString));
 		users.addAll(userDAO.getSuggestionsName(queryString));
 		HashSet<User> uniqueValues = new HashSet<>(users);
 
@@ -63,16 +64,16 @@ public class ResearchService {
 		for (Iterator<User> iterator = uniqueValues.iterator(); iterator.hasNext() && count<maxUsers;count++)
 		{
 			researchDTOs.add(new ResearchDTO(iterator.next()));
-			
+
 		}
 		count =0;
 		for (Iterator<Hashtag> iterator = hashtags.iterator(); iterator.hasNext() && count<maxHashtags;count++) 
 		{
 			researchDTOs.add(new ResearchDTO(iterator.next()));
 		}
-		
+
 		return researchDTOs;
-	
+
 	}
 
 

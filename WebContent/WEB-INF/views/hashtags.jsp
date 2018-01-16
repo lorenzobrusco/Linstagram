@@ -29,7 +29,7 @@
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
-	<script src="${pageContext.request.contextPath}/resources/js/hashtagPage.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/hashtagPage.js"></script>
 </head>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
@@ -38,7 +38,7 @@
 			<div class="col-md-2"></div>
 			<div class="col-md-8 text-center">
 				<h2>#${hashtag.hashtag}</h2>
-				<h5><b>${hashtag.count}</b> posts</h5>
+				<h5><b>${hashtag.count}</b> public posts</h5>
 			</div>
 		</div>
 		<div id="posts">

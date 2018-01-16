@@ -17,13 +17,14 @@ import org.hibernate.annotations.CascadeType;
 @Entity
 @Table(name="comment")
 public class Comment {
-
+	public final static int MAX_LENGTH_COMMENT=1000;
+	
 	@Id
 	@Column
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 
-	@Column(nullable=false)
+	@Column(nullable=false,length=MAX_LENGTH_COMMENT)
 	private String content;
 
 	@ManyToOne

@@ -26,9 +26,6 @@ import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 
-
-
-
 @Entity
 @Indexed
 @Table(name="hashtag")
@@ -57,7 +54,7 @@ public class Hashtag {
 	@Column(name = "hashtag", unique = true, nullable = false)
 
 	@Fields({
-		  @Field(name = "hashtag", index = Index.YES, store = Store.YES),
+		  @Field(name = "hashtag", index = Index.YES, store = Store.NO),
 		})
 	private String hashtag;
 

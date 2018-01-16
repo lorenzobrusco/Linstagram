@@ -29,6 +29,7 @@
 	href="${pageContext.request.contextPath}/resources/css/lib/noty/themes/nest.css">
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
+
 </head>
 
 <body>
@@ -47,7 +48,7 @@
 						for="tab-2" class="tab">Sign Up</label>
 
 					<div class="login-form">
-						<form class="sign-in-htm" action="signInAttempt" method="post">
+						<form class="sign-in-htm" action="login" method="post">
 							<div class="group">
 								<label for="user" class="label">Username</label> <input
 									id="user-singin" name="username" type="text" class="input"
@@ -64,7 +65,9 @@
 Signed in</label>
 </div> -->
 							<div class="group">
-								<input type="submit" class="button" value="Sign In">
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" /> <input type="submit" class="button"
+									value="Sign In">
 							</div>
 							<div id="forgot-pass">
 								<a id="forgot-pass-btn" role="button">Forgot Password?</a>
@@ -86,16 +89,19 @@ Signed in</label>
 							</div>
 							<div class="group">
 								<label for="password-field" class="label">Password</label> <input
-									name="password" type="password" class="input"
+									name="password" type="password" class="input" 
 									data-type="password" id="password-field" required>
 							</div>
 							<div class="group">
 								<label for="password-repeat" class="label">Repeat
-									Password</label> <input type="password" class="input"
+									Password</label> <input type="password" class="input" 
 									data-type="password" id="password-repeat" required>
 							</div>
 							<div class="hr"></div>
 							<div class="group">
+
+								<input type="hidden" name="${_csrf.parameterName}"
+									value="${_csrf.token}" />
 								<button class="button" id="signup-btn">Sign Up</button>
 							</div>
 						</form>
@@ -111,6 +117,7 @@ Signed in</label>
 	$(document)
 			.ready(
 					function() {
+						
 						const SUCCESS_SING_UP = "SUCCESS_SIGN_UP";
 						const EMAIL_ALREADY_USED = "ERROR_EMAIL_ALREADY_USED";
 						const USERNAME_ALREADY_USED = "ERROR_USERNAME_ALREADY_USED";
@@ -146,31 +153,29 @@ Signed in</label>
 							}
 							new Noty(notyconf).show();
 						}
-						
-						$("#forgot-pass-btn").click(function(){
+
+						$("#forgot-pass-btn").click(function() {
 							$.ajax({
-								url: "forgotPasswordPage",
-								method : 'post',
-								success:function(resp){
+								url : "forgotPasswordPage",
+								method : 'POST',
+								success : function(resp) {
 									$(".login-html").empty();
 									$(".login-html").append(resp);
 								} //close success
 							});
-						
+
 						});
-						
-						function showLoading(){
+
+						function showLoading() {
 							$("#loader").removeClass("hide");
 							$(".login-wrap").addClass("hide");
-							
+
 						}
-						
-						function hideLoading(){
+
+						function hideLoading() {
 							$("#loader").addClass("hide");
 							$(".login-wrap").removeClass("hide");
 						}
-
-
 						$("#signup-btn")
 								.click(
 										function(e) {
@@ -184,21 +189,29 @@ Signed in</label>
 													buildNoty("Sorry, but the PASSWORD must be of at least 6 character");
 												} else {
 
-													if (pass_field.val() != pass_repeat.val()) {
+													if (pass_field.val() != pass_repeat
+															.val()) {
 														buildNoty("Sorry, but the PASSWORD do not match");
-														pass_field.addClass("input-with-error");
-														pass_repeat.addClass("input-with-error");
+														pass_field
+																.addClass("input-with-error");
+														pass_repeat
+																.addClass("input-with-error");
 														pass_field.focus();
 													} else {
-														pass_field.removeClass("input-with-error");
-														pass_repeat.removeClass("input-with-error");
+														pass_field
+																.removeClass("input-with-error");
+														pass_repeat
+																.removeClass("input-with-error");
 
-														var email = $("#email").val();
-														var pass = pass_field.val();
+														var email = $("#email")
+																.val();
+														var pass = pass_field
+																.val();
 
 														if (validationMail(email)) {
 															showLoading();
-															$.ajax({
+															$
+																	.ajax({
 																		url : "signUpAttempt",
 																		method : 'post',
 																		data : {
@@ -206,8 +219,8 @@ Signed in</label>
 																			username : user,
 																			password : pass
 																		},
-																		success : function(result) {
-																		
+																		success : function(
+																				result) {
 																			if (result == EMAIL_ALREADY_USED) {
 																				hideLoading();
 																				buildNoty("Sorry, but the entered EMAIL is ALREADY USED");
@@ -216,9 +229,17 @@ Signed in</label>
 																				buildNoty("Sorry, but the entered USERNAME is ALREADY USED");
 																			} else if (result == SUCCESS_SING_UP) {
 																				//fill sign-in form with the data of the just registered user and submit 
-																				$("#user-singin").val(user);
-																				$("#pass").val(pass);
-																				$(".sign-in-htm").submit();
+																				$(
+																						"#user-singin")
+																						.val(
+																								user);
+																				$(
+																						"#pass")
+																						.val(
+																								pass);
+																				$(
+																						".sign-in-htm")
+																						.submit();
 																			}
 																		} //close success
 																	}); //close ajax

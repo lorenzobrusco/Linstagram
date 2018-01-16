@@ -54,10 +54,10 @@
 				<div class="col-lg-3 sidenav">
 					<ul class="nav nav-pills nav-stacked custom-nav">
 						<li id="infoUser" class="active-nav">
-							<a id="changeInfoUser" href="#section1">Modifica profilo</a>
+							<a id="changeInfoUser" href="#section1">Edit Profile</a>
 						</li>
 						<li id="passUser">
-							<a id="changePassword" href="#section2">Modifica password</a>
+							<a id="changePassword" href="#section2">Change Password</a>
 						</li>
 					</ul>
 					<br>

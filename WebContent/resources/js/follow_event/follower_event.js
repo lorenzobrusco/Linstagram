@@ -129,6 +129,7 @@ $(document).ready(function() {
 		var id = $(this).attr('name');
 		
 		var privateProfile = $('#private'+id).val();
+		
 		$.ajax({
 			url : "followUser",
 			data:{username:username},
@@ -188,7 +189,7 @@ $(document).ready(function() {
 	});
 	
 	//EVENTO DEL TASTO "ACCEPT_REQUEST" [PER ACCETTARE LA RICHIESTA]
-	$(document).on('click', '#acceptRequest-btn', function() {
+	/*$(document).on('click', '#acceptRequest-btn', function() {
 		var username = $(this).attr('value');
 
 		$.ajax({
@@ -216,6 +217,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+	*/
 	
 });

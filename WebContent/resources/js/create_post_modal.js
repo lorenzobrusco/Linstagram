@@ -1,3 +1,6 @@
+
+/* DA CANCELLARE */
+
 Dropzone.autoDiscover = false;
 
 function resize_canvas(canvas) {
@@ -5,17 +8,17 @@ function resize_canvas(canvas) {
 //	canvas.css("height", "100%");
 }
 
-//function getContextPath() {
-//var domanin=document.location.origin;
-//return domanin+window.location.pathname.substring(0, window.location.pathname.indexOf("/",2))+"/";
-//}
-
 function UploadPic(canvas,filename) {
 	canvas.toBlob(function(blob){
 //		console.log(blob);
 		var formData = new FormData();
 		formData.append('file', blob,filename);
-		formData.append('postDescription', $("#create-post-modal #post-description-input").val());
+		var postDescription=$("#create-post-modal #post-description-input").val();
+		//preventing injection
+		var safetext = $( $.parseHTML(postDescription) ).text();
+
+		formData.append('postDescription', safetext);
+		formData.append('type', 'image');
 		$.ajax({
 			type: 'POST',
 			url: 'createPost',
@@ -39,6 +42,41 @@ function UploadPic(canvas,filename) {
 			}
 		});
 	});
+}
+
+
+function UploadFile(file,filename, type) {
+
+		var formData = new FormData();
+		formData.append('file', file, filename);
+		var postDescription=$("#create-post-modal #post-description-input").val();
+		//preventing injection
+		var safetext = $( $.parseHTML(postDescription) ).text();
+
+		formData.append('postDescription', safetext);
+		formData.append('type', type);
+		$.ajax({
+			type: 'POST',
+			url: 'createPost',
+			enctype: 'multipart/form-data',
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function(msg) {
+				$(".close-create-post-modal").click(); //close modal
+//				location.reload(true);
+
+				new Noty({
+					text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your post is created!',
+					theme: 'nest',
+					type: 'success',
+					layout: 'bottomLeft',
+					timeout:2000,
+					progressBar: true
+				}).on("onClose",function(){location.reload()}).show();
+
+			}
+		});
 }
 
 function createCanvas(canvas,imgURL){
@@ -73,7 +111,6 @@ function createCanvas(canvas,imgURL){
 }
 
 
-
 $(document).ready(function () {
 	//	DROPZONE 
 	dropzoneOptions = {
@@ -83,7 +120,7 @@ $(document).ready(function () {
 			parallelUploads: 4,
 			maxFiles: 1,
 			maxFilesize: 20, //MB
-			acceptedFiles: "image/*",
+			acceptedFiles: "image/*, video/*",
 			addRemoveLinks: true,
 			dictDefaultMessage: 'Drop yuor photos or videos here',
 			//     Tweek dropzone to use another container for file previews
@@ -91,18 +128,25 @@ $(document).ready(function () {
 
 			init: function () {
 				var myDropzone = this;
+				var file;
 				var submit_file = $('#create-post-modal #submit-file');
 				var filename="";
 				submit_file.prop("disabled", true);
 
 				this.on("thumbnail", function (file) {
 					if (myDropzone.getAcceptedFiles().length > 0) {
-						//enable submit_file
 						$("#create-post-modal div.dz-default.dz-message").addClass("hide");
 						submit_file.prop("disabled", false);
 					}
 				});
-
+				this.on("addedfile", function(file) { 
+						if(file.type.indexOf("video") != 1){
+							$("#create-post-modal div.dz-default.dz-message").addClass("hide");
+							submit_file.prop("disabled", false);
+						}
+				});
+				
+				
 				this.on("removedfile", function (file) {
 					//console.log(myDropzone.getAcceptedFiles());
 					//disable submit_file
@@ -131,23 +175,26 @@ $(document).ready(function () {
 
 					//hide dropzone section
 					$("#create-post-modal #post-dropzone").addClass("hide");
-					var file = myDropzone.getAcceptedFiles();
+					file = myDropzone.getAcceptedFiles();
 					filename = file[0].name;
-					var filter_section = $("#create-post-modal #apply-filter-section");
-
-					filter_section.append("<canvas class='filter-img' id='img-to-modify'></canvas>");
-					filter_section.append('<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter </button>');
-
-					var canvas=$('#create-post-modal #apply-filter-section > canvas');
-
-					createCanvas(canvas.get(0),file[0].dataURL);
-					resize_canvas(canvas);
-					filter_section.removeClass("hide");
-
+					if(~file[0].type.indexOf("image") && !(~file[0].type.indexOf("gif"))){
+						var filter_section = $("#create-post-modal #apply-filter-section");
+	
+						filter_section.append("<canvas class='filter-img' id='img-to-modify'></canvas>");
+						filter_section.append('<button class="btn btn-submit"  id="submit-filter"><i class="fa fa-paper-plane" aria-hidden="true"></i> Apply Filter </button>');
+	
+						var canvas=$('#create-post-modal #apply-filter-section > canvas');
+	
+						createCanvas(canvas.get(0),file[0].dataURL);
+						resize_canvas(canvas);
+						filter_section.removeClass("hide");
+					}
 					var post_description_section = $("#create-post-modal #post-description");
 					var loader=$('#create-post-modal #loader');
 					var submit_filter=$('#create-post-modal #submit-filter');
-
+					if(~file[0].type.indexOf("video") || ~file[0].type.indexOf("gif")){
+						post_description_section.removeClass("hide");
+					}
 					$("#create-post-modal #apply-filter-section #filter-btn-group button").click(function () {
 						var filterType = $(this).attr("id");
 //						console.log(filterType);
@@ -192,8 +239,14 @@ $(document).ready(function () {
 
 				$("#create-post-modal #submit-description").click(e => {
 //					myDropzone.processQueue(); 
-					var canvas = $('#create-post-modal #apply-filter-section > canvas').get(0);
-					UploadPic(canvas,filename);
+					if(~file[0].type.indexOf("video")){
+						UploadFile(file[0],filename, "video");
+					} else if(~file[0].type.indexOf("image")) {
+						UploadFile(file[0],filename, "image");
+					} else {
+						var canvas = $('#create-post-modal #apply-filter-section > canvas').get(0);
+						UploadPic(canvas,filename);
+					}
 				});
 
 
@@ -231,5 +284,23 @@ $(document).ready(function () {
 	}
 
 	$("#open-create-post-modal").animatedModal(modalConfiguration);
-	$("#add-mobile").animatedModal(modalConfiguration);
+//	$("#add-mobile").animatedModal(modalConfiguration);
+	
+	var sneackbar = $("#snackbar");
+	
+	
+	$("#add-mobile").click( e =>{
+		sneackbar.addClass("show");
+	});
+	
+	$("#create-post-btn").animatedModal(modalConfiguration);
+	
+	$("#snackbar .btn").click(e=>{sneackbar.removeClass("show");})
+	
+	$(document).mouseup(function(e) {
+		if (!sneackbar.is(e.target) && sneackbar.has(e.target).length === 0) {
+			sneackbar.removeClass("show");
+	    }
+	});
+	
 });

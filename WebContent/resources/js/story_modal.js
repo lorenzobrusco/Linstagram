@@ -1,3 +1,5 @@
+/* DA CANCELLARE */
+
 Dropzone.autoDiscover = false;
 
 function resize_canvas(canvas) {
@@ -230,5 +232,6 @@ $(document).ready(function () {
 	}
 
 	$("#open-story-modal").animatedModal(modalConfiguration);
-	$("#add-story").animatedModal(modalConfiguration);
+//	$("#add-story").animatedModal(modalConfiguration);
+	$("#create-story-btn").animatedModal(modalConfiguration);
 });

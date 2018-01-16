@@ -1,14 +1,14 @@
 package it.unical.linstagram.helper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TagFinder {
 
-	public static List<String> findTags (String text)
+	public static Set<String> findTags (String text)
 	{
-		String[] arr = text.split(" ");    
-		List<String> tags = new ArrayList<>();
+		String[] arr = text.split("\\s");    
+		Set<String> tags = new HashSet<>();
 
 		for ( String ss : arr) {
 
@@ -17,7 +17,6 @@ public class TagFinder {
 			{
 				tags.add(ss.substring(1));
 			}
-
 		}
 
 		return tags;

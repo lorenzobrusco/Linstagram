@@ -2,27 +2,48 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+		<script src="${pageContext.request.contextPath}/resources/js/video.js"></script>
 <c:forEach items="${posts}" var="post">
 	<section>
 		<div class="row">
-			<div class="col-md-2"></div>
+			<div class="col-md-2"><span class="pid hidden">${post.id}</span></div>
 			<div class="col-md-8">
 				<div class='card'>
 					<div class='top-section'>
-						<a href='userPage?username=${post.user.username }'> 
-						<img class="user-img"
-							src=${post.user.photoProfile }></a> 
-							<a
-							href='userPage?username=${post.user.username }'
-							class='user-name'>${post.user.username }</a>
+						<a href='userPage?username=${post.user.username }'> <img
+							class="user-img" src=${post.user.photoProfile }></a> <a
+							href='userPage?username=${post.user.username }' class='user-name'>${post.user.username }</a>
 					</div>
 					<div class='body-section'>
-						<div class="overlay">
-							<span></span>
-						</div>
+
 						<c:forEach items="${post.media}" var="media">
-							<img src="${media.url}" />
+							<c:if test="${media.type.value == 0}">
+								<div class="overlay-video">
+									<video id="video${post.id }" width="100%"  style="max-height: 400px; background:  black;" loop preload="auto" >
+										<source src="${media.url}" type="video/mp4">
+									</video>
+									<span class="tag-play">
+										<i class="fa fa-play fa-5x" aria-hidden="true"></i>
+									</span>
+									<span class="tag-pause hide">
+										<i class="fa fa-pause fa-1x" aria-hidden="true"></i>
+									</span>
+									<span class="tag-video"></span><span class="tag-audio"><i class="fa fa-volume-up fa-1x" aria-hidden="true"></i></span>
+								</div>
+							</c:if>
+							<c:if test="${media.type.value == 1}">
+								<div class="overlay">
+									<c:choose>
+										<c:when test="${fn:length(post.likes) == 0 }">
+											<a name="${post.id }" id="love${post.id }" class="love"><span></span></a>
+										</c:when>
+										<c:otherwise>
+											<a name="${post.id }" id="love${post.id }" class="love"><span></span></a>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<img src="${media.url}" />
+							</c:if>
 						</c:forEach>
 					</div>
 					<div class='action-section'>
@@ -31,17 +52,21 @@
 								<c:choose>
 									<c:when test="${fn:length(post.likes) == 0 }">
 										<a name="${post.id }" id="love${post.id }" class="love"><span
-											class='love'><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></span></a>
+											class='love'><i class="fa fa-heart-o fa-2x"
+												aria-hidden="true"></i></span></a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${post.likeUser == true}">
 												<a name="${post.id }" id="loveFull${post.id }"
-													class="loveFull"><span class='loveFull'><i class="fa fa-heart fa-2x" aria-hidden="true"></i></span></a>
+													class="loveFull"><span class='loveFull'><i
+														class="fa fa-heart fa-2x" aria-hidden="true"></i></span></a>
 											</c:when>
 											<c:otherwise>
 												<a name="${post.id }" id="love${post.id }" class="love">
-												<span class='love'><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></span></a>
+													<span class='love'><i class="fa fa-heart-o fa-2x"
+														aria-hidden="true"></i></span>
+												</a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -51,18 +76,22 @@
 								<c:choose>
 									<c:when test="${fn:length(user.bookmarks) == 0 }">
 										<a name="${post.id }" id="bookmark${post.id }"
-											class="bookmark">
-											<span class='save'><i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i></span></a>
+											class="bookmark"> <span class='save'><i
+												class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i></span></a>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${post.bookmarkUser }">
-												<a name="${post.id }" id="bookmark${post.id }" class="bookmarkFull">
-												<span class='save'> <i class="fa fa-bookmark fa-2x" aria-hidden="true"></i> </span></a>
+												<a name="${post.id }" id="bookmark${post.id }"
+													class="bookmarkFull"> <span class='save'> <i
+														class="fa fa-bookmark fa-2x" aria-hidden="true"></i>
+												</span></a>
 											</c:when>
 											<c:otherwise>
 												<a name="${post.id }" id="bookmark${post.id }"
-													class="bookmark"><span class='save'> <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i> </span></a>
+													class="bookmark"><span class='save'> <i
+														class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>
+												</span></a>
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
@@ -71,14 +100,14 @@
 						</div>
 						<div class="likes-section" style="cursor: pointer;">
 							<a id="likes" data-toggle="modal" data-target="#modalLike"
-								name="${post.id }"><b>Likes to  
-								<span id="count_like${post.id }"> ${fn:length(post.likes)}</span>
+								name="${post.id }"><b>Likes to <span
+									id="count_like${post.id }"> ${fn:length(post.likes)}</span>
 									people
 							</b></a>
 						</div>
 						<div class='caption-section'>
 							<a href='userPage?username=${post.user.username}'>${post.user.username }</a>
-							<span>${post.content}</span>
+							<span class="post_cont_${post.id}">${post.content}</span>
 						</div>
 
 						<div class='list-comments-section'>
@@ -103,9 +132,7 @@
 						</div>
 
 						<div class='time-section'>
-							<p>
-							${post.elapsedTime}
-							</p>
+							<p>${post.elapsedTime}</p>
 						</div>
 
 						<div class='comment-section'>
@@ -123,3 +150,4 @@
 		</div>
 	</section>
 </c:forEach>
+

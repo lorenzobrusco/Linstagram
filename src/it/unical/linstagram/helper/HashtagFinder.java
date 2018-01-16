@@ -1,14 +1,14 @@
 package it.unical.linstagram.helper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class HashtagFinder {
 
-	public static List<String> findHashtags (String text)
+	public static Set<String> findHashtags (String text)
 	{
-		String[] arr = text.split(" ");    
-		List<String> hashtags = new ArrayList<>();
+		String[] arr = text.split("\\s");    
+		Set<String> hashtags = new HashSet<>();
 
 		for ( String ss : arr) {
 

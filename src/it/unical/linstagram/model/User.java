@@ -17,7 +17,11 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 @Entity
 @Table(name="user")
@@ -31,7 +35,7 @@ public class User{
 
 	@Column(name="username", nullable = false, unique = true)
 	@Fields({
-		@Field(name = "username", index = Index.YES, store = Store.YES),
+		@Field(name = "username", index = Index.YES, store = Store.NO),
 	})
 	private String username;
 
@@ -43,13 +47,13 @@ public class User{
 
 	@Column(name="name")
 	@Fields({
-		@Field(name = "name", index = Index.YES, store = Store.YES),
+		@Field(name = "name", index = Index.YES, store = Store.NO),
 	})
 	private String name;
 
 	@Column (name="surname")
 	@Fields({
-		@Field(name = "surname", index = Index.YES, store = Store.YES),
+		@Field(name = "surname", index = Index.YES, store = Store.NO),
 	})
 	private String surname;
 
@@ -257,4 +261,5 @@ public class User{
 			return false;
 		return true;
 	}
+
 }

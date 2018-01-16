@@ -1,6 +1,5 @@
 package it.unical.linstagram.dto;
 
-import java.util.Calendar;
 
 import it.unical.linstagram.model.Media.Media_Type;
 import it.unical.linstagram.model.Story;
@@ -10,13 +9,15 @@ public class StoryDTO {
 	private String url;
 	private String type;
 	private long date;
-	public boolean viewed;
+	private String duration;
+	private boolean viewed;
 	
 	public StoryDTO(Story story, boolean viewed) {
 		id=story.getId();
 		url = story.getMedia().getUrl();
 		type = convertType(story.getMedia().getType());
 		date = story.getCreationDate().getTime().getTime();
+		duration = duration(story.getMedia().getType());
 		this.viewed = viewed;
 	}
 	
@@ -25,6 +26,13 @@ public class StoryDTO {
 			return "photo";
 		else
 			return "video";
+	}
+	
+	private String duration(Media_Type type) {
+		if(type==Media_Type.IMAGE)
+			return "5";
+		else
+			return "";
 	}
 	public String getUrl() {
 		return url;
@@ -44,5 +52,9 @@ public class StoryDTO {
 	
 	public long getDate() {
 		return date;
+	}
+	
+	public String getDuration() {
+		return duration;
 	}
 }

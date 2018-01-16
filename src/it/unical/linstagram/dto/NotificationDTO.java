@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import it.unical.linstagram.model.Media.Media_Type;
 import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.NotificationType;
 
@@ -16,6 +17,7 @@ public class NotificationDTO {
 	private String urlPost;
 	private int idPost;
 	private String date;
+	private boolean isVideo;
 	private boolean isPrivateFrom;
 	private boolean isPrivateTo;
 	private boolean alreadyFollowing;
@@ -35,22 +37,22 @@ public class NotificationDTO {
 		this.isRequestFrom = isRequestFrom;
 		this.isPrivateTo = notification.getUserTo().isPrivateProfile();
 		this.isPrivateFrom = notification.getUserFrom().isPrivateProfile();
-		if (notification.getType().equals(NotificationType.COMMENT)) {
-			this.context = String.format("commented your post: %s", notification.getComment().getContent());
+		if (notification.getPost() != null) {
 			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
 			this.idPost = notification.getPost().getId();
+			this.isVideo = notification.getPost().getMedia().get(0).getType() == Media_Type.VIDEO;
+		}
+		if (notification.getType().equals(NotificationType.COMMENT)) {
+			this.context = "commented your post";
+
 		} else if (notification.getType().equals(NotificationType.LIKE)) {
 			this.context = "liked your post";
-			this.urlPost = notification.getPost().getMedia().get(0).getUrl();
-			this.idPost = notification.getPost().getId();
 		} else {
 			if (!this.alreadyFollowed) {
 				this.context = "Asks to follow you";
 			} else {
 				this.context = "started following you";
 			}
-
-			this.urlPost = null;
 		}
 
 	}
@@ -130,6 +132,14 @@ public class NotificationDTO {
 
 	public void setDate(String data) {
 		this.date = data;
+	}
+
+	public boolean isVideo() {
+		return isVideo;
+	}
+
+	public void setVideo(boolean isVideo) {
+		this.isVideo = isVideo;
 	}
 
 	public boolean isPrivateFrom() {

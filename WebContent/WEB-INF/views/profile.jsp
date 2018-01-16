@@ -53,7 +53,7 @@
 						<div class="row item-user-info">
 							<ul>
 								<li><b>@${user.username}</b></li>
-								<li><a class="btn btn-default" href="modifyProfile" id="modify-profile-btn">Modify Profile</a></li>
+								<li><a class="btn btn-default" href="modifyProfile" id="modify-profile-btn">Edit Profile</a></li>
 								<li><a class="btn btn-danger" href="logout" id="logout-mobile-btn">Logout</a></li>
 							</ul>
 							<input id="username_hidden" type="hidden" name="username_hidden"
@@ -61,13 +61,13 @@
 						</div>
 						<div class="row item-user-info">
 							<ul>
-								<li><span><b>${fn:length(user.posts)}</b></span> post</li>
+								<li><span><b>${fn:length(posts)}</b></span> post</li>
 								<li id="follower" data-toggle="modal"
 									data-target="#modalFollower"><span><b>${fn:length(user.followers)}</b></span>
 									follower</li>
 								<li id="following" data-toggle="modal"
 									data-target="#modalFollowing"><span><b id="count_following">${fn:length(user.followings)}</b></span>
-									profili seguiti</li>
+									profiles followed</li>
 							</ul>
 						</div>
 						<div class="row item-user-info">
@@ -136,7 +136,6 @@
 	<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
 	<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
 	
-	<jsp:include page="./fragment/userProfileFragment/modalPost.jsp"></jsp:include>
 </body>
 
 

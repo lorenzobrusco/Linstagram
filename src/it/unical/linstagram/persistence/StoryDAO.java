@@ -4,13 +4,13 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class StoryDAO implements IStoryDAO{
 
 	@Override
@@ -80,6 +80,8 @@ public class StoryDAO implements IStoryDAO{
 				.setParameter("fUsers",followedUsers)
 				.setParameter("dayLimit", dayLimit)
 				.list();
+		
+		
 		session.close();
 		return stories;
 	}

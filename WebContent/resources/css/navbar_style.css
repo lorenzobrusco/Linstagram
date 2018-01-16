@@ -265,11 +265,11 @@ header {
   background-position: -407px -103px;
 }
 
-#add-story{
+#explore-mobile{
 	background-image: url(../images/icons.png);
-  height: 23px;
+ 	height: 24px;
   width: 28px;
-  background-position: -433px 0px;
+  background-position: -406px -208px;
 }
 
 #home-mobile {
@@ -542,4 +542,76 @@ header {
   100% {
     transform: rotate (360 deg);
   }
+}
+
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+		display:flex !important;
+		flex-direction:row;
+		justify-content:center;
+		align-items:center;
+    --bottom-heigth: 60px;
+    visibility: hidden;
+    width: 80%;
+    margin-left: 10%;
+    background: transparent;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    bottom: var(--bottom-heigth);
+    /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);*/
+}
+
+
+#snackbar a i{
+	color:black;
+}
+
+#snackbar a {
+	display:flex;
+	align-items:center;
+	flex-direction:row;
+	justify-content:center;
+	margin:auto 15%;
+	border:1px solid #cccccc8c;
+	background-color: #fafafa;
+	width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  box-shadow: 3px 3px 10px 0px #9d9d9dc7;
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: var(--bottom-heigth); opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: var(--bottom-heigth); opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: var(--bottom-heigth); opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: var(--bottom-heigth); opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }
