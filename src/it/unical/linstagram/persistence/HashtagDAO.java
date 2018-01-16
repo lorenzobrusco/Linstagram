@@ -62,46 +62,29 @@ public class HashtagDAO implements IHashtagDAO {
 
 	}
 
-
-	//TODO NON FUNZIONA
 	public void updateAllHashtagCountsByUser (String username, int toAdd)
 	{
 		Session session = HibernateUtil.getSession();
-		Transaction tx = session.beginTransaction();
-
 		List<Hashtag> hashtags =  session.createQuery("select p.hashtags FROM  Post p where p.user.username = :_username")
 				.setParameter("_username", username).list();
 
+		Transaction tx = null;
+		tx = session.beginTransaction();
 		for (Hashtag hashtag : hashtags) {
-			hashtag.setCount(hashtag.getCount()+toAdd);
-			session.update(hashtag);
+			Query q =session.createQuery("update Hashtag h set h.count = h.count+ :_toAdd"
+					+ " where h = :_hashtag")
+					.setParameter("_hashtag", hashtag)
+					.setParameter("_toAdd", toAdd);
+			q.executeUpdate();
 		}
+	
 		tx.commit();
+
 		session.close();
-		
+
 		return;
 
 	}
-
-//	@Override
-//	public void updateAllHashtagCountsByUser (String username, int toAdd)
-//	{
-//		Session session = HibernateUtil.getSession();
-//
-//		Query q =session.createQuery("update Hashtag h set h.count = h.count+ :_toAdd"
-//				+ " where h in (select p.hashtags from Post p where p.user.username = :_username)")
-//				.setParameter("_username", username)
-//				.setParameter("_toAdd", toAdd);
-//		q.executeUpdate();
-//
-//		session.close();
-//		return;
-//
-//	}
-
-
-
-
 
 
 }

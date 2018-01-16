@@ -112,7 +112,13 @@ public class ProfileController {
 		if (!bio.equals(""))
 			user.setBiography(bio);
 
+		boolean updateHashtagsCount = false;
+
 		if (!privateCheck.equals("")) {
+			if (!user.isPrivateProfile() && privateCheck.equals("true") 
+					|| user.isPrivateProfile() && privateCheck.equals("false"))
+				updateHashtagsCount = true;
+
 			if (privateCheck.equals("true"))
 				user.setPrivateProfile(true);
 			else
@@ -124,7 +130,9 @@ public class ProfileController {
 		else
 			messageResponse = new MessageResponse(MessageCode.OK, user, "OK");
 
-		hashtagsService.modifyCounterPerUser(user.getUsername(), user.isPrivateProfile());
+		if (updateHashtagsCount)
+			hashtagsService.modifyCounterPerUser(user.getUsername(), user.isPrivateProfile());
+
 		return messageResponse.getMessage();
 	}
 
@@ -186,8 +194,8 @@ public class ProfileController {
 		List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
 		model.addAttribute("posts", postOfUser);
 		return "fragment/userProfileFragment/postSection"; // Per aggiungere solo i post in cui e' taggato l'utente
-															// [utilizzato sia per utente nella sessione che per gli
-															// altri utenti]
+		// [utilizzato sia per utente nella sessione che per gli
+		// altri utenti]
 	}
 
 	@RequestMapping("taggedPhoto")
@@ -196,8 +204,8 @@ public class ProfileController {
 		List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
 		model.addAttribute("posts", postOfUser);
 		return "fragment/userProfileFragment/taggedPhotoSection"; // Per aggiungere solo i post in cui e' taggato
-																	// l'utente [utilizzato sia per utente nella
-																	// sessione che per gli altri utenti]
+		// l'utente [utilizzato sia per utente nella
+		// sessione che per gli altri utenti]
 	}
 
 	@RequestMapping("bookmarkPhoto")

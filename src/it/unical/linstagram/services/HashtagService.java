@@ -13,8 +13,6 @@ public class HashtagService {
 
 	@Autowired
 	private HashtagDAO hashtagDAO;
-	@Autowired
-	private ModelDAO modelDAO;
 
 	public Hashtag getHashtag(String tag) {
 		return hashtagDAO.getHashtagByValue(tag);
@@ -26,13 +24,13 @@ public class HashtagService {
 	 * @param isPrivate
 	 * @return
 	 */
-	public boolean modifyCounterPerUser(String username, boolean isPrivate) {
-		final List<Hashtag> allHashtagByUser = hashtagDAO.getAllHashtagByUser(username);
-		for (Hashtag hashtag : allHashtagByUser) {
-			hashtag.setCount((isPrivate) ? hashtag.getCount() - 1 : hashtag.getCount() + 1);
-			modelDAO.update(hashtag);
-		}
-		return true;
+	public void modifyCounterPerUser(String username, boolean isPrivate) {
+
+			if(isPrivate) 
+				hashtagDAO.updateAllHashtagCountsByUser(username, -1);
+			else
+				hashtagDAO.updateAllHashtagCountsByUser(username, +1);
+		return;
 
 	}
 
