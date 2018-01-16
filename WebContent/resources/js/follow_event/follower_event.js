@@ -1,4 +1,14 @@
 //EVENTI DEI BOTTONI DELLE RICHIESTE FOLLOW PRIVATE E PUBBLICHE
+function sendNotification(user) {
+		  $.ajax({
+		    url: "sendNotification",
+		    type: "POST",
+		    data:{
+		    	user: user
+		    }
+		  });
+		  return;
+}
 
 $(document).ready(function() {
 	
@@ -142,7 +152,8 @@ $(document).ready(function() {
 					else 
 						$("#follow_ul").append("<li><button value='"+username+"' name='"+id+"' id='cancelRequest-btn'>Delete Request</button></li>");
 					
-					$("#count_follower").html(parseInt($("#count_follower").html(), 10)+1)
+					$("#count_follower").html(parseInt($("#count_follower").html(), 10)+1);
+					sendNotification(username);
 				}
 			}
 		});
@@ -182,6 +193,7 @@ $(document).ready(function() {
 			data:{username:username},
 			success : function(result) {
 				if (result == "OK") {
+					sendNotification(username);
 					location.reload();
 				}
 			}

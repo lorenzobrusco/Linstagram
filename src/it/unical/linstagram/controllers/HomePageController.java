@@ -22,7 +22,6 @@ import it.unical.linstagram.dto.ResearchDTO;
 import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
 import it.unical.linstagram.helper.MessageResponse;
-import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Media.Media_Type;
 import it.unical.linstagram.model.Post;

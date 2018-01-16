@@ -121,6 +121,9 @@
 										url : "notificationToSee",
 										type : "POST",
 										success : function(result) {
+											if (result <= 0){
+												$(".badge").remove();
+											}
 											if (result > 0) {
 												var badge_notification = "<span class='badge'>"
 														+ result + "</span>"

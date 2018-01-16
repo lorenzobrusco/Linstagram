@@ -37,17 +37,27 @@ public class NotificationDAO implements INotificationDAO {
 	public Notification existsNotification(Notification notification) {
 		final Session session = HibernateUtil.getSession();
 		Notification ntf = null;
-		final List<Notification> notifications = session.createQuery(
-				"FROM Notification n WHERE n.userTo=:userTo and n.userFrom=:userFrom "
-						+ "and n.post=:post and n.type=0")
-				.setParameter("userTo", notification.getUserTo())
-				.setParameter("userFrom", notification.getUserFrom())
-				.setParameter("post", notification.getPost())
-				.list();
-		if(notifications.size() > 0)
+		final List<Notification> notifications = session
+				.createQuery("FROM Notification n WHERE n.userTo=:userTo and n.userFrom=:userFrom "
+						+ "and n.post=:post and (n.type=0 or n.type=2)")
+				.setParameter("userTo", notification.getUserTo()).setParameter("userFrom", notification.getUserFrom())
+				.setParameter("post", notification.getPost()).list();
+		if (notifications.size() > 0)
 			ntf = notifications.get(0);
 		session.close();
 		return ntf;
+	}
+
+	public int existsFollowRequest(User userFrom, User userTo) {
+		final Session session = HibernateUtil.getSession();
+		
+		List<Notification> notifications = session
+				.createQuery("FROM Notification n WHERE n.userTo=:userTo and n.userFrom=:userFrom and n.type=0")
+				.setParameter("userTo", userTo).setParameter("userFrom", userFrom).list();
+		if (notifications.size() > 0)
+			return notifications.get(0).getId();
+		session.close();
+		return -1;
 	}
 
 }

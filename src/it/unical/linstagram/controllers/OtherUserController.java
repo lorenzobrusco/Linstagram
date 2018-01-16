@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.helper.MessageResponse;
-import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
@@ -44,15 +43,6 @@ public class OtherUserController {
 		return "otherUserProfile";
 	}
 
-	// @RequestMapping("sendRequest")
-	// @ResponseBody
-	// public String sendRequest(HttpSession session, Model model,
-	// @RequestParam("username") String username) {
-	// User user = (User) session.getAttribute("user");
-	//
-	// return new MessageResponse(MessageCode.OK, user, "OK").getMessage();
-	// }
-
 	@RequestMapping("acceptRequest")
 	@ResponseBody
 	public String acceptRequest(HttpSession session, Model model, @RequestParam("username") String username) {
@@ -70,7 +60,7 @@ public class OtherUserController {
 	public String rejectRequest(HttpSession session, Model model, @RequestParam("username") String username) {
 		User user = (User) session.getAttribute("user");
 
-		if (!userService.rejectRequest(user.getUsername(), username))
+		if (!userService.rejectRequest(user, username))
 			return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
 					.getMessage();
 

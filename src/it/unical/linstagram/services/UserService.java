@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
-import it.unical.linstagram.helper.UserManager;
+import it.unical.linstagram.model.Notification;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.RequestFollow;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
+import it.unical.linstagram.persistence.NotificationDAO;
 import it.unical.linstagram.persistence.UserDAO;
 
 @Service
@@ -24,9 +25,9 @@ public class UserService {
 	private UserDAO userDAO;
 	@Autowired
 	private ModelDAO modelDAO;
-
-	UserManager userManager;
-
+	@Autowired
+	private NotificationDAO notificationDao;
+	
 	public boolean addFollowing(String usernameSession, String usernameToFollow) {
 
 		User userSession = userDAO.getUserByUsername(usernameSession);
@@ -170,11 +171,13 @@ public class UserService {
 				return true;
 		return false;
 	}
-
-	public boolean rejectRequest (String usernameSession, String username) {
-		int id = userDAO.searchRequestFollow(usernameSession, username);
-		if (id != -1)
-			if(modelDAO.delete(RequestFollow.class, id))
+	
+	public boolean rejectRequest (User userSession, String username) {
+		User otherUser = userDAO.getUserByUsername(username);
+		int id = userDAO.searchRequestFollow(userSession.getUsername(), username);
+		int idNotification = notificationDao.existsFollowRequest(userSession, otherUser); 
+		if (id != -1 && idNotification != -1)
+			if(modelDAO.delete(RequestFollow.class, id) && modelDAO.delete(Notification.class, idNotification)) 
 				return true;
 		return false;
 	}

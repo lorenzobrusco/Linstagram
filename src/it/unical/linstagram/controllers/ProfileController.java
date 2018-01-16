@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.config.CustomPasswordEncoder;
 import it.unical.linstagram.helper.MessageResponse;
-import it.unical.linstagram.helper.UserManager;
 import it.unical.linstagram.model.Gender;
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Post;
