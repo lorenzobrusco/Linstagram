@@ -33,19 +33,6 @@ public class NotificationDAO implements INotificationDAO {
 		return notifications;
 	}
 
-	public boolean isAlreadyFollower(User userTo, User userFrom) {
-		final Session session = HibernateUtil.getSession();
-		final BigInteger notifications = (BigInteger) session
-				.createNativeQuery(
-						"Select count(*) FROM following as f " + "WHERE f.followed=:userFrom and f.following=:userTo")
-				.setParameter("userTo", userTo.getId()).setParameter("userFrom", userFrom.getId()).getSingleResult();
-		session.close();
-		return notifications != BigInteger.ZERO;
-	}
-
-	public boolean isAlreadyFollowing(User userTo, User userFrom) {
-		return isAlreadyFollower(userFrom, userTo);
-	}
 
 	public Notification existsNotification(Notification notification) {
 		final Session session = HibernateUtil.getSession();

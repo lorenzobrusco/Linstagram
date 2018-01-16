@@ -202,25 +202,8 @@ public class HomePageController {
 	@ResponseBody
 	@RequestMapping(value = "/research", method = RequestMethod.POST)
 	public List<ResearchDTO> research(@RequestParam String text, HttpSession session) {
-		// Set<Hashtag> suggestionsHashtag =
-		// researchService.getSuggestionsHashtag(text);
-		// Set<UserViewerDTO> suggestionsUsers =
-		// researchService.getSuggestionsUsername(text);
-		// suggestionsUsers.addAll(researchService.getSuggestionsName(text));
-		//
-		// for (Hashtag hashtag : suggestionsHashtag) {
-		// System.out.println(hashtag.getHashtag());
-		// }
-		//
-		// session.setAttribute("hashtagSearch", suggestionsHashtag);
-		// session.setAttribute("userSearch", suggestionsUsers);
-		//
-		//
-		// return "SUCCESS";
-		// TODO DA SISTEMARE
-		System.out.println(text);
 		List<ResearchDTO> generalQuery = researchService.generalQuery(text);
-		System.out.println(generalQuery);
+
 		return generalQuery;
 	}
 

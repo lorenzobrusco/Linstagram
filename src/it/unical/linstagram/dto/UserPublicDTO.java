@@ -9,20 +9,22 @@ public class UserPublicDTO extends UserPrivateDTO {
 
 	private String biography;
 	
-	private Set<User> followings;
-	private Set<User> followers;
+	private int followings;
+	private int followers;
 	private Set<Post> posts;
 	private Set<Post> tagged;
 	
 //	private boolean followed; //se questo utente è seguito da un'altro utente(della sessione)
 	
 	
-	public UserPublicDTO(User user, boolean followed, boolean request_send, boolean request_received) {
+	public UserPublicDTO(User user, boolean followed, boolean request_send, boolean request_received, int numberOfFollowings
+			, int numberOfFollowers) {
 		super(user, followed, request_send, request_received);
 		this.biography = user.getBiography();
 		
-		this.followings = user.getFollowings();
-		this.followers = user.getFollowers();
+		this.setFollowings(numberOfFollowings);
+		this.setFollowers(numberOfFollowers);
+		
 		this.posts = user.getPosts();
 		this.tagged = user.getTagged();
 	}
@@ -31,13 +33,6 @@ public class UserPublicDTO extends UserPrivateDTO {
 		return biography;
 	}
 
-	public Set<User> getFollowings() {
-		return followings;
-	}
-
-	public Set<User> getFollowers() {
-		return followers;
-	}
 
 	public Set<Post> getPosts() {
 		return posts;
@@ -46,9 +41,22 @@ public class UserPublicDTO extends UserPrivateDTO {
 	public Set<Post> getTagged() {
 		return tagged;
 	}
+
+	public int getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(int followers) {
+		this.followers = followers;
+	}
+
+	public int getFollowings() {
+		return followings;
+	}
+
+	public void setFollowings(int followings) {
+		this.followings = followings;
+	}
+
 	
-//	public boolean isFollowed() {
-//		return followed;
-//	}
-//	
 }

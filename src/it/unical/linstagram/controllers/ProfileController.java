@@ -49,8 +49,10 @@ public class ProfileController {
 
 		List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
 		model.addAttribute("posts", postOfUser);
-		User initializeFollowersAndFollowings = userService.initializeFollowersAndFollowings(user);
-		session.setAttribute("user", initializeFollowersAndFollowings);
+		
+		model.addAttribute("numberOfFollowings", userService.getCountFollowings(user.getId()));
+		model.addAttribute("numberOfFollowers", userService.getCountFollowers(user.getId()));
+		
 
 		return "profile";
 	}

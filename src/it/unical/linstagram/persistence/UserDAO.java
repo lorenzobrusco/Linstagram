@@ -1,5 +1,6 @@
 package it.unical.linstagram.persistence;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Set;
 
@@ -275,6 +276,21 @@ public class UserDAO implements IUserDAO {
 
 		session.close();
 		return privateProfile;
+	}
+	
+
+	public boolean isAlreadyFollower(User userTo, User userFrom) {
+		final Session session = HibernateUtil.getSession();
+		final BigInteger notifications = (BigInteger) session
+				.createNativeQuery(
+						"Select count(*) FROM following as f " + "WHERE f.followed=:userFrom and f.following=:userTo")
+				.setParameter("userTo", userTo.getId()).setParameter("userFrom", userFrom.getId()).getSingleResult();
+		session.close();
+		return notifications != BigInteger.ZERO;
+	}
+
+	public boolean isAlreadyFollowing(User userTo, User userFrom) {
+		return isAlreadyFollower(userFrom, userTo);
 	}
 
 }

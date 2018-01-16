@@ -149,5 +149,15 @@ public class ModelDAO {
 		return count.intValue();
 
 	}
+	
+	public int getCount(String whatCount, Class<?> from, String where) {
+		final Session session = HibernateUtil.getSession();
+		Long count = (Long) session.createQuery(String.format("select count(elements(%s)) FROM %s %s WHERE %s", whatCount,
+				from.getSimpleName(), from.getSimpleName().toLowerCase().charAt(0),where)).getSingleResult();
+		session.close();
+		return count.intValue();
+
+	}
+
 
 }

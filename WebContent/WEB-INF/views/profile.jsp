@@ -63,10 +63,10 @@
 							<ul>
 								<li><span><b>${fn:length(posts)}</b></span> post</li>
 								<li id="follower" data-toggle="modal"
-									data-target="#modalFollower"><span><b>${fn:length(user.followers)}</b></span>
+									data-target="#modalFollower"><span><b>${numberOfFollowers}</b></span>
 									follower</li>
 								<li id="following" data-toggle="modal"
-									data-target="#modalFollowing"><span><b id="count_following">${fn:length(user.followings)}</b></span>
+									data-target="#modalFollowing"><span><b id="count_following">${numberOfFollowings}</b></span>
 									profiles followed</li>
 							</ul>
 						</div>
