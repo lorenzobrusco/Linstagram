@@ -13,8 +13,29 @@ public class HibernateUtil {
 	private static SessionFactory factory;
 	private static String configPath = null;
 
+	public static void initConfigPath ()
+	{
+		String path = HibernateUtil.class.getClassLoader().getResource("").getPath();
+
+		try {
+			configPath = URLDecoder.decode(path, "UTF-8");
+			configPath = new File(configPath).getPath();
+
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+	}
+
 	public static void initSessionFactory(boolean test) {
 
+
+		if (configPath == null)
+		{
+			initConfigPath();
+		}
 		if (factory == null) {
 			Configuration configuration = new Configuration();
 			if (test)
@@ -24,33 +45,12 @@ public class HibernateUtil {
 			}
 			else
 			{
-				String path = HibernateUtil.class.getClassLoader().getResource("").getPath();
+				//strategy
+				configuration.setProperty("hibernate.search.default.locking_strategy", "none");
+				//hibernate.search.default.indexBase
+				configuration.setProperty("hibernate.search.default.indexBase", configPath + "/../build/indexes");
+				factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
 
-				try {
-					configPath = URLDecoder.decode(path, "UTF-8");
-					configPath = new File(configPath).getPath();
-
-					//refresh every half hour
-					configuration.setProperty("hibernate.search.default.refresh", "1800");
-					//strategy
-					configuration.setProperty("hibernate.search.default.locking_strategy", "none");
-					//hibernate.search.default.indexBase
-					configuration.setProperty("hibernate.search.default.indexBase", configPath + "/../build/indexes");
-					//source directory location where the master is copied to
-					configuration.setProperty("hibernate.search.default.sourceBase", configPath + "/../source/indexes");
-					//configuration.setProperty("hibernate.search.default.exclusive_index_use", "false");
-					//refresh every half hour
-					configuration.setProperty("hibernate.search.default.refresh", "1800");
-					//slave working directory location
-					configuration.setProperty("hibernate.search.default.indexBase", configPath + "/../build/indexes");
-
-					//					configuration.setProperty("hihibernate.search.default.locking_strategy", "naive");
-					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
-
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 
 			}
 		}

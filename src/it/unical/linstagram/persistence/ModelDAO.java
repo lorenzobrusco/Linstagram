@@ -37,6 +37,24 @@ public class ModelDAO {
 		return list;
 	}
 
+	public boolean updateList(List<?> objects) {
+		final Session session = HibernateUtil.getSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			for (Object o : objects) {
+				session.update(o);
+			}
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			transaction.rollback();
+			return false;
+		} finally {
+			session.close();
+		}
+	}
+
 	public boolean update(Object model) {
 		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
@@ -70,14 +88,15 @@ public class ModelDAO {
 			session.close();
 		}
 	}
+
 	public boolean delete(Class<?> type, Serializable id) {
 		final Session session = HibernateUtil.getSession();
-	    Object persistentInstance = session.load(type, id);
-	    Transaction transaction = null;
-		
-	    try {
-	    	if (persistentInstance != null) {
-	    		transaction = session.beginTransaction();
+		Object persistentInstance = session.load(type, id);
+		Transaction transaction = null;
+
+		try {
+			if (persistentInstance != null) {
+				transaction = session.beginTransaction();
 				session.delete(persistentInstance);
 				transaction.commit();
 				return true;
@@ -91,14 +110,13 @@ public class ModelDAO {
 			session.close();
 		}
 	}
-	
-	
-	public Object initialize(Object detachedParent,String fieldName) {
-	    Session session = HibernateUtil.getSession();
-		Object reattachedParent = session.merge(detachedParent); 
 
-	    // get the field from the entity and initialize it
-	    Field fieldToInitialize;
+	public Object initialize(Object detachedParent, String fieldName) {
+		Session session = HibernateUtil.getSession();
+		Object reattachedParent = session.merge(detachedParent);
+
+		// get the field from the entity and initialize it
+		Field fieldToInitialize;
 		try {
 			fieldToInitialize = detachedParent.getClass().getDeclaredField(fieldName);
 			fieldToInitialize.setAccessible(true);
@@ -108,11 +126,28 @@ public class ModelDAO {
 			e.printStackTrace();
 		} finally {
 			session.close();
-			
+
 		}
 		return reattachedParent;
 
 	}
 
+	public int getCount(Class<?> object) {
+		final Session session = HibernateUtil.getSession();
+		Long count = (Long) session.createQuery(String.format("select count(*) FROM %s", object.getSimpleName()))
+				.getSingleResult();
+		session.close();
+		return count.intValue();
+
+	}
+
+	public int getCount(String whatCount, Class<?> from) {
+		final Session session = HibernateUtil.getSession();
+		Long count = (Long) session.createQuery(String.format("select count(elements(%s)) FROM %s %s", whatCount,
+				from.getSimpleName(), from.getSimpleName().toLowerCase().charAt(0))).getSingleResult();
+		session.close();
+		return count.intValue();
+
+	}
 
 }

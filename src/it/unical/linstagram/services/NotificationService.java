@@ -119,11 +119,11 @@ public class NotificationService {
 					existRequestFrom));
 			if (notification.isToSee()) {
 				notification.setToSee(false);
-				modelDAO.update(notification);
 			}
 			if (notificationsDTO.size() > maxNumberOfNotification)
 				break;
 		}
+		modelDAO.updateList(notifications);
 		return notificationsDTO;
 	}
 

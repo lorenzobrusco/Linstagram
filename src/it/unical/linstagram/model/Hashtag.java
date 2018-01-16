@@ -26,9 +26,6 @@ import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 
-
-
-
 @Entity
 @Indexed
 @Table(name="hashtag")

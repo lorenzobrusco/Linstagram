@@ -106,7 +106,6 @@
 								stompClient.subscribe('/user/queue/notify',
 										function(notification) {
 											updateNotificationBadge();
-											alert(notification)
 										});
 							});
 
