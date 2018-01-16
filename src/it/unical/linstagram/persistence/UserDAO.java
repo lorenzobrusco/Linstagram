@@ -105,7 +105,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public List<Post> getPostByUsername(String username) {
 		Session session = HibernateUtil.getSession();
-		List<Post> posts = session.createQuery("SELECT user.posts FROM User user WHERE user.username=:username")
+		List<Post> posts = session.createQuery("FROM Post p WHERE p.user.username=:username order by p.postDate desc")
 				.setParameter("username", username).list();
 		for (Post post : posts) {
 			post.getTags().size();
