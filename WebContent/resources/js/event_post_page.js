@@ -53,6 +53,7 @@ $(document).ready(function() {
 					$(love_id).empty();
 					$(love_id).append("<a name="+postID+" id=loveFull"+postID+
 					" class=loveFull><span class=loveFull><i class='fa fa-heart fa-2x' aria-hidden='true'></i></span></a>");
+					sendNotification(result.obj);
 				}
 			}
 		});
@@ -66,7 +67,9 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : "removeLike",
-			data:{postID:postID},
+			data:{
+				postID: postID
+			},
 			success : function(result) {
 				if(result == "OK") {
 					$(count_like).html(parseInt($(count_like).html(), 10)-1)
@@ -85,7 +88,9 @@ $(document).ready(function() {
 
 		$.ajax({
 			url : "addBookmark",
-			data:{postID:postID},
+			data:{
+				postID: postID
+			},
 			success : function(result) {
 				if(result == "OK") {
 					$(bookmark_id).empty();
@@ -129,7 +134,10 @@ $(document).ready(function() {
 		
 		$.ajax({
 			url : "addComment",
-			data: {postID:postID, comment:comm},
+			data: {
+				postID: postID, 
+				comment: comm
+			},
 			success : function(result) {					
 				result = JSON.parse(result);
 				if(result.messageCode == "OK") {
