@@ -33,6 +33,14 @@
 	href="${pageContext.request.contextPath}/resources/css/profile_style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
+	
+	<!-- NOTY -->	
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/lib/noty/noty.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/lib/noty/themes/nest.css">
+<script
+	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
 
 </head>
 <body>

@@ -2,7 +2,6 @@ package it.unical.linstagram.services;
 
 import java.util.Random;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,41 +18,28 @@ public class SignInUpService {
 	private UserDAO userDao;
 	@Autowired
 	private ModelDAO modelDao;
-	
+
 	@Autowired
 	private MailService mailService;
-	
+
 	private CustomPasswordEncoder passwordEncoder = new CustomPasswordEncoder();
 	/**
 	 * Try signin.
 	 * 
-	 * @param access (email or username)
+	 * @param access (username)
 	 * @param password
 	 * @return
 	 */
 	public MessageResponse signInAttempt(String access, String password) {
-		EmailValidator ev = EmailValidator.getInstance();
 		User user = null;
-		if (ev.isValid(access)) {
-			//TODO: prova a loggare con email
-			String savedPassword = userDao.getPasswordByEmail(access);
-			boolean passwordFound = passwordEncoder.matches(password, savedPassword);
-			
-			if (passwordFound != true) {
-				user = userDao.getUserByEmailAndPass(access, savedPassword);
-			}
-			else
-				user = null;
-		} else {
-			String savedPassword = userDao.getPasswordByUsername(access);
-			boolean passwordFound = passwordEncoder.matches(password, savedPassword);
-//			System.out.println("saved:"+savedPassword);
-			if (passwordFound != true) {
-				user = userDao.getUserByUsernameAndPass(access, savedPassword);
-			}
-			else
-				user = null;
+
+		String savedPassword = userDao.getPasswordByUsername(access);
+		boolean passwordFound = passwordEncoder.matches(password, savedPassword);
+		if (passwordFound != true) {
+			user = userDao.getUserByUsernameAndPass(access, savedPassword);
 		}
+		else
+			user = null;
 		if (user == null)
 			return new MessageResponse(MessageCode.ERROR_SIGN_IN, null, "");
 		return new MessageResponse(MessageCode.SUCCESS_SIGN_IN, user, "");
@@ -78,20 +64,20 @@ public class SignInUpService {
 			return MessageCode.ERROR_USERNAME_ALREADY_USED;
 
 		String passEncrypted = passwordEncoder.encode(password);
-		
+
 		User newUser = new User(username, email, passEncrypted);
 		modelDao.save(newUser);
 
 		return MessageCode.SUCCESS_SIGN_UP;
 	}
-	
+
 	public MessageResponse existUser(String username,String email) {
 		User userByUsernameAndEmail = userDao.getUserByUsernameAndEmail(username,email);
 		if(userByUsernameAndEmail != null)
 			return new MessageResponse(MessageCode.OK,userByUsernameAndEmail, null);
 		return new MessageResponse(MessageCode.USER_NOT_EXIST,null, null);
 	}
-	
+
 	public void setNewRandomPassword(User user) {
 		String generatedPass = generateRandomPassword();
 		String passEncrypted = passwordEncoder.encode(generatedPass);
@@ -99,7 +85,7 @@ public class SignInUpService {
 		modelDao.update(user);
 		mailService.sendmail(user.getEmail(),user.getUsername(),generatedPass);
 	}
-	
+
 	private String generateRandomPassword() {
 		final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		final int passlength = 8;
@@ -111,6 +97,6 @@ public class SignInUpService {
 		}
 		return randStr.toString();
 	}
-	
+
 
 }
