@@ -45,24 +45,19 @@ public class ProfileController {
 
 	@RequestMapping("profile")
 	public String getProfilePage(HttpSession session, Model model) {
-		if (UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
+		User user = (User) session.getAttribute("user");
 
-			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
-			model.addAttribute("posts", postOfUser);
-			User initializeFollowersAndFollowings = userService.initializeFollowersAndFollowings(user);
-			session.setAttribute("user", initializeFollowersAndFollowings);
+		List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
+		model.addAttribute("posts", postOfUser);
+		User initializeFollowersAndFollowings = userService.initializeFollowersAndFollowings(user);
+		session.setAttribute("user", initializeFollowersAndFollowings);
 
-			return "profile";
-		}
-		return "redirect:/";
+		return "profile";
 	}
 
 	@RequestMapping("modifyProfile")
 	public String getModifyProfile(HttpSession session) {
-		if (UserManager.checkLogged(session))
-			return "modifyProfile";
-		return "redirect:/";
+		return "modifyProfile";
 	}
 
 	// Controllo dei campi che l'utente cambia
@@ -187,39 +182,30 @@ public class ProfileController {
 
 	@RequestMapping("postPhoto")
 	public String getPostPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
-		if (UserManager.checkLogged(session)) {
-			User user = userService.getUser(username);
-			List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
-			model.addAttribute("posts", postOfUser);
-			return "fragment/userProfileFragment/postSection"; // Per aggiungere solo i post in cui e' taggato l'utente
-																// [utilizzato sia per utente nella sessione che per gli
-																// altri utenti]
-		}
-		return "redirect:/";
+		User user = userService.getUser(username);
+		List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
+		model.addAttribute("posts", postOfUser);
+		return "fragment/userProfileFragment/postSection"; // Per aggiungere solo i post in cui e' taggato l'utente
+															// [utilizzato sia per utente nella sessione che per gli
+															// altri utenti]
 	}
 
 	@RequestMapping("taggedPhoto")
 	public String getTaggedPhoto(HttpSession session, Model model, @RequestParam("username") String username) {
-		if (UserManager.checkLogged(session)) {
-			User user = userService.getUser(username);
-			List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
-			model.addAttribute("posts", postOfUser);
-			return "fragment/userProfileFragment/taggedPhotoSection"; // Per aggiungere solo i post in cui e' taggato
-																		// l'utente [utilizzato sia per utente nella
-																		// sessione che per gli altri utenti]
-		}
-		return "redirect:/";
+		User user = userService.getUser(username);
+		List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername());
+		model.addAttribute("posts", postOfUser);
+		return "fragment/userProfileFragment/taggedPhotoSection"; // Per aggiungere solo i post in cui e' taggato
+																	// l'utente [utilizzato sia per utente nella
+																	// sessione che per gli altri utenti]
 	}
 
 	@RequestMapping("bookmarkPhoto")
 	public String getBookmarkPhoto(HttpSession session, Model model) {
-		if (UserManager.checkLogged(session)) {
-			User user = (User) session.getAttribute("user");
-			List<Post> postOfUser = profileService.getBookmarkOfUser(user.getUsername());
+		User user = (User) session.getAttribute("user");
+		List<Post> postOfUser = profileService.getBookmarkOfUser(user.getUsername());
 
-			model.addAttribute("posts", postOfUser);
-			return "fragment/userProfileFragment/bookmarkPhotoSection";
-		}
-		return "redirect:/";
+		model.addAttribute("posts", postOfUser);
+		return "fragment/userProfileFragment/bookmarkPhotoSection";
 	}
 }

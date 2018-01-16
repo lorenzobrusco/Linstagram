@@ -51,38 +51,30 @@ public class HomePageController {
 	@RequestMapping("/")
 	public String homePageController(HttpSession session, Model model) {
 
-		if (UserManager.checkLogged(session)) {
-			final User loggedUser = (User) session.getAttribute("user");
+		final User loggedUser = (User) session.getAttribute("user");
 
-			List<PostDTO> posts = postService.getLatestPost(loggedUser, null, 0);
+		List<PostDTO> posts = postService.getLatestPost(loggedUser, null, 0);
 
-			model.addAttribute("posts", posts);
-			model.addAttribute("followedUsersStories", storiesService.getFollowedStories(loggedUser));
-			return "index";
-		}
+		model.addAttribute("posts", posts);
+		model.addAttribute("followedUsersStories", storiesService.getFollowedStories(loggedUser));
 		return "index";
 
 	}
 
 	@RequestMapping("/explore")
 	public String explorePage(HttpSession session, Model model) {
-		if (UserManager.checkLogged(session)) {
-			User loggedUser = (User) session.getAttribute("user");
-			List<PostDTO> posts = new ArrayList<>();
-			posts = postService.getPopularPostsExplorePage(loggedUser, null, 0);
-			model.addAttribute("posts", posts);
-			return "explore";
-		}
-		return "redirect:/";
+
+		User loggedUser = (User) session.getAttribute("user");
+		List<PostDTO> posts = new ArrayList<>();
+		posts = postService.getPopularPostsExplorePage(loggedUser, null, 0);
+		model.addAttribute("posts", posts);
+		return "explore";
 	}
 
 	@RequestMapping("/storyViewed")
 	public String viewStory(HttpSession session, @RequestParam int idStory) {
-		if (UserManager.checkLogged(session)) {
-			User loggedUser = (User) session.getAttribute("user");
-			storiesService.AddViewerToStory(loggedUser, idStory);
-			return "redirect:/";
-		}
+		User loggedUser = (User) session.getAttribute("user");
+		storiesService.AddViewerToStory(loggedUser, idStory);
 		return "redirect:/";
 	}
 
@@ -176,14 +168,15 @@ public class HomePageController {
 	//
 	@ResponseBody
 	@RequestMapping(value = "/addStory", method = RequestMethod.POST)
-	public StoryDTO addStory(@RequestParam MultipartFile file,@RequestParam String type, HttpSession session) throws IOException {
+	public StoryDTO addStory(@RequestParam MultipartFile file, @RequestParam String type, HttpSession session)
+			throws IOException {
 		Media mediaStory = null;
-		
-		if(type.equals("image"))
+
+		if (type.equals("image"))
 			mediaStory = uploadService.createMedia(file, Media_Type.IMAGE, session);
 		else
 			mediaStory = uploadService.createMedia(file, Media_Type.VIDEO, session);
-		
+
 		StoryDTO storyDTO = storiesService.saveStory(mediaStory, (User) session.getAttribute("user"));
 		return storyDTO;
 	}
