@@ -43,12 +43,21 @@ public class NotificationService {
 	 */
 	public void saveNotification(Notification notification) {
 		Notification oldNotification = notificationDAO.existsNotification(notification);
-		System.out.println(oldNotification);
+//		System.out.println(oldNotification);
+//		if (oldNotification != null) {
+//			modelDAO.update(notification);
+//		} else {
+//			modelDAO.save(notification);
+//		}
+		
+		
 		if (oldNotification != null) {
-			modelDAO.update(notification);
+			modelDAO.delete(Notification.class, oldNotification.getId());
+			modelDAO.save(notification);
 		} else {
 			modelDAO.save(notification);
 		}
+		
 	}
 
 	/**

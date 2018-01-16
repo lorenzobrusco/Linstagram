@@ -175,9 +175,13 @@ public class UserService {
 	public boolean rejectRequest (User userSession, String username) {
 		User otherUser = userDAO.getUserByUsername(username);
 		int id = userDAO.searchRequestFollow(userSession.getUsername(), username);
-		int idNotification = notificationDao.existsFollowRequest(userSession, otherUser); 
+		int idNotification = notificationDao.existsFollowRequest(userSession, otherUser);
 		if (id != -1 && idNotification != -1)
 			if(modelDAO.delete(RequestFollow.class, id) && modelDAO.delete(Notification.class, idNotification)) 
+				return true;
+		id = userDAO.searchRequestFollow(username,userSession.getUsername());
+		if (id != -1)
+			if(modelDAO.delete(RequestFollow.class, id)) 
 				return true;
 		return false;
 	}

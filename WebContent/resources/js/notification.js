@@ -1,3 +1,14 @@
+function sendNotification(user) {
+		  $.ajax({
+		    url: "sendNotification",
+		    type: "POST",
+		    data:{
+		    	user: user
+		    }
+		  });
+		  return;
+}
+
 $(document).ready(function(){
 	var notification =  $("#notification_list");
 	var notification_mobile_list = $("#notification_list_mobile");
@@ -135,12 +146,12 @@ $(document).ready(function(){
 			success : function(result) {
 				if (result == "OK") {
 					div.empty();
-					if(notification.isPrivateFrom)
+					if(notification.privateFrom)
 						div.append("<button class='deleteRequestfollowProfile_btn' disabled>Waiting</button>");
 					else
 						div.append("<button class='unfollowProfile_btn'>Unfollow</button>");
 					div.append("<input class='" + notification.isPrivate +"' type='hidden' name='user' value='" + json +"'>");
-					
+					sendNotification(notification.userName);
 				}
 				else {
 					showResultMessage("FAILED");
