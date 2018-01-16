@@ -31,6 +31,11 @@
 	href="${pageContext.request.contextPath}/resources/css/profile_style.css">
 <script src="${pageContext.request.contextPath}/resources/js/explore.js"></script>
 </head>
+<style>
+.empty_post{
+	display: none;
+}
+</style>
 <body>
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
 	<div class="container profile">
