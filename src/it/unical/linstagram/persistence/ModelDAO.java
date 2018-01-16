@@ -2,6 +2,7 @@ package it.unical.linstagram.persistence;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.math.BigInteger;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -114,5 +115,28 @@ public class ModelDAO {
 
 	}
 
+	
+	public int getCount (Class<?> object)
+	{
+		final Session session = HibernateUtil.getSession();
+		Long count =  (Long) session
+				.createQuery(String.format("select count(*) FROM %s", object.getSimpleName()))
+				.getSingleResult();
+		session.close();
+		return count.intValue();
+		
+	}
+	
+	public int getCount (String whatCount, Class<?> from)
+	{
+		final Session session = HibernateUtil.getSession();
+		Long count =  (Long) session
+				.createQuery(String.format("select count(elements(%s)) FROM %s %s", whatCount, from.getSimpleName(),
+						from.getSimpleName().toLowerCase().charAt(0)))
+				.getSingleResult();
+		session.close();
+		return count.intValue();
+		
+	}
 
 }
