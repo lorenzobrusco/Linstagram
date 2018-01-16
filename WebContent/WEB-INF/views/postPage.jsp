@@ -36,12 +36,12 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
-			<div style="margin: 0 0 0 32px;">
+			<div class="margin-"style="margin: 0 0 0 32px;">
 					<div class="row content-post">
 						<div class="col-md-8 posts">
 							<c:forEach items="${post.media}" var="media">
 								<c:if test="${media.type.value == 0}">
-									<video width="650px" height="600px" style="background: black;"
+									<video width="100%" height="600px" style="background: black;"
 										controls autoplay loop preload="auto"> <source
 										class="img-post-page" src="${media.url}" type="video/mp4"></video>
 								</c:if>
