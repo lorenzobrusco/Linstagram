@@ -2,16 +2,18 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
+	type="image/x-icon">
+<link rel="icon"	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
+	type="image/x-icon">
+
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/navbar_style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/popover_style.css">
-<link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
-	type="image/x-icon">
-<link rel="icon"
-	href="${pageContext.request.contextPath}/resources/images/favicon.ico"
-	type="image/x-icon">
 <script src="${pageContext.request.contextPath}/resources/js/lib/sockjs-0.3.4.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/lib/stomp.min.js"></script>
 <script
@@ -42,8 +44,12 @@
 		</div>
 		
 		<div id="snackbar">
-			<a href="#story-modal" class="btn btn-default" id="create-story-btn">Story</a>
-			<a href="#create-post-modal" class="btn btn-default" id="create-post-btn">Post</a>
+			<a href="#story-modal" id="create-story-btn" >
+				<i class="fa fa-clock-o fa-2x" aria-hidden="true"> </i>
+			</a>
+			<a href="#create-post-modal" id="create-post-btn">
+				<i class="fa fa-picture-o fa-2x" aria-hidden="true"> </i>
+			</a>
 		</div>
 		
 	</div>

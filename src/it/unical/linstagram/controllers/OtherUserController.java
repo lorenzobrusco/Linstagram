@@ -69,7 +69,7 @@ public class OtherUserController {
 	public String acceptRequest(HttpSession session, Model model, @RequestParam("username") String username) {
 		User user = (User) session.getAttribute("user");
 
-		if (!userService.acceptRequest(user.getUsername(), username))
+		if (!userService.acceptRequest(user.getUsername(), username, user))
 			return new MessageResponse(MessageCode.FAILED, user, "Non e' stato possibile inoltrare la richiesta.")
 					.getMessage();
 

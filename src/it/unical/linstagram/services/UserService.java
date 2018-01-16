@@ -49,7 +49,6 @@ public class UserService {
 		userToFollow.getFollowers().remove(userSession);
 		
 		if (modelDAO.merge(userSession)) {
-//			user.getFollowings().remove(userToFollow);
 			return true;
 		}
 		return false;
@@ -61,24 +60,12 @@ public class UserService {
 	}
 	
 	public UserDTO getOtherUser(User user, String usernameOther) {
-		
 		User userOther = userDAO.getUserByUsername(usernameOther);
-		
-//		List<User> userFollowing = userDAO.getFollowingByUsername(user.getUsername());
-//		userOther = (User) modelDAO.initialize(userOther, "followings");
-//		userOther = (User) modelDAO.initialize(userOther, "followers");
-//		userOther = (User) modelDAO.initialize(userOther, "posts");
-//		userOther = (User) modelDAO.initialize(userOther, "tagged");
+		List<User> userFollowing = userDAO.getFollowingByUsername(user.getUsername());
 
-		System.out.println(userOther);
-		//TODO differenziare gli initializze se � public o private
-		
-		user = (User) modelDAO.initialize(user, "followings");
-		
 		boolean request_send = userDAO.existRequestFollow(usernameOther, user.getUsername());
 		boolean request_received = userDAO.existRequestFollow(user.getUsername(), usernameOther);
-		System.out.println("QUANTI MINCHIA SONO:"+user.getFollowings());
-		for (User u : user.getFollowings()) {
+		for (User u : userFollowing) {
 			if (u.getId() == userOther.getId()) {
 				return new UserPublicDTO(userOther, true, request_send, request_received);
 			}
@@ -171,7 +158,7 @@ public class UserService {
 		return false;
 	}
 	
-	public boolean acceptRequest(String usernameSession, String username) {
+	public boolean acceptRequest(String usernameSession, String username, User user) {
 		int id = userDAO.searchRequestFollow(username, usernameSession);
 		if (id != -1)
 			if(addFollowing(username, usernameSession) && modelDAO.delete(RequestFollow.class, id))
