@@ -61,21 +61,6 @@ public class SignInUpController {
 		return signUpAttempt.toString();
 	}
 
-	//	@RequestMapping(value="/signInAttempt",method=RequestMethod.POST)
-	//	public String signIn(@RequestParam String username, @RequestParam String password, HttpSession session) {
-	//		MessageResponse signInAttemptResp = signInService.signInAttempt(username, password);
-	//		//		System.out.println(signInAttempt);
-	//		if (signInAttemptResp.getMessageCode() == MessageCode.SUCCESS_SIGN_IN) {
-	//			if(signInAttemptResp.getObj() instanceof User) {
-	//				User user= (User) signInAttemptResp.getObj();
-	//				session.setAttribute("user", user);
-	//				mediaService.createImageDefault();
-	//				System.out.println("compa marcu");
-	//				return "redirect:/index";
-	//			}
-	//		}
-	//		return "redirect:/";
-	//	}
 	@RequestMapping(value="/setUserSession")
 	public String signIn(HttpSession session, Principal principal) {
 		User user = userService.getUser(principal.getName());

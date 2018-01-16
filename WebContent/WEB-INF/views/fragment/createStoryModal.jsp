@@ -12,8 +12,6 @@
 	
 <!--<script src="${pageContext.request.contextPath}/resources/js/lib/dropzone.js"></script> -->
 
-<!-- <script
-	src="${pageContext.request.contextPath}/resources/js/story_modal.js"></script> GO IN INDEX-->
 	
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/animatedModal.min.js"></script>
