@@ -47,6 +47,8 @@ public class NotificationDTO {
 
 		} else if (notification.getType().equals(NotificationType.LIKE)) {
 			this.context = "liked your post";
+		} else if (notification.getType().equals(NotificationType.TAG)) {
+			this.context = "tagged you";
 		} else {
 			if (!this.alreadyFollowed) {
 				this.context = "Asks to follow you";
