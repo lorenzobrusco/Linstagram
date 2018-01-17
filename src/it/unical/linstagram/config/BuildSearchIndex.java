@@ -59,7 +59,9 @@ implements ApplicationListener<ContextRefreshedEvent> {
 		session.beginTransaction();
 		String setQuery = "SET GLOBAL event_scheduler='ON'"; 
 		session.createNativeQuery(setQuery).executeUpdate();
+		session.getTransaction().commit();
 
+		session.beginTransaction();
 		String sql = "CREATE EVENT IF NOT EXISTS `DeleteStories` ON SCHEDULE EVERY 1 DAY STARTS '2018-01-18 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM story " + 
 				"WHERE TIMESTAMPDIFF(HOUR,  story.creationDate, CURRENT_TIMESTAMP  ) > 24";
 		session.createNativeQuery(sql).executeUpdate();
