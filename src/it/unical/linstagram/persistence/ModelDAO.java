@@ -171,8 +171,17 @@ public class ModelDAO {
 				from.getSimpleName(), from.getSimpleName().toLowerCase().charAt(0),where)).getSingleResult();
 		session.close();
 		return count.intValue();
-
 	}
+	
+	
+	public int getCountById(String whatCount, Class<?> from, int id) {
+	    final Session session = HibernateUtil.getSession();
+	    Long count = (Long) session.createQuery(String.format("select count(elements(e.%s)) FROM %s e WHERE e.id=%s", whatCount,
+	        from.getSimpleName(), Integer.toString(id))).getSingleResult();
+	    session.close();
+	    return count.intValue();
+
+	  }
 
 
 }

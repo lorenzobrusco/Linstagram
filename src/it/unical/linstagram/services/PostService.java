@@ -116,8 +116,8 @@ public class PostService {
 		for (Post post : posts) {
 			postsDTO.add(
 					new PostPreviewDTO(post,
-							modelDao.getCount("p.likes", Post.class, "p.id="+post.getId()),
-					modelDao.getCount("p.comments", Post.class, "p.id="+post.getId())));
+							modelDao.getCountById("likes", Post.class, post.getId()),
+					modelDao.getCountById("comments", Post.class, post.getId())));
 		}
 
 		return postsDTO;
