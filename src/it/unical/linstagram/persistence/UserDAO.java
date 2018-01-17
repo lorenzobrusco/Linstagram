@@ -19,7 +19,7 @@ import it.unical.linstagram.model.User;
 @SuppressWarnings("unchecked")
 public class UserDAO implements IUserDAO {
 	
-	private static final int MAX_RESULTS_POST = 3;
+	private static final int MAX_RESULTS_POST = 9;
 
 
 	@Override
