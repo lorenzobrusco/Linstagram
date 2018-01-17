@@ -28,12 +28,3 @@ $(document).ready(function() {
 	
 });
 
-function initVideo(video_name){
-	var video = $(video_name)[0];
-	video.onplay = function(){
-		alert("play");
-	};
-	video.onpause = function(){		
-	};
-	
-}

@@ -1,7 +1,5 @@
 package it.unical.linstagram.model.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -18,7 +16,6 @@ import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.PostDAO;
-import it.unical.linstagram.persistence.UserDAO;
 
 public class TestPostDAO extends AbstractModelTest{
 	
@@ -28,48 +25,6 @@ public class TestPostDAO extends AbstractModelTest{
 	public static void init() {
 		md = new ModelDAO();
 		pd = new PostDAO();
-	}
-
-//	@Test
-	public void testBookmarksUser() {
-		
-		
-		User eliana = new User("Eliana","email","pass");
-		User manuel = new User("Manuel","e","pass");
-		User paola = new User("Paola","paola","pass");
-		
-		Post post = new Post(eliana,null,Calendar.getInstance(),"Sono Cioa");
-		Post post1 = new Post(paola,null,Calendar.getInstance(),"Pararararra");
-		Post post2 = new Post(eliana,null,Calendar.getInstance(),"Sono sceasfafma");
-		
-		md.save(post1);
-		
-		eliana.getPosts().add(post);
-		eliana.getPosts().add(post2);
-//		eliana.getPosts().add(post3);
-		
-		manuel.getBookmarks().add(post1);
-		md.save(eliana);
-		md.save(manuel);
-		
-		manuel.getBookmarks().add(post2);
-		md.update(manuel);
-		
-		Post post3 = new Post(eliana,null,Calendar.getInstance(),"Sono scemffffffffffffa");
-
-		md.save(post3); // Simulazione dell'aggiunta di un post da parte dell'utente 
-											// (è inutile fare una query per inserire)
-		
-		UserDAO dao = new UserDAO();
-		
-//		List<Post> posts = dao.getPostByUsername("eliana");
-		List<Post> posts = dao.getBookmarksByUsername("manuel");
-		
-		for(Post p : posts) {
-			System.out.println(p.getContent());
-		}
-		
-		assertEquals(1, posts.size());
 	}
 
 	
