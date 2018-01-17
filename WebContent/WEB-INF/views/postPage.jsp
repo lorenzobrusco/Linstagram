@@ -9,8 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-	<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon-32x32.png" />
-<link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.icon" type="image/x-icon" />
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon-32x32.png" />
+<link rel="icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.icon"
+	type="image/x-icon" />
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -34,9 +37,10 @@
 	<jsp:include page="./fragment/navbar.jsp"></jsp:include>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-1"></div>
+			<div class="col-md-1"><span class="pid hidden">${post.id}</span>
+			</div>
 			<div class="col-md-10">
-			<div class="margin-"style="margin: 0 0 0 32px;">
+				<div class="margin-" style="margin: 0 0 0 32px;">
 					<div class="row content-post">
 						<div class="col-md-8 posts">
 							<c:forEach items="${post.media}" var="media">
@@ -60,9 +64,16 @@
 								<span class="post_cont_${post.id}">${post.content}</span>
 							</div>
 							<div class="comments">
+									<a class="show-all-comments" href="#postcibo"
+										data-toggle="collapse"><span class="show-comments"></span>
+										Load other comments<img class="hide" id="loader-comments"
+										src="${pageContext.request.contextPath}/resources/images/loaderComm.gif"></a><br>
 								<div class='list-comments-section'>
 									<div class='list-comments${post.id }'>
-										<c:forEach items="${post.comments}" var="comment">
+										<c:forEach items="${post.comments}" varStatus="status">
+											<c:set var="size" value="${post.comments.size()}" />
+											<c:set var="comment"
+												value="${post.comments[size-status.count]}" />
 											<div class="comment">
 												<a href='userPage?username=${comment.user.username}'><b>${comment.user.username}</b></a>
 												<span> ${comment.content}</span>
@@ -70,6 +81,9 @@
 										</c:forEach>
 									</div>
 								</div>
+									<a class="hide hide-all-comments" href="#postcibo"
+										data-toggle="collapse"><span class="hide-comments"></span>
+										Hide comments</a><br>
 
 							</div>
 							<div class='action-section'>

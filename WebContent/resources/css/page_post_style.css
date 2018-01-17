@@ -75,7 +75,7 @@ body, html {
  }
 
 .content-post .comments .list-comments-section {
-	max-height: 333px;
+	max-height: 300px;
 	overflow-y: auto;
 }
 
@@ -211,6 +211,10 @@ body, html {
 		margin-right: -15px;
 		margin-left: -15px;
 	}
+}
+#loader-comments{
+	height: 12px;
+	margin-left: 5px;
 }
 
 .comment{

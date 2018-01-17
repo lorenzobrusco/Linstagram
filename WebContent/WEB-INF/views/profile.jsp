@@ -69,7 +69,7 @@
 						</div>
 						<div class="row item-user-info">
 							<ul>
-								<li><span><b>${fn:length(posts)}</b></span> post</li>
+								<li><span><b>${postsCount}</b></span> post</li>
 								<li id="follower" data-toggle="modal"
 									data-target="#modalFollower"><span><b>${numberOfFollowers}</b></span>
 									follower</li>

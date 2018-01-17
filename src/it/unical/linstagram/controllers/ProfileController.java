@@ -23,7 +23,6 @@ import it.unical.linstagram.dto.PostPreviewDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.model.Gender;
 import it.unical.linstagram.model.Media;
-import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.HashtagService;
 import it.unical.linstagram.services.MediaService;
@@ -49,6 +48,8 @@ public class ProfileController {
 
 		List<PostPreviewDTO> postOfUser = profileService.getPostOfUser(user.getUsername(),0);
 		model.addAttribute("posts", postOfUser);
+		int postCount = profileService.getPostCount(user.getId());
+		model.addAttribute("postsCount", postCount);
 		
 		model.addAttribute("numberOfFollowings", userService.getCountFollowings(user.getId()));
 		model.addAttribute("numberOfFollowers", userService.getCountFollowers(user.getId()));

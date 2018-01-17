@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.unical.linstagram.dto.PostPreviewDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
@@ -66,8 +65,8 @@ public class UserService {
 			boolean request_send = userDAO.existRequestFollow(usernameOther, user.getUsername());
 			boolean request_received = userDAO.existRequestFollow(user.getUsername(), usernameOther);
 
-			int numberOfFollowings = modelDAO.getCount("u.followings", User.class, "u.id = " + userOther.getId());
-			int numberOfFollowers = modelDAO.getCount("u.followers", User.class, "u.id = " + userOther.getId());
+		int numberOfFollowings = modelDAO.getCountById("followings", User.class, userOther.getId());
+		int numberOfFollowers = modelDAO.getCountById("followers", User.class, userOther.getId());
 
 			boolean alreadyFollowing = userDAO.isAlreadyFollowing(user, userOther);
 
@@ -194,12 +193,13 @@ public class UserService {
 
 	public int getCountFollowings(int userID) {
 
-		return modelDAO.getCount("u.followings", User.class, "u.id = " + userID);
+		return modelDAO.getCountById("followings", User.class, userID);
 
 	}
 
-	public int getCountFollowers(int userID) {
-		return modelDAO.getCount("u.followers", User.class, "u.id = " + userID);
+	public int getCountFollowers (int userID)
+	{
+		return modelDAO.getCountById("followers", User.class, userID);
 
 	}
 

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import it.unical.linstagram.dto.PostPreviewDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.helper.MessageResponse;
-import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.NotificationService;

@@ -28,8 +28,8 @@ public class ProfileService {
 		for(Post post: posts) {
 			postDTOs.add(
 					new PostPreviewDTO(post,
-							modelDAO.getCount("p.likes", Post.class, "p.id="+post.getId()),
-					modelDAO.getCount("p.comments", Post.class, "p.id="+post.getId())));
+							modelDAO.getCountById("likes", Post.class, post.getId()),
+					modelDAO.getCountById("comments", Post.class, post.getId())));
 		}
 		return postDTOs;
 	}
@@ -40,8 +40,8 @@ public class ProfileService {
 		for(Post post: posts) {
 			postDTOs.add(
 					new PostPreviewDTO(post,
-							modelDAO.getCount("p.likes", Post.class, "p.id="+post.getId()),
-					modelDAO.getCount("p.comments", Post.class, "p.id="+post.getId())));
+							modelDAO.getCountById("likes", Post.class, post.getId()),
+					modelDAO.getCountById("comments", Post.class, post.getId())));
 		}
 		return postDTOs;
 	}
@@ -52,8 +52,8 @@ public class ProfileService {
 		for(Post post: posts) {
 			postDTOs.add(
 					new PostPreviewDTO(post,
-							modelDAO.getCount("p.likes", Post.class, "p.id="+post.getId()),
-					modelDAO.getCount("p.comments", Post.class, "p.id="+post.getId())));
+							modelDAO.getCountById("likes", Post.class,post.getId()),
+					modelDAO.getCountById("comments", Post.class, post.getId())));
 		}
 		return postDTOs;
 	}
@@ -94,6 +94,10 @@ public class ProfileService {
 		if (modelDAO.merge(user))
 			return true;
 		return false;
+	}
+	
+	public int getPostCount(int userId) {
+		return modelDAO.getCountById("posts", User.class, userId);
 	}
 
 	
