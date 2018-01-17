@@ -20,16 +20,16 @@ public class ProfileService {
 	private ModelDAO modelDAO;
 	
 	
-	public List<Post> getPostOfUser(String username) {
-		return userDAO.getPostByUsername(username);
+	public List<Post> getPostOfUser(String username, int last) {
+		return userDAO.getPostByUsername(username,last);
 	}
 	
-	public List<Post> getPostTaggedOfUser(String username) {
-		return userDAO.getTaggedPostByUsername(username);
+	public List<Post> getPostTaggedOfUser(String username,int last) {
+		return userDAO.getTaggedPostByUsername(username, last);
 	}
 
-	public List<Post> getBookmarkOfUser(String username) {
-		return userDAO.getBookmarksByUsername(username);
+	public List<Post> getBookmarkOfUser(String username,int last) {
+		return userDAO.getBookmarksByUsername(username,last);
 	}
 
 	

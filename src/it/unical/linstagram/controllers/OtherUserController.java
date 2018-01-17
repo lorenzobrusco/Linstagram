@@ -17,6 +17,7 @@ import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MessageCode;
 import it.unical.linstagram.services.NotificationService;
+import it.unical.linstagram.services.ProfileService;
 import it.unical.linstagram.services.UserService;
 
 @Controller
@@ -26,6 +27,8 @@ public class OtherUserController {
 	private UserService userService;
 	@Autowired
 	private NotificationService notificationService;
+	@Autowired
+	private ProfileService profileService;
 
 	@RequestMapping("userPage")
 	public String getUserPage(HttpSession session, Model model, @RequestParam("username") String usernameOther) {
@@ -35,9 +38,8 @@ public class OtherUserController {
 			return "redirect:/profile";
 
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
-		List<Post> postOfUser = userService.getPostOfUser(usernameOther);
+		List<Post> postOfUser = profileService.getPostOfUser(usernameOther,0);
 		model.addAttribute("userPublic", userDTO);
-		// TODO sostituisci con userDTO.getPost()
 		model.addAttribute("posts", postOfUser);
 
 		return "otherUserProfile";

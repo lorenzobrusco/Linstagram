@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -17,6 +18,8 @@ import it.unical.linstagram.model.User;
 @Repository
 @SuppressWarnings("unchecked")
 public class UserDAO implements IUserDAO {
+	
+	private static final int MAX_RESULTS_POST = 3;
 
 
 	@Override
@@ -101,15 +104,41 @@ public class UserDAO implements IUserDAO {
 		session.close();
 		return pass;
 	}
+	
+	@Override
+	public List<Post> getPostByUsername(String username,int last) {
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("FROM Post p WHERE p.user.username=:username order by p.postDate desc")
+				.setParameter("username", username);
+		
+		query.setFirstResult(last);
+		query.setMaxResults(MAX_RESULTS_POST);
+		
+		List<Post> posts = query.list();
+		for (Post post : posts) {
+//			post.getTags().size();
+//			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
+		
+		session.close();
+		return posts;
+	}
+	
 
 	@Override
-	public List<Post> getPostByUsername(String username) {
+	public List<Post> getBookmarksByUsername(String username,int last) {
 		Session session = HibernateUtil.getSession();
-		List<Post> posts = session.createQuery("FROM Post p WHERE p.user.username=:username order by p.postDate desc")
-				.setParameter("username", username).list();
+		Query query = session.createQuery("SELECT user.bookmarks FROM User user WHERE user.username=:username")
+				.setParameter("username", username);
+		
+		query.setFirstResult(last);
+		query.setMaxResults(MAX_RESULTS_POST);
+		List<Post> posts = query.list();
 		for (Post post : posts) {
-			post.getTags().size();
-			post.getHashtags().size();
+//			post.getTags().size();
+//			post.getHashtags().size();
 			post.getMedia().size();
 			post.getLikes().size();
 		}
@@ -118,28 +147,18 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public List<Post> getBookmarksByUsername(String username) {
+	public List<Post> getTaggedPostByUsername(String username,int last) {
 		Session session = HibernateUtil.getSession();
-		List<Post> posts = session.createQuery("SELECT user.bookmarks FROM User user WHERE user.username=:username")
-				.setParameter("username", username).list();
+		
+		Query query = session.createQuery("SELECT user.tagged FROM User user WHERE user.username=:username")
+				.setParameter("username", username);
+		
+		query.setFirstResult(last);
+		query.setMaxResults(MAX_RESULTS_POST);
+		List<Post> posts = query.list();
 		for (Post post : posts) {
-			post.getTags().size();
-			post.getHashtags().size();
-			post.getMedia().size();
-			post.getLikes().size();
-		}
-		session.close();
-		return posts;
-	}
-
-	@Override
-	public List<Post> getTaggedPostByUsername(String username) {
-		Session session = HibernateUtil.getSession();
-		List<Post> posts = session.createQuery("SELECT user.tagged FROM User user WHERE user.username=:username")
-				.setParameter("username", username).list();
-		for (Post post : posts) {
-			post.getTags().size();
-			post.getHashtags().size();
+//			post.getTags().size();
+//			post.getHashtags().size();
 			post.getMedia().size();
 			post.getLikes().size();
 		}

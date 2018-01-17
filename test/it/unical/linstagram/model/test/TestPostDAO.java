@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -73,33 +72,6 @@ public class TestPostDAO extends AbstractModelTest{
 		assertEquals(1, posts.size());
 	}
 
-	
-	//TODO da sistemare
-//	@Test
-	public void testUserTagged() {
-		
-		User eliana = new User("Eliana","email","pass");
-		User manuel = new User("Manuel","e","pass");
-		User paola = new User("Paola","paola","pass");
-		
-		Post post = new Post(eliana,null,Calendar.getInstance(),"Sono scema");
-		
-		post.getTags().add(manuel);
-		
-		md.save(post);
-		
-		post.getTags().add(paola);
-		md.update(post);
-		
-		UserDAO dao = new UserDAO();
-		List<Post> tagged =  dao.getTaggedPostByUsername("manuel");
-		
-		for(Post p : tagged) {
-			System.out.println(p.getContent());
-		}
-		Assert.assertEquals(1,tagged.size());
-	}
-	
 	
 //	@Test
 	public void testLikes() {

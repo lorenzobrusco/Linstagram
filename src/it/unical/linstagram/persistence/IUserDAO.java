@@ -19,10 +19,6 @@ public interface IUserDAO {
 	String getPasswordByUsername(String username);
 	String getPasswordByEmail(String email);
 	
-	List<Post> getPostByUsername(String username);
-	List<Post> getBookmarksByUsername(String username);
-	List<Post> getTaggedPostByUsername(String username);
-	
 	List<User> getFollowingByUsername(String username);
 	List<User> getFollowerByUsername(String username);
 	
@@ -33,5 +29,11 @@ public interface IUserDAO {
 	void inizializeListUser(Set<?> set);
 	
 	List<User> getSuggestions(String queryString);
-	List<User> getSuggestionsName(String string);	
+	List<User> getSuggestionsName(String string);
+
+	List<Post> getPostByUsername(String username, int last);
+
+	List<Post> getTaggedPostByUsername(String username, int last);
+	
+	List<Post> getBookmarksByUsername(String username, int last);
 }
