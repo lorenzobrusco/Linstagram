@@ -87,6 +87,10 @@ public class PostDAO implements IPostDAO {
 
 	public List<Post> getPopularPosts(String username, Calendar timeReq, int last) {
 		Session session = HibernateUtil.getSession();
+		Calendar now = Calendar.getInstance();
+		Calendar dayLimit = Calendar.getInstance();
+		dayLimit.setTimeInMillis(now.getTimeInMillis()-86400*1000*7);
+		
 		List<User> followedUsers = session.createQuery("SELECT u.followings FROM User u WHERE u.username=:username")
 				.setParameter("username", username).list();
 
@@ -94,12 +98,12 @@ public class PostDAO implements IPostDAO {
 		Query query = null;
 		if (!followedUsers.isEmpty())
 			query = session.createQuery(
-					"SELECT p FROM Post p  WHERE (p.user in (:fUsers) or p.user.username=:username) and p.postDate<=:timeR order by p.likes.size desc, p.postDate desc")
-					.setParameter("fUsers", followedUsers).setParameter("username", username).setParameter("timeR",timeReq);
+					"SELECT p FROM Post p  WHERE (p.user in (:fUsers) or p.user.username=:username) and p.postDate<=:timeR  and p.postDate>=:dayLimit order by p.likes.size desc, p.postDate desc")
+					.setParameter("fUsers", followedUsers).setParameter("username", username).setParameter("timeR",timeReq).setParameter("dayLimit",dayLimit);
 		else
 			query = session.createQuery(
-					"SELECT p FROM Post p WHERE p.user.username=:username and p.postDate<=:timeR order by p.likes.size desc, p.postDate desc")
-					.setParameter("username", username).setParameter("timeR",timeReq);
+					"SELECT p FROM Post p WHERE p.user.username=:username and p.postDate<=:timeR and p.postDate>=:dayLimit order by p.likes.size desc, p.postDate desc")
+					.setParameter("username", username).setParameter("timeR",timeReq).setParameter("dayLimit",dayLimit);
 
 		query.setFirstResult(last);
 		query.setMaxResults(MAX_RESULTS_POST);
@@ -118,9 +122,15 @@ public class PostDAO implements IPostDAO {
 
 	public List<Post> getPostsExplorePage(Calendar calendar, int last) {
 		Session session = HibernateUtil.getSession();
+		Calendar now = Calendar.getInstance();
+		Calendar dayLimit = Calendar.getInstance();
+		dayLimit.setTimeInMillis(now.getTimeInMillis()-86400*1000*7);
+		
 		List<Post> posts = session
-				.createQuery("SELECT p FROM Post p WHERE p.user.privateProfile=false order by p.likes.size desc, p.postDate desc")
-				.setFirstResult(last).setMaxResults(MAX_RESULTS_POST_EXPLORE).list();
+				.createQuery("SELECT p FROM Post p WHERE p.user.privateProfile=false and p.postDate>=:limitDate order by p.likes.size desc, p.postDate desc")
+				.setParameter("limitDate",dayLimit)
+				.setFirstResult(last)
+				.setMaxResults(MAX_RESULTS_POST_EXPLORE).list();
 		for (Post post : posts) {
 			post.getTags().size();
 			post.getHashtags().size();
