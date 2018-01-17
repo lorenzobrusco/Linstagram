@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Gen 17, 2018 alle 12:05
+-- Creato il: Gen 17, 2018 alle 12:17
 -- Versione del server: 10.1.28-MariaDB
 -- Versione PHP: 5.6.32
 
@@ -41,7 +41,7 @@ CREATE TABLE `bookmark` (
 
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
-  `content` varchar(255) NOT NULL,
+  `content` varchar(1000) NOT NULL,
   `date` datetime NOT NULL,
   `post` int(11) DEFAULT NULL,
   `user` int(11) DEFAULT NULL
@@ -91,6 +91,19 @@ CREATE TABLE `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Dump dei dati per la tabella `hibernate_sequence`
+--
+
+INSERT INTO `hibernate_sequence` (`next_val`) VALUES
+(1),
+(1),
+(1),
+(1),
+(1),
+(1),
+(1);
+
 -- --------------------------------------------------------
 
 --
@@ -125,10 +138,10 @@ CREATE TABLE `notification` (
   `date` datetime NOT NULL,
   `toSee` bit(1) NOT NULL,
   `type` int(11) NOT NULL,
-  `userto` int(11) DEFAULT NULL,
   `comment` int(11) DEFAULT NULL,
   `post` int(11) DEFAULT NULL,
-  `userfrom` int(11) DEFAULT NULL
+  `userfrom` int(11) DEFAULT NULL,
+  `userto` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -318,6 +331,14 @@ ALTER TABLE `user`
 ALTER TABLE `viewed_story`
   ADD PRIMARY KEY (`story_id`,`user_id`),
   ADD KEY `FKjdkpyj9ku130mioqsbgru1yc9` (`user_id`);
+
+DELIMITER $$
+--
+-- Eventi
+--
+CREATE DEFINER=`root`@`localhost` EVENT `DeleteStories` ON SCHEDULE EVERY 1 DAY STARTS '2018-01-18 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM story WHERE TIMESTAMPDIFF(HOUR,  story.creationDate, CURRENT_TIMESTAMP  ) > 24$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
