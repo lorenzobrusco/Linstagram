@@ -153,8 +153,8 @@ public class PostService {
 		return false;
 	}
 
-	public User insertBookmark(User u, int idPost) {
-		//		User u = userDAO.getUserByUsername(username);
+	public User insertBookmark(String username, int idPost) {
+		User u = userDAO.getUserByUsername(username);
 		Post post = postDAO.getPostById(idPost);
 		u.getBookmarks().add(post);
 
@@ -215,7 +215,7 @@ public class PostService {
 
 		List<UserDTO> likesDTO = new ArrayList<>();
 		for (User user : likes) {
-			System.out.println(user.getUsername());
+//			System.out.println(user.getUsername());
 			likesDTO.add(new UserPrivateDTO(user, false, false, false));
 		}
 
