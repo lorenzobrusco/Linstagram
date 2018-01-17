@@ -5,37 +5,31 @@ $(document).ready(function() {
 	
 	//EVENTO PER CARICARE I "POST PUBBLICATI" DALL'UTENTE
 	$("#post_user").on('click', function() {
-		var username = $('#username_hidden').val();
-		
-		$.ajax({
-			url : "postPhoto",
-			data:{username:username},
-			success : function(result) {
-				$("#colum").html(result);
-			}
-		});
+		lastScrollTop=0;
+		entered=false;
+		$("#colum").empty();
+		var active_tab = "Posts";
+		console.log("Active tab post click:"+active_tab);
+		lazyLoadContent(active_tab);
 	});
 	
 	//EVENTO PER CARICARE I "TAGGED POST" DELL'UTENTE
 	$("#tags").on('click', function() {
-		var username = $('#username_hidden').val();
-		
-		$.ajax({
-			url : "taggedPhoto",
-			data:{username:username},
-			success : function(result) {
-				$("#tag").html(result);
-			}
-		});
+				lastScrollTop=0;
+				entered=false;
+				$("#tag").empty();
+				var active_tab = "Tags";
+				console.log("Active tab tag click:"+active_tab);
+				lazyLoadContent(active_tab);
 	});
 
 	//EVENTO PER CARICARE I "BOOKMARKS POST" DELL'UTENTE
 	$("#bookmarks").on('click', function() {
-		$.ajax({
-			url : "bookmarkPhoto",
-			success : function(result) {
-				$("#bookmark").html(result);
-			}
-		});
+		lastScrollTop=0;
+		entered=false;
+		$("#bookmark").empty();
+		var active_tab = "Bookmarks";
+		console.log("Active tab tag click:"+active_tab);
+		lazyLoadContent(active_tab);
 	});
 });

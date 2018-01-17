@@ -9,7 +9,7 @@
 		<div id="${post.id }" class="post">
 			<c:forEach items="${post.media}" var="media">
 				<c:if test="${media.type.value == 0}">
-					<a href="post?id=${post.id }"> <video width="300px"
+					<a href="post?id=${post.id }"> <video width="100%"
 							height="300px" style="background: black;" autoplay loop muted
 							preload="auto">
 							<source class="picture" src="${media.url}" type="video/mp4">

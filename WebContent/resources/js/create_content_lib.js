@@ -7,7 +7,16 @@ function resize_canvas(canvas) {
 	//	canvas.css("height", "100%");
 }
 
-
+function sendNotification(user) {
+	  $.ajax({
+	    url: "sendNotification",
+	    type: "POST",
+	    data:{
+	    	user: user
+	    }
+	  });
+	  return;
+}
 
 var complete_noty = new Noty({
 	text: '<p style="color:black;font-weight:bold;text-transform: uppercase;">Operation Complete!</p> Good! Your post is created!',
@@ -55,7 +64,10 @@ function UploadPic(canvas, filename, container) {
 			data: formData,
 			processData: false,
 			contentType: false,
-			success: function(msg) {
+			success: function(result) {
+				for (var i = 0; i < result.length; i++) {
+					sendNotification(result[i]); 
+				}
 				$(".close-create-post-modal").click(); //close modal
 				complete_noty.show();
 

@@ -27,6 +27,22 @@ public class ModelDAO {
 			session.close();
 		}
 	}
+	
+	public boolean saveOrUpdate(Object model) {
+		final Session session = HibernateUtil.getSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.saveOrUpdate(model);
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			transaction.rollback();
+			return false;
+		} finally {
+			session.close();
+		}
+	}
 
 	public List<?> getAll(Class<?> object) {
 		final Session session = HibernateUtil.getSession();
@@ -76,7 +92,6 @@ public class ModelDAO {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-
 			session.merge(model);
 			transaction.commit();
 			return true;

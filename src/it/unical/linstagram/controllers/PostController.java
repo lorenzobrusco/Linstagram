@@ -74,7 +74,7 @@ public class PostController {
 		User user = (User) session.getAttribute("user");
 		//TODO: passare l'utente e non l'username evitando una nuova query
 		//		User userDB = postService.insertBookmark(user.getUsername(), idPost);
-		User userDB = postService.insertBookmark(user, idPost);
+		User userDB = postService.insertBookmark(user.getUsername(), idPost);
 		if (userDB != null) {
 			session.setAttribute("user", userDB);
 			return new MessageResponse(MessageCode.OK, user, "OK").getMessage();

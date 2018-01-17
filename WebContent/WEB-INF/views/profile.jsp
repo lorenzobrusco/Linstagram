@@ -113,7 +113,8 @@
 								<ul class="nav nav-tabs ">
 									<li class="active"><a id="post_user" href="#tab_default_1"
 										data-toggle="tab"> Posts </a></li>
-									<li><a id="tags" href="#tab_default_2" data-toggle="tab">
+									<li>
+										<a id="tags" href="#tab_default_2" data-toggle="tab">
 											Tags </a></li>
 									<li><a id="bookmarks" href="#tab_default_3"
 										data-toggle="tab"> Bookmarks </a></li>
@@ -140,12 +141,103 @@
 			</div>
 		</section>
 	</div>
+	
+	<div id="loading" class="fixed-bottom hide text-center"><img class="img-fluid" alt="" src="${pageContext.request.contextPath}/resources/images/loader.gif"></div>
+	
 	<jsp:include page="./fragment/footer.jsp"></jsp:include>
 	<jsp:include page="./fragment/followFragment/modalFollow.jsp"></jsp:include>
 	<jsp:include page="./fragment/followFragment/modalFollower.jsp"></jsp:include>
 	
 </body>
 
+<script>
+//Inifinity scroll
+var entered=false;
 
+function lazyLoadContent(active_tab){
+	$("#loading").removeClass("hide");
+	
+	console.log(active_tab);
+	var url="";
+	var append_element="";
+	if( active_tab=="Posts") {
+		url="postPhoto";
+		append_element = "#colum";
+	}
+	else if( active_tab=="Tags") {
+		url="taggedPhoto";
+		append_element = "#tag";
+	}
+	else if( active_tab=="Bookmarks") {
+		url="bookmarkPhoto";
+		append_element = "#bookmark";
+	}
+	else{
+		console.error("error active tab");
+		return;
+	}
+	
+	var listSize = $(append_element).children(".post-section").length;
+	console.log(listSize);
+	
+	setTimeout(function(){
+
+		$.ajax({
+			url:url, 
+			data:{
+				username:'${user.username}',
+				lastIndex:listSize },
+			success: function(result) {
+				console.log(listSize);
+				//console.log(result);
+				//console.log(append_element);
+				var html = $.parseHTML(result);
+				console.log(html);
+				var empty = false;
+				for(var i=0; i < html.length;i++){
+					if($(html[i]).hasClass("empty_post") || $(html[i]).hasClass("bookmark") || $(html[i]).hasClass("tags")){
+							empty=true;
+					}
+				}
+				if($(".empty_post").length != 0) {
+					$(".empty_post").remove();
+				}
+				if($(".bookmark").length != 0) {
+					$(".bookmark").remove();
+				}
+				if($(".tags").length != 0) {
+					$(".tags").remove();
+				}
+
+				if(!empty || listSize == 0)
+					$(append_element).append(result);
+				$("#loading").addClass("hide");
+				entered=false;
+			}	
+		}) 		 
+	},1000);
+}
+
+$(document).ready(function(){
+	var lastScrollTop = 0;
+	
+	$(window).scroll(function(){
+	
+		var st = $(this).scrollTop();
+	
+		if (st > lastScrollTop){
+	
+			if (($(document).height() -  $(window).height()) <=  $(window).scrollTop()+10 && !entered) {
+				entered=true;
+				var active_tab=$(".nav  > li.active").text().replace(/\s/g, '');
+				lazyLoadContent(active_tab);
+				console.log("Active tab scroll:"+active_tab);
+			}
+		}
+		lastScrollTop = st;
+	});
+});
+
+</script>
 
 </html>

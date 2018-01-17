@@ -43,21 +43,12 @@ public class NotificationService {
 	 */
 	public void saveNotification(Notification notification) {
 		Notification oldNotification = notificationDAO.existsNotification(notification);
-//		System.out.println(oldNotification);
-//		if (oldNotification != null) {
-//			modelDAO.update(notification);
-//		} else {
-//			modelDAO.save(notification);
-//		}
-		
-		
 		if (oldNotification != null) {
 			modelDAO.delete(Notification.class, oldNotification.getId());
 			modelDAO.save(notification);
 		} else {
 			modelDAO.save(notification);
 		}
-		
 	}
 
 	/**
@@ -89,8 +80,11 @@ public class NotificationService {
 	 */
 	public void generateCommentNotification(User user, int idPost) {
 		final Post post = postDAO.getPostById(idPost);
-		final Notification notification = new Notification(user, post.getUser(), post, null, NotificationType.COMMENT);
-		this.saveNotification(notification);
+		if (post.getUser().getId() != user.getId()) {
+			final Notification notification = new Notification(user, post.getUser(), post, null,
+					NotificationType.COMMENT);
+			this.saveNotification(notification);
+		}
 	}
 
 	/**
@@ -103,6 +97,11 @@ public class NotificationService {
 		final User userToFollow = userDAO.getUserByUsername(follow);
 		final Notification notification = new Notification(user, userToFollow, null, null, NotificationType.FOLLOW);
 		this.saveNotification(notification);
+	}
+	
+	public void generateTagNotification(User user, User userTagged, Post post) {
+		final Notification notification = new Notification(user, userTagged, post, null, NotificationType.TAG);
+		modelDAO.merge(notification);
 	}
 
 	/**
@@ -120,10 +119,8 @@ public class NotificationService {
 					notification.getUserTo().getUsername());
 			boolean existRequestFrom = userDAO.existRequestFollow(notification.getUserTo().getUsername(),
 					notification.getUserFrom().getUsername());
-			boolean alreadyFollowing = userDAO.isAlreadyFollowing(notification.getUserTo(),
-					notification.getUserFrom());
-			boolean alreadyFollowed = userDAO.isAlreadyFollower(notification.getUserTo(),
-					notification.getUserFrom());
+			boolean alreadyFollowing = userDAO.isAlreadyFollowing(notification.getUserTo(), notification.getUserFrom());
+			boolean alreadyFollowed = userDAO.isAlreadyFollower(notification.getUserTo(), notification.getUserFrom());
 			notificationsDTO.add(new NotificationDTO(notification, alreadyFollowing, alreadyFollowed, existRequestTo,
 					existRequestFrom));
 			if (notification.isToSee()) {

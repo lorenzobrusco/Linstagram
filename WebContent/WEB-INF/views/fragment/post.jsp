@@ -21,9 +21,7 @@
 						<c:forEach items="${post.media}" var="media">
 							<c:if test="${media.type.value == 0}">
 								<div class="overlay-video">
-									<video id="video${post.id }" width="100%"
-										style="max-height: 400px; background: black;" loop
-										preload="auto">
+									<video id="video${post.id }" width="100%"  style="max-height: 400px; background:  black;" preload="auto" >
 										<source src="${media.url}" type="video/mp4">
 									</video>
 									<span class="tag-play"> <i class="fa fa-play fa-5x"

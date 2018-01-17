@@ -12,7 +12,6 @@ import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
 import it.unical.linstagram.model.Notification;
-import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.RequestFollow;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
@@ -88,10 +87,6 @@ public class UserService {
 		return userDAO.getAllUser();
 	}
 
-
-	public List<Post> getPostTaggedOfUser(String username) {
-		return userDAO.getTaggedPostByUsername(username);
-	}
 
 	public List<UserDTO> getFollowers(String username, String usernameSession) {
 		List<User> followings = userDAO.getFollowingByUsername(usernameSession);
