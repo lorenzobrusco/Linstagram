@@ -41,8 +41,7 @@ public class PostController {
 			model.addAttribute("post", post);
 			return "postPage";
 		}
-		//TODO creare pagina 404
-		return "";
+		return "404";
 	}
 
 	@RequestMapping("addLike")

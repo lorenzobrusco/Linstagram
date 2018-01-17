@@ -43,11 +43,12 @@ public class PostDAO implements IPostDAO {
 
 		Post post = session.createQuery("FROM Post p WHERE p.id=:idPost", Post.class).setParameter("idPost", idPost)
 				.uniqueResult();
-		post.getTags().size();
-		post.getHashtags().size();
-		post.getMedia().size();
-		post.getLikes().size();
-
+		if(post != null) {
+			post.getTags().size();
+			post.getHashtags().size();
+			post.getMedia().size();
+			post.getLikes().size();
+		}
 		session.close();
 		return post;
 	}

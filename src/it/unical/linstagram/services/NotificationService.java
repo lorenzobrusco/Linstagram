@@ -2,6 +2,7 @@ package it.unical.linstagram.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -99,9 +100,11 @@ public class NotificationService {
 		this.saveNotification(notification);
 	}
 	
-	public void generateTagNotification(User user, User userTagged, Post post) {
-		final Notification notification = new Notification(user, userTagged, post, null, NotificationType.TAG);
-		modelDAO.merge(notification);
+	public void generateTagNotifications(User user, Set<User> usersTagged, Post post) {
+		post = (Post) modelDAO.mergeObj(post);
+		for(User usertagged: usersTagged) {
+			modelDAO.save(new Notification(user, usertagged, post, null, NotificationType.TAG));
+		}
 	}
 
 	/**

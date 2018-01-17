@@ -123,8 +123,8 @@ public class HomePageController {
 		postService.savePost(new_post);
 		for(User userTagged : new_post.getTags()) {
 			usersTagged.add(userTagged.getUsername());
-			notificationService.generateTagNotification((User) (session.getAttribute("user")), userTagged, new_post);
 		}
+		notificationService.generateTagNotifications((User) (session.getAttribute("user")), new_post.getTags(), new_post);
 		return usersTagged;
 	}
 

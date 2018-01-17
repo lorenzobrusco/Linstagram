@@ -53,6 +53,24 @@ public class ModelDAO {
 		return list;
 	}
 
+	public boolean saveList(List<?> objects) {
+		final Session session = HibernateUtil.getSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			for (Object o : objects) {
+				session.save(o);
+			}
+			transaction.commit();
+			return true;
+		} catch (Exception e) {
+			transaction.rollback();
+			return false;
+		} finally {
+			session.close();
+		}
+	}
+	
 	public boolean updateList(List<?> objects) {
 		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
@@ -82,6 +100,23 @@ public class ModelDAO {
 		} catch (Exception e) {
 			transaction.rollback();
 			return false;
+		} finally {
+			session.close();
+		}
+	}
+	
+	public Object mergeObj(Object model) {
+		final Session session = HibernateUtil.getSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			model = session.merge(model);
+			transaction.commit();
+			return model;
+		} catch (Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+			return null;
 		} finally {
 			session.close();
 		}

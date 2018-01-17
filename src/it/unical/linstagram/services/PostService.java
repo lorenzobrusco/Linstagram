@@ -203,7 +203,8 @@ public class PostService {
 			}
 		}
 
-		modelDao.merge(post);
+		if(post.getTags().size() <= 0)
+			modelDao.merge(post);
 	}
 
 	public List<Post> getFollowedPosts(String username) {
