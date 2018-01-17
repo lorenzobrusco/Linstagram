@@ -15,13 +15,9 @@ import it.unical.linstagram.persistence.HibernateUtil;
 public class Indexer {
 
 	public static void init() {
-		Session session = HibernateUtil.getSession();
-		
-		System.out.println("SONO LA INIT");
+		Session session = HibernateUtil.getSession();		
 		reindex(Hashtag.class, session);
-		System.out.println("HASHTAG reindex");
 		reindex(User.class, session);
-		System.out.println("USER reindex");
 		session.close();
 	}
 
@@ -34,7 +30,7 @@ public class Indexer {
 	 * @param sess
 	 *            the hibernate session
 	 */
-	private static void reindex(Class clazz, Session sess) {
+	private static void reindex(Class<?> clazz, Session sess) {
 		FullTextSession txtSession = Search.getFullTextSession(sess);
 		MassIndexer massIndexer = txtSession.createIndexer(clazz);
 
@@ -48,7 +44,6 @@ public class Indexer {
 			.progressMonitor(monitor) // a MassIndexerProgressMonitor implementation
 			.startAndWait();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			System.err.println("mass reindexing interrupted: " + e.getMessage());
 		} finally {
 			txtSession.flushToIndexes();

@@ -39,11 +39,13 @@ public class OtherUserController {
 			return "redirect:/profile";
 
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
-		List<PostPreviewDTO> postOfUser = profileService.getPostOfUser(usernameOther,0);
-		model.addAttribute("userPublic", userDTO);
-		model.addAttribute("posts", postOfUser);
-
-		return "otherUserProfile";
+		if (userDTO != null) {
+			List<PostPreviewDTO> postOfUser = profileService.getPostOfUser(usernameOther, 0);
+			model.addAttribute("userPublic", userDTO);
+			model.addAttribute("posts", postOfUser);
+			return "otherUserProfile";
+		}
+		return "404";
 	}
 
 	@RequestMapping("acceptRequest")

@@ -22,7 +22,6 @@ public class HibernateUtil {
 			configPath = new File(configPath).getPath();
 
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -58,33 +57,6 @@ public class HibernateUtil {
 	}
 
 	public static Session getSession() {
-
-		//		if (factory == null) {
-		//
-		//			Configuration configuration = new Configuration();
-		//			String path = HibernateUtil.class.getClassLoader().getResource("").getPath();
-		//
-		//			try {
-		//				String fullPath = URLDecoder.decode(path, "UTF-8");
-		//				fullPath = new File(fullPath).getPath();
-		//
-		//				configuration.setProperty("hibernate.search.default.indexBase", fullPath + "/../build/indexes");
-		//				configuration.setProperty("hihibernate.search.default.locking_strategy", "naive");
-		//
-		//				if (!Files.exists(Paths.get(fullPath + "/../build/indexes"))) {
-		//					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
-		//					init();
-		//				} else {
-		//					factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
-		//				}
-		//			} catch (UnsupportedEncodingException e) {
-		//				// TODO Auto-generated catch block
-		//				e.printStackTrace();
-		//			}
-		//
-		//		}
-
-		System.out.println(factory);
 		final Session session = factory.openSession();
 		return session;
 	}

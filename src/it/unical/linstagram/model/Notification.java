@@ -33,7 +33,7 @@ public class Notification {
 
 	@ManyToOne
 	@JoinColumn(name = "post")
-	@Cascade(value=CascadeType.MERGE)
+	@Cascade(value=CascadeType.SAVE_UPDATE)
 	private Post post;
 
 	@ManyToOne
