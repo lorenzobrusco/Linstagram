@@ -146,18 +146,6 @@ public class UserService {
 		userDAO.inizializeListUser(set);
 	}
 
-	public List<PostPreviewDTO> getPostOfUser(String username) {
-		List<Post> posts =userDAO.getPostByUsername(username);
-		List<PostPreviewDTO> postDTOs = new ArrayList<>();
-		for(Post post: posts) {
-			postDTOs.add(
-					new PostPreviewDTO(post,
-							modelDAO.getCount("p.likes", Post.class, "p.id="+post.getId()),
-					modelDAO.getCount("p.comments", Post.class, "p.id="+post.getId())));
-		}
-		return postDTOs;
-	}
-
 	public boolean sendRequest(String usernameSession, String username) {
 		User userSession = userDAO.getUserByUsername(usernameSession);
 		User user = userDAO.getUserByUsername(username);

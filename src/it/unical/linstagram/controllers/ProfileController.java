@@ -47,7 +47,7 @@ public class ProfileController {
 	public String getProfilePage(HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
 
-		List<Post> postOfUser = profileService.getPostOfUser(user.getUsername(),0);
+		List<PostPreviewDTO> postOfUser = profileService.getPostOfUser(user.getUsername(),0);
 		model.addAttribute("posts", postOfUser);
 		
 		model.addAttribute("numberOfFollowings", userService.getCountFollowings(user.getId()));
@@ -193,7 +193,7 @@ public class ProfileController {
 	@RequestMapping("postPhoto")
 	public String getPostPhoto(HttpSession session, Model model, @RequestParam("username") String username,@RequestParam("lastIndex") int lastIndex) {
 		User user = userService.getUser(username);
-		List<Post> postOfUser = profileService.getPostOfUser(user.getUsername(),lastIndex);
+		List<PostPreviewDTO> postOfUser = profileService.getPostOfUser(user.getUsername(),lastIndex);
 		model.addAttribute("posts", postOfUser);
 		return "fragment/userProfileFragment/postSection"; 
 		// [utilizzato sia per utente nella sessione che per gli
@@ -203,7 +203,7 @@ public class ProfileController {
 	@RequestMapping("taggedPhoto")
 	public String getTaggedPhoto(HttpSession session, Model model, @RequestParam("username") String username,@RequestParam("lastIndex") int lastIndex) {
 		User user = userService.getUser(username);
-		List<Post> postOfUser = profileService.getPostTaggedOfUser(user.getUsername(),lastIndex);
+		List<PostPreviewDTO> postOfUser = profileService.getPostTaggedOfUser(user.getUsername(),lastIndex);
 		model.addAttribute("posts", postOfUser);
 		return "fragment/userProfileFragment/taggedPhotoSection"; // Per aggiungere solo i post in cui e' taggato
 		// l'utente [utilizzato sia per utente nella
@@ -213,7 +213,7 @@ public class ProfileController {
 	@RequestMapping("bookmarkPhoto")
 	public String getBookmarkPhoto(HttpSession session, Model model, @RequestParam("lastIndex") int lastIndex) {
 		User user = (User) session.getAttribute("user");
-		List<Post> postOfUser = profileService.getBookmarkOfUser(user.getUsername(),lastIndex);
+		List<PostPreviewDTO> postOfUser = profileService.getBookmarkOfUser(user.getUsername(),lastIndex);
 		model.addAttribute("posts", postOfUser);
 		return "fragment/userProfileFragment/bookmarkPhotoSection";
 	}

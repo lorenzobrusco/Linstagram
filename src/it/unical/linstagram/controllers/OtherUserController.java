@@ -39,7 +39,7 @@ public class OtherUserController {
 			return "redirect:/profile";
 
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
-		List<PostPreviewDTO> postOfUser = userService.getPostOfUser(usernameOther);
+		List<PostPreviewDTO> postOfUser = profileService.getPostOfUser(usernameOther,0);
 		model.addAttribute("userPublic", userDTO);
 		model.addAttribute("posts", postOfUser);
 

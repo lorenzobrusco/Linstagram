@@ -28,6 +28,7 @@
 	href="${pageContext.request.contextPath}/resources/css/lib/noty/themes/nest.css">
 <script
 	src="${pageContext.request.contextPath}/resources/js/lib/noty.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/modal_follow_style.css">
 
 <script src="${pageContext.request.contextPath}/resources/js/hashtagPage.js"></script>
 </head>

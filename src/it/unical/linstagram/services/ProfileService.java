@@ -1,10 +1,12 @@
 package it.unical.linstagram.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.linstagram.dto.PostPreviewDTO;
 import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.persistence.ModelDAO;
@@ -20,16 +22,40 @@ public class ProfileService {
 	private ModelDAO modelDAO;
 	
 	
-	public List<Post> getPostOfUser(String username, int last) {
-		return userDAO.getPostByUsername(username,last);
+	public List<PostPreviewDTO> getPostOfUser(String username, int last) {
+		List<Post> posts = userDAO.getPostByUsername(username,last);
+		List<PostPreviewDTO> postDTOs = new ArrayList<>();
+		for(Post post: posts) {
+			postDTOs.add(
+					new PostPreviewDTO(post,
+							modelDAO.getCount("p.likes", Post.class, "p.id="+post.getId()),
+					modelDAO.getCount("p.comments", Post.class, "p.id="+post.getId())));
+		}
+		return postDTOs;
 	}
 	
-	public List<Post> getPostTaggedOfUser(String username,int last) {
-		return userDAO.getTaggedPostByUsername(username, last);
+	public List<PostPreviewDTO> getPostTaggedOfUser(String username,int last) {
+		List<Post> posts = userDAO.getTaggedPostByUsername(username, last);
+		List<PostPreviewDTO> postDTOs = new ArrayList<>();
+		for(Post post: posts) {
+			postDTOs.add(
+					new PostPreviewDTO(post,
+							modelDAO.getCount("p.likes", Post.class, "p.id="+post.getId()),
+					modelDAO.getCount("p.comments", Post.class, "p.id="+post.getId())));
+		}
+		return postDTOs;
 	}
 
-	public List<Post> getBookmarkOfUser(String username,int last) {
-		return userDAO.getBookmarksByUsername(username,last);
+	public List<PostPreviewDTO> getBookmarkOfUser(String username,int last) {
+		List<Post> posts = userDAO.getBookmarksByUsername(username,last);
+		List<PostPreviewDTO> postDTOs = new ArrayList<>();
+		for(Post post: posts) {
+			postDTOs.add(
+					new PostPreviewDTO(post,
+							modelDAO.getCount("p.likes", Post.class, "p.id="+post.getId()),
+					modelDAO.getCount("p.comments", Post.class, "p.id="+post.getId())));
+		}
+		return postDTOs;
 	}
 
 	
