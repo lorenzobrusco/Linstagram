@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import it.unical.linstagram.dto.CommentDTO;
 import it.unical.linstagram.dto.PostDTO;
+import it.unical.linstagram.dto.PostPreviewDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.helper.HashtagFinder;
@@ -55,7 +56,7 @@ public class PostService {
 				hasLike = true;
 			if (bookmarks.contains(post))
 				hasBookmark = true;
-			return new PostDTO(post, hasLike, hasBookmark);
+			return new PostDTO(post, hasLike, hasBookmark,postDAO.getCommentByPostId(post.getId(), 0, 4));
 		}
 		return null;
 	}
@@ -67,9 +68,8 @@ public class PostService {
 		for (Post post : posts) {
 			// System.out.println("creo il post "+post.getContent());
 			postsDTO.add(new PostDTO(post, postDAO.doesTheUserLikeThePost(post.getId(), user),
-					user.getBookmarks().contains(post)));
+					user.getBookmarks().contains(post),postDAO.getCommentByPostId(post.getId(), 0, 4)));
 		}
-
 		return postsDTO;
 	}
 
@@ -80,7 +80,7 @@ public class PostService {
 
 		for (Post post : posts) {
 			postsDTO.add(new PostDTO(post, postDAO.doesTheUserLikeThePost(post.getId(), user),
-					user.getBookmarks().contains(post)));
+					user.getBookmarks().contains(post),postDAO.getCommentByPostId(post.getId(), 0, 4)));
 		}
 
 		return postsDTO;
@@ -102,20 +102,22 @@ public class PostService {
 			if (bookmarks.contains(post))
 				hasBookmark = true;
 
-			postsDTO.add(new PostDTO(post, hasLike, hasBookmark));
+			postsDTO.add(new PostDTO(post, hasLike, hasBookmark,postDAO.getCommentByPostId(post.getId(), 0, 4)));
 		}
 
 		return postsDTO;
 	}
 
-	public List<PostDTO> getPopularPostsExplorePage(User user, Calendar date, int last) {
+	public List<PostPreviewDTO> getPopularPostsExplorePage(User user, Calendar date, int last) {
 
 		List<Post> posts = postDAO.getPostsExplorePage(date, last);
-		List<PostDTO> postsDTO = new ArrayList<>();
+		List<PostPreviewDTO> postsDTO = new ArrayList<>();
 
 		for (Post post : posts) {
-			postsDTO.add(new PostDTO(post, postDAO.doesTheUserLikeThePost(post.getId(), user),
-					user.getBookmarks().contains(post)));
+			postsDTO.add(
+					new PostPreviewDTO(post,
+							modelDao.getCount("p.likes", Post.class, "p.id="+post.getId()),
+					modelDao.getCount("p.comments", Post.class, "p.id="+post.getId())));
 		}
 
 		return postsDTO;
@@ -146,6 +148,7 @@ public class PostService {
 		User user = userDAO.getUserByUsername(username);
 
 		Comment comment = new Comment(contentComment, user, post, date);
+		post = (Post) modelDao.initialize(post, "comments");
 		post.getComments().add(comment);
 
 		if (modelDao.merge(comment))
@@ -228,7 +231,7 @@ public class PostService {
 	public List<CommentDTO> getPostComment(int idPost, int index) {
 		List<Comment> comments = postDAO.getCommentByPostId(idPost, index);
 		List<CommentDTO> commentDTOs = new ArrayList<>();
-
+		
 		for (Comment comment : comments) {
 			commentDTOs.add(new CommentDTO(comment));
 		}

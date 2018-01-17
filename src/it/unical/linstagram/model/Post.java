@@ -21,8 +21,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OrderBy;
 
 @Entity
@@ -45,8 +48,6 @@ public class Post {
 	@Column
 	private String content;
 	
-//	@OneToMany(mappedBy="post")
-//	@Cascade(value=CascadeType.ALL)
 	@ElementCollection
 	@CollectionTable(name="media", joinColumns=@JoinColumn(name="post"))
 	private List<Media> media = new ArrayList<Media>();
@@ -58,7 +59,7 @@ public class Post {
                inverseJoinColumns={@JoinColumn(name="user_id")})
 	private Set<User> likes = new HashSet<User>();
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany
 	@Cascade(value=CascadeType.ALL)
 	@JoinTable(name="tags",
 			joinColumns= {@JoinColumn(name="post_id")},
@@ -66,12 +67,11 @@ public class Post {
 	private Set<User> tags = new HashSet<User>();
 
 //TODO : potrebbero essere caricati lazy
-	@OneToMany(mappedBy="post", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="post")
 	@Cascade(value=CascadeType.ALL)
-	@OrderBy(clause = "date asc")
 	private Set<Comment> comments = new HashSet<Comment>();
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name="hashtag_post",
 		joinColumns= {@JoinColumn(name="id_post")},
 		inverseJoinColumns= {@JoinColumn(name="id_hashtag")})

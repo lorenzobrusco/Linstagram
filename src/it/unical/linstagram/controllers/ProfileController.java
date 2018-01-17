@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.config.CustomPasswordEncoder;
+import it.unical.linstagram.dto.PostPreviewDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.model.Gender;
 import it.unical.linstagram.model.Media;
@@ -46,7 +47,7 @@ public class ProfileController {
 	public String getProfilePage(HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
 
-		List<Post> postOfUser = profileService.getPostOfUser(user.getUsername());
+		List<PostPreviewDTO> postOfUser = userService.getPostOfUser(user.getUsername());
 		model.addAttribute("posts", postOfUser);
 		
 		model.addAttribute("numberOfFollowings", userService.getCountFollowings(user.getId()));

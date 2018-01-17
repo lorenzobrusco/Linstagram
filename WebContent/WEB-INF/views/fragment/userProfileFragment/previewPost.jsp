@@ -25,8 +25,8 @@
 				</c:if>
 			</c:forEach>
 			<div class="links">
-				<a><span class="fa fa-heart"> ${fn:length(post.likes)}</span></a> <a><span
-					class="fa fa-comment"> ${fn:length(post.comments)}</span></a>
+				<a><span class="fa fa-heart"> ${post.nLikes}</span></a> <a><span
+					class="fa fa-comment"> ${post.nComments}</span></a>
 			</div>
 		</div>
 	</div>

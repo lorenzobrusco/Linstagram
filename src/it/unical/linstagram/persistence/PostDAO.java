@@ -220,10 +220,21 @@ public class PostDAO implements IPostDAO {
 
 	public List<Comment> getCommentByPostId(int idPost, int index) {
 		Session session = HibernateUtil.getSession();
-		Query query = session.createQuery("FROM Comment c WHERE c.post.id=:idPost order by c.date")
+		Query query = session.createQuery("FROM Comment c WHERE c.post.id=:idPost order by c.date desc")
 				.setParameter("idPost", idPost);
 		query.setFirstResult(index);
 		query.setMaxResults(MAX_RESULTS_COMMENTS);
+		List<Comment> comments = query.list();
+		session.close();
+		return comments;
+	}
+	
+	public List<Comment> getCommentByPostId(int idPost, int index, int length) {
+		Session session = HibernateUtil.getSession();
+		Query query = session.createQuery("FROM Comment c WHERE c.post.id=:idPost order by c.date desc")
+				.setParameter("idPost", idPost);
+		query.setFirstResult(index);
+		query.setMaxResults(length);
 		List<Comment> comments = query.list();
 		session.close();
 		return comments;

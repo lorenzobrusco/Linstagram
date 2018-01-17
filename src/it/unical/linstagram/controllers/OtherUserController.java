@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import it.unical.linstagram.dto.PostPreviewDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.helper.MessageResponse;
 import it.unical.linstagram.model.Post;
@@ -35,7 +36,7 @@ public class OtherUserController {
 			return "redirect:/profile";
 
 		UserDTO userDTO = userService.getOtherUser(user, usernameOther);
-		List<Post> postOfUser = userService.getPostOfUser(usernameOther);
+		List<PostPreviewDTO> postOfUser = userService.getPostOfUser(usernameOther);
 		model.addAttribute("userPublic", userDTO);
 		// TODO sostituisci con userDTO.getPost()
 		model.addAttribute("posts", postOfUser);

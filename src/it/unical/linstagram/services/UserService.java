@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.unical.linstagram.dto.PostPreviewDTO;
 import it.unical.linstagram.dto.UserDTO;
 import it.unical.linstagram.dto.UserPrivateDTO;
 import it.unical.linstagram.dto.UserPublicDTO;
@@ -150,8 +151,16 @@ public class UserService {
 		userDAO.inizializeListUser(set);
 	}
 
-	public List<Post> getPostOfUser(String username) {
-		return userDAO.getPostByUsername(username);
+	public List<PostPreviewDTO> getPostOfUser(String username) {
+		List<Post> posts =userDAO.getPostByUsername(username);
+		List<PostPreviewDTO> postDTOs = new ArrayList<>();
+		for(Post post: posts) {
+			postDTOs.add(
+					new PostPreviewDTO(post,
+							modelDAO.getCount("p.likes", Post.class, "p.id="+post.getId()),
+					modelDAO.getCount("p.comments", Post.class, "p.id="+post.getId())));
+		}
+		return postDTOs;
 	}
 
 	public boolean sendRequest(String usernameSession, String username) {

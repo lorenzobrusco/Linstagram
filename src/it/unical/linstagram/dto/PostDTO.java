@@ -2,6 +2,7 @@ package it.unical.linstagram.dto;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -30,12 +31,12 @@ public class PostDTO {
 
 	private Set<User> likes = new HashSet<User>();
 
-	private Set<Comment> comments = new HashSet<Comment>();
+	private List<Comment> comments = new ArrayList<Comment>();
 
 	private boolean likeUser;
 	private boolean bookmarkUser;
 
-	public PostDTO(Post post, boolean likeUser, boolean bookmarkUser) {
+	public PostDTO(Post post, boolean likeUser, boolean bookmarkUser, Collection<Comment> comments) {
 		this.id = post.getId();
 		this.user = post.getUser();
 		this.postDate = post.getPostDate();
@@ -44,8 +45,8 @@ public class PostDTO {
 		this.content = getConvertedContent(post.getContent(), post.getTags(), post.getHashtags());
 		this.setElapsedTime(calculateElapsedTime());
 
-		this.comments = post.getComments();
-
+		for(Comment c: comments)
+			this.comments.add(c);
 		this.likeUser = likeUser;
 		this.bookmarkUser = bookmarkUser;
 	}
@@ -98,11 +99,11 @@ public class PostDTO {
 		this.likes = likes;
 	}
 
-	public Set<Comment> getComments() {
+	public List<Comment> getComments() {
 		return comments;
 	}
 
-	public void setComments(Set<Comment> comments) {
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 

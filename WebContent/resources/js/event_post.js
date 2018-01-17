@@ -184,7 +184,7 @@ $(document).ready(function() {
 			success : function(result) {	
 				if(result.length > 0){
 					for(var i=0; i < result.length; i++)
-						$(listComment).append("<div class='comment'><a href='userPage?usernameOther="+result[i].username+"'><b>"+result[i].username+"</b></a>"+
+						$(listComment).prepend("<div class='comment'><a href='userPage?usernameOther="+result[i].username+"'><b>"+result[i].username+"</b></a>"+
 								"<span>"+result[i].comment+"</span></div>");
 
 					$(listComment).siblings(".hide-all-comments").removeClass("hide");

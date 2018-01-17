@@ -2,11 +2,13 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-		<script src="${pageContext.request.contextPath}/resources/js/video.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/video.js"></script>
 <c:forEach items="${posts}" var="post">
 	<section>
 		<div class="row">
-			<div class="col-md-2"><span class="pid hidden">${post.id}</span></div>
+			<div class="col-md-2">
+				<span class="pid hidden">${post.id}</span>
+			</div>
 			<div class="col-md-8">
 				<div class='card'>
 					<div class='top-section'>
@@ -19,16 +21,17 @@
 						<c:forEach items="${post.media}" var="media">
 							<c:if test="${media.type.value == 0}">
 								<div class="overlay-video">
-									<video id="video${post.id }" width="100%"  style="max-height: 400px; background:  black;" loop preload="auto" >
+									<video id="video${post.id }" width="100%"
+										style="max-height: 400px; background: black;" loop
+										preload="auto">
 										<source src="${media.url}" type="video/mp4">
 									</video>
-									<span class="tag-play">
-										<i class="fa fa-play fa-5x" aria-hidden="true"></i>
-									</span>
-									<span class="tag-pause hide">
-										<i class="fa fa-pause fa-1x" aria-hidden="true"></i>
-									</span>
-									<span class="tag-video"></span><span class="tag-audio"><i class="fa fa-volume-up fa-1x" aria-hidden="true"></i></span>
+									<span class="tag-play"> <i class="fa fa-play fa-5x"
+										aria-hidden="true"></i>
+									</span> <span class="tag-pause hide"> <i
+										class="fa fa-pause fa-1x" aria-hidden="true"></i>
+									</span> <span class="tag-video"></span><span class="tag-audio"><i
+										class="fa fa-volume-up fa-1x" aria-hidden="true"></i></span>
 								</div>
 							</c:if>
 							<c:if test="${media.type.value == 1}">
@@ -116,14 +119,12 @@
 								Load other comments<img class="hide" id="loader-comments"
 								src="${pageContext.request.contextPath}/resources/images/loaderComm.gif"></a><br>
 							<div class='list-comments${post.id }'>
-								<c:forEach items="${post.comments}" var="comment"
-									varStatus="loop">
-									<c:if test="${loop.index <4}">
-										<div class="comment">
-											<a href='userPage?username=${comment.user.username}'><b>${comment.user.username}</b></a>
-											<span> ${comment.content}</span>
-										</div>
-									</c:if>
+								<c:forEach items="${post.comments}" varStatus="status">
+									<c:set var="comment" value="${post.comments[4-status.count]}"/>
+									<div class="comment">
+										<a href='userPage?username=${comment.user.username}'><b>${comment.user.username}</b></a>
+										<span> ${comment.content}</span>
+									</div>
 								</c:forEach>
 							</div>
 							<a class="hide hide-all-comments" href="#postcibo"

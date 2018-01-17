@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.unical.linstagram.dto.PostDTO;
+import it.unical.linstagram.dto.PostPreviewDTO;
 import it.unical.linstagram.dto.ResearchDTO;
 import it.unical.linstagram.dto.StoryDTO;
 import it.unical.linstagram.dto.StoryViewerDTO;
@@ -64,8 +65,7 @@ public class HomePageController {
 	public String explorePage(HttpSession session, Model model) {
 
 		User loggedUser = (User) session.getAttribute("user");
-		List<PostDTO> posts = new ArrayList<>();
-		posts = postService.getPopularPostsExplorePage(loggedUser, null, 0);
+		List<PostPreviewDTO> posts = postService.getPopularPostsExplorePage(loggedUser, null, 0);
 		model.addAttribute("posts", posts);
 		return "explore";
 	}
@@ -143,8 +143,7 @@ public class HomePageController {
 			@RequestParam("type") String typeRequest, HttpSession session, Model model) {
 
 		User loggedUser = (User) session.getAttribute("user");
-		List<PostDTO> posts = new ArrayList<>();
-		posts = postService.getPopularPostsExplorePage(loggedUser, null, lastIndex);
+		List<PostPreviewDTO> posts = postService.getPopularPostsExplorePage(loggedUser, null, lastIndex);
 		model.addAttribute("posts", posts);
 		return "fragment/userProfileFragment/postSection";
 	}
