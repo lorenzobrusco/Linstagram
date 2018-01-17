@@ -43,20 +43,12 @@ public class NotificationService {
 	 */
 	public void saveNotification(Notification notification) {
 		Notification oldNotification = notificationDAO.existsNotification(notification);
-		// System.out.println(oldNotification);
-		// if (oldNotification != null) {
-		// modelDAO.update(notification);
-		// } else {
-		// modelDAO.save(notification);
-		// }
-
 		if (oldNotification != null) {
 			modelDAO.delete(Notification.class, oldNotification.getId());
 			modelDAO.save(notification);
 		} else {
 			modelDAO.save(notification);
 		}
-
 	}
 
 	/**
@@ -105,6 +97,11 @@ public class NotificationService {
 		final User userToFollow = userDAO.getUserByUsername(follow);
 		final Notification notification = new Notification(user, userToFollow, null, null, NotificationType.FOLLOW);
 		this.saveNotification(notification);
+	}
+	
+	public void generateTagNotification(User user, User userTagged, Post post) {
+		final Notification notification = new Notification(user, userTagged, post, null, NotificationType.TAG);
+		modelDAO.merge(notification);
 	}
 
 	/**

@@ -174,7 +174,6 @@ public class PostService {
 	}
 
 	public void savePost(Post post) {
-
 		Set<String> findHashtags = HashtagFinder.findHashtags(post.getContent());
 		Set<String> findTags = TagFinder.findTags(post.getContent());
 
@@ -185,8 +184,6 @@ public class PostService {
 			Hashtag hashtagByValue = hashtagDAO.getHashtagByValue(fh);
 			if (hashtagByValue != null && !post.getUser().isPrivateProfile()) {
 				hashtagByValue.setCount(hashtagByValue.getCount() + 1);
-				modelDao.update(hashtagByValue);
-
 			} else {
 				if (!post.getUser().isPrivateProfile())
 					hashtagByValue = new Hashtag(fh.toLowerCase(), 1);

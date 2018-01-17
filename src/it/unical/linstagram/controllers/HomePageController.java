@@ -28,6 +28,7 @@ import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.User;
 import it.unical.linstagram.services.MediaService;
 import it.unical.linstagram.services.MessageCode;
+import it.unical.linstagram.services.NotificationService;
 import it.unical.linstagram.services.PostService;
 import it.unical.linstagram.services.ResearchService;
 import it.unical.linstagram.services.StoriesService;
@@ -46,6 +47,9 @@ public class HomePageController {
 
 	@Autowired
 	private ResearchService researchService;
+	
+	@Autowired
+	private NotificationService notificationService;
 
 	@RequestMapping("/")
 	public String homePageController(HttpSession session, Model model) {
@@ -104,19 +108,24 @@ public class HomePageController {
 
 	@ResponseBody
 	@RequestMapping(value = "/createPost", method = RequestMethod.POST)
-	public Media createPost(@RequestParam String postDescription, @RequestParam String type,
+	public Collection<String> createPost(@RequestParam String postDescription, @RequestParam String type,
 			@RequestParam MultipartFile file, HttpSession session) throws IOException {
+		final List<Media> uploadedFiles = new ArrayList<>();
+		final List<String> usersTagged = new ArrayList<>();
 		Media mediaInfo = null;
 		if (type.equals("image"))
 			mediaInfo = uploadService.createMedia(file, Media_Type.IMAGE, session);
 		else
 			mediaInfo = uploadService.createMedia(file, Media_Type.VIDEO, session);
-		final List<Media> uploadedFiles = new ArrayList<>();
 		uploadedFiles.add(mediaInfo);
-		Post new_post = new Post((User) (session.getAttribute("user")), uploadedFiles, Calendar.getInstance(),
+		final Post new_post = new Post((User) (session.getAttribute("user")), uploadedFiles, Calendar.getInstance(),
 				postDescription);
 		postService.savePost(new_post);
-		return mediaInfo;
+		for(User userTagged : new_post.getTags()) {
+			usersTagged.add(userTagged.getUsername());
+			notificationService.generateTagNotification((User) (session.getAttribute("user")), userTagged, new_post);
+		}
+		return usersTagged;
 	}
 
 	@RequestMapping("/getPosts")
