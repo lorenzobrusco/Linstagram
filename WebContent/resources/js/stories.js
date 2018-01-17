@@ -61,7 +61,7 @@ function Stories(){
 	}
 
 	var zuck = new Zuck('stories', {
-		backNative: true,
+		backNative: false,
 		previousTap: true,
 		autoFullScreen: false,
 		skin: 'Snapgram',
