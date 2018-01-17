@@ -197,7 +197,9 @@ $(document).ready(function() {
 	$(document).on('click', '.hide-all-comments', function() {
 		var postID = $(this).parent().siblings('.comment-section').children("button").attr("id");
 		var listComment = $('.list-comments'+postID);
-		$(listComment).children(".comment:gt(3)").remove();
+		var listSize = $(listComment).children(".comment").length;
+
+		$(listComment).children(".comment:lt("+(listSize-4)+")").remove();
 		$(this).addClass("hide");
 
 	});

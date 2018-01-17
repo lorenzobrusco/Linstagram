@@ -148,8 +148,6 @@ public class PostService {
 		User user = userDAO.getUserByUsername(username);
 
 		Comment comment = new Comment(contentComment, user, post, date);
-		post = (Post) modelDao.initialize(post, "comments");
-		post.getComments().add(comment);
 
 		if (modelDao.merge(comment))
 			return true;
