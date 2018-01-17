@@ -170,4 +170,36 @@ $(document).ready(function() {
 			$(this).find("button").click();
 		}
 	});
+	$(document).on('click', '.show-all-comments', function() {
+		var postID = $(".pid").text();
+		console.log(postID);
+		var thiss = this;
+		var listComment = $('.list-comments'+postID);
+		var listSize = $(".comment").length;
+		$("#loader-comments").removeClass("hide");
+		$.ajax({
+			url : "getPostComment",
+			data:{post:postID, index:listSize},
+			success : function(result) {	
+				if(result.length > 0){
+					for(var i=0; i < result.length; i++)
+						$(listComment).prepend("<div class='comment'><a href='userPage?usernameOther="+result[i].username+"'><b>"+result[i].username+"</b></a>"+
+								"<span>"+result[i].comment+"</span></div>");
+
+					$(".hide-all-comments").removeClass("hide");
+				}
+				$("#loader-comments").addClass("hide");
+			}
+		});
+	});
+
+	$(document).on('click', '.hide-all-comments', function() {
+		var postID = $(".pid").text();
+		var listComment = $('.list-comments'+postID);
+		var listSize = $(listComment).children(".comment").length;
+
+		$(listComment).children(".comment:lt("+(listSize-15)+")").remove();
+		$(this).addClass("hide");
+
+	});
 });

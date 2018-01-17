@@ -29,9 +29,8 @@ public class NotificationController {
 
 	@RequestMapping(value = "sendNotification", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<?> someAction(@RequestParam String user) {
+	public void someAction(@RequestParam String user) {
 		notificationService.notify(new MessageNotification("update"), user);
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "openNotification", method = RequestMethod.POST)

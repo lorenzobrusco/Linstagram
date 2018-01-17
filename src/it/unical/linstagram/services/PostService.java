@@ -56,7 +56,7 @@ public class PostService {
 				hasLike = true;
 			if (bookmarks.contains(post))
 				hasBookmark = true;
-			return new PostDTO(post, hasLike, hasBookmark,postDAO.getCommentByPostId(post.getId(), 0, 4));
+			return new PostDTO(post, hasLike, hasBookmark,postDAO.getCommentByPostId(post.getId(), 0, 15));
 		}
 		return null;
 	}

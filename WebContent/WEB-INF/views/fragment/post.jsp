@@ -118,7 +118,8 @@
 								src="${pageContext.request.contextPath}/resources/images/loaderComm.gif"></a><br>
 							<div class='list-comments${post.id }'>
 								<c:forEach items="${post.comments}" varStatus="status">
-									<c:set var="comment" value="${post.comments[4-status.count]}"/>
+									<c:set var="size" value="${post.comments.size()}"/>
+									<c:set var="comment" value="${post.comments[size-status.count]}"/>
 									<div class="comment">
 										<a href='userPage?username=${comment.user.username}'><b>${comment.user.username}</b></a>
 										<span> ${comment.content}</span>
