@@ -95,6 +95,10 @@ public class ProfileService {
 			return true;
 		return false;
 	}
+	
+	public int getPostCount(int userId) {
+		return modelDAO.getCount("u.posts", User.class, "u.id="+userId);
+	}
 
 	
 }
