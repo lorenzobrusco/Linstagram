@@ -79,19 +79,19 @@ public class ProfileService {
 	
 	public boolean changePassword(User user, String password) {
 		user.setPassword(password);
-		if (modelDAO.merge(user))
+		if ((User) modelDAO.merge(user) != null)
 			return true;
 		return false;
 	}
 	
 	public boolean uploadPhotoProfile(User user) {
-		if (modelDAO.merge(user))
+		if ((User) modelDAO.merge(user) != null)
 			return true;
 		return false;
 	}
 	
 	public boolean updateUser(User user) {
-		if (modelDAO.merge(user))
+		if ((User) modelDAO.merge(user) != null)
 			return true;
 		return false;
 	}

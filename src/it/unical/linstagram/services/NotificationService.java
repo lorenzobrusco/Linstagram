@@ -101,12 +101,11 @@ public class NotificationService {
 	}
 	
 	public void generateTagNotifications(User user, Set<User> usersTagged, Post post) {
-		post = (Post) modelDAO.mergeObj(post);
 		for(User usertagged: usersTagged) {
 			modelDAO.save(new Notification(user, usertagged, post, null, NotificationType.TAG));
 		}
 	}
-
+	
 	/**
 	 * Used to get all notification from db
 	 * 

@@ -127,7 +127,7 @@ public class PostService {
 		Post post = postDAO.getPostById(idPost);
 		User u = userDAO.getUserByUsername(username);
 		if (post.getLikes().add(u)) {
-			if (modelDao.merge(post))
+			if ((Post) modelDao.merge(post) != null)
 				return true;
 		}
 		return false;
@@ -138,7 +138,7 @@ public class PostService {
 		User u = userDAO.getUserByUsername(username);
 		post.getLikes().remove(u);
 
-		if (modelDao.merge(post))
+		if ((Post) modelDao.merge(post) != null)
 			return true;
 		return false;
 	}
@@ -146,35 +146,33 @@ public class PostService {
 	public boolean insertComment(int idPost, String username, String contentComment, Calendar date) {
 		Post post = postDAO.getPostById(idPost);
 		User user = userDAO.getUserByUsername(username);
-
 		Comment comment = new Comment(contentComment, user, post, date);
-
-		if (modelDao.merge(comment))
+		if ((Comment) modelDao.merge(comment) != null)
 			return true;
 		return false;
 	}
 
-	public User insertBookmark(String username, int idPost) {
-		User u = userDAO.getUserByUsername(username);
-		Post post = postDAO.getPostById(idPost);
-		u.getBookmarks().add(post);
-
-		if (modelDao.merge(u))
-			return u;
+	public User insertBookmark(User user, int idPost) {
+		user = (User) modelDao.merge(user);
+		if(user != null) {
+			Post post = postDAO.getPostById(idPost);
+			user.getBookmarks().add(post);
+			return (User) modelDao.merge(user);
+		}
 		return null;
 	}
 
-	public User removeBookmark(String username, int idPost) {
-		Post post = postDAO.getPostById(idPost);
-		User u = userDAO.getUserByUsername(username);
-		u.getBookmarks().remove(post);
-
-		if (modelDao.merge(u))
-			return u;
+	public User removeBookmark(User user, int idPost) {
+		user = (User) modelDao.merge(user);
+		if(user != null) {
+			Post post = postDAO.getPostById(idPost);
+			user.getBookmarks().remove(post);
+			return (User) modelDao.merge(user);
+		}
 		return null;
 	}
 
-	public void savePost(Post post) {
+	public Post savePost(Post post) {
 		Set<String> findHashtags = HashtagFinder.findHashtags(post.getContent());
 		Set<String> findTags = TagFinder.findTags(post.getContent());
 
@@ -202,9 +200,7 @@ public class PostService {
 				post.getTags().add(userByUsername);
 			}
 		}
-
-		if(post.getTags().size() <= 0)
-			modelDao.merge(post);
+		return (Post) modelDao.merge(post);
 	}
 
 	public List<Post> getFollowedPosts(String username) {

@@ -118,12 +118,9 @@ public class HomePageController {
 		else
 			mediaInfo = uploadService.createMedia(file, Media_Type.VIDEO, session);
 		uploadedFiles.add(mediaInfo);
-		final Post new_post = new Post((User) (session.getAttribute("user")), uploadedFiles, Calendar.getInstance(),
+		Post new_post = new Post((User) (session.getAttribute("user")), uploadedFiles, Calendar.getInstance(),
 				postDescription);
-		postService.savePost(new_post);
-		for(User userTagged : new_post.getTags()) {
-			usersTagged.add(userTagged.getUsername());
-		}
+		new_post = postService.savePost(new_post);
 		notificationService.generateTagNotifications((User) (session.getAttribute("user")), new_post.getTags(), new_post);
 		return usersTagged;
 	}

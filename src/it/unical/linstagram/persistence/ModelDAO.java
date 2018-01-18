@@ -122,18 +122,18 @@ public class ModelDAO {
 		}
 	}
 
-	public boolean merge(Object model) {
+	public Object merge(Object model) {
 		final Session session = HibernateUtil.getSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			session.merge(model);
+			model = session.merge(model);
 			transaction.commit();
-			return true;
+			return model;
 		} catch (Exception e) {
 			transaction.rollback();
 			e.printStackTrace();
-			return false;
+			return null;
 		} finally {
 			session.close();
 		}
