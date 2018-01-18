@@ -101,8 +101,6 @@ public class MediaService {
 	 * @return
 	 */
 	private String getOutputFilename(MultipartFile multipartFile, HttpSession session) {
-		// TODO change file name
-		// System.out.println(multipartFile.getOriginalFilename());
 		getNameFile(multipartFile, session);
 		String name = nameFile;
 		return getLocalDestinationLocation(session) + name;

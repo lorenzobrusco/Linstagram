@@ -66,7 +66,6 @@ public class Post {
 			inverseJoinColumns= {@JoinColumn(name="user_id")})
 	private Set<User> tags = new HashSet<User>();
 
-//TODO : potrebbero essere caricati lazy
 	@OneToMany(mappedBy="post")
 	@Cascade(value=CascadeType.ALL)
 	private Set<Comment> comments = new HashSet<Comment>();

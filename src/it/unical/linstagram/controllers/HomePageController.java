@@ -81,30 +81,6 @@ public class HomePageController {
 		return "redirect:/";
 	}
 
-	// TODO: hande multiple file
-	// /**
-	// * Getting uploaded files from request
-	// * save of all them and create post
-	// * @param request
-	// * @param response
-	// * @return
-	// * @throws IOException
-	// */
-	// @RequestMapping(value = "/upload", method = RequestMethod.POST)
-	// public @ResponseBody List<Media> multipleUpload(MultipartHttpServletRequest
-	// request, HttpServletResponse response,
-	// HttpSession session)
-	// throws IOException {
-	// final Map<String, MultipartFile> fileMap = request.getFileMap();
-	// final List<Media> uploadedFiles = new ArrayList<>();
-	// for (MultipartFile multipartFile : fileMap.values()) {
-	// saveFileToLocalDisk(multipartFile, session);
-	// Media fileInfo = getUploadedFileInfo(multipartFile, session);
-	// fileInfo = saveFileToDatabase(fileInfo);
-	// uploadedFiles.add(fileInfo);
-	// }
-	// return uploadedFiles;
-	// }
 
 	@ResponseBody
 	@RequestMapping(value = "/createPost", method = RequestMethod.POST)

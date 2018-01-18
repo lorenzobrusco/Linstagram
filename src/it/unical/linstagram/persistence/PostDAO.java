@@ -240,7 +240,6 @@ public class PostDAO implements IPostDAO {
 		return comments;
 	}
 
-	// TODO MIGLIORARE
 	public List<Post> getPostsByHashtag(String hashtag, Calendar calendar, int last) {
 		Session session = HibernateUtil.getSession();
 
@@ -262,7 +261,6 @@ public class PostDAO implements IPostDAO {
 	}
 
 	
-	// TODO MIGLIORARE
 		public List<Post> getPublicPostsByHashtag(User user, String hashtag, Calendar calendar, int last) {
 			Session session = HibernateUtil.getSession();
 
