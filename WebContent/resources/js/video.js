@@ -2,6 +2,7 @@ function restart(video) {
 	var parent = video.parent();
 	parent.find(".tag-pause").addClass("hide");
 	parent.find(".tag-play").removeClass("hide");
+	video[0].currentTime = 0;
 }
 $(document).ready(function() {
 	$(document).on("click", ".tag-play",function(e) {
@@ -13,7 +14,6 @@ $(document).ready(function() {
 	});
 	
 	$(document).on("click", ".tag-pause",function(e) {
-		console.log($(this));
 		var video = $(this).parent().find("video");
 		video[0].pause();
 		$(this).addClass("hide");
@@ -21,7 +21,6 @@ $(document).ready(function() {
 	});
 	
 	$(document).on("click", ".tag-audio",function(e) {
-		console.log($(this));
 		var video = $(this).parent().find("video");
 		video[0].muted = !video[0].muted;
 		if(video[0].muted){
