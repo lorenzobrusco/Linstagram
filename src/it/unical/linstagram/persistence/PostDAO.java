@@ -17,8 +17,8 @@ import it.unical.linstagram.model.User;
 @SuppressWarnings("unchecked")
 public class PostDAO implements IPostDAO {
 
-	private static final int MAX_RESULTS_POST = 5;
-	private static final int MAX_RESULTS_POST_EXPLORE = 9;
+	private static final int MAX_RESULTS_POST = 12;
+	private static final int MAX_RESULTS_POST_EXPLORE = 15;
 	private static final int MAX_RESULTS_COMMENTS = 9;
 
 	public List<Post> getPosts() {
