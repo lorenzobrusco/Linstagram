@@ -62,11 +62,11 @@ public class StoriesService {
 
 	public void AddViewerToStory(User user, int idStory) {
 		Story story = storyDAO.getStoryById(idStory);
-
+		if(story==null) return;
 		if(!story.isAViewer(user))
 			story.addViewer(user);
 
-		modelDAO.merge(story);
+		modelDAO.update(story);
 	}
 
 	public StoryDTO saveStory(Media media, User user) {
