@@ -181,14 +181,11 @@ public class PostService {
 			post.setContent(post.getContent().replaceAll("#"+fh, "#"+fh.toLowerCase()));
 
 			Hashtag hashtagByValue = hashtagDAO.getHashtagByValue(fh);
-			if (hashtagByValue != null && !post.getUser().isPrivateProfile()) {
-				hashtagByValue.setCount(hashtagByValue.getCount() + 1);
+			if (hashtagByValue != null) {
+				hashtagByValue.setCount(!post.getUser().isPrivateProfile() ? hashtagByValue.getCount() + 1
+						: hashtagByValue.getCount());
 			} else {
-				if (!post.getUser().isPrivateProfile())
-					hashtagByValue = new Hashtag(fh.toLowerCase(), 1);
-				else
-					hashtagByValue = new Hashtag(fh.toLowerCase(), 0);
-
+				hashtagByValue = new Hashtag(fh.toLowerCase(),post.getUser().isPrivateProfile() ? 0 : 1);
 			}
 			post.getHashtags().add(hashtagByValue);
 		}

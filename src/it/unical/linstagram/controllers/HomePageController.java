@@ -121,7 +121,10 @@ public class HomePageController {
 		Post new_post = new Post((User) (session.getAttribute("user")), uploadedFiles, Calendar.getInstance(),
 				postDescription);
 		new_post = postService.savePost(new_post);
-		notificationService.generateTagNotifications((User) (session.getAttribute("user")), new_post.getTags(), new_post);
+		for(User tagged : new_post.getTags())
+			usersTagged.add(tagged.getUsername());
+		if(new_post != null)
+			notificationService.generateTagNotifications((User) (session.getAttribute("user")), new_post.getTags(), new_post);
 		return usersTagged;
 	}
 
