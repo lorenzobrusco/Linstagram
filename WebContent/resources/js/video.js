@@ -1,3 +1,8 @@
+function restart(video) {
+	var parent = video.parent();
+	parent.find(".tag-pause").addClass("hide");
+	parent.find(".tag-play").removeClass("hide");
+}
 $(document).ready(function() {
 	$(document).on("click", ".tag-play",function(e) {
 		console.log($(this));
