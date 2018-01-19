@@ -43,6 +43,8 @@ public class NotificationService {
 	 * @param notification
 	 */
 	public void saveNotification(Notification notification) {
+		if(notification.getUserFrom().getId() == notification.getUserTo().getId())
+			return;
 		Notification oldNotification = notificationDAO.existsNotification(notification);
 		if (oldNotification != null) {
 			modelDAO.delete(Notification.class, oldNotification.getId());
@@ -102,6 +104,7 @@ public class NotificationService {
 	
 	public void generateTagNotifications(User user, Set<User> usersTagged, Post post) {
 		for(User usertagged: usersTagged) {
+			if(user.getId() != usertagged.getId())
 			modelDAO.save(new Notification(user, usertagged, post, null, NotificationType.TAG));
 		}
 	}

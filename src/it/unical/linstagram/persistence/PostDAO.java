@@ -128,7 +128,7 @@ public class PostDAO implements IPostDAO {
 		dayLimit.setTimeInMillis(now.getTimeInMillis()-86400*1000*7);
 		
 		List<Post> posts = session
-				.createQuery("SELECT p FROM Post p WHERE p.user.privateProfile=false and p.postDate>=:limitDate order by p.likes.size desc, p.postDate desc")
+				.createQuery("SELECT p FROM Post p WHERE p.user.privateProfile=false and p.postDate>=:limitDate order by size(p.likes) desc, p.postDate desc")
 				.setParameter("limitDate",dayLimit)
 				.setFirstResult(last)
 				.setMaxResults(MAX_RESULTS_POST_EXPLORE).list();
