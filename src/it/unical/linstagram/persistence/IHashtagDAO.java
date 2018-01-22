@@ -3,6 +3,7 @@ package it.unical.linstagram.persistence;
 import java.util.List;
 
 import org.springframework.lang.Nullable;
+
 import it.unical.linstagram.model.Hashtag;
 
 public interface IHashtagDAO {

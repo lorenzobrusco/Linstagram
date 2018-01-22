@@ -1,7 +1,5 @@
 package it.unical.linstagram.model.test;
 
-import static org.junit.Assert.assertNotNull;
-
 import org.hibernate.Session;
 import org.junit.Assert;
 import org.junit.Test;

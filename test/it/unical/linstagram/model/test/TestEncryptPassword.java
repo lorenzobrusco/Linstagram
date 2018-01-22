@@ -1,15 +1,9 @@
 package it.unical.linstagram.model.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import it.unical.linstagram.config.CustomPasswordEncoder;
-import it.unical.linstagram.helper.MessageResponse;
-import it.unical.linstagram.persistence.UserDAO;
-import it.unical.linstagram.services.MessageCode;
-import it.unical.linstagram.services.SignInUpService;
 
 public class TestEncryptPassword {
 

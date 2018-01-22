@@ -6,20 +6,14 @@ import java.util.List;
 import javax.persistence.TemporalType;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import it.unical.linstagram.model.Media;
+import it.unical.linstagram.model.Post;
 import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
-import it.unical.linstagram.model.Media.Media_Type;
-import it.unical.linstagram.model.Post;
 import it.unical.linstagram.persistence.HibernateUtil;
-import it.unical.linstagram.persistence.IStoryDAO;
-import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.PostDAO;
 import it.unical.linstagram.persistence.StoryDAO;
 import it.unical.linstagram.persistence.UserDAO;
@@ -30,14 +24,7 @@ public class TestStoryInsert {
 	public static void init() {
 		HibernateUtil.initSessionFactory(false);
 	}
-	@Test
-	public void testPostLikes() {
-		PostDAO pd = new PostDAO();
-		Post post = pd.getPostById(206);
-		
-		Assert.assertEquals(0,post.getComments().size());
-		
-	}
+	
 //	@Test
 	public void getStory() {
 		

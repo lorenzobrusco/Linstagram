@@ -2,13 +2,7 @@ package it.unical.linstagram.model.test;
 
 import java.util.List;
 
-import javax.jws.WebParam.Mode;
-
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.MassIndexer;
-import org.hibernate.search.Search;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;

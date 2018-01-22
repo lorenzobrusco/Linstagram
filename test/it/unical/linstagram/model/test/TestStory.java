@@ -2,19 +2,13 @@ package it.unical.linstagram.model.test;
 
 import java.util.List;
 
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.unical.linstagram.model.Media;
 import it.unical.linstagram.model.Media.Media_Type;
 import it.unical.linstagram.model.Story;
 import it.unical.linstagram.model.User;
-import it.unical.linstagram.persistence.HibernateUtil;
 import it.unical.linstagram.persistence.IStoryDAO;
 import it.unical.linstagram.persistence.ModelDAO;
 import it.unical.linstagram.persistence.StoryDAO;
