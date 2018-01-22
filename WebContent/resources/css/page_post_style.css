@@ -72,11 +72,14 @@ body, html {
  .content-post .caption-section{
  	margin: 0 16px;
  	margin-bottom:20px;
+ 	max-height: 100px;
+  overflow-y: scroll;
+  min-height: auto;
  }
 
 .content-post .comments .list-comments-section {
-	max-height: 300px;
-	overflow-y: auto;
+	 max-height: 280px;
+   overflow-y: auto;
 }
 
 .content-post .action-section {
@@ -219,6 +222,7 @@ body, html {
 
 .comment{
 	word-wrap:break-word;
+	padding-top: 10px;
 }
 
 /* SCROLLBAR */

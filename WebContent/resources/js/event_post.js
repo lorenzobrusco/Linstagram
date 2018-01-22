@@ -132,11 +132,12 @@ $(document).ready(function() {
 			url : "addComment",
 			data: {postID:postID, comment:comm},
 			success : function(result) {
+//				console.log(result);
 				result = JSON.parse(result);
 				if(result.messageCode == "OK") {
 					$("#comment"+postID).val('');
 					$(listComment).append("<div class='comment'><a href='userPage?username="+username+"'><b>"+username+"</b></a>"+
-							"<span class='comment_body'>"+comm+"</span></div>");
+							"<span class='comment_body'>"+result.message+"</span></div>");
 					sendNotification(result.obj);
 				}
 			}
