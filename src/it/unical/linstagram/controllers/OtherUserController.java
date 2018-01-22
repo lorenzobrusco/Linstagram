@@ -42,6 +42,8 @@ public class OtherUserController {
 			List<PostPreviewDTO> postOfUser = profileService.getPostOfUser(usernameOther, 0);
 			model.addAttribute("userPublic", userDTO);
 			model.addAttribute("posts", postOfUser);
+			int postCount = profileService.getPostCount(userDTO.getId());
+			model.addAttribute("postsCount", postCount);
 			return "otherUserProfile";
 		}
 		return "404";
