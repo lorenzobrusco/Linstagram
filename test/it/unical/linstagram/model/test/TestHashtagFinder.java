@@ -1,7 +1,6 @@
 package it.unical.linstagram.model.test;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Assert;

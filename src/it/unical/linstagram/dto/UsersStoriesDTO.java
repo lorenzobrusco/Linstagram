@@ -1,12 +1,7 @@
 package it.unical.linstagram.dto;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import it.unical.linstagram.model.Story;
-import it.unical.linstagram.model.User;
 
 public class UsersStoriesDTO {
 	

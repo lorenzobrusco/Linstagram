@@ -3,7 +3,6 @@ package it.unical.linstagram.model.test;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 
 import it.unical.linstagram.persistence.HibernateUtil;
