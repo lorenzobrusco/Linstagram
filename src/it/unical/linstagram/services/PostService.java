@@ -229,7 +229,7 @@ public class PostService {
 	
 	public String checkStringLength(String text,int max_lenght) {
 		if(text.length() > max_lenght) {
-			String text_short = text.substring(0, Comment.MAX_LENGTH_COMMENT - 3);
+			String text_short = text.substring(0, max_lenght - 3);
 			text = text_short + "...";
 		}
 		return text;
