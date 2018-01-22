@@ -81,7 +81,7 @@ function Stories(){
 					
 					var id = $("#stories [data-id='"+storyId+"'] .items li:nth-child("+(currStory+1)+")").attr("data-id");
 					setUserStoryModal();
-					viewsStory(storyId,id);
+//					viewsStory(storyId,id);
 
 					if(storyId == loggedUser)
 					{
