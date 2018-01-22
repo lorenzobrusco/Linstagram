@@ -98,13 +98,15 @@ public class PostController {
 		User user = (User) session.getAttribute("user");
 		Post post = postService.getPost(idPost);
 		
-		if (!comment.equals(""))
+		if (!comment.equals("")) { 
 			//check comment length 
 			comment = postService.checkStringLength(comment,Comment.MAX_LENGTH_COMMENT);
 			if (postService.insertComment(idPost, user.getUsername(), comment, Calendar.getInstance())) {
 				notificationService.generateCommentNotification(user, idPost);
 				return new Gson().toJson(new MessageResponse(MessageCode.OK, post.getUser().getUsername(), comment));
 			}
+		}
+			
 
 		return new Gson().toJson(new MessageResponse(MessageCode.FAILED, post.getUser().getUsername(), "Failed"));
 	}
