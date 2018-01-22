@@ -97,13 +97,10 @@ public class PostController {
 			@RequestParam("comment") String comment) {
 		User user = (User) session.getAttribute("user");
 		Post post = postService.getPost(idPost);
-		//check comment length 
-		if(comment.length() > Comment.MAX_LENGTH_COMMENT) {
-			String comment_short = comment.substring(0, Comment.MAX_LENGTH_COMMENT - 3);
-			comment = comment_short + "...";
-		}
 		
 		if (!comment.equals(""))
+			//check comment length 
+			comment = postService.checkStringLength(comment,Comment.MAX_LENGTH_COMMENT);
 			if (postService.insertComment(idPost, user.getUsername(), comment, Calendar.getInstance())) {
 				notificationService.generateCommentNotification(user, idPost);
 				return new Gson().toJson(new MessageResponse(MessageCode.OK, post.getUser().getUsername(), comment));

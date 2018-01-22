@@ -81,13 +81,16 @@ public class HomePageController {
 		return "redirect:/";
 	}
 
-
 	@ResponseBody
 	@RequestMapping(value = "/createPost", method = RequestMethod.POST)
 	public Collection<String> createPost(@RequestParam String postDescription, @RequestParam String type,
 			@RequestParam MultipartFile file, HttpSession session) throws IOException {
 		final List<Media> uploadedFiles = new ArrayList<>();
 		final List<String> usersTagged = new ArrayList<>();
+		
+		if(!postDescription.equals(""))
+			postDescription = postService.checkStringLength(postDescription,Post.MAX_LENGTH_CONTENT);
+		
 		Media mediaInfo = null;
 		if (type.equals("image"))
 			mediaInfo = uploadService.createMedia(file, Media_Type.IMAGE, session);

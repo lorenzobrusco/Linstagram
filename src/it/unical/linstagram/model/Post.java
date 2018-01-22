@@ -31,6 +31,7 @@ import org.hibernate.annotations.OrderBy;
 @Entity
 @Table(name="post")
 public class Post {
+	public final static int MAX_LENGTH_CONTENT=1000;
 
 	@Id
 	@Column
@@ -45,7 +46,7 @@ public class Post {
 	@Column(nullable=false)
 	private Calendar postDate;
 	
-	@Column
+	@Column(length=MAX_LENGTH_CONTENT)
 	private String content;
 	
 	@ElementCollection
