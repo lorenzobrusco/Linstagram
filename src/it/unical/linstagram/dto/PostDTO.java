@@ -177,17 +177,19 @@ public class PostDTO {
 				while (index != -1)
 				{
 
-					if (index <2 || index >2 && content.charAt(index-1) !='>')
+					if (index <2 || index >=2 && content.charAt(index-1) !='>')
 					{
 
 						content = content.substring(0, index)+ toConcat
 								+ content.substring(index+ u.getUsername().length() +1);
 
+						index = content.indexOf("@"+u.getUsername(), index + toConcat.length());
 					}
-					index = content.indexOf("@"+u.getUsername(), index + toConcat.length());
-
+					else
+					{
+						index = content.indexOf("@"+u.getUsername(), index +1);
+					}
 				}
-				//				content = content.replaceAll("@"+u.getUsername(), "<a href='userPage?username="+u.getUsername()+"'>"+"@"+u.getUsername()+"</a>");
 			}
 		}
 		if (hashtags.size() != 0)
@@ -199,23 +201,22 @@ public class PostDTO {
 				String toConcat = "<a href='hashtags?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>";
 				while (index != -1)
 				{
-					if (index <2 || index >2 && content.charAt(index-1) !='>')
+					if (index <2 || index >=2 && content.charAt(index-1) !='>')
 					{
-
 						content = content.substring(0, index)+ toConcat
 								+ content.substring(index+ h.getHashtag().length() +1);
 
+						index = content.indexOf("#"+h.getHashtag(), index + toConcat.length());
 					}
-					index = content.indexOf("#"+h.getHashtag(), index + toConcat.length());
+					else 
+					{
+						index = content.indexOf("#"+h.getHashtag(), index + 1);
+					}
 				}
-
-				//				content = content.replaceAll("#"+h.getHashtag(), "<a href='hashtags?hashtag="+h.getHashtag()+"'>"+"#"+h.getHashtag()+"</a>");				
-				//				content = content.replaceAll("#"+h.getHashtag(), "<a href='javascript:getPostsByHashtags(\""+h.getHashtag()+"\")'>"+"#"+h.getHashtag()+"</a>");
 			}
-
 		}
 		return content;
-	}
+	}	
 
 
 }
