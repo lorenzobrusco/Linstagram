@@ -180,7 +180,7 @@ public class ProfileController {
 		Media mediaInfo = uploadService.createProfilePhoto(file, session);
 		User user = (User) session.getAttribute("user");
 		user.setPhotoProfile(mediaInfo.getUrl());
-		System.out.println(user.getPhotoProfile());
+
 		boolean result = profileService.uploadPhotoProfile(user);
 		if (result)
 			return "modifyProfile";

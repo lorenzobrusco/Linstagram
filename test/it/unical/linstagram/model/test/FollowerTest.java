@@ -17,7 +17,7 @@ public class FollowerTest {
 	@Test
 	void followerTest() {
 		HibernateUtil.initSessionFactory(true);
-		User eliana = new User("Eliana", "elianalovehitler@gmail.com", "Leader");
+		User eliana = new User("Eliana", "elianalove@gmail.com", "Leader");
 		User manuel = new User("Manuel", "A", "A");
 		User ciccio = new User("Ciccio", "B", "B");
 		User alessio = new User("Alessio", "B", "B");
@@ -57,9 +57,6 @@ public class FollowerTest {
 				.setParameter("u1id", eliana.getId()).list();
 		System.out.println(users.size());
 
-		//		for (User user : users) {
-		//			System.out.println(user.getUsername());
-		//		}
 		sex.close();
 
 		Assert.assertEquals(1, users.size());

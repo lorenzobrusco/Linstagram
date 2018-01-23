@@ -66,7 +66,7 @@ public class PostService {
 		List<PostDTO> postsDTO = new ArrayList<>();
 
 		for (Post post : posts) {
-			// System.out.println("creo il post "+post.getContent());
+
 			postsDTO.add(new PostDTO(post, postDAO.doesTheUserLikeThePost(post.getId(), user),
 					user.getBookmarks().contains(post),postDAO.getCommentByPostId(post.getId(), 0, 4)));
 		}
@@ -210,7 +210,6 @@ public class PostService {
 
 		List<UserDTO> likesDTO = new ArrayList<>();
 		for (User user : likes) {
-//			System.out.println(user.getUsername());
 			likesDTO.add(new UserPrivateDTO(user, false, false, false));
 		}
 

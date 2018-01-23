@@ -131,7 +131,7 @@ public class MediaService {
 		String path_image = context.getRealPath("/WEB-INF/images/");
 
 		String path = path_image + user.getId() + "/";
-		// System.out.println(path);
+
 		FileModel.createFolder(path);
 		return path;
 	}

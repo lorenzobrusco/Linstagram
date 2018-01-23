@@ -22,9 +22,8 @@ public class CustomUserDetailsService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
         it.unical.linstagram.model.User user = userService.getUser(username);
-        System.out.println("***************************************User : "+user);
+
         if(user==null){
-            System.out.println("User not found");
             throw new UsernameNotFoundException("Username not found");
         }
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), 

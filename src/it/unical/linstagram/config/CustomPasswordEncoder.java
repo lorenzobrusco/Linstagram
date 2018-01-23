@@ -35,8 +35,7 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 		String hash;
 		try {
 			hash = byteArrayToHexString(computeHash(newPassword));
-//			System.out.println(hash);
-//			System.out.println(savedPassword);
+
 			if (hash.equals(savedPassword)) 
 				return hash;
 			

@@ -39,7 +39,6 @@ public class HibernateUtil {
 			Configuration configuration = new Configuration();
 			if (test)
 			{
-				System.out.println( "ciao");
 				factory = configuration.configure("hibernateTest.cfg.xml").buildSessionFactory();
 			}
 			else

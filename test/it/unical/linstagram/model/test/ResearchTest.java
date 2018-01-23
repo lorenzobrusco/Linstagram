@@ -127,7 +127,6 @@ public class ResearchTest extends AbstractModelTest {
 		List<User> suggestions = userDAO.getSuggestionsName("el");
 		System.out.println("la size della lista è "+ suggestions.size());
 		
-		System.out.println("SONO QUI");
 		
 		for (User user : suggestions) {
 			System.out.println(user.getUsername());
